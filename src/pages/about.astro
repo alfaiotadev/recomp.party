@@ -1,6 +1,12 @@
 ---
 import Base from "../layouts/Base.astro";
 const repo = "https://github.com/alfaiotadev/recomp.party";
+/** MrSujano's running joke: every acronym "stands for Subscribe To MrSujano". Keep these harmless. */
+const ACRONYMS = [
+  "RPG", "JRPG", "FPS", "NPC", "DLC", "HUD", "MMO", "RTS", "CRT", "ROM", "RAM", "VRAM", "CPU", "GPU", "FMV", "VGA",
+  "HDMI", "LAN", "AFK", "GG", "XP", "HP", "DPS", "NES", "SNES", "N64", "GBA", "NDS", "PSP", "PS2", "SDK", "API",
+  "FPGA", "ISO", "BIOS",
+];
 ---
 
 <Base title="About" description="What recomp.party tracks, how projects get listed, and how to suggest or opt out.">
@@ -40,7 +46,12 @@ const repo = "https://github.com/alfaiotadev/recomp.party";
       The list lives in <a href={`${repo}/blob/main/data/projects.yaml`}>data/projects.yaml</a>. Each week an automated job
       searches GitHub, the news posts of{" "}
       <a href="https://pixelcherryninja.blogspot.com/">PixelCherryNinja</a>, the video source lists of{" "}
-      <a href="https://github.com/MrSujano/Sources/releases">MrSujano</a> and a few other feeds for new candidates, uses an AI model to sort out what is a real,
+      <a
+        href="https://github.com/MrSujano/Sources/releases"
+        class="sujano"
+        data-decode-hover="{x} stands for Subscribe To MrSujano"
+        data-decode-fill={JSON.stringify(ACRONYMS)}>MrSujano</a
+      > and a few other feeds for new candidates, uses an AI model to sort out what is a real,
       playable project, and opens a pull request. A human reviews every entry before it goes live — the AI only
       suggests.
     </p>
@@ -73,6 +84,12 @@ const repo = "https://github.com/alfaiotadev/recomp.party";
 </Base>
 
 <style>
+  .sujano {
+    font-family: var(--mono);
+    font-size: 0.92em;
+    color: var(--recomp);
+    text-decoration-color: rgb(124 240 197 / 0.4);
+  }
   .prose {
     max-width: 46rem;
   }

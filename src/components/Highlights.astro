@@ -266,40 +266,6 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   })();
 </script>
 
-<script is:inline>
-  // "Decode" word swap: scramble into noise, then settle letter by letter into a new word.
-  (() => {
-    const els = document.querySelectorAll(".decode[data-words]");
-    if (!els.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const GLYPHS = "!<>-_\\/[]{}=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const rand = (s) => s[Math.floor(Math.random() * s.length)];
-    for (const el of els) {
-      const words = JSON.parse(el.dataset.words);
-      let current = el.textContent;
-      const swap = () => {
-        let next;
-        do next = rand(words); while (next === current);
-        const from = current, len = Math.max(from.length, next.length);
-        const settleAt = Array.from({ length: len }, (_, i) => 6 + i * 2 + Math.floor(Math.random() * 6));
-        let frame = 0;
-        const step = () => {
-          let out = "";
-          for (let i = 0; i < len; i++) {
-            if (frame >= settleAt[i]) out += next[i] ?? "";
-            else if (frame < 3 && from[i]) out += from[i];
-            else out += i < next.length || frame < settleAt[i] - 3 ? rand(GLYPHS) : "";
-          }
-          el.textContent = out;
-          if (frame++ < settleAt[len - 1]) requestAnimationFrame(() => setTimeout(step, 60));
-          else (el.textContent = next), (current = next);
-        };
-        step();
-      };
-      setInterval(() => !document.hidden && swap(), 6000);
-    }
-  })();
-</script>
-
 <style>
   .hl {
     --arrow: 2.1rem;
