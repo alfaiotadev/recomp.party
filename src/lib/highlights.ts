@@ -65,26 +65,58 @@ export type PlatformOfWeek = {
   releases: number;
   projects: number;
   top: { entry: Entry; releases: number }[];
+  /** Weeks this platform has been #1 (over the release history we have), and its current run. */
+  weeksOnTop: number;
+  streak: number;
 };
 
-/** The original platform whose projects shipped the most releases in the last 7 days. */
-function platformOfWeek(): PlatformOfWeek | undefined {
+type WeekResult = { id: PlatformId; list: { entry: Entry; releases: number }[]; releases: number };
+
+/** The platform whose projects shipped the most releases in [start, end); ties go to more projects. */
+function winner(start: number, end: number): WeekResult | undefined {
   const perGame = games
-    .map((entry) => ({ entry, releases: (entry.snap?.releaseDates ?? []).filter((r) => Date.parse(r.date) >= weekAgo).length }))
+    .map((entry) => ({
+      entry,
+      releases: (entry.snap?.releaseDates ?? []).filter((r) => {
+        const t = Date.parse(r.date);
+        return t >= start && t < end;
+      }).length,
+    }))
     .filter((g) => g.releases > 0);
   const byPlatform = new Map<PlatformId, typeof perGame>();
   for (const g of perGame) byPlatform.set(g.entry.platform, [...(byPlatform.get(g.entry.platform) ?? []), g]);
   const sum = (l: typeof perGame) => l.reduce((n, g) => n + g.releases, 0);
   const best = [...byPlatform.entries()].sort((a, b) => sum(b[1]) - sum(a[1]) || b[1].length - a[1].length)[0];
-  if (!best) return undefined;
-  const [id, list] = best;
+  return best && { id: best[0], list: best[1], releases: sum(best[1]) };
+}
+
+/**
+ * The original platform whose projects shipped the most releases in the last 7 days, plus how often
+ * it has won before. Past weeks are recomputed from today's list, so projects added later count too.
+ */
+function platformOfWeek(): PlatformOfWeek | undefined {
+  const current = winner(weekAgo, now);
+  if (!current) return undefined;
+  const HISTORY_WEEKS = 104;
+  let weeksOnTop = 0;
+  let streak = 0;
+  let unbroken = true;
+  for (let k = 0; k < HISTORY_WEEKS; k++) {
+    const w = winner(now - (k + 1) * 7 * DAY, now - k * 7 * DAY);
+    const won = w?.id === current.id;
+    if (won) weeksOnTop++;
+    if (unbroken && won) streak++;
+    else unbroken = false;
+  }
   return {
-    id,
-    name: PLATFORMS[id],
-    logo: platformLogo(id),
-    releases: sum(list),
-    projects: list.length,
-    top: list.sort((a, b) => b.releases - a.releases).slice(0, 4),
+    id: current.id,
+    name: PLATFORMS[current.id],
+    logo: platformLogo(current.id),
+    releases: current.releases,
+    projects: current.list.length,
+    top: current.list.sort((a, b) => b.releases - a.releases).slice(0, 4),
+    weeksOnTop,
+    streak,
   };
 }
 

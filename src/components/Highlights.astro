@@ -83,6 +83,10 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                 <p class="mono">
                   <span class="glow">{platform.releases}</span> releases · {platform.projects} {platform.projects === 1 ? "project" : "projects"}
                 </p>
+                <p class="mono weeks">
+                  #1 for <b>{platform.weeksOnTop}</b> {platform.weeksOnTop === 1 ? "week" : "weeks"} in total
+                  {platform.streak > 1 && <> · {platform.streak} in a row</>}
+                </p>
               </div>
             </header>
             <ol class="items">
@@ -356,6 +360,15 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     margin: 0.6rem 0 0;
     font-size: 0.8rem;
     color: var(--muted);
+  }
+  .plat-hero .weeks {
+    margin-top: 0.25rem;
+    font-size: 0.72rem;
+    color: var(--faint);
+  }
+  .plat-hero .weeks b {
+    color: var(--port);
+    font-weight: 600;
   }
   .plat-name {
     font-size: 1.6rem;
