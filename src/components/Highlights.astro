@@ -31,7 +31,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                   <li>
                     <a href={r.entry.kind === "tool" ? r.entry.url : entryPath(r.entry)} class={`item ${r.entry.kind}`}>
                       <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
-                      <span class="big mono">{r.value}</span>
+                      <span class="big mono">{r.value}{r.growth && <span class="star"> ★</span>}</span>
+                      {r.growth && <span class="growth mono">{r.growth}</span>}
                       <strong>{r.entry.game}</strong>
                       <span class="meta mono">
                         {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[r.entry.platform]} /> : PLATFORMS[r.entry.platform]}
@@ -341,6 +342,15 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   .item.port .big {
     color: var(--port);
     text-shadow: 0 0 14px rgb(255 179 92 / 0.4);
+  }
+  .big .star {
+    font-size: 0.75em;
+    opacity: 0.8;
+  }
+  .growth {
+    font-size: 0.66rem;
+    color: var(--muted);
+    margin: -0.1rem 0 0.2rem;
   }
   .meta {
     margin-top: auto;

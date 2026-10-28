@@ -6,11 +6,14 @@ const DAY = 86_400_000;
 const now = Date.now();
 const weekAgo = now - 7 * DAY;
 
-export type Riser = { entry: Entry; value: string; detail: string };
+/** `value` is the headline (stars gained), `growth` the gain relative to the star count at the start. */
+export type Riser = { entry: Entry; value: string; detail: string; growth?: string };
 
 /**
- * Stars gained over the last week, from the daily counts fetch.ts records in data/stars.json.
- * Until there are a few days of history, rank young repos by stars per day since creation instead.
+ * Stars gained over the last week, from the daily counts fetch.ts records in data/stars.json
+ * (GitHub no longer lists stargazers, so there is no way to backfill). With less than a week of
+ * history the available span is used and labelled; with a single day, young repos are ranked by
+ * stars per day since creation instead.
  */
 function risers(): { title: string; note: string; items: Riser[] } {
   const all = [...games, ...tools];
@@ -20,14 +23,27 @@ function risers(): { title: string; note: string; items: Riser[] } {
   const base = dates.filter((d) => d <= target).at(-1) ?? dates[0];
   const spanDays = base ? Math.round((now - Date.parse(base)) / DAY) : 0;
 
-  if (base && spanDays >= 3) {
+  if (base && spanDays >= 1) {
+    const span = spanDays >= 7 ? "7 days" : spanDays === 1 ? "1 day" : `${spanDays} days`;
+    const pct = (gain: number, before: number) => {
+      const p = (gain / Math.max(1, before)) * 100;
+      return p >= 10 ? Math.round(p).toString() : p.toFixed(1);
+    };
     const items = all
-      .map((entry) => ({ entry, delta: (entry.snap?.stars ?? 0) - (history[base]?.[entry.repo] ?? entry.snap?.stars ?? 0) }))
+      .map((entry) => {
+        const before = history[base]?.[entry.repo];
+        return { entry, before, delta: before === undefined ? 0 : (entry.snap?.stars ?? 0) - before };
+      })
       .filter((r) => r.delta > 0)
       .sort((a, b) => b.delta - a.delta)
       .slice(0, 5)
-      .map(({ entry, delta }) => ({ entry, value: `+${delta.toLocaleString("en")}`, detail: `★ ${entry.snap!.stars.toLocaleString("en")}` }));
-    return { title: "Rising stars", note: spanDays >= 7 ? "most stars gained in 7 days" : `most stars gained in ${spanDays} days`, items };
+      .map(({ entry, delta, before }) => ({
+        entry,
+        value: `+${delta.toLocaleString("en")}`,
+        detail: `★ ${entry.snap!.stars.toLocaleString("en")}`,
+        growth: `▲ ${pct(delta, before!)}% in ${span}`,
+      }));
+    if (items.length) return { title: "Rising stars", note: `stars gained in the last ${span}`, items };
   }
 
   const items = all
