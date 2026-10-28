@@ -1,6 +1,23 @@
 ---
 import Base from "../layouts/Base.astro";
 const repo = "https://github.com/alfaiotadev/recomp.party";
+/** Pixel cherries for the PixelCherryNinja credit, drawn on a 12×10 grid (one rect per pixel). */
+const CHERRY_PALETTE: Record<string, string> = { r: "#e8383d", d: "#a51f2a", w: "#ffffff", s: "#8a5a2b", g: "#46b04a" };
+const CHERRY = [
+  ".......ssgg.",
+  "......s.s.g.",
+  ".....s..s...",
+  "....s...s...",
+  "...s....s...",
+  "..s....rr...",
+  ".rr...rwrr..",
+  "rwrr..rrrd..",
+  "rrrd...dd...",
+  ".dd.........",
+];
+const cherryPixels = CHERRY.flatMap((row, y) =>
+  [...row].flatMap((c, x) => (CHERRY_PALETTE[c] ? [{ x, y, fill: CHERRY_PALETTE[c] }] : [])),
+);
 /** MrSujano's running joke: every acronym "stands for Subscribe To MrSujano". Keep these harmless. */
 const ACRONYMS = [
   "RPG", "JRPG", "FPS", "NPC", "DLC", "HUD", "MMO", "RTS", "CRT", "ROM", "RAM", "VRAM", "CPU", "GPU", "FMV", "VGA",
@@ -45,7 +62,11 @@ const ACRONYMS = [
     <p>
       The list lives in <a href={`${repo}/blob/main/data/projects.yaml`}>data/projects.yaml</a>. Each week an automated job
       searches GitHub, the news posts of{" "}
-      <a href="https://pixelcherryninja.blogspot.com/">PixelCherryNinja</a>, the video source lists of{" "}
+      <a href="https://pixelcherryninja.blogspot.com/" class="pcn"
+        >PixelCherryNinja<svg class="cherry" viewBox="0 0 12 10" shape-rendering="crispEdges" aria-hidden="true"
+          >{cherryPixels.map((p) => <rect x={p.x} y={p.y} width="1.02" height="1.02" fill={p.fill} />)}</svg
+        ></a
+      >, the video source lists of{" "}
       <a
         href="https://github.com/MrSujano/Sources/releases"
         class="sujano"
@@ -84,6 +105,38 @@ const ACRONYMS = [
 </Base>
 
 <style>
+  /* tribute to PixelCherryNinja: logo yellow + pixel cherries */
+  .pcn {
+    font-family: var(--mono);
+    font-size: 0.92em;
+    color: #f7c948;
+    text-decoration-color: rgb(247 201 72 / 0.4);
+    white-space: nowrap;
+  }
+  .pcn:hover {
+    text-shadow: 0 0 10px rgb(247 201 72 / 0.45);
+  }
+  .cherry {
+    display: inline-block;
+    width: 1.2em;
+    height: 1em;
+    margin-left: 0.25em;
+    vertical-align: -0.1em;
+    filter: drop-shadow(0 0 3px rgb(232 56 61 / 0.45));
+  }
+  .pcn:hover .cherry {
+    animation: cherry-bounce 0.5s steps(3) 2;
+  }
+  @keyframes cherry-bounce {
+    50% {
+      transform: translateY(-0.18em) rotate(-8deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pcn:hover .cherry {
+      animation: none;
+    }
+  }
   .sujano {
     font-family: var(--mono);
     font-size: 0.92em;
