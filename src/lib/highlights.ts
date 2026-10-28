@@ -62,7 +62,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
   return { title: "Rising stars", note: "stars per day since the repo was created", items };
 }
 
-function newReleases(): { title: string; note: string; items: Entry[] } {
+function newReleases(): { title: string; note: string; items: Entry[]; more: number } {
   const since = (days: number) => games.filter((g) => g.firstReleaseAt && Date.parse(g.firstReleaseAt) >= now - days * DAY);
   let days = 7;
   let list = since(days);
@@ -71,6 +71,8 @@ function newReleases(): { title: string; note: string; items: Entry[] } {
     title: days === 7 ? "New this week" : "New in the last two weeks",
     note: "first playable release",
     items: list.sort((a, b) => b.firstReleaseAt!.localeCompare(a.firstReleaseAt!)).slice(0, 5),
+    /** Earlier releases in the same window that don't fit on the cards. */
+    more: Math.max(0, list.length - 5),
   };
 }
 

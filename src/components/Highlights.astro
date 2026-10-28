@@ -8,6 +8,12 @@ const slides = [
   fresh.items.length && { id: "fresh", label: fresh.title },
   platform && { id: "platform", label: "Platform of the week" },
 ].filter(Boolean) as { id: string; label: string }[];
+/** Rotated by the decode animation in "+N awesome releases before these". */
+const ADJECTIVES = [
+  "awesome", "glorious", "native", "shiny", "legendary", "tubular", "radical", "pixel-perfect",
+  "buttery-smooth", "60-fps", "widescreen", "turbo", "delightful", "bodacious", "spicy", "lovingly-ported",
+  "nostalgic", "crunchy", "blast-processed", "uncapped",
+];
 const mini = (id: Parameters<typeof platformLogo>[0]) => {
   const l = platformLogo(id);
   return l && { src: l.src, ...fitLogo(l, 56, 13) };
@@ -50,6 +56,12 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <header>
               <p class="eyebrow">{fresh.note}</p>
               <h2>{fresh.title}</h2>
+              {fresh.more > 0 && (
+                <a class="more-new mono" href="/#all-games">
+                  +{fresh.more} <span class="decode" data-words={JSON.stringify(ADJECTIVES)}>awesome</span>{" "}
+                  {fresh.more === 1 ? "release" : "releases"} before these
+                </a>
+              )}
             </header>
             <ol class="items">
               {fresh.items.map((g) => {
@@ -235,6 +247,40 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   })();
 </script>
 
+<script is:inline>
+  // "Decode" word swap: scramble into noise, then settle letter by letter into a new word.
+  (() => {
+    const els = document.querySelectorAll(".decode[data-words]");
+    if (!els.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const GLYPHS = "!<>-_\\/[]{}=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const rand = (s) => s[Math.floor(Math.random() * s.length)];
+    for (const el of els) {
+      const words = JSON.parse(el.dataset.words);
+      let current = el.textContent;
+      const swap = () => {
+        let next;
+        do next = rand(words); while (next === current);
+        const from = current, len = Math.max(from.length, next.length);
+        const settleAt = Array.from({ length: len }, (_, i) => 6 + i * 2 + Math.floor(Math.random() * 6));
+        let frame = 0;
+        const step = () => {
+          let out = "";
+          for (let i = 0; i < len; i++) {
+            if (frame >= settleAt[i]) out += next[i] ?? "";
+            else if (frame < 3 && from[i]) out += from[i];
+            else out += i < next.length || frame < settleAt[i] - 3 ? rand(GLYPHS) : "";
+          }
+          el.textContent = out;
+          if (frame++ < settleAt[len - 1]) requestAnimationFrame(() => setTimeout(step, 28));
+          else (el.textContent = next), (current = next);
+        };
+        step();
+      };
+      setInterval(() => !document.hidden && swap(), 3200);
+    }
+  })();
+</script>
+
 <style>
   .hl {
     --arrow: 2.1rem;
@@ -278,6 +324,21 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   .slide header .eyebrow {
     margin: 0;
     color: var(--recomp);
+  }
+  .more-new {
+    display: inline-block;
+    margin-top: 0.7rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .more-new:hover {
+    color: var(--fg);
+  }
+  .decode {
+    color: var(--recomp);
+    text-shadow: 0 0 10px rgb(124 240 197 / 0.45);
+    white-space: nowrap;
   }
   .items {
     list-style: none;
