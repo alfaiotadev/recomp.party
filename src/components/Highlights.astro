@@ -1,0 +1,329 @@
+---
+import { ago, entryPath, fitLogo, PLATFORMS, platformLogo } from "../lib/data.ts";
+import { highlights } from "../lib/highlights.ts";
+
+const { risers, fresh, platform } = highlights;
+const slides = [
+  risers.items.length && { id: "rising", label: risers.title },
+  fresh.items.length && { id: "fresh", label: fresh.title },
+  platform && { id: "platform", label: "Platform of the week" },
+].filter(Boolean) as { id: string; label: string }[];
+const mini = (id: Parameters<typeof platformLogo>[0]) => {
+  const l = platformLogo(id);
+  return l && { src: l.src, ...fitLogo(l, 56, 13) };
+};
+---
+
+{
+  slides.length > 0 && (
+    <section class="hl" aria-roledescription="carousel" aria-label="This week">
+      <div class="hl-track" id="hl-track" tabindex="0">
+        {risers.items.length > 0 && (
+          <article class="slide" id="hl-rising" aria-label={risers.title}>
+            <header>
+              <p class="eyebrow">{risers.note}</p>
+              <h2>{risers.title}</h2>
+            </header>
+            <ol class="items">
+              {risers.items.map((r, i) => {
+                const logo = mini(r.entry.platform);
+                return (
+                  <li>
+                    <a href={r.entry.kind === "tool" ? r.entry.url : entryPath(r.entry)} class={`item ${r.entry.kind}`}>
+                      <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
+                      <span class="big mono">{r.value}</span>
+                      <strong>{r.entry.game}</strong>
+                      <span class="meta mono">
+                        {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[r.entry.platform]} /> : PLATFORMS[r.entry.platform]}
+                        <span>{r.detail}</span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          </article>
+        )}
+        {fresh.items.length > 0 && (
+          <article class="slide" id="hl-fresh" aria-label={fresh.title}>
+            <header>
+              <p class="eyebrow">{fresh.note}</p>
+              <h2>{fresh.title}</h2>
+            </header>
+            <ol class="items">
+              {fresh.items.map((g) => {
+                const logo = mini(g.platform);
+                return (
+                  <li>
+                    <a href={entryPath(g)} class={`item ${g.kind}`}>
+                      <span class={`badge ${g.kind}`}>{g.kind}</span>
+                      <strong>{g.game}</strong>
+                      <span class="meta mono">
+                        {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[g.platform]} /> : PLATFORMS[g.platform]}
+                        <span>{ago(g.firstReleaseAt)}</span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          </article>
+        )}
+        {platform && (
+          <article class="slide plat-slide" id="hl-platform" aria-label="Platform of the week">
+            <header>
+              <p class="eyebrow">most releases in 7 days</p>
+              <h2>Platform of the week</h2>
+              <div class="plat-hero">
+                {platform.logo ? (
+                  <img class="logo-img" src={platform.logo.src} {...(() => { const b = fitLogo(platform.logo!, 220, 56); return { width: b.w, height: b.h }; })()} alt={platform.name} />
+                ) : (
+                  <span class="plat-name">{platform.name}</span>
+                )}
+                <p class="mono">
+                  <span class="glow">{platform.releases}</span> releases · {platform.projects} {platform.projects === 1 ? "project" : "projects"}
+                </p>
+              </div>
+            </header>
+            <ol class="items">
+              {platform.top.map((t) => (
+                <li>
+                  <a href={entryPath(t.entry)} class={`item ${t.entry.kind}`}>
+                    <span class="big mono">{t.releases}×</span>
+                    <strong>{t.entry.game}</strong>
+                    <span class="meta mono">
+                      <span>{t.entry.repo.split("/")[0]}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </article>
+        )}
+      </div>
+      <div class="hl-nav" hidden id="hl-nav">
+        <button type="button" class="arrow" data-dir="-1" aria-label="Previous">←</button>
+        <div class="dots" role="tablist">
+          {slides.map((s, i) => (
+            <button type="button" role="tab" class="dot" data-i={i} aria-label={s.label} aria-selected={i === 0 ? "true" : "false"} />
+          ))}
+        </div>
+        <button type="button" class="arrow" data-dir="1" aria-label="Next">→</button>
+      </div>
+    </section>
+  )
+}
+
+<script is:inline>
+  (() => {
+    const track = document.getElementById("hl-track");
+    const nav = document.getElementById("hl-nav");
+    if (!track || !nav) return;
+    const slides = [...track.children];
+    const dots = [...nav.querySelectorAll(".dot")];
+    nav.hidden = slides.length < 2;
+    let i = 0;
+    const go = (n, smooth = true) => {
+      i = (n + slides.length) % slides.length;
+      track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: smooth ? "smooth" : "auto" });
+    };
+    track.addEventListener("scroll", () => {
+      const n = Math.round(track.scrollLeft / track.clientWidth);
+      if (n !== i) i = n;
+      dots.forEach((d, k) => d.setAttribute("aria-selected", String(k === i)));
+    }, { passive: true });
+    nav.addEventListener("click", (ev) => {
+      const b = ev.target.closest("button");
+      if (!b) return;
+      go(b.dataset.dir ? i + Number(b.dataset.dir) : Number(b.dataset.i));
+      restart();
+    });
+    let timer;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const restart = () => {
+      clearInterval(timer);
+      if (!reduce && slides.length > 1) timer = setInterval(() => go(i + 1), 7000);
+    };
+    const host = track.parentElement;
+    host.addEventListener("pointerenter", () => clearInterval(timer));
+    host.addEventListener("pointerleave", restart);
+    host.addEventListener("focusin", () => clearInterval(timer));
+    host.addEventListener("focusout", restart);
+    restart();
+  })();
+</script>
+
+<style>
+  .hl {
+    margin-top: 1.4rem;
+    position: relative;
+  }
+  .hl-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background:
+      linear-gradient(120deg, rgb(124 240 197 / 0.06), transparent 40%),
+      var(--surface);
+  }
+  .hl-track::-webkit-scrollbar {
+    display: none;
+  }
+  .slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: grid;
+    grid-template-columns: minmax(180px, 230px) 1fr;
+    gap: 1.5rem;
+    padding: 1.3rem 1.4rem 1.4rem;
+    min-height: 168px;
+  }
+  @media (max-width: 760px) {
+    .slide {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+  }
+  .slide header h2 {
+    margin: 0.3rem 0 0;
+    font-size: 1.35rem;
+  }
+  .slide header .eyebrow {
+    margin: 0;
+    color: var(--recomp);
+  }
+  .items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.6rem;
+  }
+  .item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 100%;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: rgb(11 13 20 / 0.55);
+    text-decoration: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .item.recomp:hover,
+  .item.tool:hover {
+    border-color: rgb(124 240 197 / 0.45);
+    box-shadow: 0 6px 24px -12px rgb(124 240 197 / 0.5);
+  }
+  .item.port:hover {
+    border-color: rgb(255 179 92 / 0.45);
+    box-shadow: 0 6px 24px -12px rgb(255 179 92 / 0.5);
+  }
+  .item strong {
+    font-size: 0.92rem;
+    line-height: 1.25;
+  }
+  .item .badge {
+    align-self: flex-start;
+  }
+  .rank {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.75rem;
+    font-size: 0.68rem;
+    color: var(--faint);
+  }
+  .big {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+  .item.recomp .big,
+  .item.tool .big {
+    color: var(--recomp);
+    text-shadow: 0 0 14px rgb(124 240 197 / 0.4);
+  }
+  .item.port .big {
+    color: var(--port);
+    text-shadow: 0 0 14px rgb(255 179 92 / 0.4);
+  }
+  .meta {
+    margin-top: auto;
+    padding-top: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+  .meta img {
+    opacity: 0.55;
+  }
+  .plat-hero {
+    margin-top: 1rem;
+  }
+  .plat-hero img {
+    opacity: 0.9;
+    filter: brightness(0) invert(1) drop-shadow(0 0 10px rgb(124 240 197 / 0.35));
+  }
+  .plat-hero p {
+    margin: 0.6rem 0 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .plat-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .hl-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+  .hl-nav[hidden] {
+    display: none;
+  }
+  .arrow {
+    font: inherit;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.15rem 0.55rem;
+    cursor: pointer;
+  }
+  .arrow:hover {
+    color: var(--fg);
+    border-color: var(--faint);
+  }
+  .dots {
+    display: flex;
+    gap: 0.35rem;
+  }
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border-radius: 50%;
+    border: 0;
+    background: var(--line);
+    cursor: pointer;
+  }
+  .dot[aria-selected="true"] {
+    background: var(--recomp);
+    box-shadow: 0 0 8px var(--recomp);
+    width: 1.3rem;
+    border-radius: 4px;
+  }
+</style>

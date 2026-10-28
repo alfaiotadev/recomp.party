@@ -114,3 +114,7 @@ export const Rejected = z.array(
   }),
 );
 export type Rejected = z.infer<typeof Rejected>;
+
+/** data/stars.json — daily star counts (UTC date → repo → stars), last ~35 days. GitHub hides stargazer lists. */
+export const StarHistory = z.record(z.iso.date(), z.record(z.string(), z.number()));
+export type StarHistory = z.infer<typeof StarHistory>;

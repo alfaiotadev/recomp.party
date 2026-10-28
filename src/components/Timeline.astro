@@ -1,6 +1,6 @@
 ---
-import { shortDate, type Entry } from "../lib/data.ts";
-import { AXIS_H, layout, NAME_X, views, W } from "../lib/timeline.ts";
+import { ago, entryPath, shortDate, type Entry } from "../lib/data.ts";
+import { AXIS_H, layout, NAME_W, NAME_X, SORTS, views, W } from "../lib/timeline.ts";
 
 interface Props {
   games: Entry[];
@@ -25,12 +25,19 @@ const defaultView = "1y";
     <span class="sw recomp"></span> static recompilation
     <span class="sw port"></span> source port
     <span class="sw pre"></span> pre-release
-    — each row runs from a project's first release to its latest one.
+    {" "}<span class="legend-note">— each row runs from a project's first release to its latest one.</span>
   </p>
   <div class="tl-views">
     {
       layouts.map((l) => (
         <div class="tl-view" data-view={l.view.id}>
+          <div class="tl-inner">
+          <label class="tl-sort" hidden style={`left:${(NAME_X / W) * 100}%;width:${(NAME_W / W) * 100}%;height:${(AXIS_H / l.height) * 100}%`}>
+            <span>sort</span>
+            <select aria-label="Sort projects within each platform">
+              {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
+            </select>
+          </label>
           <svg viewBox={`0 0 ${W} ${l.height}`} role="img" aria-label={`${l.view.label}: releases per platform`}>
             {l.lanes.map((lane, i) => (
               <g class="lane">
@@ -60,29 +67,152 @@ const defaultView = "1y";
             <line class="now" x1={l.nowX} x2={l.nowX} y1={AXIS_H - 4} y2={l.height} />
             {l.lanes.flatMap((lane, i) =>
               lane.rows.map((r) => (
-                <a href={r.href} class={`row ${r.entry.kind}${i % 2 ? " odd" : ""}`}>
-                  <title>
-                    {`${r.entry.game} — ${r.entry.repo}\nfirst release ${shortDate(r.entry.firstReleaseAt!)}, latest ${shortDate(r.entry.latestReleaseAt!)} (${r.entry.snap?.releaseCount} releases)`}
-                  </title>
-                  <rect class="hit" x="0" y={r.y - 9} width={W} height="18" />
-                  {r.guide && <line class="guide" x1={r.guide.x1} x2={r.guide.x2} y1={r.y} y2={r.y} />}
-                  <line class="bar" x1={r.x1} x2={r.x2} y1={r.y} y2={r.y} />
-                  {r.clipped && <path class="bar-clip" d={`M${r.x1 + 6} ${r.y - 4} L${r.x1} ${r.y} L${r.x1 + 6} ${r.y + 4}`} />}
+                <a
+                  href={r.href}
+                  class={`row ${r.entry.kind}${i % 2 ? " odd" : ""}`}
+                  style={`transform:translateY(${r.y}px)`}
+                  aria-label={`${r.entry.game} (${r.entry.repo})`}
+                  data-slots={JSON.stringify(r.slots)}
+                  data-game={r.entry.game}
+                  data-repo={r.entry.repo}
+                  data-kind={r.entry.kind}
+                  data-first={shortDate(r.entry.firstReleaseAt!)}
+                  data-latest={shortDate(r.entry.latestReleaseAt!)}
+                  data-count={r.entry.snap?.releaseCount ?? 0}
+                  data-stars={(r.entry.snap?.stars ?? 0).toLocaleString("en")}
+                  data-tool={r.entry.tool ?? ""}
+                >
+                  <rect class="hit" x="0" y="-9" width={W} height="18" />
+                  {r.guide && <line class="guide" x1={r.guide.x1} x2={r.guide.x2} y1="0" y2="0" />}
+                  <line class="bar" x1={r.x1} x2={r.x2} y1="0" y2="0" />
+                  {r.clipped && <path class="bar-clip" d={`M${r.x1 + 6} -4 L${r.x1} 0 L${r.x1 + 6} 4`} />}
                   {r.dots.map((d) => (
-                    <circle class={d.prerelease ? "dot pre" : "dot"} cx={d.x} cy={r.y} r="3.2" />
+                    <circle class={d.prerelease ? "dot pre" : "dot"} cx={d.x} cy="0" r="3.2" />
                   ))}
-                  <text class="label" x={NAME_X} y={r.y + 4}>
+                  <text class="label" x={NAME_X} y="4">
                     {r.name}
                   </text>
                 </a>
               )),
             )}
           </svg>
+          </div>
+          <div class="tl-m">
+            <label class="tl-sort m-sort" hidden>
+              <span>sort</span>
+              <select aria-label="Sort projects within each platform">
+                {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
+              </select>
+            </label>
+            {l.lanes.map((lane) => (
+              <div class="m-lane">
+                <div class="m-head">
+                  <div class="m-plat">
+                    {lane.logo ? <img class="logo-img" src={lane.logo.src} width={lane.logo.w * 0.85} height={lane.logo.h * 0.85} alt={lane.name} /> : <strong>{lane.name}</strong>}
+                    <span class="m-count">{lane.rows.length} {lane.rows.length === 1 ? "project" : "projects"}</span>
+                  </div>
+                  <div class="m-axis" aria-hidden="true">
+                    {l.mobile.ticks.filter((tk, k) => tk.major || l.view.ticks === "year" || k % 2 === 0).map((tk) => (
+                      <span style={`left:${tk.p}%`}>{tk.label.replace(/ \d{4}$/, "")}</span>
+                    ))}
+                  </div>
+                </div>
+                <ol class="m-rows">
+                  <li class="m-grid" aria-hidden="true">
+                    {l.mobile.ticks.map((tk) => <span class={tk.major ? "major" : ""} style={`left:${tk.p}%`} />)}
+                    <span class="m-now" style={`left:${l.mobile.now}%`} />
+                  </li>
+                  {lane.rows.map((r) => (
+                    <li class={`m-row ${r.entry.kind}`} style={`order:${r.ranks.first + 1}`} data-ranks={JSON.stringify(r.ranks)}>
+                      <a href={entryPath(r.entry)}>
+                        <span class="m-name">{r.entry.game}</span>
+                        <span class="m-when">{ago(r.entry.latestReleaseAt)}</span>
+                        <span class="m-track">
+                          {r.clipped && <span class="m-clip" />}
+                          <span class="m-bar" style={`left:${r.pct.x1}%;width:${Math.max(0, r.pct.x2 - r.pct.x1)}%`} />
+                          {r.pct.dots.map((d) => (
+                            <span class={d.prerelease ? "m-dot pre" : "m-dot"} style={`left:${d.x}%`} />
+                          ))}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ))}
+          </div>
         </div>
       ))
     }
   </div>
+  <div class="tl-tip" id="tl-tip" role="tooltip" hidden></div>
 </section>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector(".timeline");
+    if (!root) return;
+    const rows = [...root.querySelectorAll("a.row")];
+    const mrows = [...root.querySelectorAll("li.m-row")];
+
+    // --- sorting: rows move between precomputed slots; platform lanes stay fixed
+    const selects = [...root.querySelectorAll(".tl-sort select")];
+    const apply = (key) => {
+      for (const r of rows) r.style.transform = `translateY(${JSON.parse(r.dataset.slots)[key]}px)`;
+      for (const m of mrows) m.style.order = JSON.parse(m.dataset.ranks)[key] + 1;
+      for (const s of selects) s.value = key;
+      try { localStorage.setItem("tl-sort", key); } catch {}
+    };
+    for (const s of selects) {
+      s.closest(".tl-sort").hidden = false;
+      s.addEventListener("change", () => apply(s.value));
+    }
+    let saved = null;
+    try { saved = localStorage.getItem("tl-sort"); } catch {}
+    if (saved && saved !== "first" && selects[0]?.querySelector(`option[value="${saved}"]`)) {
+      root.classList.add("no-anim");
+      apply(saved);
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
+    }
+
+    // --- tooltip
+    const tip = document.getElementById("tl-tip");
+    const kinds = { recomp: "Static recompilation", port: "Source port" };
+    const line = (cls, text) => {
+      const el = document.createElement("div");
+      el.className = cls;
+      el.textContent = text;
+      return el;
+    };
+    const fill = (d) => {
+      tip.replaceChildren(
+        line("t-kind " + d.kind, kinds[d.kind] + (d.tool ? " · " + d.tool : "")),
+        line("t-game", d.game),
+        line("t-repo", d.repo),
+        line("t-meta", `${d.first} → ${d.latest}`),
+        line("t-meta", `${d.count} releases · ★ ${d.stars}`),
+      );
+      tip.hidden = false;
+    };
+    const place = (x, y) => {
+      const pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+      const left = x + pad + w > innerWidth - 8 ? x - pad - w : x + pad;
+      const top = y + pad + h > innerHeight - 8 ? y - pad - h : y + pad;
+      tip.style.transform = `translate(${Math.max(8, left)}px, ${Math.max(8, top)}px)`;
+    };
+    for (const r of rows) {
+      r.addEventListener("pointerenter", () => fill(r.dataset));
+      r.addEventListener("pointermove", (e) => place(e.clientX, e.clientY));
+      r.addEventListener("pointerleave", () => (tip.hidden = true));
+      r.addEventListener("focus", () => {
+        fill(r.dataset);
+        const b = r.getBoundingClientRect();
+        place(b.left + b.width * 0.3, b.top + b.height / 2);
+      });
+      r.addEventListener("blur", () => (tip.hidden = true));
+    }
+  })();
+</script>
 
 <style>
   .timeline > input {
@@ -140,6 +270,9 @@ const defaultView = "1y";
   .tl-view {
     display: none;
     overflow-x: auto;
+  }
+  .tl-view svg {
+    min-width: 0;
   }
   #tl-3m:checked ~ .tl-views [data-view="3m"],
   #tl-1y:checked ~ .tl-views [data-view="1y"],
@@ -215,12 +348,104 @@ const defaultView = "1y";
     stroke-width: 1.5;
     filter: drop-shadow(0 0 3px var(--accent));
   }
+  .tl-inner {
+    position: relative;
+    min-width: 900px;
+  }
+  .tl-sort {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--faint);
+  }
+  .tl-sort[hidden] {
+    display: none;
+  }
+  .tl-sort select {
+    font: inherit;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 0.1rem 0.35rem;
+    cursor: pointer;
+  }
+  .tl-sort select:hover,
+  .tl-sort select:focus {
+    border-color: rgb(124 240 197 / 0.5);
+    outline: none;
+  }
+  .row {
+    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .no-anim .row {
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .row {
+      transition: none;
+    }
+  }
+  .tl-tip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    pointer-events: none;
+    max-width: 300px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: rgb(18 22 36 / 0.92);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.7);
+    font-size: 0.8rem;
+  }
+  .tl-tip[hidden] {
+    display: none;
+  }
+  .tl-tip :global(.t-kind) {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .tl-tip :global(.t-kind.recomp) {
+    color: var(--recomp);
+  }
+  .tl-tip :global(.t-kind.port) {
+    color: var(--port);
+  }
+  .tl-tip :global(.t-game) {
+    font-weight: 650;
+    font-size: 0.92rem;
+    line-height: 1.3;
+    margin: 0.15rem 0 0.1rem;
+  }
+  .tl-tip :global(.t-repo),
+  .tl-tip :global(.t-meta) {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .tl-tip :global(.t-repo) {
+    color: var(--faint);
+    margin-bottom: 0.35rem;
+  }
   .row .hit {
     fill: transparent;
   }
   .row:hover .hit,
   .row:focus-visible .hit {
-    fill: var(--hover);
+    fill: currentColor;
+    fill-opacity: 0.06;
+  }
+  .row:focus-visible {
+    outline: none;
   }
   .bar {
     stroke-width: 2.5;
@@ -287,5 +512,183 @@ const defaultView = "1y";
   }
   .row:hover .bar {
     opacity: 0.9;
+  }
+
+  /* ---- phone layout: one card per project with a full-width mini timeline ---- */
+  .tl-m {
+    display: none;
+  }
+  @media (max-width: 760px) {
+    .tl-inner {
+      display: none;
+    }
+    .tl-m {
+      display: block;
+    }
+    .tl-views,
+    .tl-view {
+      overflow: visible;
+    }
+    .tl-views {
+      border: 0;
+      background: none;
+    }
+    .legend-note {
+      display: none;
+    }
+  }
+  .m-sort {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.6rem;
+  }
+  .m-lane {
+    margin-bottom: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .m-head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 0.65rem 0.8rem 0.35rem;
+    background: rgb(18 22 36 / 0.94);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    border-radius: 12px 12px 0 0;
+  }
+  .m-plat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+  .m-count {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--faint);
+  }
+  .m-axis {
+    position: relative;
+    height: 1rem;
+    margin-top: 0.45rem;
+  }
+  .m-axis span {
+    position: absolute;
+    top: 0;
+    transform: translateX(-2px);
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+  .m-rows {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0.2rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .m-grid {
+    position: absolute;
+    inset: 0 0.8rem;
+    pointer-events: none;
+  }
+  .m-grid span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--line);
+    opacity: 0.6;
+  }
+  .m-grid span.major {
+    opacity: 1;
+    background: var(--faint);
+  }
+  .m-grid .m-now {
+    background: var(--accent);
+    opacity: 0.8;
+    box-shadow: 0 0 4px var(--accent);
+  }
+  .m-row a {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.1rem 0.6rem;
+    padding: 0.45rem 0.8rem 0.5rem;
+    text-decoration: none;
+  }
+  .m-row a:active {
+    background: rgb(255 255 255 / 0.04);
+  }
+  .m-name {
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+  .m-when {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    align-self: center;
+  }
+  .m-track {
+    grid-column: 1 / -1;
+    position: relative;
+    height: 10px;
+  }
+  .m-bar {
+    position: absolute;
+    top: 4px;
+    height: 2px;
+    border-radius: 2px;
+    opacity: 0.55;
+  }
+  .m-dot {
+    position: absolute;
+    top: 1px;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    border-radius: 50%;
+  }
+  .m-dot.pre {
+    background: var(--surface) !important;
+    border: 1.5px solid;
+  }
+  .m-clip {
+    position: absolute;
+    left: -2px;
+    top: 2px;
+    width: 6px;
+    height: 6px;
+    border-left: 1.5px solid;
+    border-bottom: 1.5px solid;
+    transform: rotate(45deg);
+  }
+  .m-row.recomp .m-bar,
+  .m-row.recomp .m-dot {
+    background: var(--recomp);
+  }
+  .m-row.port .m-bar,
+  .m-row.port .m-dot {
+    background: var(--port);
+  }
+  .m-row.recomp .m-dot {
+    box-shadow: 0 0 5px rgb(124 240 197 / 0.6);
+  }
+  .m-row.port .m-dot {
+    box-shadow: 0 0 5px rgb(255 179 92 / 0.6);
+  }
+  .m-row.recomp :is(.m-dot.pre, .m-clip) {
+    border-color: var(--recomp);
+    color: var(--recomp);
+  }
+  .m-row.port :is(.m-dot.pre, .m-clip) {
+    border-color: var(--port);
+    color: var(--port);
   }
 </style>

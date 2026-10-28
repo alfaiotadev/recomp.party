@@ -1,5 +1,6 @@
 ---
 import GameCard from "../components/GameCard.astro";
+import Highlights from "../components/Highlights.astro";
 import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
 import { ago, fitLogo, games, generatedAt, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolUsers, tools } from "../lib/data.ts";
@@ -38,6 +39,8 @@ const toolStrip = tools.slice(0, 8);
     }
   </dl>
   <p class="refreshed mono">data refreshed {ago(generatedAt)}</p>
+
+  <Highlights />
 
   <Timeline games={games} />
 
@@ -154,6 +157,23 @@ const toolStrip = tools.slice(0, 8);
   @media (max-width: 720px) {
     .stats {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .stats div {
+      padding: 0.8rem 0.9rem;
+      justify-content: flex-end;
+    }
+    .stats dd {
+      font-size: 1.6rem;
+    }
+    .stats dt {
+      font-size: 0.65rem;
+    }
+    .filters,
+    .filters input {
+      width: 100%;
+    }
+    .filters select {
+      flex: 1;
     }
   }
   .stats div {

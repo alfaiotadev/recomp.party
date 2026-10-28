@@ -29,9 +29,9 @@ jobs:
       - run: npm run validate
       - name: Commit snapshot if it changed
         run: |
-          git diff --quiet data/snapshot.json && { echo "No changes."; exit 0; }
+          git diff --quiet data/snapshot.json data/stars.json && { echo "No changes."; exit 0; }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/snapshot.json
+          git add data/snapshot.json data/stars.json
           git commit -m "data: refresh snapshot"
           git push
