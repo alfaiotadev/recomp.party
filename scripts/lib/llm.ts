@@ -1,6 +1,7 @@
 /**
  * Tiny OpenAI-compatible chat client with a provider fallback chain.
  *
+ * (GitHub Models was retired on 2026-07-30; its endpoint now answers 200 "OK" without running a model.)
  * Every provider below exposes /chat/completions with the same request shape and has a free tier.
  * Providers whose key is not set are skipped; on rate limits, errors or unusable output the next one
  * is tried. With no keys at all, `chatJSON` returns null and callers fall back to heuristics.
@@ -12,13 +13,6 @@ type Provider = { name: string; url: string; model: string; key: string | undefi
 function providers(): Provider[] {
   const env = process.env;
   const list: Provider[] = [
-    {
-      name: "github-models",
-      url: "https://models.github.ai/inference/chat/completions",
-      model: env.GITHUB_MODELS_MODEL ?? "openai/gpt-4.1-mini",
-      // In Actions this is the workflow GITHUB_TOKEN (needs `permissions: models: read`).
-      key: env.GITHUB_MODELS_TOKEN ?? env.GITHUB_TOKEN,
-    },
     {
       name: "gemini",
       url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",

@@ -41,11 +41,11 @@ Astro static build  →  GitHub Pages  →  recomp.party
 ### AI-assisted discovery
 
 `scripts/lib/llm.ts` talks to any OpenAI-compatible endpoint and walks a chain of free tiers, skipping providers
-without a key and falling back on rate limits:
+without a key and falling back on rate limits. Add at least one key as an Actions secret; with none, discovery
+still runs but only reports candidates for manual review.
 
 | Provider | Secret(s) | Default model (override with env) |
 |---|---|---|
-| GitHub Models | none — uses the workflow `GITHUB_TOKEN` | `openai/gpt-4.1-mini` (`GITHUB_MODELS_MODEL`) |
 | Google Gemini | `GEMINI_API_KEY` (also enables web search with Google Search grounding) | `gemini-flash-latest` (`GEMINI_MODEL`) |
 | Groq | `GROQ_API_KEY` | `llama-3.3-70b-versatile` (`GROQ_MODEL`) |
 | Mistral | `MISTRAL_API_KEY` | `mistral-small-latest` (`MISTRAL_MODEL`) |

@@ -9,7 +9,6 @@ permissions:
   contents: write
   pull-requests: write
   issues: write
-  models: read
 
 concurrency:
   group: suggestion-${{ github.event.issue.number }}
