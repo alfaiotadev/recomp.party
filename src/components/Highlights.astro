@@ -8,6 +8,12 @@ const slides = [
   fresh.items.length && { id: "fresh", label: fresh.title },
   platform && { id: "platform", label: "Platform of the week" },
 ].filter(Boolean) as { id: string; label: string }[];
+/** GitHub's star (Primer Octicons star-16 / star-fill-16, MIT). */
+const STAR =
+  "M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z";
+const STAR_FILL =
+  "M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z";
+
 /** Rotated by the decode animation in "+N awesome releases before these". */
 const ADJECTIVES = [
   "awesome", "glorious", "native", "shiny", "legendary", "tubular", "radical", "pixel-perfect",
@@ -28,7 +34,10 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
           <article class="slide" id="hl-rising" aria-label={risers.title}>
             <header>
               <p class="eyebrow">{risers.note}</p>
-              <h2>{risers.title}</h2>
+              <h2 class="rs-title">
+                <svg class="star-fill" viewBox="0 0 16 16" aria-hidden="true"><path d={STAR_FILL} /></svg>
+                {risers.title}
+              </h2>
             </header>
             <ol class="items">
               {risers.items.map((r, i) => {
@@ -37,12 +46,22 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                   <li>
                     <a href={r.entry.kind === "tool" ? r.entry.url : entryPath(r.entry)} class={`item ${r.entry.kind}`}>
                       <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
-                      <span class="big mono">{r.value}{r.growth && <span class="star"> ★</span>}</span>
+                      <span class="big mono">
+                        {r.value}
+                        {r.growth && (
+                          <svg class="star-fill" viewBox="0 0 16 16" aria-label="stars">
+                            <path d={STAR_FILL} />
+                          </svg>
+                        )}
+                      </span>
                       {r.growth && <span class="growth mono">{r.growth}</span>}
                       <strong>{r.entry.game}</strong>
                       <span class="meta mono">
                         {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[r.entry.platform]} /> : PLATFORMS[r.entry.platform]}
-                        <span>{r.detail}</span>
+                        <span class="gh-star" title={`${r.stars.toLocaleString("en")} stars on GitHub`}>
+                          <svg viewBox="0 0 16 16" aria-hidden="true"><path d={STAR} /></svg>
+                          <span>{r.stars.toLocaleString("en")}</span>
+                        </span>
                       </span>
                     </a>
                   </li>
@@ -271,12 +290,12 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             else out += i < next.length || frame < settleAt[i] - 3 ? rand(GLYPHS) : "";
           }
           el.textContent = out;
-          if (frame++ < settleAt[len - 1]) requestAnimationFrame(() => setTimeout(step, 28));
+          if (frame++ < settleAt[len - 1]) requestAnimationFrame(() => setTimeout(step, 60));
           else (el.textContent = next), (current = next);
         };
         step();
       };
-      setInterval(() => !document.hidden && swap(), 3200);
+      setInterval(() => !document.hidden && swap(), 6000);
     }
   })();
 </script>
@@ -404,9 +423,49 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     color: var(--port);
     text-shadow: 0 0 14px rgb(255 179 92 / 0.4);
   }
-  .big .star {
-    font-size: 0.75em;
-    opacity: 0.8;
+  .big {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .star-fill {
+    width: 0.8em;
+    height: 0.8em;
+    fill: currentColor;
+    filter: drop-shadow(0 0 4px currentColor);
+    flex: none;
+  }
+  .rs-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .rs-title .star-fill {
+    width: 0.85em;
+    height: 0.85em;
+    color: #e3b341; /* GitHub's starred gold */
+  }
+  /* GitHub-style star counter pill */
+  .gh-star {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.1rem 0.45rem 0.1rem 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.03);
+    color: var(--muted);
+    font-size: 0.66rem;
+    line-height: 1.4;
+  }
+  .gh-star svg {
+    width: 0.8rem;
+    height: 0.8rem;
+    fill: currentColor;
+  }
+  .item:hover .gh-star {
+    color: #e3b341;
+    border-color: rgb(227 179 65 / 0.4);
   }
   .growth {
     font-size: 0.66rem;

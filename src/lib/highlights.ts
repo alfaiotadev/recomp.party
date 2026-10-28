@@ -7,7 +7,7 @@ const now = Date.now();
 const weekAgo = now - 7 * DAY;
 
 /** `value` is the headline (stars gained), `growth` the gain relative to the star count at the start. */
-export type Riser = { entry: Entry; value: string; detail: string; growth?: string };
+export type Riser = { entry: Entry; value: string; stars: number; growth?: string };
 
 /**
  * Stars gained over the last week, from the daily counts fetch.ts records in data/stars.json
@@ -40,7 +40,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
       .map(({ entry, delta, before }) => ({
         entry,
         value: `+${delta.toLocaleString("en")}`,
-        detail: `★ ${entry.snap!.stars.toLocaleString("en")}`,
+        stars: entry.snap!.stars,
         growth: `▲ ${pct(delta, before!)}% in ${span}`,
       }));
     if (items.length) return { title: "Rising stars", note: `stars gained in the last ${span}`, items };
@@ -57,7 +57,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
     .map(({ entry, perDay }) => ({
       entry,
       value: `${Math.round(perDay).toLocaleString("en")}/day`,
-      detail: `★ ${entry.snap!.stars.toLocaleString("en")}`,
+      stars: entry.snap!.stars,
     }));
   return { title: "Rising stars", note: "stars per day since the repo was created", items };
 }
