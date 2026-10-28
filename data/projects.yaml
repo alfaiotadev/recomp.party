@@ -13,6 +13,12 @@
   platform: snes
   kind: recomp
   added: 2026-10-28
+- repo: mstan/MegaManXSNESRecomp
+  game: Mega Man X
+  platform: snes
+  kind: recomp
+  tool: snesrecomp
+  added: 2026-10-28
 - repo: snesrev/zelda3
   game: "The Legend of Zelda: A Link to the Past"
   platform: snes
@@ -182,6 +188,12 @@
   platform: gc
   kind: recomp
   added: 2026-10-28
+- repo: Odrannnn/MetroidPrimePort
+  game: Metroid Prime
+  platform: gc
+  kind: port
+  based_on: [PrimeDecomp/prime]
+  added: 2026-10-28
 - repo: TwilitRealm/dusklight
   game: "The Legend of Zelda: Twilight Princess"
   platform: gc
@@ -190,10 +202,36 @@
   added: 2026-10-28
 
 # --- Wii -------------------------------------------------------------------------
+- repo: MiniBandit/MKW-3DS
+  game: Mario Kart Wii
+  platform: wii
+  kind: port
+  based_on: [dudewhat/MKW-3DS]
+  added: 2026-10-28
+- repo: keepvaibin/nebula
+  game: Super Mario Galaxy
+  platform: wii
+  kind: port
+  based_on: [SMGCommunity/Petari]
+  added: 2026-10-28
 - repo: Apolinario-coder/SkyRecomp
   game: "The Legend of Zelda: Skyward Sword"
   platform: wii
   kind: recomp
+  added: 2026-10-28
+
+# --- Wii U -----------------------------------------------------------------------
+- repo: centollOS/SwitchWakerHD
+  game: "The Legend of Zelda: The Wind Waker HD"
+  platform: wiiu
+  kind: recomp
+  based_on: [ZeldaWWHDRecomp/ZeldaWWHDRecomp]
+  added: 2026-10-28
+- repo: ZeldaWWHDRecomp/ZeldaWWHDRecomp
+  game: "The Legend of Zelda: The Wind Waker HD"
+  platform: wiiu
+  kind: recomp
+  based_on: [ZeldaWWHDDecomp/wwhd]
   added: 2026-10-28
 
 # --- Switch ----------------------------------------------------------------------
@@ -207,6 +245,11 @@
   platform: switch
   kind: recomp
   added: 2026-10-28
+- repo: morerokk/MHGURecomp
+  game: Monster Hunter Generations Ultimate
+  platform: switch
+  kind: recomp
+  added: 2026-10-28
 - repo: OpenSmash-Ultimate/ssbu-recomp
   game: Super Smash Bros. Ultimate
   platform: switch
@@ -214,6 +257,16 @@
   added: 2026-10-28
 - repo: Revivedx/SavageWindRecomp
   game: "The Legend of Zelda: Breath of the Wild"
+  platform: switch
+  kind: recomp
+  added: 2026-10-28
+- repo: peiikai/LASRecomp
+  game: "The Legend of Zelda: Link's Awakening"
+  platform: switch
+  kind: recomp
+  added: 2026-10-28
+- repo: kuraeow/ultratears
+  game: "The Legend of Zelda: Tears of the Kingdom"
   platform: switch
   kind: recomp
   added: 2026-10-28
@@ -233,6 +286,11 @@
   kind: recomp
   tool: RecompOne
   added: 2026-10-28
+- repo: Matteo842/CrashBandicoot-Launcher
+  game: Crash Bandicoot
+  platform: ps1
+  kind: recomp
+  added: 2026-10-28
 - repo: SlickAmogus/silent-hill-decomp
   game: Silent Hill
   platform: ps1
@@ -245,6 +303,16 @@
   added: 2026-10-28
 
 # --- PlayStation 2 ---------------------------------------------------------------
+- repo: z3xox/Tenkaichi3Decomp
+  game: "Dragon Ball Z: Budokai Tenkaichi 3"
+  platform: ps2
+  kind: port
+  added: 2026-10-28
+- repo: moesuito/gt4-staticrecomp
+  game: Gran Turismo 4
+  platform: ps2
+  kind: recomp
+  added: 2026-10-28
 - repo: open-goal/jak-project
   game: Jak and Daxter series
   platform: ps2
@@ -253,8 +321,50 @@
   added: 2026-10-28
 
 # --- PlayStation 4 ---------------------------------------------------------------
+- repo: saulob/dragons-crown-pro-pc
+  game: Dragon's Crown Pro
+  platform: ps4
+  kind: port
+  added: 2026-10-28
 - repo: OverkillLabs3/driveclub-recomp
   game: Driveclub
+  platform: ps4
+  kind: recomp
+  added: 2026-10-28
+- repo: GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS
+  game: EA SPORTS UFC 3
+  platform: ps4
+  kind: port
+  based_on: [T3CHNOLOG1C/SacredFire]
+  added: 2026-10-28
+- repo: LucaPazienza/gravityrush_pc
+  game: Gravity Rush Remastered
+  platform: ps4
+  kind: port
+  added: 2026-10-28
+- repo: HayatoG/iss_pc
+  game: inFamous Second Son
+  platform: ps4
+  kind: port
+  added: 2026-10-28
+- repo: bc160201983/medievil_2019_pc_port
+  game: MediEvil
+  platform: ps4
+  kind: port
+  based_on: [FelipePrado0/gow3_pc]
+  added: 2026-10-28
+- repo: LoreanXavier/pt-pc
+  game: P.T.
+  platform: ps4
+  kind: port
+  added: 2026-10-28
+- repo: HayatoG/tlg_pc
+  game: The Last Guardian
+  platform: ps4
+  kind: port
+  added: 2026-10-28
+- repo: bc160201983/Uncharted-The-Nathan-Drake-Collection-PC-port
+  game: "Uncharted: The Nathan Drake Collection"
   platform: ps4
   kind: recomp
   added: 2026-10-28
@@ -265,6 +375,41 @@
   platform: psp
   kind: recomp
   tool: PSPRecomp
+  added: 2026-10-28
+- repo: TeamGDB/Yakumo
+  game: Monster Hunter Portable 3rd HD Ver.
+  platform: psp
+  kind: recomp
+  added: 2026-10-28
+
+# --- Xbox ------------------------------------------------------------------------
+- repo: TGP482/BLACK-XBERecomp
+  game: Black
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  added: 2026-10-28
+- repo: xenophobentx/takedawn
+  game: "Burnout 3: Takedown"
+  platform: xbox
+  kind: recomp
+  added: 2026-10-28
+- repo: NoRain211/doaxvb-re
+  game: Dead or Alive Xtreme Beach Volleyball
+  platform: xbox
+  kind: recomp
+  added: 2026-10-28
+- repo: OAleex/OpenShao
+  game: "Mortal Kombat: Shaolin Monks"
+  platform: xbox
+  kind: port
+  added: 2026-10-28
+- repo: TGP482/SCDA-XBERecomp
+  game: "Splinter Cell: Double Agent"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  based_on: [TGP482/XboxXBE-Recomp]
   added: 2026-10-28
 
 # --- Xbox 360 --------------------------------------------------------------------
@@ -302,6 +447,18 @@
   kind: recomp
   tool: ReXGlue
   added: 2026-10-28
+- repo: arcanite24/pinyon-shift
+  game: Forza Horizon
+  platform: x360
+  kind: recomp
+  tool: ShiftGlue
+  added: 2026-10-28
+- repo: FH1-ReImagined/ForzaHorizon1-ReImagined
+  game: Forza Horizon
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
 - repo: SunJaycy/GoldenEye-Recomp
   game: GoldenEye 007 (XBLA)
   platform: x360
@@ -312,6 +469,29 @@
   game: Lost Odyssey
   platform: x360
   kind: recomp
+  added: 2026-10-28
+- repo: jorjbarbosa/naruto-rise-recomp
+  game: "Naruto: Rise of a Ninja"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: SpeedBreakerProject/speedbreaker
+  game: "Need for Speed: Most Wanted"
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+- repo: TekRantGaming/king-kong-recompiled
+  game: Peter Jackson's King Kong
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: beatrixzy/PGR4-Recomp
+  game: Project Gotham Racing 4
+  platform: x360
+  kind: port
+  tool: ReXGlue
   added: 2026-10-28
 - repo: LittleBitUA/DownpourRecomp
   game: "Silent Hill: Downpour"
@@ -371,6 +551,11 @@
   added: 2026-10-28
 
 # --- Toolchains ------------------------------------------------------------------
+- repo: boykopovar/AnyPS5
+  game: AnyPS5
+  platform: ps5
+  kind: tool
+  added: 2026-10-28
 - repo: N64Recomp/N64Recomp
   game: "N64: Recompiled"
   platform: n64

@@ -1,3 +1,30 @@
 # Repos that discovery should never propose again. Add maintainers' opt-out requests here too.
 # Fields: repo (owner/name), reason, date (YYYY-MM-DD).
-[]
+- repo: tporadowski/redis
+  reason: Repository is a Windows port of the Redis database, not a game
+    recompilation or port
+  date: 2026-10-28
+- repo: Gzh0821/pvzg_site
+  reason: The repo is a website for a fan‑made web rewrite of PvZ2, not a static
+    recompilation or source port of the original game.
+  date: 2026-10-28
+- repo: rt64/rt64
+  reason: RT64 is a graphics rendering library, not a playable recompilation,
+    source port, or recompiler toolchain.
+  date: 2026-10-28
+- repo: reacher-z/Awesome-REA
+  reason: The repository is a curated list of RE resources, not a playable
+    recompilation or tool for a specific game.
+  date: 2026-10-28
+- repo: chasem-dev/sms-launcher
+  reason: Repository is only a launcher that builds and runs the game, not the
+    actual recompilation or source port itself.
+  date: 2026-10-28
+- repo: project-instinct/InstinctMJ
+  reason: The repository is an RL environment/port for a simulation framework, not
+    a playable game recompilation or source port.
+  date: 2026-10-28
+- repo: elripalda/RecompStore
+  reason: The repository is a PS5 homebrew app store/launcher, not a game-specific
+    recompilation, source port, or recompilation tool.
+  date: 2026-10-28
