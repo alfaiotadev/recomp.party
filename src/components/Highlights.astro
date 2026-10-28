@@ -16,7 +16,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
 
 {
   slides.length > 0 && (
-    <section class="hl" aria-roledescription="carousel" aria-label="This week">
+    <section class="hl" id="hl" aria-roledescription="carousel" aria-label="This week">
       <div class="hl-track" id="hl-track" tabindex="0">
         {risers.items.length > 0 && (
           <article class="slide" id="hl-rising" aria-label={risers.title}>
@@ -101,14 +101,19 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
           </article>
         )}
       </div>
-      <div class="hl-nav" hidden id="hl-nav">
-        <button type="button" class="arrow" data-dir="-1" aria-label="Previous">←</button>
-        <div class="dots" role="tablist">
-          {slides.map((s, i) => (
-            <button type="button" role="tab" class="dot" data-i={i} aria-label={s.label} aria-selected={i === 0 ? "true" : "false"} />
-          ))}
-        </div>
-        <button type="button" class="arrow" data-dir="1" aria-label="Next">→</button>
+      <button type="button" class="arrow prev" data-dir="-1" aria-label="Previous" hidden>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg>
+      </button>
+      <button type="button" class="arrow next" data-dir="1" aria-label="Next" hidden>
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
+      </button>
+      <div class="hl-tabs" role="tablist" id="hl-tabs" hidden>
+        {slides.map((s, i) => (
+          <button type="button" role="tab" class="tab" data-i={i} aria-selected={i === 0 ? "true" : "false"} aria-controls={`hl-${s.id}`}>
+            <span class="tab-label">{s.label}</span>
+            <span class="tab-bar"><span class="tab-fill" /></span>
+          </button>
+        ))}
       </div>
     </section>
   )
@@ -116,45 +121,103 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
 
 <script is:inline>
   (() => {
+    const root = document.getElementById("hl");
     const track = document.getElementById("hl-track");
-    const nav = document.getElementById("hl-nav");
-    if (!track || !nav) return;
+    const tabsEl = document.getElementById("hl-tabs");
+    if (!root || !track || !tabsEl) return;
     const slides = [...track.children];
-    const dots = [...nav.querySelectorAll(".dot")];
-    nav.hidden = slides.length < 2;
-    let i = 0;
-    const go = (n, smooth = true) => {
-      i = (n + slides.length) % slides.length;
-      track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: smooth ? "smooth" : "auto" });
-    };
-    track.addEventListener("scroll", () => {
-      const n = Math.round(track.scrollLeft / track.clientWidth);
-      if (n !== i) i = n;
-      dots.forEach((d, k) => d.setAttribute("aria-selected", String(k === i)));
-    }, { passive: true });
-    nav.addEventListener("click", (ev) => {
-      const b = ev.target.closest("button");
-      if (!b) return;
-      go(b.dataset.dir ? i + Number(b.dataset.dir) : Number(b.dataset.i));
-      restart();
-    });
-    let timer;
+    const tabs = [...tabsEl.querySelectorAll(".tab")];
+    if (slides.length < 2) return;
+    for (const el of root.querySelectorAll("[hidden]")) el.hidden = false;
+
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const restart = () => {
-      clearInterval(timer);
-      if (!reduce && slides.length > 1) timer = setInterval(() => go(i + 1), 7000);
+    let i = 0;
+    let programmatic = false; // true while a scroll was started by go(), not by the user
+    let auto = !reduce; // turned off for good by any manual navigation
+    let paused = false;
+
+    // The active tab's fill bar is the timer: its CSS animation runs for the slide duration and
+    // `animationend` advances the carousel, so indicator and timing can never drift apart.
+    const restartTimer = () => {
+      root.classList.remove("playing");
+      if (!auto || paused) return;
+      void root.offsetWidth; // reflow so the animation starts again from zero
+      root.classList.add("playing");
     };
-    const host = track.parentElement;
-    host.addEventListener("pointerenter", () => clearInterval(timer));
-    host.addEventListener("pointerleave", restart);
-    host.addEventListener("focusin", () => clearInterval(timer));
-    host.addEventListener("focusout", restart);
-    restart();
+    const mark = () => {
+      tabs.forEach((t, k) => t.setAttribute("aria-selected", String(k === i)));
+      restartTimer();
+    };
+    const go = (n) => {
+      i = (n + slides.length) % slides.length;
+      programmatic = true;
+      track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: reduce ? "auto" : "smooth" });
+      mark();
+    };
+    const stopAuto = () => {
+      auto = false;
+      root.classList.remove("playing");
+      root.classList.add("manual");
+    };
+
+    tabsEl.addEventListener("animationend", (e) => {
+      if (e.target.classList.contains("tab-fill") && auto && !paused) go(i + 1);
+    });
+    root.addEventListener("click", (e) => {
+      const b = e.target.closest(".arrow, .tab");
+      if (!b) return;
+      stopAuto();
+      go(b.dataset.dir ? i + Number(b.dataset.dir) : Number(b.dataset.i));
+    });
+
+    // Swiping or scrolling the track by hand also counts as taking control.
+    for (const ev of ["pointerdown", "wheel", "touchstart"]) track.addEventListener(ev, () => (programmatic = false), { passive: true });
+    let settle;
+    track.addEventListener("scroll", () => {
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        const n = Math.round(track.scrollLeft / track.clientWidth);
+        if (!programmatic && n !== i) {
+          stopAuto();
+          i = n;
+          mark();
+        }
+        programmatic = false;
+      }, 120);
+    }, { passive: true });
+
+    track.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      stopAuto();
+      go(i + (e.key === "ArrowRight" ? 1 : -1));
+    });
+
+    // Hover / focus: pause and reset the countdown; leaving starts it again from zero.
+    const pause = () => {
+      paused = true;
+      restartTimer();
+    };
+    const resume = () => {
+      paused = false;
+      restartTimer();
+    };
+    root.addEventListener("pointerenter", pause);
+    root.addEventListener("pointerleave", resume);
+    root.addEventListener("focusin", pause);
+    root.addEventListener("focusout", (e) => {
+      if (!root.contains(e.relatedTarget)) resume();
+    });
+
+    if (!auto) root.classList.add("manual");
+    mark();
   })();
 </script>
 
 <style>
   .hl {
+    --arrow: 2.1rem;
+    --tabs-h: 2.6rem;
     margin-top: 1.4rem;
     position: relative;
   }
@@ -282,48 +345,136 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     font-size: 1.6rem;
     font-weight: 700;
   }
-  .hl-nav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.6rem;
-    margin-top: 0.5rem;
-  }
-  .hl-nav[hidden] {
-    display: none;
-  }
+  /* arrows sit on the carousel's edges, half outside the frame */
   .arrow {
-    font: inherit;
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 0.15rem 0.55rem;
-    cursor: pointer;
-  }
-  .arrow:hover {
-    color: var(--fg);
-    border-color: var(--faint);
-  }
-  .dots {
-    display: flex;
-    gap: 0.35rem;
-  }
-  .dot {
-    width: 0.5rem;
-    height: 0.5rem;
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: var(--arrow);
+    height: var(--arrow);
+    /* centre on the slide area (the section also contains the tab row) */
+    margin-top: calc(var(--arrow) / -2 - var(--tabs-h) / 2);
     padding: 0;
     border-radius: 50%;
-    border: 0;
-    background: var(--line);
+    border: 1px solid var(--line);
+    background: rgb(18 22 36 / 0.92);
+    backdrop-filter: blur(6px);
+    color: var(--muted);
     cursor: pointer;
+    box-shadow: 0 6px 18px -8px rgb(0 0 0 / 0.8);
+    transition: color 0.15s, border-color 0.15s, box-shadow 0.15s;
   }
-  .dot[aria-selected="true"] {
+  .arrow[hidden],
+  .hl-tabs[hidden] {
+    display: none;
+  }
+  .arrow.prev {
+    left: calc(var(--arrow) / -2);
+  }
+  .arrow.next {
+    right: calc(var(--arrow) / -2);
+  }
+  .arrow:hover,
+  .arrow:focus-visible {
+    color: var(--recomp);
+    border-color: rgb(124 240 197 / 0.5);
+    box-shadow: 0 0 16px -4px rgb(124 240 197 / 0.5);
+  }
+  .arrow svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @media (max-width: 760px) {
+    .arrow.prev {
+      left: 0.35rem;
+    }
+    .arrow.next {
+      right: 0.35rem;
+    }
+    /* phones: swipe or tap a tab; edge arrows would cover the cards */
+    .arrow {
+      display: none;
+    }
+  }
+
+  /* page tabs: centred, each with a bar that fills while the page is shown */
+  .hl-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    height: var(--tabs-h);
+    padding-top: 0.55rem;
+  }
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    width: clamp(6.5rem, 22vw, 11rem);
+    padding: 0.15rem 0.2rem;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font: inherit;
+  }
+  .tab-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--faint);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    transition: color 0.2s;
+  }
+  .tab:hover .tab-label {
+    color: var(--muted);
+  }
+  .tab[aria-selected="true"] .tab-label {
+    color: var(--fg);
+  }
+  .tab-bar {
+    position: relative;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .tab-fill {
+    position: absolute;
+    inset: 0;
+    transform-origin: left;
+    transform: scaleX(0);
     background: var(--recomp);
-    box-shadow: 0 0 8px var(--recomp);
-    width: 1.3rem;
-    border-radius: 4px;
+    box-shadow: 0 0 6px var(--recomp);
+  }
+  /* auto-advance: the fill animation doubles as the timer (see script) */
+  .playing .tab[aria-selected="true"] .tab-fill {
+    animation: hl-fill 7s linear forwards;
+  }
+  /* paused or manual: the active tab simply shows a full bar */
+  .hl:not(.playing) .tab[aria-selected="true"] .tab-fill {
+    transform: scaleX(1);
+    opacity: 0.55;
+  }
+  .manual .tab[aria-selected="true"] .tab-fill {
+    opacity: 1;
+  }
+  @keyframes hl-fill {
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @media (max-width: 520px) {
+    .tab-label {
+      font-size: 0.6rem;
+    }
   }
 </style>
