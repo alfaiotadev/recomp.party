@@ -2,6 +2,9 @@ name: Fetch data
 
 # Refresh data/snapshot.json from the GitHub API. A finished run triggers "Deploy site".
 on:
+  push:
+    branches: [main]
+    paths: [data/projects.yaml] # new entries get release data right after a merge
   schedule:
     - cron: "17 */6 * * *"
   workflow_dispatch:
