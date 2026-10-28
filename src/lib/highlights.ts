@@ -27,7 +27,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
       .sort((a, b) => b.delta - a.delta)
       .slice(0, 5)
       .map(({ entry, delta }) => ({ entry, value: `+${delta.toLocaleString("en")}`, detail: `★ ${entry.snap!.stars.toLocaleString("en")}` }));
-    return { title: "Rising this week", note: spanDays >= 7 ? "most stars gained in 7 days" : `most stars gained in ${spanDays} days`, items };
+    return { title: "Rising stars", note: spanDays >= 7 ? "most stars gained in 7 days" : `most stars gained in ${spanDays} days`, items };
   }
 
   const items = all
@@ -43,7 +43,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
       value: `${Math.round(perDay).toLocaleString("en")}/day`,
       detail: `★ ${entry.snap!.stars.toLocaleString("en")}`,
     }));
-  return { title: "Fastest rising", note: "stars per day since the repo was created", items };
+  return { title: "Rising stars", note: "stars per day since the repo was created", items };
 }
 
 function newReleases(): { title: string; note: string; items: Entry[] } {
