@@ -20,8 +20,6 @@ const updatedIn = (range: [number, number]) =>
 export type Delta = { now: number; before: number; diff: number };
 const delta = (a: number, b: number): Delta => ({ now: a, before: b, diff: a - b });
 
-const last30: [number, number] = [now - 30 * DAY, now];
-const prev30: [number, number] = [now - 60 * DAY, now - 30 * DAY];
 const newest = games.map((g) => g.firstReleaseAt).filter(Boolean).sort().at(-1);
 
 export const stats = {
@@ -33,14 +31,14 @@ export const stats = {
   },
   platforms: { value: platformsInUse.length, ids: platformsInUse },
   fresh: {
-    value: newIn(last30),
+    value: newIn(week(0)),
     week: delta(newIn(week(0)), newIn(week(1))),
     bars: series(newIn),
     barsLabel: "New projects per week, last 12 weeks",
   },
   updated: {
-    value: updatedIn(last30),
-    period: delta(updatedIn(last30), updatedIn(prev30)),
+    value: updatedIn(week(0)),
+    week: delta(updatedIn(week(0)), updatedIn(week(1))),
     bars: series(updatedIn),
     barsLabel: "Projects with a release per week, last 12 weeks",
   },

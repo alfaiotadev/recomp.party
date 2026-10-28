@@ -41,9 +41,9 @@ const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
       <span class="n glow">{fresh.value}</span>
       <Spark values={fresh.bars} label={fresh.barsLabel} />
     </div>
-    <span class="label">first released in 30 days</span>
+    <span class="label">first released this week</span>
     <span class={`cmp ${arrow(fresh.week)}`}>
-      <b>{fresh.week.now}</b> this week · {fresh.week.before} the week before
+      <b>{signed(fresh.week.diff)}</b> vs the week before ({fresh.week.before})
     </span>
   </div>
 
@@ -52,9 +52,9 @@ const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
       <span class="n">{updated.value}</span>
       <Spark values={updated.bars} label={updated.barsLabel} />
     </div>
-    <span class="label">updated in 30 days</span>
-    <span class={`cmp ${arrow(updated.period)}`}>
-      <b>{signed(updated.period.diff)}</b> vs the 30 days before ({updated.period.before})
+    <span class="label">updated this week</span>
+    <span class={`cmp ${arrow(updated.week)}`}>
+      <b>{signed(updated.week.diff)}</b> vs the week before ({updated.week.before})
     </span>
   </div>
 </div>
