@@ -131,38 +131,52 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     for (const el of root.querySelectorAll("[hidden]")) el.hidden = false;
 
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const DURATION = 7000;
     let i = 0;
     let programmatic = false; // true while a scroll was started by go(), not by the user
     let auto = !reduce; // turned off for good by any manual navigation
-    let paused = false;
 
-    // The active tab's fill bar is the timer: its CSS animation runs for the slide duration and
-    // `animationend` advances the carousel, so indicator and timing can never drift apart.
-    const restartTimer = () => {
-      root.classList.remove("playing");
-      if (!auto || paused) return;
-      void root.offsetWidth; // reflow so the animation starts again from zero
-      root.classList.add("playing");
+    // Countdown: progress runs 0 → 1 over DURATION and advances the page at 1. While hovered it
+    // runs backwards at the same pace and rests at 0 — it never goes back a page.
+    let progress = 0;
+    let dir = 1;
+    let last = performance.now();
+    const draw = () => {
+      tabs.forEach((t, k) => {
+        const f = t.querySelector(".tab-fill");
+        f.style.transform = `scaleX(${k === i ? (auto ? progress : 1) : 0})`;
+      });
+    };
+    const tick = (now) => {
+      const dt = now - last;
+      last = now;
+      if (auto && !document.hidden) {
+        progress = Math.min(1, Math.max(0, progress + (dir * dt) / DURATION));
+        if (progress >= 1) {
+          progress = 0;
+          go(i + 1);
+        }
+        draw();
+      }
+      if (auto) requestAnimationFrame(tick);
     };
     const mark = () => {
       tabs.forEach((t, k) => t.setAttribute("aria-selected", String(k === i)));
-      restartTimer();
+      draw();
     };
     const go = (n) => {
       i = (n + slides.length) % slides.length;
+      progress = 0;
       programmatic = true;
       track.scrollTo({ left: i * track.clientWidth, behavior: reduce ? "auto" : "smooth" });
       mark();
     };
     const stopAuto = () => {
       auto = false;
-      root.classList.remove("playing");
       root.classList.add("manual");
+      draw();
     };
 
-    tabsEl.addEventListener("animationend", (e) => {
-      if (e.target.classList.contains("tab-fill") && auto && !paused) go(i + 1);
-    });
     root.addEventListener("click", (e) => {
       const b = e.target.closest(".arrow, .tab");
       if (!b) return;
@@ -193,24 +207,20 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
       go(i + (e.key === "ArrowRight" ? 1 : -1));
     });
 
-    // Hover / focus: pause and reset the countdown; leaving starts it again from zero.
-    const pause = () => {
-      paused = true;
-      restartTimer();
-    };
-    const resume = () => {
-      paused = false;
-      restartTimer();
-    };
-    root.addEventListener("pointerenter", pause);
-    root.addEventListener("pointerleave", resume);
-    root.addEventListener("focusin", pause);
+    // Hover / focus: the countdown runs backwards; leaving lets it fill again from where it is.
+    root.addEventListener("pointerenter", () => (dir = -1));
+    root.addEventListener("pointerleave", () => (dir = 1));
+    root.addEventListener("focusin", () => (dir = -1));
     root.addEventListener("focusout", (e) => {
-      if (!root.contains(e.relatedTarget)) resume();
+      if (!root.contains(e.relatedTarget)) dir = 1;
     });
 
     if (!auto) root.classList.add("manual");
     mark();
+    if (auto) requestAnimationFrame((now) => {
+      last = now;
+      tick(now);
+    });
   })();
 </script>
 
@@ -460,23 +470,6 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     transform: scaleX(0);
     background: var(--recomp);
     box-shadow: 0 0 6px var(--recomp);
-  }
-  /* auto-advance: the fill animation doubles as the timer (see script) */
-  .playing .tab[aria-selected="true"] .tab-fill {
-    animation: hl-fill 7s linear forwards;
-  }
-  /* paused or manual: the active tab simply shows a full bar */
-  .hl:not(.playing) .tab[aria-selected="true"] .tab-fill {
-    transform: scaleX(1);
-    opacity: 0.55;
-  }
-  .manual .tab[aria-selected="true"] .tab-fill {
-    opacity: 1;
-  }
-  @keyframes hl-fill {
-    to {
-      transform: scaleX(1);
-    }
   }
   @media (max-width: 520px) {
     .tab-label {

@@ -1,20 +1,12 @@
 ---
 import GameCard from "../components/GameCard.astro";
 import Highlights from "../components/Highlights.astro";
+import StatTiles from "../components/StatTiles.astro";
 import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
 import { ago, fitLogo, games, generatedAt, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolUsers, tools } from "../lib/data.ts";
 
-const month = Date.now() - 30 * 86_400_000;
-const releasedThisMonth = games.filter((g) => g.latestReleaseAt && Date.parse(g.latestReleaseAt) >= month).length;
-const newThisMonth = games.filter((g) => g.firstReleaseAt && Date.parse(g.firstReleaseAt) >= month).length;
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
-const stats = [
-  { n: games.length, label: "playable projects" },
-  { n: platformsInUse.length, label: "original platforms" },
-  { n: newThisMonth, label: "first released in 30 days" },
-  { n: releasedThisMonth, label: "updated in 30 days" },
-];
 const toolStrip = tools.slice(0, 8);
 ---
 
@@ -28,16 +20,7 @@ const toolStrip = tools.slice(0, 8);
     </p>
   </div>
 
-  <dl class="stats">
-    {
-      stats.map((s) => (
-        <div>
-          <dt>{s.label}</dt>
-          <dd>{s.n}</dd>
-        </div>
-      ))
-    }
-  </dl>
+  <StatTiles />
   <p class="refreshed mono">data refreshed {ago(generatedAt)}</p>
 
   <Highlights />
@@ -148,60 +131,6 @@ const toolStrip = tools.slice(0, 8);
     max-width: 62rem;
     text-wrap: pretty;
   }
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1px;
-    margin: 2.2rem 0 0;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  @media (max-width: 720px) {
-    .stats {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .stats div {
-      padding: 0.8rem 0.9rem;
-      justify-content: flex-end;
-    }
-    .stats dd {
-      font-size: 1.6rem;
-    }
-    .stats dt {
-      font-size: 0.65rem;
-    }
-    .filters,
-    .filters input {
-      width: 100%;
-    }
-    .filters select {
-      flex: 1;
-    }
-  }
-  .stats div {
-    background: var(--surface);
-    padding: 1rem 1.2rem;
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  .stats dt {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    color: var(--muted);
-  }
-  .stats dd {
-    margin: 0;
-    font-family: var(--mono);
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 1.2;
-  }
-  .stats div:nth-child(3) dd {
-    color: var(--recomp);
-    text-shadow: 0 0 16px rgb(124 240 197 / 0.4);
-  }
   .refreshed {
     margin: 0.5rem 0 0;
     font-size: 0.7rem;
@@ -288,6 +217,15 @@ const toolStrip = tools.slice(0, 8);
   }
   .filters input {
     min-width: 13rem;
+  }
+  @media (max-width: 720px) {
+    .filters,
+    .filters input {
+      width: 100%;
+    }
+    .filters select {
+      flex: 1;
+    }
   }
   .count {
     font-size: 0.72rem;

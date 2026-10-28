@@ -1,0 +1,172 @@
+---
+import { PLATFORMS, platformLogo } from "../lib/data.ts";
+import { stats, type Delta } from "../lib/stats.ts";
+import Spark from "./Spark.astro";
+
+const { projects, platforms, fresh, updated } = stats;
+const arrow = (d: Delta) => (d.diff > 0 ? "up" : d.diff < 0 ? "down" : "flat");
+const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
+---
+
+<div class="stats">
+  <div class="tile">
+    <div class="top">
+      <span class="n">{projects.value}</span>
+      <Spark values={projects.bars} label={projects.barsLabel} />
+    </div>
+    <span class="label">playable projects</span>
+    <span class="cmp">{projects.note}</span>
+  </div>
+
+  <div class="tile">
+    <div class="top">
+      <span class="n">{platforms.value}</span>
+    </div>
+    <span class="label">original platforms</span>
+    <span class="logos">
+      {
+        platforms.ids.map((id) => {
+          const l = platformLogo(id);
+          if (!l) return <span class="logo-text" title={PLATFORMS[id]}>{PLATFORMS[id].split(" ")[0]}</span>;
+          // same visual area for every logo, so wordmarks and square marks weigh the same
+          const h = Math.min(13, Math.sqrt(250 / l.aspect));
+          return <img class="logo-img" src={l.src} width={+(h * l.aspect).toFixed(1)} height={+h.toFixed(1)} alt={PLATFORMS[id]} title={PLATFORMS[id]} loading="lazy" />;
+        })
+      }
+    </span>
+  </div>
+
+  <div class="tile">
+    <div class="top">
+      <span class="n glow">{fresh.value}</span>
+      <Spark values={fresh.bars} label={fresh.barsLabel} />
+    </div>
+    <span class="label">first released in 30 days</span>
+    <span class={`cmp ${arrow(fresh.week)}`}>
+      <b>{fresh.week.now}</b> this week · {fresh.week.before} the week before
+    </span>
+  </div>
+
+  <div class="tile">
+    <div class="top">
+      <span class="n">{updated.value}</span>
+      <Spark values={updated.bars} label={updated.barsLabel} />
+    </div>
+    <span class="label">updated in 30 days</span>
+    <span class={`cmp ${arrow(updated.period)}`}>
+      <b>{signed(updated.period.diff)}</b> vs the 30 days before ({updated.period.before})
+    </span>
+  </div>
+</div>
+
+<style>
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin: 2.2rem 0 0;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  @media (max-width: 860px) {
+    .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .tile {
+    background: var(--surface);
+    padding: 1rem 1.2rem 0.95rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.6rem;
+    min-height: 2.4rem;
+  }
+  .n {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.1;
+  }
+  .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+  .cmp {
+    margin-top: 0.55rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--line);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--faint);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cmp b {
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .cmp.up b {
+    color: var(--recomp);
+  }
+  .cmp.up b::before {
+    content: "▲ ";
+    font-size: 0.8em;
+  }
+  .cmp.down b {
+    color: var(--accent);
+  }
+  .cmp.down b::before {
+    content: "▼ ";
+    font-size: 0.8em;
+  }
+  .logos {
+    margin-top: 0.55rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.55rem;
+  }
+  .logos img {
+    opacity: 0.6;
+    transition: opacity 0.15s;
+  }
+  .logos img:hover {
+    opacity: 1;
+  }
+  .logo-text {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 520px) {
+    .tile {
+      padding: 0.8rem 0.85rem;
+    }
+    .n {
+      font-size: 1.6rem;
+    }
+    .top :global(.spark) {
+      width: 64px;
+      height: 22px;
+    }
+    .cmp {
+      white-space: normal;
+    }
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+/** Tiny bar chart: one bar per value, the last bar (current period) highlighted. */
+interface Props {
+  values: number[];
+  label: string;
+}
+const { values, label } = Astro.props;
+const W = 96;
+const H = 30;
+const gap = 2;
+const bw = (W - gap * (values.length - 1)) / values.length;
+const max = Math.max(1, ...values);
+const min = Math.min(...values);
+// Cumulative series barely move relative to their total; zoom in on the range so growth is visible.
+const base = min > max * 0.5 ? min * 0.9 : 0;
+const h = (v: number) => Math.max(1.5, ((v - base) / (max - base)) * (H - 2));
+---
+
+<svg class="spark" viewBox={`0 0 ${W} ${H}`} width={W} height={H} role="img" aria-label={`${label}: ${values.join(", ")}`}>
+  {
+    values.map((v, i) => (
+      <rect class={i === values.length - 1 ? "bar now" : "bar"} x={i * (bw + gap)} y={H - h(v)} width={bw} height={h(v)} rx="1" />
+    ))
+  }
+</svg>
+
+<style>
+  .spark {
+    display: block;
+    flex: none;
+  }
+  .bar {
+    fill: var(--faint);
+    opacity: 0.45;
+  }
+  .bar.now {
+    fill: var(--recomp);
+    opacity: 1;
+    filter: drop-shadow(0 0 3px rgb(124 240 197 / 0.7));
+  }
+</style>
