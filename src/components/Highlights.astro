@@ -151,7 +151,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     const go = (n) => {
       i = (n + slides.length) % slides.length;
       programmatic = true;
-      track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: reduce ? "auto" : "smooth" });
+      track.scrollTo({ left: i * track.clientWidth, behavior: reduce ? "auto" : "smooth" });
       mark();
     };
     const stopAuto = () => {
@@ -265,6 +265,12 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0.6rem;
+  }
+  /* medium widths fit four cards per row: drop the fifth instead of leaving it alone on a row */
+  @media (min-width: 761px) and (max-width: 1180px) {
+    .items li:nth-child(5) {
+      display: none;
+    }
   }
   .item {
     position: relative;
