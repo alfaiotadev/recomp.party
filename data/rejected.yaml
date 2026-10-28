@@ -28,3 +28,96 @@
   reason: The repository is a PS5 homebrew app store/launcher, not a game-specific
     recompilation, source port, or recompilation tool.
   date: 2026-10-28
+- repo: Droid-Deck/DroidDeck
+  reason: It is a general-purpose Android frontend/compatibility layer for
+    Steam/Windows games, not a game-specific static recompilation or source
+    port.
+  date: 2026-10-28
+- repo: utkarshdalal/GameNative
+  reason: It is a general launcher and compatibility layer (using Wine/FEX) for
+    running PC games on Android, not a game-specific recompilation or source
+    port.
+  date: 2026-10-28
+- repo: mamedev/mame
+  reason: MAME is a general-purpose emulator framework, which is explicitly rejected.
+  date: 2026-10-28
+- repo: KytyPS5/KytyPS5
+  reason: KytyPS5 is a generic PS5 translation layer/emulator, not a game‑specific
+    static recompilation or source port.
+  date: 2026-10-28
+- repo: azahar-emu/azahar
+  reason: It is a general-purpose Nintendo 3DS emulator (fork of Citra), not a
+    game-specific recompilation or source port.
+  date: 2026-10-28
+- repo: sharpemu/sharpemu
+  reason: SharpEmu is a PlayStation 5 emulator, not a static recompilation or
+    source‑port of a game.
+  date: 2026-10-28
+- repo: LargeModGames/spotatui
+  reason: The repository is a music player, not a game recompilation, source port,
+    or related tool.
+  date: 2026-10-28
+- repo: Swordpdf/PS5SX2
+  reason: It's a PS2 emulator port for PS5, not a game-specific static
+    recompilation or source port.
+  date: 2026-10-28
+- repo: gopher64/gopher64
+  reason: Gopher64 is a generic N64 emulator, not a game‑specific static
+    recompilation or source port.
+  date: 2026-10-28
+- repo: ymir-emu/Ymir
+  reason: Ymir is a Sega Saturn emulator, not a game-specific static recompilation
+    or source port.
+  date: 2026-10-28
+- repo: ARMSX2/ARMSX3
+  reason: It's an Android port of the RPCS3 PS3 emulator, not a game-specific
+    static recompilation or source port.
+  date: 2026-10-28
+- repo: leolobato/playden-ps5
+  reason: The repository is a launcher for Windows Steam games on a jailbroken
+    PS5, not a static recompilation or source port of a classic console game.
+  date: 2026-10-28
+- repo: rommapp/argosy-launcher
+  reason: The repository is a generic Android launcher for RomM, not a
+    game-specific recompilation, source port, or recompiler tool.
+  date: 2026-10-28
+- repo: LTSharpe/OblivionRemasteredPerformanceFix
+  reason: It's a performance‑fix mod for a modern PC remaster, not a static
+    recompilation or source‑port of a classic console game.
+  date: 2026-10-28
+- repo: ioncodes/gecko
+  reason: The repository is a GameCube/Wii emulator, not a static recompilation or
+    source‑port of a specific game.
+  date: 2026-10-28
+- repo: hifihedgehog/PadForge
+  reason: PadForge is a Windows controller remapper, not a game recompilation,
+    source port, or recompiler toolchain.
+  date: 2026-10-28
+- repo: TamaribaEmu/OpenPS2BIOS
+  reason: OpenPS2BIOS is a replacement BIOS for emulators, not a playable game
+    port or recompilation tool.
+  date: 2026-10-28
+- repo: CLSAMG22/BBSC
+  reason: It's a multiplayer mod for the shadPS4 emulator, not a standalone
+    recompilation or source port of the game.
+  date: 2026-10-28
+- repo: vricosti/ruzu-emu
+  reason: The repository is a Nintendo Switch emulator, not a game-specific static
+    recompilation or source port.
+  date: 2026-10-28
+- repo: ravensclawx/HBLauncher
+  reason: The repository is a homebrew launcher for SmileBASIC, not a static
+    recompilation or source port of a classic game.
+  date: 2026-10-28
+- repo: p0mpurin/Kasumi
+  reason: Kasumi is a cloud‑gaming client for the New 3DS, not a static
+    recompilation, source port, or recompilation tool.
+  date: 2026-10-28
+- repo: giancarloerra/Degauss
+  reason: Degauss is a MiSTer frontend UI, not a game recompilation, source port,
+    or recompiler tool.
+  date: 2026-10-28
+- repo: RikkiGibson/DreamPotato
+  reason: DreamPotato is a Dreamcast VMU emulator, not a static recompilation or
+    source‑port of a game.
+  date: 2026-10-28

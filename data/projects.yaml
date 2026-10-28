@@ -40,8 +40,21 @@
   kind: port
   based_on: [n64decomp/banjo-kazooie]
   added: 2026-10-28
+- repo: some-scurvy-dog/banjo-tooie-scurvy-dog-port
+  game: Banjo-Tooie
+  platform: n64
+  kind: port
+  tool: N64Recomp
+  based_on: [Mr-Wiseguy/banjo-tooie]
+  added: 2026-10-28
 - repo: RevoSucks/BM64Recomp
   game: Bomberman 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: fliperama86/cvlod_recomp
+  game: "Castlevania: Legacy of Darkness"
   platform: n64
   kind: recomp
   tool: N64Recomp
@@ -75,6 +88,12 @@
   platform: n64
   kind: port
   based_on: [inspectredc/fzerox]
+  added: 2026-10-28
+- repo: murkantor/Project-Midas
+  game: GoldenEye 007
+  platform: n64
+  kind: port
+  based_on: [n64decomp/007]
   added: 2026-10-28
 - repo: HarbourMasters/SpaghettiKart
   game: Mario Kart 64
@@ -194,6 +213,11 @@
   kind: port
   based_on: [PrimeDecomp/prime]
   added: 2026-10-28
+- repo: ogdanimal/SkiesOfArcadiaLegends-Recomp
+  game: Skies of Arcadia Legends
+  platform: gc
+  kind: recomp
+  added: 2026-10-28
 - repo: TwilitRealm/dusklight
   game: "The Legend of Zelda: Twilight Princess"
   platform: gc
@@ -208,6 +232,12 @@
   kind: port
   based_on: [dudewhat/MKW-3DS]
   added: 2026-10-28
+- repo: previouslevelgames/recharged
+  game: Mario Strikers Charged
+  platform: wii
+  kind: port
+  based_on: [yannick/mscharged-decomp]
+  added: 2026-10-28
 - repo: keepvaibin/nebula
   game: Super Mario Galaxy
   platform: wii
@@ -219,8 +249,19 @@
   platform: wii
   kind: recomp
   added: 2026-10-28
+- repo: santiagovalencia109/Wario-Land-Shake-It-Native-PC
+  game: "Wario Land: Shake It!"
+  platform: wii
+  kind: recomp
+  tool: WiiCompiled
+  added: 2026-10-28
 
 # --- Wii U -----------------------------------------------------------------------
+- repo: ryderclanky/BotW-Native
+  game: "The Legend of Zelda: Breath of the Wild"
+  platform: wiiu
+  kind: recomp
+  added: 2026-10-28
 - repo: centollOS/SwitchWakerHD
   game: "The Legend of Zelda: The Wind Waker HD"
   platform: wiiu
@@ -291,6 +332,19 @@
   platform: ps1
   kind: recomp
   added: 2026-10-28
+- repo: BlackLabelHQ/MediEvilRecomp
+  game: MediEvil
+  platform: ps1
+  kind: recomp
+  tool: RecompOne
+  added: 2026-10-28
+- repo: BrazilianHobbyist/Project-RE-Visited-RE3
+  game: "Resident Evil 3: Nemesis"
+  platform: ps1
+  kind: recomp
+  tool: PSXRecomp
+  based_on: [RetroPortingToolKit/psxrecomp]
+  added: 2026-10-28
 - repo: SlickAmogus/silent-hill-decomp
   game: Silent Hill
   platform: ps1
@@ -303,6 +357,11 @@
   added: 2026-10-28
 
 # --- PlayStation 2 ---------------------------------------------------------------
+- repo: danielgomesvieira2000/burnout3-pc
+  game: "Burnout 3: Takedown"
+  platform: ps2
+  kind: port
+  added: 2026-10-28
 - repo: z3xox/Tenkaichi3Decomp
   game: "Dragon Ball Z: Budokai Tenkaichi 3"
   platform: ps2
@@ -319,8 +378,25 @@
   kind: port
   note: OpenGOAL — decompiles and recompiles the GOAL language the games were written in.
   added: 2026-10-28
+- repo: aikatore/recvx-enhanced-port
+  game: "Resident Evil Code: Veronica X"
+  platform: ps2
+  kind: recomp
+  based_on: [AshfordFamily/recvx-decomp]
+  added: 2026-10-28
+- repo: theclub654/ProjectCane
+  game: Sly Cooper and the Thievius Raccoonus
+  platform: ps2
+  kind: port
+  added: 2026-10-28
 
 # --- PlayStation 4 ---------------------------------------------------------------
+- repo: deadinside28/bloodborne_pc
+  game: Bloodborne
+  platform: ps4
+  kind: recomp
+  based_on: [shadps4-emu/shadPS4]
+  added: 2026-10-28
 - repo: saulob/dragons-crown-pro-pc
   game: Dragon's Crown Pro
   platform: ps4
@@ -358,6 +434,11 @@
   platform: ps4
   kind: port
   added: 2026-10-28
+- repo: AjncSystem/ShadowOfTheColossus-PC
+  game: Shadow of the Colossus
+  platform: ps4
+  kind: port
+  added: 2026-10-28
 - repo: HayatoG/tlg_pc
   game: The Last Guardian
   platform: ps4
@@ -368,8 +449,18 @@
   platform: ps4
   kind: recomp
   added: 2026-10-28
+- repo: Supermedo/uncharted_pc
+  game: "Uncharted: The Nathan Drake Collection"
+  platform: ps4
+  kind: port
+  added: 2026-10-28
 
 # --- PSP -------------------------------------------------------------------------
+- repo: DrummingBird1/gow-psp-recomp
+  game: "God of War: Chains of Olympus"
+  platform: psp
+  kind: recomp
+  added: 2026-10-28
 - repo: elmasas/lcs-recomp
   game: "Grand Theft Auto: Liberty City Stories"
   platform: psp
@@ -383,26 +474,59 @@
   added: 2026-10-28
 
 # --- Xbox ------------------------------------------------------------------------
+- repo: TGP482/007FRWL-XBERecomp
+  game: "007: From Russia With Love"
+  platform: xbox
+  kind: port
+  added: 2026-10-28
+- repo: HossEz/fifa-world-cup-2014-recompiled
+  game: 2014 FIFA World Cup Brazil
+  platform: xbox
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
 - repo: TGP482/BLACK-XBERecomp
   game: Black
   platform: xbox
   kind: recomp
   tool: XboxXBE-Recomp
   added: 2026-10-28
+- repo: portingpete/Black-2006-Recomp
+  game: BLACK (2006)
+  platform: xbox
+  kind: recomp
+  tool: XboxRecomp
+  added: 2026-10-28
 - repo: xenophobentx/takedawn
   game: "Burnout 3: Takedown"
   platform: xbox
   kind: recomp
+  added: 2026-10-28
+- repo: NoRain211/doa2u-re
+  game: Dead or Alive 2 Ultimate
+  platform: xbox
+  kind: port
   added: 2026-10-28
 - repo: NoRain211/doaxvb-re
   game: Dead or Alive Xtreme Beach Volleyball
   platform: xbox
   kind: recomp
   added: 2026-10-28
+- repo: JackTulli/halo-64
+  game: "Halo: Combat Evolved"
+  platform: xbox
+  kind: port
+  based_on: [cybersecurity/halo-ce-universal]
+  added: 2026-10-28
 - repo: OAleex/OpenShao
   game: "Mortal Kombat: Shaolin Monks"
   platform: xbox
   kind: port
+  added: 2026-10-28
+- repo: gamboozino/ngbrecomp
+  game: Ninja Gaiden Black
+  platform: xbox
+  kind: recomp
   added: 2026-10-28
 - repo: TGP482/SCDA-XBERecomp
   game: "Splinter Cell: Double Agent"
@@ -437,6 +561,19 @@
   added: 2026-10-28
 - repo: florinp93/hells-gate-recomp
   game: Dante's Inferno
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: wivi514/Dead_Rising_2_Case_West_Xenon_Recomp
+  game: "Dead Rising 2: Case West"
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  based_on: [hedge-dev/XenonRecomp]
+  added: 2026-10-28
+- repo: TekRantGaming/earthworm-jim-hd-recompiled
+  game: Earthworm Jim HD
   platform: x360
   kind: recomp
   tool: ReXGlue
@@ -491,6 +628,12 @@
   game: Project Gotham Racing 4
   platform: x360
   kind: port
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: Sirhalo23/RidgeRacer6-Recompilation
+  game: Ridge Racer 6
+  platform: x360
+  kind: recomp
   tool: ReXGlue
   added: 2026-10-28
 - repo: LittleBitUA/DownpourRecomp
@@ -548,6 +691,11 @@
   platform: pc
   kind: port
   note: Decompilation of the Retro Engine v3 mobile/PC release.
+  added: 2026-10-28
+- repo: Kitrinx/Ultima7_Decomp
+  game: Ultima VII
+  platform: pc
+  kind: port
   added: 2026-10-28
 
 # --- Toolchains ------------------------------------------------------------------
