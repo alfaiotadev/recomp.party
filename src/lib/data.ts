@@ -81,3 +81,31 @@ export const OS_LABELS: Record<Release["os"][number], string> = {
   ios: "iOS",
   web: "Web",
 };
+
+/** Platforms with a monochrome-ready logo in public/logos (see public/logos/SOURCES.md), with width/height ratio. */
+const LOGO_ASPECT: Partial<Record<PlatformId, number>> = {"snes": 3.945, "n64": 6.913, "gc": 4.434, "wii": 2.299, "wiiu": 3.541, "switch": 0.983, "gb": 5.711, "gbc": 2.45, "nds": 7.243, "3ds": 8.455, "genesis": 4.848, "dc": 1.323, "xbox": 3.873, "x360": 6.264, "ps1": 1.276, "ps2": 5.797, "ps3": 4.669, "ps4": 4.678, "ps5": 4.66, "psp": 5.797};
+
+export type Logo = { src: string; aspect: number };
+
+export function platformLogo(id: PlatformId): Logo | undefined {
+  const aspect = LOGO_ASPECT[id];
+  return aspect ? { src: `/logos/${id}.svg`, aspect } : undefined;
+}
+
+/** Fit a logo into a box: wide wordmarks are capped by width, square marks get more height. */
+export function fitLogo(logo: Logo, maxW: number, maxH: number): { w: number; h: number } {
+  const h = Math.min(maxH, maxW / logo.aspect);
+  return { w: h * logo.aspect, h };
+}
+
+const toolKey = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/** Games built with a toolchain entry, matching `tool` loosely ("ReXGlue" ↔ "ReXGlue SDK" / rexglue-sdk). */
+export function toolUsers(tool: Entry): Entry[] {
+  const names = [tool.game, tool.repo.split("/")[1]!].map(toolKey);
+  return games.filter((g) => {
+    if (!g.tool) return false;
+    const k = toolKey(g.tool);
+    return names.some((n) => n === k || n.startsWith(k) || k.startsWith(n));
+  });
+}

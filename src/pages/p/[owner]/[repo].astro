@@ -1,6 +1,6 @@
 ---
 import Base from "../../../layouts/Base.astro";
-import { ago, creditLink, entryPath, games, KINDS, OS_LABELS, PLATFORMS, shortDate, tools, type Entry } from "../../../lib/data.ts";
+import { ago, creditLink, entryPath, fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
 
 export function getStaticPaths() {
   return games.map((entry) => {
@@ -14,8 +14,10 @@ interface Props {
 }
 const { entry: e } = Astro.props;
 const s = e.snap;
+const logo = platformLogo(e.platform);
+const logoBox = logo && fitLogo(logo, 160, 40);
 const sameGame = games.filter((g) => g !== e && g.game.replace(/ \(.*\)$/, "") === e.game.replace(/ \(.*\)$/, ""));
-const tool = e.tool ? tools.find((t) => t.game === e.tool || t.repo.split("/")[1] === e.tool) : undefined;
+const tool = e.tool ? tools.find((t) => toolUsers(t).includes(e)) : undefined;
 
 // Release strip: every release as a dot across the project's lifetime.
 const dates = (s?.releaseDates ?? []).map((r) => ({ t: Date.parse(r.date), pre: r.prerelease })).reverse();
@@ -37,8 +39,13 @@ const facts: [string, string | undefined][] = [
 ---
 
 <Base title={e.game} description={`${e.game} (${PLATFORMS[e.platform]}) — ${KINDS[e.kind].toLowerCase()} by ${e.repo}. ${s?.description ?? ""}`}>
-  <p class="crumbs muted"><a href="/">Games</a> / {PLATFORMS[e.platform]}</p>
-  <h1>{e.game}</h1>
+  <div class="head">
+    <div>
+      <p class="crumbs eyebrow"><a href="/">Games</a> / {PLATFORMS[e.platform]}</p>
+      <h1>{e.game}</h1>
+    </div>
+    {logo && logoBox && <img class="logo-img head-logo" src={logo.src} width={logoBox.w} height={logoBox.h} alt={PLATFORMS[e.platform]} />}
+  </div>
   <p class="badges">
     <span class={`badge ${e.kind}`}>{KINDS[e.kind]}</span>
     <span class="badge">{PLATFORMS[e.platform]}</span>
@@ -144,9 +151,30 @@ const facts: [string, string | undefined][] = [
 </Base>
 
 <style>
+  .head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .head-logo {
+    opacity: 0.35;
+    margin-bottom: 1.2rem;
+    flex: none;
+  }
+  @media (max-width: 640px) {
+    .head-logo {
+      display: none;
+    }
+  }
   .crumbs {
-    margin: 1.5rem 0 -1rem;
-    font-size: 0.85rem;
+    margin: 2.5rem 0 0;
+  }
+  .crumbs a {
+    text-decoration: none;
+  }
+  .crumbs + h1 {
+    margin-top: 0.5rem;
   }
   .badges {
     display: flex;
@@ -166,15 +194,25 @@ const facts: [string, string | undefined][] = [
     border: 1px solid var(--line);
     text-decoration: none;
     font-size: 0.92rem;
-    background: var(--card);
+    background: var(--surface);
   }
   .btn:hover {
     border-color: var(--muted);
   }
+  .btn {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+  }
   .btn.primary {
-    background: var(--fg);
+    background: var(--recomp);
     color: var(--bg);
-    border-color: var(--fg);
+    border-color: var(--recomp);
+    font-weight: 600;
+    box-shadow: 0 0 24px -6px rgb(124 240 197 / 0.6);
+  }
+  .btn.primary:hover {
+    border-color: var(--recomp);
+    filter: brightness(1.08);
   }
   .cols {
     display: grid;
@@ -185,6 +223,10 @@ const facts: [string, string | undefined][] = [
     .cols {
       grid-template-columns: 1fr;
     }
+  }
+  dd {
+    font-family: var(--mono);
+    font-size: 0.85rem;
   }
   dl {
     display: grid;
@@ -204,6 +246,15 @@ const facts: [string, string | undefined][] = [
     height: auto;
     margin-bottom: 0.5rem;
   }
+  .strip circle {
+    filter: drop-shadow(0 0 3px currentColor);
+  }
+  .strip circle.recomp {
+    color: var(--recomp);
+  }
+  .strip circle.port {
+    color: var(--port);
+  }
   .strip line {
     stroke: var(--line);
     stroke-width: 2;
@@ -221,7 +272,8 @@ const facts: [string, string | undefined][] = [
   }
   .releases {
     padding-left: 1.2rem;
-    font-size: 0.92rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
   }
   .releases li {
     margin-bottom: 0.3rem;

@@ -1,13 +1,13 @@
-import { entryPath, PLATFORMS, platformsInUse, type Entry } from "./data.ts";
+import { entryPath, fitLogo, PLATFORMS, platformLogo, platformsInUse, type Entry } from "./data.ts";
 
 /** Layout for the swimlane timeline: one lane per source platform, one row per project. */
 
 export const W = 1000;
-const LABEL_W = 128;
+const LABEL_W = 132;
 const PAD_R = 12;
 const ROW_H = 18;
 const LANE_PAD = 6;
-const MIN_LANE_H = 42; // room for the lane name + project count
+const MIN_LANE_H = 58; // room for the platform logo + project count
 export const AXIS_H = 22;
 const CHAR_W = 6.1; // rough width of one 11px character, for label placement
 
@@ -24,7 +24,14 @@ export type Row = {
   label: { x: number; anchor: "start" | "end" };
 };
 
-export type Lane = { id: string; name: string; y: number; height: number; rows: Row[] };
+export type Lane = {
+  id: string;
+  name: string;
+  logo: { src: string; w: number; h: number } | undefined;
+  y: number;
+  height: number;
+  rows: Row[];
+};
 
 export type Layout = {
   view: TimelineView;
@@ -110,7 +117,8 @@ export function layout(games: Entry[], view: TimelineView, now = Date.now()): La
       return row;
     });
     y = Math.max(y + LANE_PAD, laneY + MIN_LANE_H);
-    lanes.push({ id, name: PLATFORMS[id], y: laneY, height: y - laneY, rows });
+    const logo = platformLogo(id);
+    lanes.push({ id, name: PLATFORMS[id], logo: logo && { src: logo.src, ...fitLogo(logo, 96, 24) }, y: laneY, height: y - laneY, rows });
   }
 
   return { view, lanes, ticks: ticksFor(view, x), nowX: x(now), height: y + 4 };

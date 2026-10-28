@@ -1,11 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
-import { entryPath, games, PLATFORMS, tools } from "../lib/data.ts";
+import { entryPath, fitLogo, PLATFORMS, platformLogo, toolUsers, tools } from "../lib/data.ts";
 
-const usedBy = (name: string, repo: string) => games.filter((g) => g.tool && (g.tool === name || g.tool === repo.split("/")[1]));
 ---
 
 <Base title="Toolchains" description="The static recompilers and runtimes behind the recomps on recomp.party.">
+  <p class="eyebrow tl-eyebrow">Under the hood</p>
   <h1>Toolchains</h1>
   <p class="lede">
     The recompilers and runtimes that the game projects are built with. Most recomps pair one of these with a
@@ -14,13 +14,16 @@ const usedBy = (name: string, repo: string) => games.filter((g) => g.tool && (g.
   <ul class="tools">
     {
       tools.map((t) => {
-        const users = usedBy(t.game, t.repo);
+        const users = toolUsers(t);
+        const logo = platformLogo(t.platform);
+        const box = logo && fitLogo(logo, 90, 18);
         return (
           <li>
+            {logo && box && <img class="logo-img tlogo" src={logo.src} width={box.w} height={box.h} alt={PLATFORMS[t.platform]} />}
             <h2>
               <a href={t.url}>{t.game}</a>
             </h2>
-            <p class="muted">
+            <p class="meta">
               {PLATFORMS[t.platform]} · {t.repo} · ★ {t.snap?.stars.toLocaleString("en")}
             </p>
             {t.snap?.description && <p>{t.snap.description}</p>}
@@ -43,6 +46,13 @@ const usedBy = (name: string, repo: string) => games.filter((g) => g.tool && (g.
 </Base>
 
 <style>
+  .tl-eyebrow {
+    margin: 2.5rem 0 0;
+    color: var(--recomp);
+  }
+  .tl-eyebrow + h1 {
+    margin-top: 0.5rem;
+  }
   .tools {
     list-style: none;
     padding: 0;
@@ -51,10 +61,19 @@ const usedBy = (name: string, repo: string) => games.filter((g) => g.tool && (g.
     gap: 0.9rem;
   }
   .tools li {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 12px;
     padding: 0.9rem 1.1rem;
+  }
+  .tlogo {
+    opacity: 0.5;
+    margin-bottom: 0.6rem;
+  }
+  .meta {
+    font-family: var(--mono);
+    font-size: 0.72rem !important;
+    color: var(--faint);
   }
   .tools h2 {
     margin: 0;

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { tools } from "../lib/data.ts";
 
 interface Props {
   title?: string;
@@ -9,7 +10,7 @@ const { title, description = "A tracker for playable static recompilations and s
 const fullTitle = title ? `${title} · recomp.party` : "recomp.party — playable recomps & ports";
 const nav = [
   { href: "/", label: "Games" },
-  { href: "/tools/", label: "Toolchains" },
+  { href: "/tools/", label: "Toolchains", count: tools.length },
   { href: "/about/", label: "About" },
 ];
 const here = Astro.url.pathname;
@@ -20,6 +21,7 @@ const here = Astro.url.pathname;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0d14" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={fullTitle} />
@@ -37,6 +39,7 @@ const here = Astro.url.pathname;
           nav.map((n) => (
             <a href={n.href} aria-current={(n.href === "/" ? here === "/" : here.startsWith(n.href)) ? "page" : undefined}>
               {n.label}
+              {n.count !== undefined && <span class="nav-count">{n.count}</span>}
             </a>
           ))
         }

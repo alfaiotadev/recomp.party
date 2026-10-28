@@ -1,29 +1,23 @@
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* Midnight CRT: ink background, phosphor green for recomps, amber for ports. */
 :root {
-  --bg: #fbfaf7;
-  --fg: #1c1a24;
-  --muted: #6d6879;
-  --line: #e3dfe9;
-  --lane: #f3f0f8;
-  --hover: #ebe6f5;
-  --card: #ffffff;
-  --recomp: #6d4aff;
-  --port: #0e9f7e;
-  --accent: #e8467c;
-  color-scheme: light dark;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #121019;
-    --fg: #ece9f3;
-    --muted: #9690a6;
-    --line: #2a2636;
-    --lane: #1a1724;
-    --hover: #262136;
-    --card: #191623;
-    --recomp: #9b7bff;
-    --port: #2dd4a7;
-    --accent: #ff5e95;
-  }
+  --bg: #0b0d14;
+  --surface: #121624;
+  --surface-2: #181d30;
+  --fg: #e8ecf6;
+  --muted: #8b93ad;
+  --faint: #5a6280;
+  --line: #222842;
+  --lane: #0f1220;
+  --hover: #1c2238;
+  --recomp: #7cf0c5;
+  --port: #ffb35c;
+  --accent: #ff4f7b;
+  --sans: "Space Grotesk Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
 }
 * {
   box-sizing: border-box;
@@ -33,24 +27,44 @@ html {
 }
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgb(124 240 197 / 0.07), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgb(255 79 123 / 0.05), transparent 60%),
+    var(--bg);
   color: var(--fg);
-  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font: 16px/1.6 var(--sans);
+  min-height: 100vh;
+}
+/* faint scanlines */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.018) 0 1px, transparent 1px 3px);
+  z-index: 100;
+}
+::selection {
+  background: rgb(124 240 197 / 0.3);
 }
 a {
   color: inherit;
-  text-decoration-color: var(--muted);
-  text-underline-offset: 2px;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 3px;
 }
 a:hover {
-  text-decoration-color: currentColor;
+  text-decoration-color: var(--recomp);
+}
+:focus-visible {
+  outline: 2px solid var(--recomp);
+  outline-offset: 2px;
 }
 main,
 .site-header,
 .site-footer {
-  max-width: 1180px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 1.5rem;
 }
 .site-header {
   display: flex;
@@ -58,22 +72,47 @@ main,
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.5rem 1.5rem;
-  padding-top: 1.1rem;
-  padding-bottom: 1.1rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
 }
 .brand {
-  font-weight: 800;
-  font-size: 1.3rem;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 1.15rem;
   letter-spacing: -0.02em;
   text-decoration: none;
 }
 .brand span {
   color: var(--recomp);
+  text-shadow: 0 0 12px rgb(124 240 197 / 0.5);
+}
+.brand::after {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 0.15em;
+  vertical-align: -0.15em;
+  background: var(--recomp);
+  box-shadow: 0 0 10px rgb(124 240 197 / 0.7);
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand::after {
+    animation: none;
+  }
 }
 .site-header nav {
   display: flex;
-  gap: 1.1rem;
-  font-size: 0.95rem;
+  gap: 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
 }
 .site-header nav a {
   text-decoration: none;
@@ -83,53 +122,92 @@ main,
 .site-header nav a[aria-current="page"] {
   color: var(--fg);
 }
+.site-header nav a[aria-current="page"] {
+  box-shadow: 0 2px 0 var(--recomp);
+}
+.nav-count {
+  color: var(--faint);
+  margin-left: 0.25rem;
+}
 .site-footer {
-  margin-top: 4rem;
+  margin-top: 5rem;
   padding-top: 1.5rem;
-  padding-bottom: 2.5rem;
+  padding-bottom: 3rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.85rem;
 }
+h1,
+h2,
+h3 {
+  font-family: var(--sans);
+  letter-spacing: -0.02em;
+}
 h1 {
-  font-size: clamp(1.7rem, 4vw, 2.4rem);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  margin: 1.5rem 0 0.6rem;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.05;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem;
 }
 h2 {
-  font-size: 1.25rem;
-  letter-spacing: -0.01em;
+  font-size: 1.3rem;
+  font-weight: 650;
+}
+.glow {
+  color: var(--recomp);
+  text-shadow:
+    0 0 18px rgb(124 240 197 / 0.45),
+    0 0 2px rgb(124 240 197 / 0.6);
+}
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
 }
 .lede {
   color: var(--muted);
-  max-width: 46rem;
-  font-size: 1.05rem;
+  max-width: 44rem;
+  font-size: 1.1rem;
 }
 section {
-  margin-top: 2.5rem;
+  margin-top: 3.5rem;
+}
+.mono {
+  font-family: var(--mono);
 }
 .badge {
   display: inline-block;
   padding: 0.05rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
   font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
   border: 1px solid var(--line);
   color: var(--muted);
   white-space: nowrap;
 }
 .badge.recomp {
   color: var(--recomp);
-  border-color: color-mix(in srgb, var(--recomp) 45%, transparent);
+  border-color: rgb(124 240 197 / 0.35);
+  background: rgb(124 240 197 / 0.06);
 }
 .badge.port {
   color: var(--port);
-  border-color: color-mix(in srgb, var(--port) 45%, transparent);
+  border-color: rgb(255 179 92 / 0.35);
+  background: rgb(255 179 92 / 0.06);
+}
+.badge.tool {
+  color: #a9b4ff;
+  border-color: rgb(169 180 255 / 0.35);
+  background: rgb(169 180 255 / 0.06);
 }
 .badge.pre {
   color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  border-color: rgb(255 79 123 / 0.35);
 }
 .muted {
   color: var(--muted);
@@ -141,4 +219,9 @@ section {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
+}
+/* Platform logos are monochrome-ised so they sit in the theme. */
+.logo-img {
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
 }

@@ -1,88 +1,133 @@
 ---
-import { ago, entryPath, KINDS, OS_LABELS, PLATFORMS, type Entry } from "../lib/data.ts";
+import { ago, entryPath, fitLogo, KINDS, OS_LABELS, PLATFORMS, platformLogo, type Entry } from "../lib/data.ts";
 
 interface Props {
   entry: Entry;
 }
 const { entry: e } = Astro.props;
 const searchText = [e.game, e.repo, e.tool, PLATFORMS[e.platform]].filter(Boolean).join(" ").toLowerCase();
+const logo = platformLogo(e.platform);
+const box = logo && fitLogo(logo, 72, 18);
 ---
 
-<li
-  class="card"
-  data-platform={e.platform}
-  data-kind={e.kind}
-  data-os={e.os.join(" ")}
-  data-search={searchText}
->
+<li class={`card ${e.kind}`} data-platform={e.platform} data-kind={e.kind} data-os={e.os.join(" ")} data-search={searchText}>
   <div class="top">
     <span class={`badge ${e.kind}`} title={KINDS[e.kind]}>{e.kind}</span>
-    <span class="badge">{PLATFORMS[e.platform]}</span>
     {e.snap?.archived && <span class="badge">archived</span>}
+    {logo && box ? <img class="logo-img plat" src={logo.src} width={box.w} height={box.h} alt={PLATFORMS[e.platform]} title={PLATFORMS[e.platform]} loading="lazy" /> : <span class="plat-text">{PLATFORMS[e.platform]}</span>}
   </div>
   <h3><a href={entryPath(e)}>{e.game}</a></h3>
-  <p class="repo muted">{e.repo}{e.tool && <> · {e.tool}</>}</p>
+  <p class="repo">{e.repo}{e.tool && <span class="tool"> · {e.tool}</span>}</p>
   {
     e.latest ? (
       <p class="release">
-        <a href={e.latest.url}>{e.latest.name && e.latest.name.length <= 28 ? e.latest.name : e.latest.tag}</a>
-        {e.latest.prerelease && <span class="badge pre">pre-release</span>}
-        <span class="muted"> · {ago(e.latest.publishedAt)}</span>
+        <a href={e.latest.url}>{e.latest.name && e.latest.name.length <= 26 ? e.latest.name : e.latest.tag}</a>
+        {e.latest.prerelease && <span class="badge pre">pre</span>}
+        <span class="when">{ago(e.latest.publishedAt)}</span>
       </p>
     ) : (
       <p class="release muted">No release yet</p>
     )
   }
-  {e.os.length > 0 && <p class="os muted">{e.os.map((o) => OS_LABELS[o]).join(" · ")}</p>}
+  {e.os.length > 0 && <p class="os">{e.os.map((o) => OS_LABELS[o]).join(" · ")}</p>}
 </li>
 
 <style>
   .card {
+    position: relative;
     list-style: none;
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 0.85rem 1rem 0.9rem;
+    border-radius: 10px;
+    padding: 0.9rem 1rem 0.95rem;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.15rem;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s,
+      transform 0.15s;
+  }
+  .card:hover {
+    transform: translateY(-1px);
+  }
+  .card.recomp:hover {
+    border-color: rgb(124 240 197 / 0.45);
+    box-shadow: 0 0 0 1px rgb(124 240 197 / 0.15), 0 8px 30px -12px rgb(124 240 197 / 0.35);
+  }
+  .card.port:hover {
+    border-color: rgb(255 179 92 / 0.45);
+    box-shadow: 0 0 0 1px rgb(255 179 92 / 0.15), 0 8px 30px -12px rgb(255 179 92 / 0.35);
   }
   .card[hidden] {
     display: none;
   }
   .top {
     display: flex;
+    align-items: center;
     gap: 0.35rem;
-    flex-wrap: wrap;
+    min-height: 1.4rem;
+  }
+  .plat {
+    margin-left: auto;
+    opacity: 0.55;
+  }
+  .card:hover .plat {
+    opacity: 0.9;
+  }
+  .plat-text {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--faint);
   }
   h3 {
-    margin: 0.35rem 0 0;
-    font-size: 1.02rem;
-    line-height: 1.3;
+    margin: 0.45rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.25;
   }
   h3 a {
     text-decoration: none;
   }
-  h3 a:hover {
-    text-decoration: underline;
+  h3 a::after {
+    /* whole card is clickable */
+    content: "";
+    position: absolute;
+    inset: 0;
   }
   p {
     margin: 0;
     font-size: 0.85rem;
   }
   .repo {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--faint);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   .release {
+    position: relative; /* above the card link */
+    z-index: 1;
     margin-top: auto;
-    padding-top: 0.45rem;
+    padding-top: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
-  .release .badge {
-    margin-left: 0.3rem;
+  .release a {
+    color: var(--fg);
+  }
+  .when {
+    margin-left: auto;
+    color: var(--muted);
   }
   .os {
-    font-size: 0.78rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--faint);
   }
 </style>

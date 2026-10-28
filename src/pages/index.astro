@@ -2,31 +2,80 @@
 import GameCard from "../components/GameCard.astro";
 import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
-import { ago, games, generatedAt, KINDS, OS_LABELS, PLATFORMS, platformsInUse } from "../lib/data.ts";
+import { ago, fitLogo, games, generatedAt, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolUsers, tools } from "../lib/data.ts";
 
 const month = Date.now() - 30 * 86_400_000;
 const releasedThisMonth = games.filter((g) => g.latestReleaseAt && Date.parse(g.latestReleaseAt) >= month).length;
 const newThisMonth = games.filter((g) => g.firstReleaseAt && Date.parse(g.firstReleaseAt) >= month).length;
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
+const stats = [
+  { n: games.length, label: "playable projects" },
+  { n: platformsInUse.length, label: "original platforms" },
+  { n: newThisMonth, label: "first released in 30 days" },
+  { n: releasedThisMonth, label: "updated in 30 days" },
+];
+const toolStrip = tools.slice(0, 8);
 ---
 
 <Base>
-  <h1>Classic games, recompiled to run natively.</h1>
-  <p class="lede">
-    Static recompilations and source ports turn console games into native PC (and phone) programs. New ones are appearing
-    every week — recomp.party keeps track of the ones you can actually play.
-  </p>
-  <p class="stats muted">
-    <strong>{games.length}</strong> playable projects on <strong>{platformsInUse.length}</strong> platforms ·{" "}
-    <strong>{newThisMonth}</strong> first released in the last 30 days · <strong>{releasedThisMonth}</strong> shipped
-    an update in the last 30 days · data refreshed {ago(generatedAt)}
-  </p>
+  <div class="hero">
+    <p class="eyebrow">Static recompilations &amp; source ports</p>
+    <h1>Classic games, <span class="glow">recompiled</span> to run natively.</h1>
+    <p class="lede">
+      Console games turned into native PC (and phone) programs. New ones ship every week — recomp.party keeps track of
+      the ones you can actually play.
+    </p>
+  </div>
+
+  <dl class="stats">
+    {
+      stats.map((s) => (
+        <div>
+          <dt>{s.label}</dt>
+          <dd>{s.n}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <p class="refreshed mono">data refreshed {ago(generatedAt)}</p>
 
   <Timeline games={games} />
 
+  <section aria-labelledby="toolchains">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Under the hood</p>
+        <h2 id="toolchains">Toolchains</h2>
+      </div>
+      <a class="more mono" href="/tools/">All {tools.length} toolchains →</a>
+    </div>
+    <ul class="tools">
+      {
+        toolStrip.map((t) => {
+          const logo = platformLogo(t.platform);
+          const n = toolUsers(t).length;
+          return (
+            <li>
+              <a href={t.url}>
+                <span class="tool-top">
+                  {logo ? <img class="logo-img" src={logo.src} width={fitLogo(logo, 80, 16).w} height={fitLogo(logo, 80, 16).h} alt={PLATFORMS[t.platform]} loading="lazy" /> : <span class="mono muted">{PLATFORMS[t.platform]}</span>}
+                </span>
+                <strong>{t.game}</strong>
+                <span class="mono muted">{n > 0 ? `${n} ${n === 1 ? "game" : "games"} here` : `★ ${t.snap?.stars.toLocaleString("en")}`}</span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+
   <section aria-labelledby="all-games">
-    <div class="list-head">
-      <h2 id="all-games">All games</h2>
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Sorted by latest release</p>
+        <h2 id="all-games">All games</h2>
+      </div>
       <form class="filters" id="filters" role="search" onsubmit="return false">
         <label class="visually-hidden" for="f-q">Search</label>
         <input id="f-q" name="q" type="search" placeholder="Search games…" autocomplete="off" />
@@ -48,7 +97,7 @@ const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o
         </select>
       </form>
     </div>
-    <p class="muted count" id="count" aria-live="polite">Sorted by latest release.</p>
+    <p class="muted count mono" id="count" aria-live="polite">{games.length} games</p>
     <ul class="grid" id="games">
       {games.map((g) => <GameCard entry={g} />)}
     </ul>
@@ -74,28 +123,124 @@ const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o
         c.hidden = !ok;
         if (ok) shown++;
       }
-      count.textContent = shown === cards.length ? "Sorted by latest release." : `${shown} of ${cards.length} shown.`;
+      count.textContent = shown === cards.length ? `${cards.length} games` : `${shown} of ${cards.length} games`;
     };
     form.addEventListener("input", apply);
   })();
 </script>
 
 <style>
+  .hero {
+    padding-top: 1rem;
+  }
+  .hero .eyebrow {
+    margin: 2.5rem 0 0;
+    color: var(--recomp);
+  }
+  .hero h1 {
+    margin-top: 0.6rem;
+    max-width: 24ch;
+  }
   .stats {
-    font-size: 0.9rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin: 2.2rem 0 0;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
   }
-  .stats strong {
-    color: var(--fg);
+  @media (max-width: 720px) {
+    .stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
-  .list-head {
+  .stats div {
+    background: var(--surface);
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .stats dt {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .stats dd {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .stats div:nth-child(3) dd {
+    color: var(--recomp);
+    text-shadow: 0 0 16px rgb(124 240 197 / 0.4);
+  }
+  .refreshed {
+    margin: 0.5rem 0 0;
+    font-size: 0.7rem;
+    color: var(--faint);
+    text-align: right;
+  }
+  .sec-head {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
-    gap: 0.6rem 1rem;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1rem;
   }
-  .list-head h2 {
+  .sec-head h2 {
+    margin: 0.2rem 0 0;
+  }
+  .more {
+    font-size: 0.8rem;
+    color: var(--recomp);
+    text-decoration: none;
+  }
+  .more:hover {
+    text-decoration: underline;
+  }
+  .tools {
+    list-style: none;
+    padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 0.6rem;
+  }
+  .tools a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    height: 100%;
+    padding: 0.8rem 0.9rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: border-color 0.15s;
+  }
+  .tools a:hover {
+    border-color: rgb(169 180 255 / 0.5);
+  }
+  .tool-top {
+    height: 16px;
+    margin-bottom: 0.35rem;
+  }
+  .tool-top img {
+    opacity: 0.6;
+  }
+  .tool-top .mono {
+    font-size: 0.68rem;
+  }
+  .tools strong {
+    font-size: 0.95rem;
+  }
+  .tools .mono {
+    font-size: 0.7rem;
   }
   .filters {
     display: flex;
@@ -104,25 +249,30 @@ const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o
   }
   .filters input,
   .filters select {
-    font: inherit;
-    font-size: 0.88rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
     color: var(--fg);
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 0.35rem 0.55rem;
+    border-radius: 6px;
+    padding: 0.45rem 0.6rem;
+  }
+  .filters input:focus,
+  .filters select:focus {
+    border-color: rgb(124 240 197 / 0.5);
+    outline: none;
   }
   .filters input {
-    min-width: 12rem;
+    min-width: 13rem;
   }
   .count {
-    font-size: 0.85rem;
-    margin: 0.5rem 0 0.8rem;
+    font-size: 0.72rem;
+    margin: -0.4rem 0 0.8rem;
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.7rem;
     padding: 0;
     margin: 0;
   }

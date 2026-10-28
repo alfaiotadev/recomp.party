@@ -13,7 +13,10 @@ const defaultView = "1y";
 <section class="timeline" aria-label="Release timeline by platform">
   {layouts.map((l) => <input type="radio" name="tl-view" id={`tl-${l.view.id}`} checked={l.view.id === defaultView} />)}
   <div class="tl-head">
-    <h2>Release timeline</h2>
+    <div>
+      <p class="eyebrow">Release timeline</p>
+      <h2>One lane per original platform</h2>
+    </div>
     <div class="tl-tabs" role="group" aria-label="Time range">
       {layouts.map((l) => <label for={`tl-${l.view.id}`}>{l.view.label}</label>)}
     </div>
@@ -32,10 +35,16 @@ const defaultView = "1y";
             {l.lanes.map((lane, i) => (
               <g class="lane">
                 <rect class={i % 2 ? "lane-bg odd" : "lane-bg"} x="0" y={lane.y} width={W} height={lane.height} />
-                <text class="lane-name" x="8" y={lane.y + 17}>
-                  {lane.name}
-                </text>
-                <text class="lane-count" x="8" y={lane.y + 31}>
+                {lane.logo ? (
+                  <image class="logo-img" href={lane.logo.src} x="12" y={lane.y + 10 + (24 - lane.logo.h) / 2} width={lane.logo.w} height={lane.logo.h}>
+                    <title>{lane.name}</title>
+                  </image>
+                ) : (
+                  <text class="lane-name" x="12" y={lane.y + 28}>
+                    {lane.name}
+                  </text>
+                )}
+                <text class="lane-count" x="12" y={lane.y + 48}>
                   {lane.rows.length} {lane.rows.length === 1 ? "project" : "projects"}
                 </text>
               </g>
@@ -83,22 +92,26 @@ const defaultView = "1y";
   .tl-head {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: end;
     justify-content: space-between;
-    gap: 0.5rem 1rem;
+    gap: 0.75rem 1rem;
   }
   .tl-head h2 {
-    margin: 0;
+    margin: 0.2rem 0 0;
   }
   .tl-tabs {
     display: inline-flex;
+    padding: 3px;
+    gap: 2px;
     border: 1px solid var(--line);
-    border-radius: 999px;
-    overflow: hidden;
+    border-radius: 8px;
+    background: var(--surface);
   }
   .tl-tabs label {
-    padding: 0.3rem 0.85rem;
-    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
     cursor: pointer;
     color: var(--muted);
   }
@@ -108,13 +121,20 @@ const defaultView = "1y";
   #tl-3m:checked ~ .tl-head label[for="tl-3m"],
   #tl-1y:checked ~ .tl-head label[for="tl-1y"],
   #tl-all:checked ~ .tl-head label[for="tl-all"] {
-    background: var(--fg);
-    color: var(--bg);
+    background: var(--surface-2);
+    color: var(--recomp);
+    box-shadow: inset 0 0 0 1px rgb(124 240 197 / 0.3);
   }
   #tl-3m:focus-visible ~ .tl-head label[for="tl-3m"],
   #tl-1y:focus-visible ~ .tl-head label[for="tl-1y"],
   #tl-all:focus-visible ~ .tl-head label[for="tl-all"] {
     outline: 2px solid var(--recomp);
+  }
+  .tl-views {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    overflow: hidden;
   }
   .tl-view {
     display: none;
@@ -127,15 +147,16 @@ const defaultView = "1y";
   }
   .tl-legend {
     color: var(--muted);
-    font-size: 0.85rem;
-    margin: 0.6rem 0 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    margin: 0.9rem 0 0.9rem;
   }
   .sw {
     display: inline-block;
-    width: 0.7rem;
-    height: 0.7rem;
+    width: 0.65rem;
+    height: 0.65rem;
     border-radius: 50%;
-    margin: 0 0.25rem 0 0.6rem;
+    margin: 0 0.3rem 0 1rem;
     vertical-align: -0.05rem;
   }
   .sw:first-child {
@@ -143,20 +164,21 @@ const defaultView = "1y";
   }
   .sw.recomp {
     background: var(--recomp);
+    box-shadow: 0 0 8px var(--recomp);
   }
   .sw.port {
     background: var(--port);
+    box-shadow: 0 0 8px var(--port);
   }
   .sw.pre {
     border: 2px solid var(--muted);
-    background: var(--bg);
   }
   svg {
     display: block;
     width: 100%;
     min-width: 760px;
     height: auto;
-    font-family: inherit;
+    font-family: var(--sans);
   }
   .lane-bg {
     fill: transparent;
@@ -170,24 +192,27 @@ const defaultView = "1y";
     fill: var(--fg);
   }
   .lane-count {
-    font-size: 10px;
-    fill: var(--muted);
+    font-family: var(--mono);
+    font-size: 9.5px;
+    fill: var(--faint);
   }
   .tick line {
     stroke: var(--line);
     stroke-width: 1;
   }
   .tick.major line {
-    stroke: var(--muted);
+    stroke: var(--faint);
     stroke-dasharray: 2 3;
   }
   .tick text {
-    font-size: 10px;
-    fill: var(--muted);
+    font-family: var(--mono);
+    font-size: 9.5px;
+    fill: var(--faint);
   }
   .now {
     stroke: var(--accent);
     stroke-width: 1.5;
+    filter: drop-shadow(0 0 3px var(--accent));
   }
   .row .hit {
     fill: transparent;
@@ -197,9 +222,9 @@ const defaultView = "1y";
     fill: var(--hover);
   }
   .bar {
-    stroke-width: 3;
+    stroke-width: 2.5;
     stroke-linecap: round;
-    opacity: 0.55;
+    opacity: 0.5;
   }
   .bar-clip {
     fill: none;
@@ -219,8 +244,17 @@ const defaultView = "1y";
   .row.port .dot {
     fill: var(--port);
   }
+  .row .dot {
+    filter: drop-shadow(0 0 2.5px currentColor);
+  }
+  .row.recomp {
+    color: var(--recomp);
+  }
+  .row.port {
+    color: var(--port);
+  }
   .row .dot.pre {
-    fill: var(--bg);
+    fill: var(--surface);
     stroke-width: 1.5;
   }
   .row.recomp .dot.pre {
@@ -232,7 +266,7 @@ const defaultView = "1y";
   .label {
     font-size: 11px;
     fill: var(--fg);
-    stroke: var(--bg);
+    stroke: var(--surface);
     stroke-width: 3px;
     stroke-linejoin: round;
     paint-order: stroke;
@@ -241,6 +275,9 @@ const defaultView = "1y";
     stroke: var(--lane);
   }
   .row:hover .label {
-    text-decoration: underline;
+    fill: currentColor;
+  }
+  .row:hover .bar {
+    opacity: 0.9;
   }
 </style>
