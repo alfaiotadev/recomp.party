@@ -68,9 +68,12 @@ export type PlatformOfWeek = {
   /** Weeks this platform has been #1 (over the release history we have), and its current run. */
   weeksOnTop: number;
   streak: number;
+  /** This week's top platforms by release count, the winner first. */
+  ranking: { id: PlatformId; name: string; logo: Logo | undefined; releases: number }[];
 };
 
-type WeekResult = { id: PlatformId; list: { entry: Entry; releases: number }[]; releases: number };
+type Ranked = { id: PlatformId; list: { entry: Entry; releases: number }[]; releases: number };
+type WeekResult = Ranked & { ranked: Ranked[] };
 
 /** The platform whose projects shipped the most releases in [start, end); ties go to more projects. */
 function winner(start: number, end: number): WeekResult | undefined {
@@ -86,8 +89,10 @@ function winner(start: number, end: number): WeekResult | undefined {
   const byPlatform = new Map<PlatformId, typeof perGame>();
   for (const g of perGame) byPlatform.set(g.entry.platform, [...(byPlatform.get(g.entry.platform) ?? []), g]);
   const sum = (l: typeof perGame) => l.reduce((n, g) => n + g.releases, 0);
-  const best = [...byPlatform.entries()].sort((a, b) => sum(b[1]) - sum(a[1]) || b[1].length - a[1].length)[0];
-  return best && { id: best[0], list: best[1], releases: sum(best[1]) };
+  const ranked = [...byPlatform.entries()]
+    .sort((a, b) => sum(b[1]) - sum(a[1]) || b[1].length - a[1].length)
+    .map(([id, list]) => ({ id, list, releases: sum(list) }));
+  return ranked[0] && { ...ranked[0], ranked };
 }
 
 /**
@@ -117,6 +122,7 @@ function platformOfWeek(): PlatformOfWeek | undefined {
     top: current.list.sort((a, b) => b.releases - a.releases).slice(0, 4),
     weeksOnTop,
     streak,
+    ranking: current.ranked.slice(0, 5).map((r) => ({ id: r.id, name: PLATFORMS[r.id], logo: platformLogo(r.id), releases: r.releases })),
   };
 }
 

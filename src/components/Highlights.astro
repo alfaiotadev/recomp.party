@@ -74,20 +74,26 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <header>
               <p class="eyebrow">most releases in 7 days</p>
               <h2>Platform of the week</h2>
-              <div class="plat-hero">
-                {platform.logo ? (
-                  <img class="logo-img" src={platform.logo.src} {...(() => { const b = fitLogo(platform.logo!, 220, 56); return { width: b.w, height: b.h }; })()} alt={platform.name} />
-                ) : (
-                  <span class="plat-name">{platform.name}</span>
-                )}
-                <p class="mono">
-                  <span class="glow">{platform.releases}</span> releases · {platform.projects} {platform.projects === 1 ? "project" : "projects"}
-                </p>
-                <p class="mono weeks">
-                  #1 for <b>{platform.weeksOnTop}</b> {platform.weeksOnTop === 1 ? "week" : "weeks"} in total
-                  {platform.streak > 1 && <> · {platform.streak} in a row</>}
-                </p>
-              </div>
+              <ol class="plat-rank" aria-label="Releases in the last 7 days by platform">
+                {platform.ranking.map((r, k) => {
+                  // equal visual area, so square marks (Switch) aren't dwarfed by wide wordmarks
+                  const h = r.logo && Math.min(15, Math.sqrt(230 / r.logo.aspect), 44 / r.logo.aspect);
+                  const box = r.logo && h && { w: +(h * r.logo.aspect).toFixed(1), h: +h.toFixed(1) };
+                  return (
+                    <li class={k === 0 ? "win" : ""}>
+                      <span class="r-plat" title={r.name}>
+                        {r.logo && box ? <img class="logo-img" src={r.logo.src} width={box.w} height={box.h} alt={r.name} /> : <span class="r-text">{r.name.split(" ")[0]}</span>}
+                      </span>
+                      <span class="r-bar"><span style={`width:${(r.releases / platform.ranking[0]!.releases) * 100}%`} /></span>
+                      <span class="r-n mono">{r.releases}</span>
+                    </li>
+                  );
+                })}
+              </ol>
+              <p class="mono weeks">
+                {platform.name} #1 for <b>{platform.weeksOnTop}</b> {platform.weeksOnTop === 1 ? "week" : "weeks"} in total
+                {platform.streak > 1 && <> · {platform.streak} in a row</>}
+              </p>
             </header>
             <ol class="items">
               {platform.top.map((t) => (
@@ -349,24 +355,71 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   .meta img {
     opacity: 0.55;
   }
-  .plat-hero {
-    margin-top: 1rem;
+  .plat-rank {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
   }
-  .plat-hero img {
-    opacity: 0.9;
-    filter: brightness(0) invert(1) drop-shadow(0 0 10px rgb(124 240 197 / 0.35));
+  .plat-rank li {
+    display: grid;
+    grid-template-columns: 46px 1fr 2.2rem;
+    align-items: center;
+    gap: 0.5rem;
   }
-  .plat-hero p {
-    margin: 0.6rem 0 0;
-    font-size: 0.8rem;
+  .r-plat {
+    display: flex;
+    align-items: center;
+    height: 16px;
+  }
+  .r-plat img {
+    opacity: 0.55;
+  }
+  .plat-rank li.win .r-plat img {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 6px rgb(124 240 197 / 0.5));
+  }
+  .r-text {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    font-weight: 700;
     color: var(--muted);
+    text-transform: uppercase;
   }
-  .plat-hero .weeks {
-    margin-top: 0.25rem;
+  .r-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: rgb(255 255 255 / 0.04);
+    overflow: hidden;
+  }
+  .r-bar span {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    background: var(--faint);
+    opacity: 0.7;
+  }
+  .plat-rank li.win .r-bar span {
+    background: var(--recomp);
+    opacity: 1;
+    box-shadow: 0 0 8px rgb(124 240 197 / 0.6);
+  }
+  .r-n {
     font-size: 0.72rem;
+    color: var(--muted);
+    text-align: right;
+  }
+  .plat-rank li.win .r-n {
+    color: var(--recomp);
+    font-weight: 600;
+  }
+  .weeks {
+    margin: 0.7rem 0 0;
+    font-size: 0.68rem;
     color: var(--faint);
   }
-  .plat-hero .weeks b {
+  .weeks b {
     color: var(--port);
     font-weight: 600;
   }
