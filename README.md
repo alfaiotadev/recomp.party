@@ -46,10 +46,11 @@ still runs but only reports candidates for manual review.
 
 | Provider | Secret(s) | Default model (override with env) |
 |---|---|---|
-| Google Gemini | `GEMINI_API_KEY` (also enables web search with Google Search grounding) | `gemini-flash-latest` (`GEMINI_MODEL`) |
-| Groq | `GROQ_API_KEY` | `llama-3.3-70b-versatile` (`GROQ_MODEL`) |
-| Mistral | `MISTRAL_API_KEY` | `mistral-small-latest` (`MISTRAL_MODEL`) |
-| OpenRouter | `OPENROUTER_API_KEY` | `meta-llama/llama-3.3-70b-instruct:free` (`OPENROUTER_MODEL`) |
+| Google Gemini | `GEMINI_API_KEY` (also web search via Google Search grounding — needs a billed project) | `gemini-3.5-flash` (`GEMINI_MODEL`) |
+| Groq | `GROQ_API_KEY` | `openai/gpt-oss-120b` (`GROQ_MODEL`) |
+| Mistral | `MISTRAL_API_KEY` | `ministral-14b-latest` (`MISTRAL_MODEL`) |
+| NVIDIA | `NVIDIA_API_KEY` | `nvidia/nemotron-3.5-lightning-30b-a3b` (`NVIDIA_MODEL`) |
+| OpenRouter | `OPENROUTER_API_KEY` | `openrouter/free` (`OPENROUTER_MODEL`) |
 | Cloudflare Workers AI | `CLOUDFLARE_ACCOUNT_ID` + `CLOUDFLARE_AI_TOKEN` | `@cf/meta/llama-3.3-70b-instruct-fp8-fast` (`CLOUDFLARE_MODEL`) |
 
 Ground rules: README text and web results are untrusted input — the model only returns a JSON verdict that is

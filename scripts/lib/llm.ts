@@ -16,25 +16,33 @@ function providers(): Provider[] {
     {
       name: "gemini",
       url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-      model: env.GEMINI_MODEL ?? "gemini-flash-latest",
+      model: env.GEMINI_MODEL ?? "gemini-3.5-flash",
       key: env.GEMINI_API_KEY,
     },
     {
       name: "groq",
       url: "https://api.groq.com/openai/v1/chat/completions",
-      model: env.GROQ_MODEL ?? "llama-3.3-70b-versatile",
+      model: env.GROQ_MODEL ?? "openai/gpt-oss-120b",
       key: env.GROQ_API_KEY,
     },
     {
       name: "mistral",
       url: "https://api.mistral.ai/v1/chat/completions",
-      model: env.MISTRAL_MODEL ?? "mistral-small-latest",
+      // Free "Experiment" keys hit 429 on small/medium quickly; ministral answers reliably.
+      model: env.MISTRAL_MODEL ?? "ministral-14b-latest",
       key: env.MISTRAL_API_KEY,
+    },
+    {
+      name: "nvidia",
+      url: "https://integrate.api.nvidia.com/v1/chat/completions",
+      model: env.NVIDIA_MODEL ?? "nvidia/nemotron-3.5-lightning-30b-a3b",
+      key: env.NVIDIA_API_KEY,
     },
     {
       name: "openrouter",
       url: "https://openrouter.ai/api/v1/chat/completions",
-      model: env.OPENROUTER_MODEL ?? "meta-llama/llama-3.3-70b-instruct:free",
+      // "openrouter/free" routes to whichever free model is up; slower (~10 s) but resilient.
+      model: env.OPENROUTER_MODEL ?? "openrouter/free",
       key: env.OPENROUTER_API_KEY,
     },
     {
@@ -102,13 +110,14 @@ export async function chatJSON<T>(
 }
 
 /**
- * Ask Gemini with Google Search grounding (free tier) and return the answer text.
+ * Ask Gemini with Google Search grounding and return the answer text. Grounding may need a billed
+ * Google AI project (free keys get 429 RESOURCE_EXHAUSTED); in that case the source just yields nothing.
  * Used only to surface candidate URLs; everything it returns is re-verified against GitHub.
  */
 export async function groundedSearch(prompt: string): Promise<string | null> {
   const key = process.env.GEMINI_API_KEY;
   if (!key) return null;
-  const model = process.env.GEMINI_SEARCH_MODEL ?? process.env.GEMINI_MODEL ?? "gemini-flash-latest";
+  const model = process.env.GEMINI_SEARCH_MODEL ?? process.env.GEMINI_MODEL ?? "gemini-3.5-flash";
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST",
     headers: { "x-goog-api-key": key, "content-type": "application/json" },
