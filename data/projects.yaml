@@ -1,0 +1,405 @@
+# recomp.party — curated list of playable recomps and ports.
+#
+# Inclusion: a game project must have at least one published release you can
+# download and run (with your own game files). Toolchains (kind: tool) are listed
+# for context. Decompilations are not tracked as entries, but a port should credit
+# the decomp it builds on in `based_on`.
+#
+# Fields: see data/schema.ts. Keep entries grouped by platform, alphabetical by game.
+
+# --- Nintendo 64 ---------------------------------------------------------------
+- repo: BanjoRecomp/BanjoRecomp
+  game: Banjo-Kazooie
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [n64decomp/banjo-kazooie]
+  added: 2026-10-28
+- repo: HarbourMasters/Lighthouse
+  game: Banjo-Kazooie
+  platform: n64
+  kind: port
+  based_on: [n64decomp/banjo-kazooie]
+  added: 2026-10-28
+- repo: RevoSucks/BM64Recomp
+  game: Bomberman 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: sciaschi/CBFD-Recompiled
+  game: Conker's Bad Fur Day
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: DahSidiAbdallah/ConkerBFDReloaded
+  game: Conker's Bad Fur Day
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: DinosaurPlanetRecomp/dino-recomp
+  game: Dinosaur Planet (2000 prototype)
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: Rainchus/Donkey-Kong-64-Recompiled
+  game: Donkey Kong 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: Zorkats/G-Diffuser
+  game: F-Zero X
+  platform: n64
+  kind: port
+  based_on: [inspectredc/fzerox]
+  added: 2026-10-28
+- repo: 2ship2harkinian/2ship2harkinian
+  game: "The Legend of Zelda: Majora's Mask"
+  platform: n64
+  kind: port
+  based_on: [zeldaret/mm]
+  added: 2026-10-28
+- repo: Zelda64Recomp/Zelda64Recomp
+  game: "The Legend of Zelda: Majora's Mask"
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [zeldaret/mm]
+  added: 2026-10-28
+- repo: HarbourMasters/Shipwright
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: n64
+  kind: port
+  based_on: [zeldaret/oot]
+  added: 2026-10-28
+- repo: HarbourMasters/SpaghettiKart
+  game: Mario Kart 64
+  platform: n64
+  kind: port
+  based_on: [n64decomp/mk64]
+  added: 2026-10-28
+- repo: sonicdcer/MarioKart64Recomp
+  game: Mario Kart 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [n64decomp/mk64]
+  added: 2026-10-28
+- repo: MegaMan64Recomp/MegaMan64Recompiled
+  game: Mega Man 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: klorfmorf/Goemon64Recomp
+  game: Mystical Ninja Starring Goemon
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: perfect-dark-pc-port/perfect_dark
+  game: Perfect Dark
+  platform: n64
+  kind: port
+  based_on: [n64decomp/perfect_dark]
+  added: 2026-10-28
+- repo: JackandBeans/Snap64Recomp
+  game: Pokémon Snap
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: Rainchus/Quest64-Recomp
+  game: Quest 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+- repo: HarbourMasters/Starship
+  game: Star Fox 64
+  platform: n64
+  kind: port
+  based_on: [sonicdcer/sf64]
+  added: 2026-10-28
+- repo: sonicdcer/Starfox64Recomp
+  game: Star Fox 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [sonicdcer/sf64]
+  added: 2026-10-28
+- repo: HarbourMasters/Ghostship
+  game: Super Mario 64
+  platform: n64
+  kind: port
+  based_on: [n64decomp/sm64]
+  added: 2026-10-28
+- repo: coop-deluxe/sm64coopdx
+  game: Super Mario 64 (online co-op)
+  platform: n64
+  kind: port
+  based_on: [n64decomp/sm64]
+  added: 2026-10-28
+- repo: JRickey/BattleShip
+  game: Super Smash Bros.
+  platform: n64
+  kind: port
+  based_on: [VetriTheRetri/ssb-decomp-re]
+  added: 2026-10-28
+- repo: jessetbh/WWFNoMercyRecomp
+  game: WWF No Mercy
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-28
+
+# --- SNES ----------------------------------------------------------------------
+- repo: elliotttate/DKC1Recomp
+  game: Donkey Kong Country
+  platform: snes
+  kind: recomp
+  added: 2026-10-28
+- repo: snesrev/zelda3
+  game: "The Legend of Zelda: A Link to the Past"
+  platform: snes
+  kind: port
+  note: C reimplementation that reads assets from your own ROM.
+  added: 2026-10-28
+
+# --- GameCube / Wii ------------------------------------------------------------
+- repo: flyngmt/ACGC-PC-Port
+  game: Animal Crossing
+  platform: gc
+  kind: port
+  based_on: [ACreTeam/ac-decomp]
+  added: 2026-10-28
+- repo: rob646464/luigis-mansion-recompiled
+  game: Luigi's Mansion
+  platform: gc
+  kind: recomp
+  added: 2026-10-28
+- repo: TwilitRealm/dusklight
+  game: "The Legend of Zelda: Twilight Princess"
+  platform: gc
+  kind: port
+  based_on: [zeldaret/tp]
+  added: 2026-10-28
+- repo: Apolinario-coder/SkyRecomp
+  game: "The Legend of Zelda: Skyward Sword"
+  platform: wii
+  kind: recomp
+  added: 2026-10-28
+
+# --- Switch --------------------------------------------------------------------
+- repo: K0NL/B2recomp
+  game: Bayonetta 2
+  platform: switch
+  kind: recomp
+  added: 2026-10-28
+- repo: Revivedx/SavageWindRecomp
+  game: "The Legend of Zelda: Breath of the Wild"
+  platform: switch
+  kind: recomp
+  added: 2026-10-28
+- repo: yozander2009-stack/Metroid-Dread-Recomp
+  game: Metroid Dread
+  platform: switch
+  kind: recomp
+  added: 2026-10-28
+- repo: OpenSmash-Ultimate/ssbu-recomp
+  game: Super Smash Bros. Ultimate
+  platform: switch
+  kind: recomp
+  added: 2026-10-28
+
+# --- Nintendo DS ---------------------------------------------------------------
+- repo: mstan/MetroidPrimeHuntersRecomp
+  game: Metroid Prime Hunters
+  platform: nds
+  kind: recomp
+  tool: ndsrecomp
+  added: 2026-10-28
+
+# --- PlayStation ---------------------------------------------------------------
+- repo: BlackLabelHQ/SymphonyRecomp
+  game: "Castlevania: Symphony of the Night"
+  platform: ps1
+  kind: recomp
+  tool: RecompOne
+  added: 2026-10-28
+- repo: SlickAmogus/silent-hill-decomp
+  game: Silent Hill
+  platform: ps1
+  kind: port
+  added: 2026-10-28
+- repo: Unchiga/Yu-Gi-Oh-Forbidden-Memories-Recompiled
+  game: "Yu-Gi-Oh! Forbidden Memories"
+  platform: ps1
+  kind: recomp
+  added: 2026-10-28
+- repo: open-goal/jak-project
+  game: Jak and Daxter series
+  platform: ps2
+  kind: port
+  note: OpenGOAL — decompiles and recompiles the GOAL language the games were written in.
+  added: 2026-10-28
+- repo: elmasas/lcs-recomp
+  game: "Grand Theft Auto: Liberty City Stories"
+  platform: psp
+  kind: recomp
+  tool: PSPRecomp
+  added: 2026-10-28
+- repo: OverkillLabs3/driveclub-recomp
+  game: Driveclub
+  platform: ps4
+  kind: recomp
+  added: 2026-10-28
+
+# --- Xbox 360 ------------------------------------------------------------------
+- repo: sal063/AC6_recomp
+  game: "Ace Combat 6: Fires of Liberation"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: birabittoh/NocturneRecomp
+  game: "Castlevania: Symphony of the Night (XBLA)"
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+- repo: FrankHUN88453/CoD3Recomp
+  game: Call of Duty 3
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+- repo: psxrestore/Condemned2Recomp
+  game: "Condemned 2: Bloodshot"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: florinp93/hells-gate-recomp
+  game: Dante's Inferno
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: himdo/Fable-2-Recomp
+  game: Fable II
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: SunJaycy/GoldenEye-Recomp
+  game: GoldenEye 007 (XBLA)
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: freefrank/LostOdysseyRecomp
+  game: Lost Odyssey
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+- repo: LittleBitUA/DownpourRecomp
+  game: "Silent Hill: Downpour"
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+- repo: mchughalex/skate3recomp
+  game: Skate 3
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+- repo: hedge-dev/UnleashedRecomp
+  game: Sonic Unleashed
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  added: 2026-10-28
+- repo: goliathret/EdgeOfTimeRecomp
+  game: "Spider-Man: Edge of Time"
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+- repo: portingpete/The-Darkness-Recomp
+  game: The Darkness
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+- repo: YesterMester/TheSimpsonsGameRecomp
+  game: The Simpsons Game
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-28
+- repo: SolarCookies/TiP-Recomp
+  game: "Viva Piñata: Trouble in Paradise"
+  platform: x360
+  kind: recomp
+  added: 2026-10-28
+
+# --- PC ------------------------------------------------------------------------
+- repo: codepdbh/nfsu2-recompiled
+  game: "Need for Speed: Underground 2"
+  platform: pc
+  kind: recomp
+  added: 2026-10-28
+- repo: RSDKModding/RSDKv3-Decompilation
+  game: Sonic CD (2011)
+  platform: pc
+  kind: port
+  note: Decompilation of the Retro Engine v3 mobile/PC release.
+  added: 2026-10-28
+- repo: RSDKModding/RSDKv4-Decompilation
+  game: Sonic 1 & 2 (2013)
+  platform: pc
+  kind: port
+  note: Decompilation of the Retro Engine v4 mobile/PC release.
+  added: 2026-10-28
+
+# --- Toolchains ----------------------------------------------------------------
+- repo: N64Recomp/N64Recomp
+  game: "N64: Recompiled"
+  platform: n64
+  kind: tool
+  added: 2026-10-28
+- repo: RetroPortingToolKit/ndsrecomp
+  game: ndsrecomp
+  platform: nds
+  kind: tool
+  added: 2026-10-28
+- repo: BlackLabelHQ/RecompOne
+  game: RecompOne
+  platform: ps1
+  kind: tool
+  added: 2026-10-28
+- repo: ran-j/PS2Recomp
+  game: PS2Recomp
+  platform: ps2
+  kind: tool
+  added: 2026-10-28
+- repo: sp00nznet/ps3recomp
+  game: ps3recomp
+  platform: ps3
+  kind: tool
+  added: 2026-10-28
+- repo: jessicanataliagta/PSPRecomp
+  game: PSPRecomp
+  platform: psp
+  kind: tool
+  added: 2026-10-28
+- repo: hedge-dev/XenonRecomp
+  game: XenonRecomp
+  platform: x360
+  kind: tool
+  added: 2026-10-28
+- repo: rexglue/rexglue-sdk
+  game: ReXGlue SDK
+  platform: x360
+  kind: tool
+  added: 2026-10-28

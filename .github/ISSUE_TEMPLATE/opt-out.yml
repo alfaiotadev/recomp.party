@@ -1,0 +1,25 @@
+name: Correction or opt-out (maintainers)
+description: Your project is listed wrongly, or you'd rather it not be listed at all.
+title: "Opt-out / correction: "
+labels: [opt-out]
+body:
+  - type: input
+    id: repo
+    attributes:
+      label: Your repository
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: request
+    attributes:
+      label: Request
+      options:
+        - Remove my project from recomp.party
+        - Correct the listing
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details

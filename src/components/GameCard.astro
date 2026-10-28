@@ -1,0 +1,88 @@
+---
+import { ago, entryPath, KINDS, OS_LABELS, PLATFORMS, type Entry } from "../lib/data.ts";
+
+interface Props {
+  entry: Entry;
+}
+const { entry: e } = Astro.props;
+const searchText = [e.game, e.repo, e.tool, PLATFORMS[e.platform]].filter(Boolean).join(" ").toLowerCase();
+---
+
+<li
+  class="card"
+  data-platform={e.platform}
+  data-kind={e.kind}
+  data-os={e.os.join(" ")}
+  data-search={searchText}
+>
+  <div class="top">
+    <span class={`badge ${e.kind}`} title={KINDS[e.kind]}>{e.kind}</span>
+    <span class="badge">{PLATFORMS[e.platform]}</span>
+    {e.snap?.archived && <span class="badge">archived</span>}
+  </div>
+  <h3><a href={entryPath(e)}>{e.game}</a></h3>
+  <p class="repo muted">{e.repo}{e.tool && <> · {e.tool}</>}</p>
+  {
+    e.latest ? (
+      <p class="release">
+        <a href={e.latest.url}>{e.latest.name && e.latest.name.length <= 28 ? e.latest.name : e.latest.tag}</a>
+        {e.latest.prerelease && <span class="badge pre">pre-release</span>}
+        <span class="muted"> · {ago(e.latest.publishedAt)}</span>
+      </p>
+    ) : (
+      <p class="release muted">No release yet</p>
+    )
+  }
+  {e.os.length > 0 && <p class="os muted">{e.os.map((o) => OS_LABELS[o]).join(" · ")}</p>}
+</li>
+
+<style>
+  .card {
+    list-style: none;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.85rem 1rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .card[hidden] {
+    display: none;
+  }
+  .top {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+  h3 {
+    margin: 0.35rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.3;
+  }
+  h3 a {
+    text-decoration: none;
+  }
+  h3 a:hover {
+    text-decoration: underline;
+  }
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+  .repo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .release {
+    margin-top: auto;
+    padding-top: 0.45rem;
+  }
+  .release .badge {
+    margin-left: 0.3rem;
+  }
+  .os {
+    font-size: 0.78rem;
+  }
+</style>

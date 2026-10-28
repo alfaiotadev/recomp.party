@@ -1,0 +1,22 @@
+name: Suggest a project
+description: A playable static recompilation or source port that recomp.party is missing.
+title: "Suggest: "
+labels: [suggestion]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        recomp.party lists projects that have a **published release** you can run with your own copy of the game.
+        A bot checks the link and opens a pull request; a human reviews it before anything goes live.
+  - type: input
+    id: repo
+    attributes:
+      label: GitHub repository
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: Game, original platform, the decompilation it builds on, …

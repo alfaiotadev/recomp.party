@@ -1,0 +1,129 @@
+---
+import GameCard from "../components/GameCard.astro";
+import Timeline from "../components/Timeline.astro";
+import Base from "../layouts/Base.astro";
+import { ago, games, generatedAt, KINDS, OS_LABELS, PLATFORMS, platformsInUse } from "../lib/data.ts";
+
+const month = Date.now() - 30 * 86_400_000;
+const releasedThisMonth = games.filter((g) => g.latestReleaseAt && Date.parse(g.latestReleaseAt) >= month).length;
+const newThisMonth = games.filter((g) => g.firstReleaseAt && Date.parse(g.firstReleaseAt) >= month).length;
+const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
+---
+
+<Base>
+  <h1>Classic games, recompiled to run natively.</h1>
+  <p class="lede">
+    Static recompilations and source ports turn console games into native PC (and phone) programs. New ones are appearing
+    every week — recomp.party keeps track of the ones you can actually play.
+  </p>
+  <p class="stats muted">
+    <strong>{games.length}</strong> playable projects on <strong>{platformsInUse.length}</strong> platforms ·{" "}
+    <strong>{newThisMonth}</strong> first released in the last 30 days · <strong>{releasedThisMonth}</strong> shipped
+    an update in the last 30 days · data refreshed {ago(generatedAt)}
+  </p>
+
+  <Timeline games={games} />
+
+  <section aria-labelledby="all-games">
+    <div class="list-head">
+      <h2 id="all-games">All games</h2>
+      <form class="filters" id="filters" role="search" onsubmit="return false">
+        <label class="visually-hidden" for="f-q">Search</label>
+        <input id="f-q" name="q" type="search" placeholder="Search games…" autocomplete="off" />
+        <label class="visually-hidden" for="f-platform">Platform</label>
+        <select id="f-platform" name="platform">
+          <option value="">All platforms</option>
+          {platformsInUse.map((p) => <option value={p}>{PLATFORMS[p]}</option>)}
+        </select>
+        <label class="visually-hidden" for="f-kind">Kind</label>
+        <select id="f-kind" name="kind">
+          <option value="">Recomps &amp; ports</option>
+          <option value="recomp">{KINDS.recomp}</option>
+          <option value="port">{KINDS.port}</option>
+        </select>
+        <label class="visually-hidden" for="f-os">Runs on</label>
+        <select id="f-os" name="os">
+          <option value="">Any OS</option>
+          {osInUse.map((o) => <option value={o}>{OS_LABELS[o]}</option>)}
+        </select>
+      </form>
+    </div>
+    <p class="muted count" id="count" aria-live="polite">Sorted by latest release.</p>
+    <ul class="grid" id="games">
+      {games.map((g) => <GameCard entry={g} />)}
+    </ul>
+  </section>
+</Base>
+
+<script is:inline>
+  (() => {
+    const form = document.getElementById("filters");
+    const cards = [...document.querySelectorAll("#games > li")];
+    const count = document.getElementById("count");
+    const apply = () => {
+      const f = Object.fromEntries(new FormData(form));
+      const q = (f.q || "").trim().toLowerCase();
+      let shown = 0;
+      for (const c of cards) {
+        const d = c.dataset;
+        const ok =
+          (!f.platform || d.platform === f.platform) &&
+          (!f.kind || d.kind === f.kind) &&
+          (!f.os || d.os.split(" ").includes(f.os)) &&
+          (!q || d.search.includes(q));
+        c.hidden = !ok;
+        if (ok) shown++;
+      }
+      count.textContent = shown === cards.length ? "Sorted by latest release." : `${shown} of ${cards.length} shown.`;
+    };
+    form.addEventListener("input", apply);
+  })();
+</script>
+
+<style>
+  .stats {
+    font-size: 0.9rem;
+  }
+  .stats strong {
+    color: var(--fg);
+  }
+  .list-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+  }
+  .list-head h2 {
+    margin: 0;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .filters input,
+  .filters select {
+    font: inherit;
+    font-size: 0.88rem;
+    color: var(--fg);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.35rem 0.55rem;
+  }
+  .filters input {
+    min-width: 12rem;
+  }
+  .count {
+    font-size: 0.85rem;
+    margin: 0.5rem 0 0.8rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+  }
+</style>

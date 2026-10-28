@@ -1,0 +1,60 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description = "A tracker for playable static recompilations and source ports of classic games." } = Astro.props;
+const fullTitle = title ? `${title} · recomp.party` : "recomp.party — playable recomps & ports";
+const nav = [
+  { href: "/", label: "Games" },
+  { href: "/tools/", label: "Toolchains" },
+  { href: "/about/", label: "About" },
+];
+const here = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(here, Astro.site)} />
+    <link rel="canonical" href={new URL(here, Astro.site)} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="recomp.party releases" href="/feed.xml" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">recomp<span>.party</span></a>
+      <nav>
+        {
+          nav.map((n) => (
+            <a href={n.href} aria-current={(n.href === "/" ? here === "/" : here.startsWith(n.href)) ? "page" : undefined}>
+              {n.label}
+            </a>
+          ))
+        }
+        <a href="/feed.xml" title="RSS feed of new releases">RSS</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>
+        Data from the GitHub API, refreshed every six hours. Curated by hand, with AI-assisted suggestions.{" "}
+        <a href="https://github.com/alfaiotadev/recomp.party">Source &amp; submissions on GitHub</a>.
+      </p>
+      <p>
+        recomp.party links to projects; it hosts no games or game files. All projects require your own legally obtained
+        copy of the game.
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+name: Discover projects
+
+# Weekly: search GitHub, Hacker News and (with GEMINI_API_KEY) the web for new playable recomps/ports,
+# classify them with free LLM tiers, and open one pull request for a human to review.
+on:
+  schedule:
+    - cron: "41 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      days:
+        description: Look back this many days
+        default: "30"
+
+permissions:
+  contents: write
+  pull-requests: write
+  models: read
+
+concurrency:
+  group: discover
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: run
+        run: npm run discover
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCOVER_DAYS: ${{ inputs.days || '30' }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_AI_TOKEN: ${{ secrets.CLOUDFLARE_AI_TOKEN }}
+      # PRs opened with GITHUB_TOKEN don't trigger CI, so check the proposal here.
+      - run: npm run validate && npm run build
+      - uses: peter-evans/create-pull-request@v8
+        with:
+          branch: discover/weekly
+          delete-branch: true
+          add-paths: |
+            data/projects.yaml
+            data/rejected.yaml
+          commit-message: "data: discovery proposals"
+          title: "New project candidates"
+          body-path: tmp/discover-report.md
+          labels: discovery

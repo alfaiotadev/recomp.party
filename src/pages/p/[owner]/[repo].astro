@@ -1,0 +1,232 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { ago, creditLink, entryPath, games, KINDS, OS_LABELS, PLATFORMS, shortDate, tools, type Entry } from "../../../lib/data.ts";
+
+export function getStaticPaths() {
+  return games.map((entry) => {
+    const [owner, repo] = entry.slug.split("/");
+    return { params: { owner, repo }, props: { entry } };
+  });
+}
+
+interface Props {
+  entry: Entry;
+}
+const { entry: e } = Astro.props;
+const s = e.snap;
+const sameGame = games.filter((g) => g !== e && g.game.replace(/ \(.*\)$/, "") === e.game.replace(/ \(.*\)$/, ""));
+const tool = e.tool ? tools.find((t) => t.game === e.tool || t.repo.split("/")[1] === e.tool) : undefined;
+
+// Release strip: every release as a dot across the project's lifetime.
+const dates = (s?.releaseDates ?? []).map((r) => ({ t: Date.parse(r.date), pre: r.prerelease })).reverse();
+const t0 = dates[0]?.t ?? Date.now();
+const t1 = Math.max(Date.now(), t0 + 86_400_000);
+const sx = (t: number) => 10 + ((t - t0) / (t1 - t0)) * 780;
+
+const facts: [string, string | undefined][] = [
+  ["Platform", PLATFORMS[e.platform]],
+  ["Kind", KINDS[e.kind]],
+  ["Releases", s ? String(s.releaseCount) : undefined],
+  ["First release", e.firstReleaseAt && shortDate(e.firstReleaseAt)],
+  ["Latest release", e.latestReleaseAt && `${shortDate(e.latestReleaseAt)} (${ago(e.latestReleaseAt)})`],
+  ["Last commit", s && ago(s.pushedAt)],
+  ["Runs on", e.os.length ? e.os.map((o) => OS_LABELS[o]).join(", ") : undefined],
+  ["License", s?.license ?? "none specified"],
+  ["GitHub stars", s?.stars.toLocaleString("en")],
+];
+---
+
+<Base title={e.game} description={`${e.game} (${PLATFORMS[e.platform]}) — ${KINDS[e.kind].toLowerCase()} by ${e.repo}. ${s?.description ?? ""}`}>
+  <p class="crumbs muted"><a href="/">Games</a> / {PLATFORMS[e.platform]}</p>
+  <h1>{e.game}</h1>
+  <p class="badges">
+    <span class={`badge ${e.kind}`}>{KINDS[e.kind]}</span>
+    <span class="badge">{PLATFORMS[e.platform]}</span>
+    {s?.archived && <span class="badge">archived</span>}
+    {s?.isFork && <span class="badge">fork</span>}
+  </p>
+  {s?.description && <p class="lede">{s.description}</p>}
+  {e.note && <p>{e.note}</p>}
+
+  <p class="actions">
+    {e.latest && <a class="btn primary" href={e.latest.url}>Latest release: {e.latest.tag}</a>}
+    <a class="btn" href={e.url}>{e.repo} on GitHub</a>
+    {s?.homepage && <a class="btn" href={s.homepage}>Website</a>}
+  </p>
+
+  <div class="cols">
+    <section>
+      <h2>Facts</h2>
+      <dl>
+        {
+          facts
+            .filter(([, v]) => v)
+            .map(([k, v]) => (
+              <>
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </>
+            ))
+        }
+        {
+          e.tool && (
+            <>
+              <dt>Built with</dt>
+              <dd>{tool ? <a href={tool.url}>{e.tool}</a> : e.tool}</dd>
+            </>
+          )
+        }
+        {
+          e.based_on?.length && (
+            <>
+              <dt>Builds on</dt>
+              <dd>
+                {e.based_on.map((c, i) => {
+                  const l = creditLink(c);
+                  return (
+                    <>
+                      {i > 0 && ", "}
+                      <a href={l.href}>{l.label}</a>
+                    </>
+                  );
+                })}
+              </dd>
+            </>
+          )
+        }
+      </dl>
+    </section>
+
+    <section>
+      <h2>Recent releases</h2>
+      {
+        dates.length > 1 && (
+          <svg class="strip" viewBox="0 0 800 30" role="img" aria-label={`${dates.length} releases since ${shortDate(new Date(t0).toISOString())}`}>
+            <line x1="10" x2="790" y1="15" y2="15" />
+            {dates.map((d) => (
+              <circle class={`${e.kind}${d.pre ? " pre" : ""}`} cx={sx(d.t)} cy="15" r="5" />
+            ))}
+          </svg>
+        )
+      }
+      <ol class="releases">
+        {
+          s?.releases.map((r) => (
+            <li>
+              <a href={r.url}>{r.name || r.tag}</a>
+              {r.prerelease && <span class="badge pre">pre-release</span>}
+              <span class="muted">
+                {" "}
+                · {shortDate(r.publishedAt)}
+                {r.os.length > 0 && <> · {r.os.map((o) => OS_LABELS[o]).join(", ")}</>}
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </div>
+
+  {
+    sameGame.length > 0 && (
+      <section>
+        <h2>Other projects for this game</h2>
+        <ul>
+          {sameGame.map((g) => (
+            <li>
+              <a href={entryPath(g)}>{g.repo}</a> <span class={`badge ${g.kind}`}>{g.kind}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .crumbs {
+    margin: 1.5rem 0 -1rem;
+    font-size: 0.85rem;
+  }
+  .badges {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    font-size: 0.92rem;
+    background: var(--card);
+  }
+  .btn:hover {
+    border-color: var(--muted);
+  }
+  .btn.primary {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 0 2.5rem;
+  }
+  @media (max-width: 760px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  }
+  dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35rem 1rem;
+    margin: 0;
+    font-size: 0.92rem;
+  }
+  dt {
+    color: var(--muted);
+  }
+  dd {
+    margin: 0;
+  }
+  .strip {
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+  .strip line {
+    stroke: var(--line);
+    stroke-width: 2;
+  }
+  .strip circle.recomp {
+    fill: var(--recomp);
+  }
+  .strip circle.port {
+    fill: var(--port);
+  }
+  .strip circle.pre {
+    fill: var(--bg);
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+  .releases {
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+  }
+  .releases li {
+    margin-bottom: 0.3rem;
+  }
+  .releases .badge {
+    margin-left: 0.35rem;
+  }
+</style>

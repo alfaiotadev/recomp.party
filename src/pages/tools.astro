@@ -1,0 +1,70 @@
+---
+import Base from "../layouts/Base.astro";
+import { entryPath, games, PLATFORMS, tools } from "../lib/data.ts";
+
+const usedBy = (name: string, repo: string) => games.filter((g) => g.tool && (g.tool === name || g.tool === repo.split("/")[1]));
+---
+
+<Base title="Toolchains" description="The static recompilers and runtimes behind the recomps on recomp.party.">
+  <h1>Toolchains</h1>
+  <p class="lede">
+    The recompilers and runtimes that the game projects are built with. Most recomps pair one of these with a
+    game-specific runtime, patches and renderer.
+  </p>
+  <ul class="tools">
+    {
+      tools.map((t) => {
+        const users = usedBy(t.game, t.repo);
+        return (
+          <li>
+            <h2>
+              <a href={t.url}>{t.game}</a>
+            </h2>
+            <p class="muted">
+              {PLATFORMS[t.platform]} · {t.repo} · ★ {t.snap?.stars.toLocaleString("en")}
+            </p>
+            {t.snap?.description && <p>{t.snap.description}</p>}
+            {users.length > 0 && (
+              <p class="used">
+                Used by:{" "}
+                {users.map((u, i) => (
+                  <>
+                    {i > 0 && ", "}
+                    <a href={entryPath(u)}>{u.game}</a>
+                  </>
+                ))}
+              </p>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</Base>
+
+<style>
+  .tools {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 0.9rem;
+  }
+  .tools li {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+  }
+  .tools h2 {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  .tools p {
+    margin: 0.3rem 0 0;
+    font-size: 0.9rem;
+  }
+  .used {
+    font-size: 0.85rem !important;
+  }
+</style>
