@@ -1,15 +1,20 @@
 import { entryPath, fitLogo, PLATFORMS, platformLogo, platformsInUse, type Entry } from "./data.ts";
 
-/** Layout for the swimlane timeline: one lane per source platform, one row per project. */
+/**
+ * Layout for the swimlane timeline: one lane per source platform, one row per project.
+ * Columns: platform logo | game name (left-aligned) | time axis.
+ */
 
-export const W = 1000;
+export const W = 1140;
 const LABEL_W = 132;
+export const NAME_X = LABEL_W + 4;
+const NAME_W = 236;
+const MAX_CHARS = Math.floor((NAME_W - 14) / 6.1); // ~6.1 px per 11px character
 const PAD_R = 12;
 const ROW_H = 18;
 const LANE_PAD = 6;
 const MIN_LANE_H = 58; // room for the platform logo + project count
 export const AXIS_H = 22;
-const CHAR_W = 6.1; // rough width of one 11px character, for label placement
 
 export type TimelineView = { id: string; label: string; start: number; end: number; ticks: "month" | "year" };
 
@@ -21,7 +26,10 @@ export type Row = {
   x2: number;
   clipped: boolean;
   dots: { x: number; prerelease: boolean; date: string }[];
-  label: { x: number; anchor: "start" | "end" };
+  name: string;
+  truncated: boolean;
+  /** Faint leader from the end of the name to the start of the bar, if there's a gap. */
+  guide: { x1: number; x2: number } | null;
 };
 
 export type Lane = {
@@ -75,7 +83,7 @@ function ticksFor(view: TimelineView, x: (t: number) => number): Layout["ticks"]
 }
 
 export function layout(games: Entry[], view: TimelineView, now = Date.now()): Layout {
-  const plotL = LABEL_W;
+  const plotL = NAME_X + NAME_W;
   const plotR = W - PAD_R;
   const x = (t: number) => plotL + ((t - view.start) / (view.end - view.start)) * (plotR - plotL);
 
@@ -93,14 +101,8 @@ export function layout(games: Entry[], view: TimelineView, now = Date.now()): La
       const first = Date.parse(entry.firstReleaseAt!);
       const x1 = x(Math.max(first, view.start));
       const x2 = x(Date.parse(entry.latestReleaseAt!));
-      const textW = entry.game.length * CHAR_W;
-      // Beside the bar if there's room (right, then left); otherwise on top of the bar with a halo.
-      const label: Row["label"] =
-        x2 + 7 + textW <= plotR
-          ? { x: x2 + 7, anchor: "start" }
-          : x1 - 7 - textW >= plotL
-            ? { x: x1 - 7, anchor: "end" }
-            : { x: x1 + 12, anchor: "start" };
+      const short = entry.game.replace(/^The Legend of Zelda: /, "Zelda: ");
+      const name = short.length > MAX_CHARS ? `${short.slice(0, MAX_CHARS - 1).trimEnd()}…` : short;
       const row: Row = {
         entry,
         href: entryPath(entry),
@@ -111,7 +113,9 @@ export function layout(games: Entry[], view: TimelineView, now = Date.now()): La
         dots: (entry.snap?.releaseDates ?? [])
           .filter((r) => Date.parse(r.date) >= view.start)
           .map((r) => ({ x: x(Date.parse(r.date)), prerelease: r.prerelease, date: r.date })),
-        label,
+        name,
+        truncated: name !== entry.game,
+        guide: x1 - 6 - (NAME_X + name.length * 6.1 + 8) > 10 ? { x1: NAME_X + name.length * 6.1 + 8, x2: x1 - 6 } : null,
       };
       y += ROW_H;
       return row;
