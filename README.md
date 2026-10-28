@@ -19,7 +19,7 @@ timeline (one lane per original platform) of how the scene is moving.
 - [Suggest a project](../../issues/new?template=suggest-project.yml) — a bot checks it and opens a pull request.
 - Maintainers: [correction or opt-out](../../issues/new?template=opt-out.yml). Opted-out repos go to
   `data/rejected.yaml` so they are never proposed again.
-- Or edit [`data/projects.yaml`](data/projects.yaml) directly in a pull request.
+- Or edit [`data/projects.yaml`](data/projects.yaml) directly in a pull request (then `npm run format`).
 
 ## How it works
 

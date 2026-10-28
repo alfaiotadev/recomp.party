@@ -8,8 +8,9 @@
     "preview": "astro preview",
     "fetch": "tsx scripts/fetch.ts",
     "discover": "tsx scripts/discover.ts",
-    "validate": "tsx scripts/validate.ts",
-    "check": "tsc --noEmit"
+    "validate": "tsx scripts/validate.ts && tsx scripts/format.ts --check",
+    "check": "tsc --noEmit",
+    "format": "tsx scripts/format.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

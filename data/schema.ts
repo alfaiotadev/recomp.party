@@ -20,6 +20,7 @@ export const PLATFORMS = {
   ps2: "PlayStation 2",
   ps3: "PlayStation 3",
   ps4: "PlayStation 4",
+  ps5: "PlayStation 5",
   psp: "PSP",
   xbox: "Xbox",
   x360: "Xbox 360",
