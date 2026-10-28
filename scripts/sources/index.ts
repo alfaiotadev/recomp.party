@@ -82,3 +82,40 @@ export async function fromWebSearch(days: number): Promise<Candidate[]> {
   if (!text) return [];
   return githubSlugs(text).map((repo) => ({ repo, via: "web search (Gemini grounding)" }));
 }
+
+/** PixelCherryNinja's daily emulation/recomp news posts (Blogger JSON feed). */
+export async function fromPixelCherryNinja(days: number): Promise<Candidate[]> {
+  const since = new Date(Date.now() - days * 86_400_000).toISOString();
+  const url = `https://pixelcherryninja.blogspot.com/feeds/posts/default?alt=json&max-results=150&published-min=${encodeURIComponent(since)}`;
+  try {
+    const res = (await (await fetch(url, { signal: AbortSignal.timeout(30_000) })).json()) as {
+      feed: { entry?: { title: { $t: string }; content?: { $t: string }; link: { rel: string; href: string }[] }[] };
+    };
+    return (res.feed.entry ?? []).flatMap((e) => {
+      const post = e.link.find((l) => l.rel === "alternate")?.href ?? "PixelCherryNinja";
+      return githubSlugs(e.content?.$t ?? "").map((repo) => ({ repo, via: `PixelCherryNinja ${post}` }));
+    });
+  } catch (err) {
+    console.warn(`  [pcn] ${(err as Error).message}`);
+    return [];
+  }
+}
+
+/** MrSujano's video source lists, published as releases of github.com/MrSujano/Sources. */
+export async function fromMrSujano(days: number): Promise<Candidate[]> {
+  const since = Date.now() - days * 86_400_000;
+  try {
+    const releases = await rest<{ html_url: string; published_at: string; body: string | null }[]>(
+      "/repos/MrSujano/Sources/releases?per_page=100",
+    );
+    return releases
+      .filter((r) => Date.parse(r.published_at) >= since)
+      .flatMap((r) => githubSlugs(r.body ?? "").map((repo) => ({ repo, via: `MrSujano ${r.html_url}` })));
+  } catch (err) {
+    console.warn(`  [sujano] ${(err as Error).message}`);
+    return [];
+  }
+}
+
+/** Repos that are never recomps/ports: FPGA cores (MiSTer, openFPGA/Analogue Pocket), emulators' bookkeeping repos. */
+export const NOISE = /mister|openfpga|_pocket\b|^mister-devel\/|\/game-compatibility$/i;

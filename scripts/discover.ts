@@ -16,11 +16,19 @@ import { z } from "zod";
 import { formatProjects } from "./lib/format.ts";
 import { fetchRepos, rest } from "./lib/github.ts";
 import { chatJSON, llmAvailable } from "./lib/llm.ts";
-import { fromGitHubSearch, fromHackerNews, fromWebSearch, type Candidate } from "./sources/index.ts";
+import {
+  fromGitHubSearch,
+  fromHackerNews,
+  fromMrSujano,
+  fromPixelCherryNinja,
+  fromWebSearch,
+  NOISE,
+  type Candidate,
+} from "./sources/index.ts";
 
 const DAYS = Number(process.env.DISCOVER_DAYS ?? 30);
 const MIN_STARS = Number(process.env.DISCOVER_MIN_STARS ?? 10);
-const MAX_CLASSIFY = Number(process.env.DISCOVER_MAX ?? 40);
+const MAX_CLASSIFY = Number(process.env.DISCOVER_MAX ?? 50);
 const today = new Date().toISOString().slice(0, 10);
 
 const args = process.argv.slice(2);
@@ -33,11 +41,22 @@ let sourceSummary = "";
 if (only) {
   raw = only.map((r) => ({ repo: r.replace(/^https?:\/\/github\.com\//, "").replace(/\/$/, ""), via: "suggestion" }));
 } else {
-  const results = await Promise.all([fromGitHubSearch(DAYS), fromHackerNews(DAYS), fromWebSearch(DAYS)]);
+  const sources: [string, Promise<Candidate[]>][] = [
+    ["GitHub search", fromGitHubSearch(DAYS)],
+    ["PixelCherryNinja", fromPixelCherryNinja(DAYS)],
+    ["MrSujano", fromMrSujano(DAYS)],
+    ["Hacker News", fromHackerNews(DAYS)],
+    ["web search via Gemini", fromWebSearch(DAYS)],
+  ];
+  const results = await Promise.all(sources.map(([, p]) => p));
   raw = results.flat();
-  const [gh, hn, web] = results.map((r) => r.length);
-  const webNote = !process.env.GEMINI_API_KEY ? "not configured" : web ? `${web} mentions` : "no results or quota exhausted";
-  sourceSummary = `GitHub search (${gh} mentions), Hacker News (${hn}), web search via Gemini (${webNote})`;
+  sourceSummary = sources
+    .map(([name], i) => {
+      const n = results[i]!.length;
+      const note = name.includes("Gemini") && !n ? (process.env.GEMINI_API_KEY ? "no results or quota exhausted" : "not configured") : `${n}`;
+      return `${name} (${note})`;
+    })
+    .join(", ");
 }
 
 const projects = loadProjects();
@@ -52,7 +71,7 @@ const known = new Set(
 const via = new Map<string, Set<string>>();
 for (const c of raw) {
   const key = c.repo.toLowerCase();
-  if (known.has(key)) continue;
+  if (known.has(key) || (!only && NOISE.test(c.repo))) continue;
   if (!via.has(key)) via.set(key, new Set());
   via.get(key)!.add(c.via);
 }
@@ -82,7 +101,9 @@ for (const s of found) {
   if (why) skipped.push({ repo: s.canonical, why });
   else eligible.push(s);
 }
-eligible.sort((a, b) => b.stars - a.stars);
+// Repos a curator (news post, video, HN) pointed at go first; plain search hits fill the rest by stars.
+const curated = (s: RepoSnapshot) => [...(via.get(s.repo.toLowerCase()) ?? [])].some((v) => !v.startsWith("GitHub search"));
+eligible.sort((a, b) => Number(curated(b)) - Number(curated(a)) || b.stars - a.stars);
 const toClassify = eligible.slice(0, MAX_CLASSIFY);
 console.log(`${eligible.length} eligible after filters, classifying ${toClassify.length}.`);
 

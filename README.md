@@ -34,7 +34,7 @@ Astro static build  →  GitHub Pages  →  recomp.party
 |---|---|---|
 | `fetch.yml` | every 6 h | refresh `data/snapshot.json` (releases, stars, activity) and commit it |
 | `deploy.yml` | push to main, after fetch | validate, build with Astro, deploy to GitHub Pages |
-| `discover.yml` | weekly | find candidates (GitHub search, Hacker News, web search), classify with an LLM, open a PR |
+| `discover.yml` | weekly | find candidates (GitHub search, [PixelCherryNinja](https://pixelcherryninja.blogspot.com/) news posts, [MrSujano](https://github.com/MrSujano/Sources/releases) video sources, Hacker News, web search), classify with an LLM, open a PR |
 | `suggestion.yml` | issue labeled `suggestion` | classify the suggested repo, open a PR, reply on the issue |
 | `ci.yml` | pull requests | validate data, type-check, build |
 
