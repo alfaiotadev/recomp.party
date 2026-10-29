@@ -1,6 +1,6 @@
 /** Weekly highlights for the front-page carousel. Everything is computed at build time. */
 import { loadStarHistory } from "../../data/load.ts";
-import { games, PLATFORMS, platformLogo, tools, type Entry, type Logo, type PlatformId } from "./data.ts";
+import { games, PLATFORMS, platformLogo, type Entry, type Logo, type PlatformId } from "./data.ts";
 
 const DAY = 86_400_000;
 const now = Date.now();
@@ -9,6 +9,20 @@ const weekAgo = now - 7 * DAY;
 /** `value` is the headline (stars gained), `growth` the gain relative to the star count at the start. */
 export type Riser = { entry: Entry; value: string; stars: number; growth?: string };
 
+/** Stars gained by all games between consecutive days of data/stars.json; only repos present on both days count. */
+export type StarDay = { date: string; gained: number };
+function starTrend(): StarDay[] {
+  const history = loadStarHistory();
+  const dates = Object.keys(history).sort();
+  const repos = games.map((g) => g.repo);
+  return dates.slice(1).map((date, i) => {
+    const before = history[dates[i]!]!;
+    const after = history[date]!;
+    const gained = repos.reduce((n, r) => (before[r] !== undefined && after[r] !== undefined ? n + after[r] - before[r] : n), 0);
+    return { date, gained };
+  });
+}
+
 /**
  * Stars gained over the last week, from the daily counts fetch.ts records in data/stars.json
  * (GitHub no longer lists stargazers, so there is no way to backfill). With less than a week of
@@ -16,7 +30,7 @@ export type Riser = { entry: Entry; value: string; stars: number; growth?: strin
  * stars per day since creation instead.
  */
 function risers(): { title: string; note: string; items: Riser[] } {
-  const all = [...games, ...tools];
+  const all = games; // toolchains have their own page and the "Under the hood" section
   const history = loadStarHistory();
   const dates = Object.keys(history).sort();
   const target = new Date(weekAgo).toISOString().slice(0, 10);
@@ -145,4 +159,4 @@ function platformOfWeek(): PlatformOfWeek | undefined {
   };
 }
 
-export const highlights = { risers: risers(), fresh: newReleases(), platform: platformOfWeek() };
+export const highlights = { risers: risers(), starTrend: starTrend(), fresh: newReleases(), platform: platformOfWeek() };

@@ -2,8 +2,9 @@
 import { ago, entryPath, fitLogo, PLATFORMS, platformLogo } from "../lib/data.ts";
 import { highlights } from "../lib/highlights.ts";
 import CoverStack from "./CoverStack.astro";
+import StarTrend from "./StarTrend.astro";
 
-const { risers, fresh, platform } = highlights;
+const { risers, starTrend, fresh, platform } = highlights;
 const slides = [
   risers.items.length && { id: "rising", label: risers.title },
   fresh.items.length && { id: "fresh", label: fresh.title },
@@ -39,13 +40,14 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                 <svg class="star-fill" viewBox="0 0 16 16" aria-hidden="true"><path d={STAR_FILL} /></svg>
                 {risers.title}
               </h2>
+              <StarTrend days={starTrend} />
             </header>
             <ol class="items">
               {risers.items.map((r, i) => {
                 const logo = mini(r.entry.platform);
                 return (
                   <li>
-                    <a href={r.entry.kind === "tool" ? r.entry.url : entryPath(r.entry)} class={`item ${r.entry.kind}${r.entry.cover ? " has-art" : ""}`}>
+                    <a href={entryPath(r.entry)} class={`item ${r.entry.kind}${r.entry.cover ? " has-art" : ""}`}>
                       {r.entry.cover && <img class="art" src={r.entry.cover.src} width={r.entry.cover.width} height={r.entry.cover.height} alt="" loading="lazy" decoding="async" />}
                       <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
                       <span class="big mono">
@@ -390,8 +392,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     text-decoration: none;
     transition: border-color 0.15s, box-shadow 0.15s;
   }
-  .item.recomp:hover,
-  .item.tool:hover {
+  .item.recomp:hover {
     border-color: rgb(124 240 197 / 0.45);
     box-shadow: 0 6px 24px -12px rgb(124 240 197 / 0.5);
   }
@@ -418,8 +419,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     font-weight: 600;
     line-height: 1.1;
   }
-  .item.recomp .big,
-  .item.tool .big {
+  .item.recomp .big {
     color: var(--recomp);
     text-shadow: 0 0 14px rgb(124 240 197 / 0.4);
   }
