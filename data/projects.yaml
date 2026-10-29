@@ -390,6 +390,14 @@
   kind: port
   added: 2026-10-28
 
+# --- PlayStation 3 ---------------------------------------------------------------
+- repo: kastieloficial/RE-Code-Veronica-PS3-HD-Recomp-PC
+  game: "Resident Evil Code: Veronica X HD"
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  added: 2026-10-29
+
 # --- PlayStation 4 ---------------------------------------------------------------
 - repo: deadinside28/bloodborne_pc
   game: Bloodborne
