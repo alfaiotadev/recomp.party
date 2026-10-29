@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-29T13:08:37.082Z",
+  "generatedAt": "2026-10-29T18:42:55.787Z",
   "repos": {
     "elliotttate/DKC1Recomp": {
       "repo": "elliotttate/DKC1Recomp",
       "canonical": "elliotttate/DKC1Recomp",
       "description": "Static recompilation of Donkey Kong Country (SNES USA v1.0) with native widescreen presentation and deterministic debugging tools",
       "homepage": null,
-      "stars": 277,
+      "stars": 278,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -23,7 +23,7 @@
             "windows",
             "macos"
           ],
-          "downloads": 9491
+          "downloads": 9556
         },
         {
           "tag": "v0.0.16",
@@ -35,7 +35,7 @@
             "windows",
             "macos"
           ],
-          "downloads": 374
+          "downloads": 375
         },
         {
           "tag": "v0.0.15",
@@ -148,7 +148,7 @@
       "canonical": "mstan/MegaManXSNESRecomp",
       "description": "Mega Man X recompiled for the Super Nintendo using snesrecomp · Part of the R.A.I.D. community",
       "homepage": "https://discord.gg/Ad9BwSzctP",
-      "stars": 217,
+      "stars": 219,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -164,7 +164,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 150
+          "downloads": 275
         },
         {
           "tag": "v2.3.8",
@@ -209,7 +209,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1789
+          "downloads": 1810
         }
       ],
       "releaseDates": [
@@ -593,7 +593,7 @@
       "canonical": "snesrev/zelda3",
       "description": null,
       "homepage": "https://discord.gg/AJJbJAzNNJ",
-      "stars": 4942,
+      "stars": 4943,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -607,7 +607,7 @@
           "publishedAt": "2023-08-17T01:18:40Z",
           "prerelease": false,
           "os": [],
-          "downloads": 23142
+          "downloads": 23172
         }
       ],
       "releaseDates": [
@@ -623,7 +623,7 @@
       "canonical": "BanjoRecomp/BanjoRecomp",
       "description": "PC Port of Banjo-Kazooie made using N64: Recompiled (Windows/Linux/Mac) ",
       "homepage": null,
-      "stars": 2106,
+      "stars": 2108,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -641,7 +641,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 30310
+          "downloads": 30438
         },
         {
           "tag": "v1.0.1",
@@ -654,7 +654,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 60847
+          "downloads": 60848
         },
         {
           "tag": "v1.0.0",
@@ -667,7 +667,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 58829
+          "downloads": 58832
         }
       ],
       "releaseDates": [
@@ -691,7 +691,7 @@
       "canonical": "HarbourMasters/Lighthouse",
       "description": "A Banjo-Kazooie PC port with Anchor multiplayer, romhack and multi-language support, and a built-in randomizer.",
       "homepage": "https://www.harbourmasters.org",
-      "stars": 533,
+      "stars": 534,
       "license": "CC0-1.0",
       "archived": false,
       "isFork": false,
@@ -709,7 +709,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 877
+          "downloads": 1105
         },
         {
           "tag": "1.2.0",
@@ -735,7 +735,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 16121
+          "downloads": 16123
         },
         {
           "tag": "1.0.3",
@@ -817,7 +817,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 155
+          "downloads": 181
         },
         {
           "tag": "v0.1.0-alpha.4.4",
@@ -861,7 +861,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 136
+          "downloads": 137
         }
       ],
       "releaseDates": [
@@ -927,7 +927,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 21722
+          "downloads": 21772
         }
       ],
       "releaseDates": [
@@ -961,7 +961,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 1457
+          "downloads": 1509
         },
         {
           "tag": "v0.2.28",
@@ -1174,7 +1174,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 601
+          "downloads": 730
         },
         {
           "tag": "v1.4.6",
@@ -1186,7 +1186,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 3256
+          "downloads": 3301
         },
         {
           "tag": "v1.4.5",
@@ -1198,7 +1198,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 548
+          "downloads": 549
         },
         {
           "tag": "v1.4.4",
@@ -1314,7 +1314,7 @@
       "canonical": "sciaschi/CBFD-Recompiled",
       "description": "Conker's Bad Fur Day Recompiled",
       "homepage": null,
-      "stars": 320,
+      "stars": 321,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -1332,7 +1332,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 5133
+          "downloads": 5179
         },
         {
           "tag": "V0.1.5",
@@ -1441,7 +1441,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 8471
+          "downloads": 8481
         },
         {
           "tag": "v0.2.0",
@@ -1533,7 +1533,7 @@
       "canonical": "Rainchus/Donkey-Kong-64-Recompiled",
       "description": null,
       "homepage": null,
-      "stars": 559,
+      "stars": 560,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -1551,7 +1551,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 14348
+          "downloads": 14476
         },
         {
           "tag": "1.0.2",
@@ -1637,7 +1637,7 @@
             "macos",
             "android"
           ],
-          "downloads": 42
+          "downloads": 49
         },
         {
           "tag": "v1.1.0",
@@ -1649,7 +1649,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 7449
+          "downloads": 7489
         },
         {
           "tag": "v1.0.2-rc2",
@@ -1661,7 +1661,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1612
+          "downloads": 1614
         },
         {
           "tag": "v1.0.2-rc1",
@@ -1738,7 +1738,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1154
+          "downloads": 1177
         },
         {
           "tag": "v1.0.1",
@@ -1750,7 +1750,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 11174
+          "downloads": 11288
         },
         {
           "tag": "v1.0",
@@ -1786,7 +1786,7 @@
       "canonical": "HarbourMasters/SpaghettiKart",
       "description": "I have spaghetti, now i just need a kart",
       "homepage": "https://harbourmasters.github.io/SpaghettiKart/",
-      "stars": 2467,
+      "stars": 2469,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -1804,7 +1804,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 85219
+          "downloads": 85506
         },
         {
           "tag": "0.9.9.1",
@@ -1816,7 +1816,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 154250
+          "downloads": 154252
         },
         {
           "tag": "0.9.9",
@@ -1852,7 +1852,7 @@
       "canonical": "sonicdcer/MarioKart64Recomp",
       "description": "Mario Kart 64 for PC (Windows/Linux/MacOS)",
       "homepage": null,
-      "stars": 623,
+      "stars": 624,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -1870,7 +1870,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 14927
+          "downloads": 14942
         },
         {
           "tag": "v0.9.1",
@@ -1896,7 +1896,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 14312
+          "downloads": 14314
         }
       ],
       "releaseDates": [
@@ -1938,7 +1938,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 10047
+          "downloads": 10087
         },
         {
           "tag": "v0.9.0",
@@ -2002,7 +2002,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 16094
+          "downloads": 16126
         },
         {
           "tag": "v0.1.0-dev",
@@ -2083,7 +2083,7 @@
       "canonical": "perfect-dark-pc-port/perfect_dark",
       "description": "work in progress port of n64decomp/perfect_dark to modern platforms",
       "homepage": null,
-      "stars": 2090,
+      "stars": 2091,
       "license": "MIT",
       "archived": false,
       "isFork": true,
@@ -2101,7 +2101,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 18899
+          "downloads": 18969
         }
       ],
       "releaseDates": [
@@ -2136,7 +2136,7 @@
             "macos",
             "android"
           ],
-          "downloads": 1574
+          "downloads": 1624
         },
         {
           "tag": "v1.1.5",
@@ -2282,7 +2282,7 @@
           "publishedAt": "2026-01-11T23:08:21Z",
           "prerelease": false,
           "os": [],
-          "downloads": 7854
+          "downloads": 7865
         }
       ],
       "releaseDates": [
@@ -2298,7 +2298,7 @@
       "canonical": "HarbourMasters/Starship",
       "description": "SF64 PC Port",
       "homepage": null,
-      "stars": 2123,
+      "stars": 2125,
       "license": "CC0-1.0",
       "archived": false,
       "isFork": false,
@@ -2315,7 +2315,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 150023
+          "downloads": 150123
         },
         {
           "tag": "v1.0.0",
@@ -2326,7 +2326,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 79072
+          "downloads": 79074
         }
       ],
       "releaseDates": [
@@ -2364,7 +2364,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 26900
+          "downloads": 26910
         },
         {
           "tag": "1.0.2",
@@ -2431,7 +2431,7 @@
       "canonical": "HarbourMasters/Ghostship",
       "description": null,
       "homepage": "https://ghostship.net64.dev/",
-      "stars": 873,
+      "stars": 874,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -2451,7 +2451,7 @@
             "android",
             "ios"
           ],
-          "downloads": 37480
+          "downloads": 37813
         },
         {
           "tag": "2.0.0",
@@ -2464,7 +2464,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 46491
+          "downloads": 46503
         },
         {
           "tag": "1.0.2",
@@ -2477,7 +2477,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 37451
+          "downloads": 37452
         },
         {
           "tag": "1.0.1",
@@ -2490,7 +2490,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 5508
+          "downloads": 5510
         },
         {
           "tag": "1.0.0",
@@ -2552,7 +2552,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 291696
+          "downloads": 292064
         },
         {
           "tag": "v1.5",
@@ -2578,7 +2578,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 287410
+          "downloads": 287412
         },
         {
           "tag": "v1.4",
@@ -2680,11 +2680,11 @@
       "canonical": "JRickey/BattleShip",
       "description": "A smashin' port for PC, Mac, and Linux!",
       "homepage": "https://discord.gg/bAE73kxKXY",
-      "stars": 524,
+      "stars": 526,
       "license": null,
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-28T15:10:54Z",
+      "pushedAt": "2026-10-29T15:16:22Z",
       "createdAt": "2026-04-04T19:48:25Z",
       "releases": [
         {
@@ -2699,7 +2699,7 @@
             "macos",
             "android"
           ],
-          "downloads": 27443
+          "downloads": 27636
         },
         {
           "tag": "v1.5.1",
@@ -2899,7 +2899,7 @@
       "canonical": "2ship2harkinian/2ship2harkinian",
       "description": null,
       "homepage": null,
-      "stars": 2394,
+      "stars": 2396,
       "license": "CC0-1.0",
       "archived": false,
       "isFork": false,
@@ -2917,7 +2917,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 59354
+          "downloads": 59661
         },
         {
           "tag": "5.0.0",
@@ -2930,7 +2930,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 14410
+          "downloads": 14412
         },
         {
           "tag": "4.0.2",
@@ -2943,7 +2943,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 119233
+          "downloads": 119235
         },
         {
           "tag": "4.0.1",
@@ -2969,7 +2969,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 33355
+          "downloads": 33358
         }
       ],
       "releaseDates": [
@@ -3045,7 +3045,7 @@
       "canonical": "Zelda64Recomp/Zelda64Recomp",
       "description": "Static recompilation of Majora's Mask (and soon Ocarina of Time) for PC (Windows/Linux/Mac)",
       "homepage": null,
-      "stars": 7558,
+      "stars": 7559,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -3063,7 +3063,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 124497
+          "downloads": 124624
         },
         {
           "tag": "v1.2.1",
@@ -3089,7 +3089,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 48254
+          "downloads": 48255
         },
         {
           "tag": "v1.1.1",
@@ -3153,7 +3153,7 @@
       "canonical": "HarbourMasters/Shipwright",
       "description": null,
       "homepage": "https://shipofharkinian.com",
-      "stars": 5787,
+      "stars": 5789,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -3171,7 +3171,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 41875
+          "downloads": 43047
         },
         {
           "tag": "9.3.0",
@@ -3184,7 +3184,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 53558
+          "downloads": 53568
         },
         {
           "tag": "9.2.3",
@@ -3197,7 +3197,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 631085
+          "downloads": 631099
         },
         {
           "tag": "9.2.2",
@@ -3223,7 +3223,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 49986
+          "downloads": 49988
         }
       ],
       "releaseDates": [
@@ -3463,7 +3463,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 1312
+          "downloads": 1331
         },
         {
           "tag": "v0.1.1",
@@ -3523,7 +3523,7 @@
           "publishedAt": "2026-08-02T00:56:51Z",
           "prerelease": true,
           "os": [],
-          "downloads": 10191
+          "downloads": 10221
         },
         {
           "tag": "v0.9.2-playtest",
@@ -3532,7 +3532,7 @@
           "publishedAt": "2026-07-10T23:04:48Z",
           "prerelease": true,
           "os": [],
-          "downloads": 2642
+          "downloads": 2645
         },
         {
           "tag": "v0.9.1.1-playtest",
@@ -3541,7 +3541,7 @@
           "publishedAt": "2026-06-03T21:54:15Z",
           "prerelease": true,
           "os": [],
-          "downloads": 3362
+          "downloads": 3363
         },
         {
           "tag": "v0.9.1-playtest",
@@ -3550,7 +3550,7 @@
           "publishedAt": "2026-05-30T01:57:04Z",
           "prerelease": true,
           "os": [],
-          "downloads": 650
+          "downloads": 651
         },
         {
           "tag": "v0.9.0.1-playtest",
@@ -3559,7 +3559,7 @@
           "publishedAt": "2026-04-12T23:45:29Z",
           "prerelease": true,
           "os": [],
-          "downloads": 5842
+          "downloads": 5843
         }
       ],
       "releaseDates": [
@@ -3625,7 +3625,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 1578
+          "downloads": 1915
         },
         {
           "tag": "v1.1.4",
@@ -3637,7 +3637,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 5419
+          "downloads": 5426
         },
         {
           "tag": "v1.1.3",
@@ -3649,7 +3649,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 521
+          "downloads": 523
         },
         {
           "tag": "v1.1.2",
@@ -3661,7 +3661,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 222
+          "downloads": 224
         },
         {
           "tag": "v1.1.1",
@@ -3673,7 +3673,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 785
+          "downloads": 786
         }
       ],
       "releaseDates": [
@@ -3717,11 +3717,11 @@
       "canonical": "Odrannnn/MetroidPrimePort",
       "description": "Native port of Metroid Prime (GameCube) for Linux, Windows and Android, built from the PrimeDecomp decompilation. No emulator, no game assets included: bring your own disc image.",
       "homepage": "https://github.com/Odrannnn/MetroidPrimePort/releases/latest",
-      "stars": 570,
+      "stars": 572,
       "license": null,
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T12:33:34Z",
+      "pushedAt": "2026-10-29T18:41:38Z",
       "createdAt": "2026-09-19T14:13:16Z",
       "releases": [
         {
@@ -3737,7 +3737,7 @@
             "android",
             "ios"
           ],
-          "downloads": 1157
+          "downloads": 1516
         },
         {
           "tag": "v0.35.0",
@@ -3752,7 +3752,7 @@
             "android",
             "ios"
           ],
-          "downloads": 1644
+          "downloads": 1647
         },
         {
           "tag": "v0.34.0",
@@ -3767,7 +3767,7 @@
             "android",
             "ios"
           ],
-          "downloads": 2109
+          "downloads": 2296
         },
         {
           "tag": "v0.33.1",
@@ -3781,7 +3781,7 @@
             "macos",
             "android"
           ],
-          "downloads": 2023
+          "downloads": 2024
         },
         {
           "tag": "v0.33.0",
@@ -3995,7 +3995,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 342
+          "downloads": 345
         },
         {
           "tag": "v0.83.0-beta",
@@ -4009,7 +4009,7 @@
             "macos",
             "android"
           ],
-          "downloads": 1862
+          "downloads": 1919
         },
         {
           "tag": "v0.82.0-beta",
@@ -4107,7 +4107,7 @@
       "canonical": "TwilitRealm/dusklight",
       "description": "Dusklight brings a classic adventure to PC and mobile platforms with a variety of fixes and improvements.",
       "homepage": "https://twilitrealm.dev",
-      "stars": 6126,
+      "stars": 6127,
       "license": "CC0-1.0",
       "archived": false,
       "isFork": false,
@@ -4127,7 +4127,7 @@
             "android",
             "ios"
           ],
-          "downloads": 172803
+          "downloads": 174100
         },
         {
           "tag": "v2.0.2",
@@ -4142,7 +4142,7 @@
             "android",
             "ios"
           ],
-          "downloads": 57312
+          "downloads": 57315
         },
         {
           "tag": "v2.0.1",
@@ -4157,7 +4157,7 @@
             "android",
             "ios"
           ],
-          "downloads": 74881
+          "downloads": 74884
         },
         {
           "tag": "v2.0.0",
@@ -4172,7 +4172,7 @@
             "android",
             "ios"
           ],
-          "downloads": 36207
+          "downloads": 36208
         },
         {
           "tag": "v1.4.1",
@@ -4187,7 +4187,7 @@
             "android",
             "ios"
           ],
-          "downloads": 327739
+          "downloads": 327773
         }
       ],
       "releaseDates": [
@@ -4312,7 +4312,7 @@
             "windows",
             "macos"
           ],
-          "downloads": 2915
+          "downloads": 2942
         },
         {
           "tag": "v0.5.2",
@@ -4324,7 +4324,7 @@
             "windows",
             "macos"
           ],
-          "downloads": 8088
+          "downloads": 8089
         },
         {
           "tag": "v0.5.1",
@@ -4357,7 +4357,7 @@
             "windows",
             "macos"
           ],
-          "downloads": 845
+          "downloads": 846
         }
       ],
       "releaseDates": [
@@ -4421,7 +4421,7 @@
       "canonical": "previouslevelgames/recharged",
       "description": "Mario Strikers Charged for PC, Mac & Linux. Ported from decompiled code. Not a recompilation.",
       "homepage": null,
-      "stars": 109,
+      "stars": 110,
       "license": "CC0-1.0",
       "archived": false,
       "isFork": false,
@@ -4439,7 +4439,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 28
+          "downloads": 38
         },
         {
           "tag": "test-pr101-075cdf6ae60f",
@@ -4465,7 +4465,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 321
+          "downloads": 452
         },
         {
           "tag": "v1.0.16",
@@ -4478,7 +4478,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 513
+          "downloads": 577
         },
         {
           "tag": "v1.0.15",
@@ -4491,7 +4491,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 1551
+          "downloads": 1556
         }
       ],
       "releaseDates": [
@@ -4583,11 +4583,11 @@
       "canonical": "keepvaibin/nebula",
       "description": "A decompiled PC Port of Super Mario Galaxy, intended to work on Windows, Linux, MacOS, Android, and iOS/iPadOS.",
       "homepage": null,
-      "stars": 468,
+      "stars": 472,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T12:57:24Z",
+      "pushedAt": "2026-10-29T15:07:50Z",
       "createdAt": "2026-10-06T08:38:48Z",
       "releases": [
         {
@@ -4599,7 +4599,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 97
+          "downloads": 366
         },
         {
           "tag": "v1.0.1",
@@ -4610,7 +4610,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 14594
+          "downloads": 14598
         },
         {
           "tag": "v1.0.0",
@@ -4621,7 +4621,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 9025
+          "downloads": 9071
         }
       ],
       "releaseDates": [
@@ -4645,7 +4645,7 @@
       "canonical": "Apolinario-coder/SkyRecomp",
       "description": "Static recompilation of The Legend of Zelda: Skyward Sword for PC",
       "homepage": null,
-      "stars": 476,
+      "stars": 478,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -4663,7 +4663,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 3580
+          "downloads": 3851
         },
         {
           "tag": "v2.0.1",
@@ -4676,7 +4676,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 345
+          "downloads": 348
         },
         {
           "tag": "v2.0.0",
@@ -4689,7 +4689,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 443
+          "downloads": 446
         },
         {
           "tag": "v1.0.6",
@@ -4702,7 +4702,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 602
+          "downloads": 603
         },
         {
           "tag": "v1.0.5",
@@ -4715,7 +4715,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 1093
+          "downloads": 1094
         }
       ],
       "releaseDates": [
@@ -4779,7 +4779,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 632
+          "downloads": 663
         },
         {
           "tag": "v0.1.0",
@@ -4808,7 +4808,7 @@
       "canonical": "ryderclanky/BotW-Native",
       "description": "Breath of the Wild (Wii U, v1.5.0) statically recompiled to a native Windows program with a Vulkan renderer. ",
       "homepage": null,
-      "stars": 279,
+      "stars": 282,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -4824,7 +4824,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 1737
+          "downloads": 1797
         },
         {
           "tag": "v0.1.0",
@@ -4835,7 +4835,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 915
+          "downloads": 925
         }
       ],
       "releaseDates": [
@@ -4855,7 +4855,7 @@
       "canonical": "centollOS/SwitchWakerHD",
       "description": "Wind Waker HD (Wii U) static recompilation for Nintendo Switch, deko3d renderer. Requires your own game dump.",
       "homepage": "https://github.com/centollOS/SwitchWakerHD/releases",
-      "stars": 202,
+      "stars": 203,
       "license": "MPL-2.0",
       "archived": false,
       "isFork": false,
@@ -4873,7 +4873,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 14
+          "downloads": 51
         },
         {
           "tag": "v1.0.1-test.1",
@@ -4886,7 +4886,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 48
+          "downloads": 61
         },
         {
           "tag": "v1.0.0",
@@ -4899,7 +4899,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 1214
+          "downloads": 1422
         },
         {
           "tag": "v0.4.7",
@@ -4910,7 +4910,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 6382
+          "downloads": 6392
         },
         {
           "tag": "v0.4.6",
@@ -4921,7 +4921,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 2102
+          "downloads": 2108
         }
       ],
       "releaseDates": [
@@ -4981,18 +4981,18 @@
       "canonical": "ZeldaWWHDRecomp/ZeldaWWHDRecomp",
       "description": "Zelda Wind Waker HD Recomp",
       "homepage": null,
-      "stars": 1148,
+      "stars": 1159,
       "license": "MPL-2.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T11:55:37Z",
+      "pushedAt": "2026-10-29T16:37:24Z",
       "createdAt": "2026-10-01T12:28:45Z",
       "releases": [
         {
           "tag": "devel-build",
-          "name": "Development build (devel @ caec39d, 2026-10-29)",
+          "name": "Development build (devel @ 8f9334f, 2026-10-29)",
           "url": "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases/tag/devel-build",
-          "publishedAt": "2026-10-29T04:38:09Z",
+          "publishedAt": "2026-10-29T16:37:25Z",
           "prerelease": true,
           "os": [
             "windows",
@@ -5000,7 +5000,21 @@
             "macos",
             "android"
           ],
-          "downloads": 160
+          "downloads": 70
+        },
+        {
+          "tag": "v0.5.0",
+          "name": "v0.5.0: far fewer stutters, smoother play and settings in the pause menu",
+          "url": "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases/tag/v0.5.0",
+          "publishedAt": "2026-10-29T14:51:13Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux",
+            "macos",
+            "android"
+          ],
+          "downloads": 930
         },
         {
           "tag": "v0.4.0",
@@ -5014,7 +5028,7 @@
             "macos",
             "android"
           ],
-          "downloads": 18428
+          "downloads": 18667
         },
         {
           "tag": "v0.3.0",
@@ -5028,7 +5042,7 @@
             "macos",
             "android"
           ],
-          "downloads": 17097
+          "downloads": 17108
         },
         {
           "tag": "v0.2.14",
@@ -5042,22 +5056,17 @@
             "macos",
             "android"
           ],
-          "downloads": 4310
-        },
-        {
-          "tag": "appimage-runtime-8f39b89",
-          "name": "AppImage runtime 8f39b89 (build input, not a game release)",
-          "url": "https://github.com/ZeldaWWHDRecomp/ZeldaWWHDRecomp/releases/tag/appimage-runtime-8f39b89",
-          "publishedAt": "2026-10-12T11:54:04Z",
-          "prerelease": false,
-          "os": [],
-          "downloads": 622
+          "downloads": 4312
         }
       ],
       "releaseDates": [
         {
-          "date": "2026-10-29T04:38:09Z",
+          "date": "2026-10-29T16:37:25Z",
           "prerelease": true
+        },
+        {
+          "date": "2026-10-29T14:51:13Z",
+          "prerelease": false
         },
         {
           "date": "2026-10-21T16:35:19Z",
@@ -5136,14 +5145,14 @@
           "prerelease": false
         }
       ],
-      "releaseCount": 20
+      "releaseCount": 21
     },
     "K0NL/B2recomp": {
       "repo": "K0NL/B2recomp",
       "canonical": "K0NL/B2recomp",
       "description": "Unofficial static recompilation of Bayonetta 2 (Switch) for Windows. Builds the game on your PC from your own legally dumped copy. No game files, keys or SDK code included.",
       "homepage": null,
-      "stars": 496,
+      "stars": 498,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -5157,7 +5166,7 @@
           "publishedAt": "2026-10-22T21:02:32Z",
           "prerelease": false,
           "os": [],
-          "downloads": 5695
+          "downloads": 5838
         },
         {
           "tag": "linux-test-9",
@@ -5168,7 +5177,7 @@
           "os": [
             "linux"
           ],
-          "downloads": 164
+          "downloads": 165
         },
         {
           "tag": "v0.3.2",
@@ -5177,7 +5186,7 @@
           "publishedAt": "2026-10-22T06:05:38Z",
           "prerelease": false,
           "os": [],
-          "downloads": 1064
+          "downloads": 1065
         },
         {
           "tag": "v0.3.0",
@@ -5186,7 +5195,7 @@
           "publishedAt": "2026-10-22T01:46:47Z",
           "prerelease": false,
           "os": [],
-          "downloads": 323
+          "downloads": 324
         },
         {
           "tag": "linux-test-8",
@@ -5305,7 +5314,7 @@
       "canonical": "yozander2009-stack/Metroid-Dread-Recomp",
       "description": "Metroid Dread recomp ",
       "homepage": null,
-      "stars": 290,
+      "stars": 293,
       "license": "Apache-2.0",
       "archived": false,
       "isFork": false,
@@ -5319,7 +5328,7 @@
           "publishedAt": "2026-10-24T16:18:21Z",
           "prerelease": false,
           "os": [],
-          "downloads": 18924
+          "downloads": 19606
         },
         {
           "tag": "v0.3.1",
@@ -5328,7 +5337,7 @@
           "publishedAt": "2026-10-24T04:54:05Z",
           "prerelease": false,
           "os": [],
-          "downloads": 2239
+          "downloads": 2244
         },
         {
           "tag": "v0.3.0",
@@ -5337,7 +5346,7 @@
           "publishedAt": "2026-10-23T21:38:47Z",
           "prerelease": false,
           "os": [],
-          "downloads": 2177
+          "downloads": 2181
         },
         {
           "tag": "v0.2.0",
@@ -5387,13 +5396,25 @@
       "canonical": "morerokk/MHGURecomp",
       "description": "A native PC port of Monster Hunter Generations Ultimate. Requires the game's files to play or build.",
       "homepage": null,
-      "stars": 282,
+      "stars": 286,
       "license": "MIT",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T12:52:57Z",
+      "pushedAt": "2026-10-29T17:02:38Z",
       "createdAt": "2026-10-22T13:43:06Z",
       "releases": [
+        {
+          "tag": "0.11.1",
+          "name": "0.11.1 - Online Multiplayer QoL, backported fixes",
+          "url": "https://github.com/morerokk/MHGURecomp/releases/tag/0.11.1",
+          "publishedAt": "2026-10-29T13:56:21Z",
+          "prerelease": true,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 139
+        },
         {
           "tag": "0.10.9",
           "name": "0.10.9 - Bugfixes (mods)",
@@ -5404,7 +5425,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 65
+          "downloads": 306
         },
         {
           "tag": "0.11.0",
@@ -5416,7 +5437,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 38
+          "downloads": 53
         },
         {
           "tag": "0.10.8",
@@ -5428,7 +5449,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 162
+          "downloads": 184
         },
         {
           "tag": "0.10.7",
@@ -5441,21 +5462,13 @@
             "linux"
           ],
           "downloads": 633
-        },
-        {
-          "tag": "0.10.6",
-          "name": "0.10.6 - Bugfixes, draw distance",
-          "url": "https://github.com/morerokk/MHGURecomp/releases/tag/0.10.6",
-          "publishedAt": "2026-10-28T20:06:42Z",
-          "prerelease": false,
-          "os": [
-            "windows",
-            "linux"
-          ],
-          "downloads": 101
         }
       ],
       "releaseDates": [
+        {
+          "date": "2026-10-29T13:56:21Z",
+          "prerelease": true
+        },
         {
           "date": "2026-10-29T11:30:04Z",
           "prerelease": false
@@ -5549,14 +5562,14 @@
           "prerelease": false
         }
       ],
-      "releaseCount": 23
+      "releaseCount": 24
     },
     "OpenSmash-Ultimate/ssbu-recomp": {
       "repo": "OpenSmash-Ultimate/ssbu-recomp",
       "canonical": "OpenSmash-Ultimate/ssbu-recomp",
       "description": "Static recompilation of Super Smash Bros. Ultimate 13.0.4 to a native Windows program: tools and runtime only, bring your own dump",
       "homepage": null,
-      "stars": 523,
+      "stars": 524,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -5570,7 +5583,7 @@
           "publishedAt": "2026-10-21T18:31:35Z",
           "prerelease": true,
           "os": [],
-          "downloads": 9544
+          "downloads": 9660
         },
         {
           "tag": "runtime-753633f",
@@ -5862,11 +5875,11 @@
       "canonical": "Revivedx/SavageWindRecomp",
       "description": "Work-in-progress static recompilation of The Legend of Zelda: Breath of the Wild (Switch, v1.9.0) for Windows and Linux. Bring your own dump: no game files, keys or dumping tools included.",
       "homepage": null,
-      "stars": 2261,
+      "stars": 2283,
       "license": null,
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-28T21:44:47Z",
+      "pushedAt": "2026-10-29T17:49:42Z",
       "createdAt": "2026-10-16T17:34:55Z",
       "releases": [
         {
@@ -5878,7 +5891,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 19627
+          "downloads": 20726
         },
         {
           "tag": "v0.3.0-alpha.3",
@@ -5890,7 +5903,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 10946
+          "downloads": 11114
         },
         {
           "tag": "v0.2.0-alpha.2",
@@ -5901,7 +5914,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 18357
+          "downloads": 18411
         },
         {
           "tag": "v0.1.0-alpha.1",
@@ -5912,7 +5925,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 1278
+          "downloads": 1283
         }
       ],
       "releaseDates": [
@@ -5940,25 +5953,25 @@
       "canonical": "peiikai/LASRecomp",
       "description": "Static recompilation of Link's Awakening (Switch) to native macOS, Windows and Linux",
       "homepage": null,
-      "stars": 1936,
+      "stars": 1946,
       "license": null,
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T08:30:10Z",
+      "pushedAt": "2026-10-29T17:44:49Z",
       "createdAt": "2026-10-08T22:42:12Z",
       "releases": [
         {
-          "tag": "test-463-bowwow",
-          "name": "Test build: test-463-bowwow",
-          "url": "https://github.com/peiikai/LASRecomp/releases/tag/test-463-bowwow",
-          "publishedAt": "2026-10-28T12:28:25Z",
-          "prerelease": true,
+          "tag": "beta_5.4",
+          "name": "Beta 5.4",
+          "url": "https://github.com/peiikai/LASRecomp/releases/tag/beta_5.4",
+          "publishedAt": "2026-10-29T17:34:40Z",
+          "prerelease": false,
           "os": [
             "windows",
             "linux",
             "macos"
           ],
-          "downloads": 231
+          "downloads": 176
         },
         {
           "tag": "test-462-arc",
@@ -5971,71 +5984,55 @@
             "linux",
             "macos"
           ],
-          "downloads": 83
+          "downloads": 92
         },
         {
-          "tag": "test-455-pad",
-          "name": "Test build: test-455-pad",
-          "url": "https://github.com/peiikai/LASRecomp/releases/tag/test-455-pad",
-          "publishedAt": "2026-10-28T05:52:47Z",
-          "prerelease": true,
+          "tag": "beta_5.3",
+          "name": "Beta 5.3",
+          "url": "https://github.com/peiikai/LASRecomp/releases/tag/beta_5.3",
+          "publishedAt": "2026-10-26T19:06:19Z",
+          "prerelease": false,
           "os": [
             "windows",
             "linux",
             "macos"
           ],
-          "downloads": 59
+          "downloads": 4119
         },
         {
-          "tag": "test-413-deck",
-          "name": "Test build: test-413-deck",
-          "url": "https://github.com/peiikai/LASRecomp/releases/tag/test-413-deck",
-          "publishedAt": "2026-10-28T00:21:54Z",
-          "prerelease": true,
+          "tag": "beta_5.2",
+          "name": "Beta 5.2",
+          "url": "https://github.com/peiikai/LASRecomp/releases/tag/beta_5.2",
+          "publishedAt": "2026-10-25T04:51:13Z",
+          "prerelease": false,
           "os": [
             "windows",
             "linux",
             "macos"
           ],
-          "downloads": 87
+          "downloads": 3145
         },
         {
-          "tag": "test-452-owl",
-          "name": "Test build: test-452-owl",
-          "url": "https://github.com/peiikai/LASRecomp/releases/tag/test-452-owl",
-          "publishedAt": "2026-10-27T23:35:15Z",
-          "prerelease": true,
+          "tag": "beta_5.1",
+          "name": "Beta 5.1",
+          "url": "https://github.com/peiikai/LASRecomp/releases/tag/beta_5.1",
+          "publishedAt": "2026-10-24T02:20:26Z",
+          "prerelease": false,
           "os": [
             "windows",
             "linux",
             "macos"
           ],
-          "downloads": 47
+          "downloads": 2627
         }
       ],
       "releaseDates": [
         {
-          "date": "2026-10-28T12:28:25Z",
-          "prerelease": true
+          "date": "2026-10-29T17:34:40Z",
+          "prerelease": false
         },
         {
           "date": "2026-10-28T08:30:03Z",
-          "prerelease": true
-        },
-        {
-          "date": "2026-10-28T05:52:47Z",
-          "prerelease": true
-        },
-        {
-          "date": "2026-10-28T00:21:54Z",
-          "prerelease": true
-        },
-        {
-          "date": "2026-10-27T23:35:15Z",
-          "prerelease": true
-        },
-        {
-          "date": "2026-10-27T14:19:53Z",
           "prerelease": true
         },
         {
@@ -6055,18 +6052,18 @@
           "prerelease": false
         }
       ],
-      "releaseCount": 10
+      "releaseCount": 6
     },
     "kuraeow/ultratears": {
       "repo": "kuraeow/ultratears",
       "canonical": "kuraeow/ultratears",
       "description": "Unofficial native Windows port of Tears of the Kingdom 1.4.3 using static recompilation. Builds locally from the player's own extracted game dump; no game files included.",
       "homepage": "https://github.com/kuraeow/ultratears/releases",
-      "stars": 406,
+      "stars": 418,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T11:55:57Z",
+      "pushedAt": "2026-10-29T18:07:21Z",
       "createdAt": "2026-10-25T00:04:08Z",
       "releases": [
         {
@@ -6078,7 +6075,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 5480
+          "downloads": 5712
         }
       ],
       "releaseDates": [
@@ -6110,7 +6107,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 155
+          "downloads": 173
         },
         {
           "tag": "v0.7.9-alpha",
@@ -6155,7 +6152,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 861
+          "downloads": 870
         }
       ],
       "releaseDates": [
@@ -6343,7 +6340,7 @@
       "canonical": "BlackLabelHQ/SymphonyRecomp",
       "description": "Recompilation project for Castlevania: Symphony of the Night",
       "homepage": null,
-      "stars": 1005,
+      "stars": 1007,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -6361,7 +6358,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 3043
+          "downloads": 3095
         },
         {
           "tag": "v0.5.1b",
@@ -6374,7 +6371,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 36190
+          "downloads": 36402
         },
         {
           "tag": "v0.5.0b",
@@ -6387,7 +6384,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 449
+          "downloads": 450
         },
         {
           "tag": "v0.4.3b",
@@ -6400,7 +6397,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 8270
+          "downloads": 8271
         },
         {
           "tag": "v0.4.2b",
@@ -6465,11 +6462,11 @@
       "canonical": "Matteo842/CrashBandicoot-Launcher",
       "description": "CrashBandicoot native pc port",
       "homepage": null,
-      "stars": 311,
+      "stars": 313,
       "license": "MIT",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T03:01:03Z",
+      "pushedAt": "2026-10-29T18:35:59Z",
       "createdAt": "2026-07-23T09:25:08Z",
       "releases": [
         {
@@ -6483,7 +6480,7 @@
             "linux",
             "android"
           ],
-          "downloads": 9759
+          "downloads": 9978
         },
         {
           "tag": "2.3",
@@ -6496,7 +6493,7 @@
             "linux",
             "android"
           ],
-          "downloads": 261
+          "downloads": 262
         },
         {
           "tag": "2.2",
@@ -6522,7 +6519,7 @@
             "linux",
             "android"
           ],
-          "downloads": 3578
+          "downloads": 3579
         },
         {
           "tag": "2.0",
@@ -6653,7 +6650,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 2161
+          "downloads": 2244
         },
         {
           "tag": "v0.1b",
@@ -6666,7 +6663,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 2292
+          "downloads": 2293
         }
       ],
       "releaseDates": [
@@ -6702,7 +6699,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 80
+          "downloads": 133
         },
         {
           "tag": "v1.7.0",
@@ -6778,11 +6775,11 @@
       "canonical": "SlickAmogus/silent-hill-decomp",
       "description": "Multiplatform and Feature-rich Port based on PSX decompilation of Silent Hill 1 made with Claude and Psycross. Still in beta and is in active development.",
       "homepage": "https://sh1pc.com",
-      "stars": 788,
+      "stars": 791,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T11:02:38Z",
+      "pushedAt": "2026-10-29T18:30:37Z",
       "createdAt": "2026-03-06T02:58:47Z",
       "releases": [
         {
@@ -6792,7 +6789,7 @@
           "publishedAt": "2026-10-26T06:27:54Z",
           "prerelease": true,
           "os": [],
-          "downloads": 968
+          "downloads": 1170
         },
         {
           "tag": "realtime-history",
@@ -6806,7 +6803,7 @@
             "android",
             "ios"
           ],
-          "downloads": 688
+          "downloads": 644
         },
         {
           "tag": "realtime",
@@ -6820,7 +6817,7 @@
             "android",
             "ios"
           ],
-          "downloads": 85
+          "downloads": 15
         },
         {
           "tag": "crossplatform-beta",
@@ -6834,7 +6831,7 @@
             "android",
             "ios"
           ],
-          "downloads": 21291
+          "downloads": 21479
         },
         {
           "tag": "xbox-alpha-1",
@@ -6911,11 +6908,11 @@
       "canonical": "Unchiga/Yu-Gi-Oh-Forbidden-Memories-Recompiled",
       "description": "Native decompilation and recompilation of Yu-Gi-Oh! Forbidden Memories",
       "homepage": null,
-      "stars": 265,
+      "stars": 264,
       "license": null,
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-25T22:26:40Z",
+      "pushedAt": "2026-10-29T16:05:18Z",
       "createdAt": "2026-09-21T22:48:44Z",
       "releases": [
         {
@@ -6930,7 +6927,7 @@
             "macos",
             "android"
           ],
-          "downloads": 4043
+          "downloads": 4145
         },
         {
           "tag": "v0.3.0",
@@ -6944,7 +6941,7 @@
             "macos",
             "android"
           ],
-          "downloads": 19494
+          "downloads": 19767
         },
         {
           "tag": "v0.2.1-preview.1",
@@ -6956,7 +6953,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1838
+          "downloads": 1839
         },
         {
           "tag": "v0.2.0",
@@ -6968,7 +6965,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 5931
+          "downloads": 5934
         },
         {
           "tag": "v0.1.4-preview.2",
@@ -6980,7 +6977,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1624
+          "downloads": 1625
         }
       ],
       "releaseDates": [
@@ -7056,7 +7053,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 324
+          "downloads": 372
         },
         {
           "tag": "v0.7.1-alpha",
@@ -7067,7 +7064,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 965
+          "downloads": 999
         },
         {
           "tag": "v0.7.0-alpha",
@@ -7164,7 +7161,7 @@
       "canonical": "z3xox/Tenkaichi3Decomp",
       "description": "PC port of Dragon Ball Z: Budokai Tenkaichi 3, built on the BT3-Decompiled project.",
       "homepage": null,
-      "stars": 625,
+      "stars": 628,
       "license": "AGPL-3.0",
       "archived": false,
       "isFork": false,
@@ -7181,7 +7178,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 5632
+          "downloads": 6884
         },
         {
           "tag": "v0.1.39",
@@ -7193,7 +7190,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 4399
+          "downloads": 4414
         },
         {
           "tag": "v0.1.38.9",
@@ -7205,7 +7202,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 4804
+          "downloads": 4862
         },
         {
           "tag": "v0.1.38.8",
@@ -7217,7 +7214,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 631
+          "downloads": 632
         },
         {
           "tag": "v0.1.38.7",
@@ -7229,7 +7226,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 6585
+          "downloads": 6587
         }
       ],
       "releaseDates": [
@@ -7461,7 +7458,7 @@
       "canonical": "moesuito/gt4-staticrecomp",
       "description": null,
       "homepage": null,
-      "stars": 391,
+      "stars": 396,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -7477,7 +7474,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 4932
+          "downloads": 5275
         },
         {
           "tag": "v1.3.0-rc6",
@@ -7488,7 +7485,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 2211
+          "downloads": 2374
         },
         {
           "tag": "v1.2.4",
@@ -7499,7 +7496,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 1997
+          "downloads": 2000
         },
         {
           "tag": "v1.3.0-rc5",
@@ -7510,7 +7507,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 1760
+          "downloads": 1776
         },
         {
           "tag": "v1.2.3",
@@ -7521,7 +7518,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 6781
+          "downloads": 6829
         }
       ],
       "releaseDates": [
@@ -7573,7 +7570,7 @@
       "canonical": "open-goal/jak-project",
       "description": "Reviving the language that brought us the Jak & Daxter Series",
       "homepage": "https://opengoal.dev",
-      "stars": 3621,
+      "stars": 3622,
       "license": "ISC",
       "archived": false,
       "isFork": false,
@@ -7591,7 +7588,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 10737
+          "downloads": 10840
         },
         {
           "tag": "v0.3.8",
@@ -7604,7 +7601,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 16088
+          "downloads": 16110
         },
         {
           "tag": "v0.3.6",
@@ -8032,7 +8029,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 3396
+          "downloads": 3600
         },
         {
           "tag": "v0.6.9",
@@ -8044,7 +8041,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1604
+          "downloads": 1613
         },
         {
           "tag": "v0.6.8",
@@ -8056,7 +8053,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 3138
+          "downloads": 3142
         },
         {
           "tag": "v0.6.7",
@@ -8068,7 +8065,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 818
+          "downloads": 821
         },
         {
           "tag": "v0.6.6",
@@ -8185,7 +8182,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1112
+          "downloads": 1151
         }
       ],
       "releaseDates": [
@@ -8201,7 +8198,7 @@
       "canonical": "kastieloficial/RE-Code-Veronica-PS3-HD-Recomp-PC",
       "description": "Resident Evil Code: Veronica X HD - PS3 static recompilation port (hobby, no game data)",
       "homepage": null,
-      "stars": 114,
+      "stars": 134,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -8215,7 +8212,7 @@
           "publishedAt": "2026-10-29T00:27:30Z",
           "prerelease": false,
           "os": [],
-          "downloads": 386
+          "downloads": 1041
         },
         {
           "tag": "v1.1.10",
@@ -8224,7 +8221,7 @@
           "publishedAt": "2026-10-28T15:12:49Z",
           "prerelease": false,
           "os": [],
-          "downloads": 330
+          "downloads": 336
         },
         {
           "tag": "v1.1.9",
@@ -8251,7 +8248,7 @@
           "publishedAt": "2026-10-27T19:37:16Z",
           "prerelease": true,
           "os": [],
-          "downloads": 8
+          "downloads": 11
         }
       ],
       "releaseDates": [
@@ -8335,7 +8332,7 @@
       "canonical": "deadinside28/bloodborne_pc",
       "description": "Bloodborne (v1.09) running natively on Linux and Windows: the game's x86-64 code runs as is, GPU side translated to Vulkan; FSR 4 / DLSS, co-op (BBSC). Bring your own dump.",
       "homepage": null,
-      "stars": 3737,
+      "stars": 3744,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
@@ -8352,7 +8349,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1392
+          "downloads": 1988
         },
         {
           "tag": "0.6",
@@ -8363,7 +8360,7 @@
           "os": [
             "linux"
           ],
-          "downloads": 12357
+          "downloads": 12369
         },
         {
           "tag": "0.6-pre1",
@@ -8396,7 +8393,7 @@
           "os": [
             "linux"
           ],
-          "downloads": 2432
+          "downloads": 2434
         }
       ],
       "releaseDates": [
@@ -8460,7 +8457,7 @@
       "canonical": "saulob/dragons-crown-pro-pc",
       "description": "Dragon's Crown Pro native PC port for Windows, with direct PS4 PKG installation, TRG launcher and modern graphics options",
       "homepage": null,
-      "stars": 295,
+      "stars": 302,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
@@ -8477,7 +8474,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 472
+          "downloads": 864
         },
         {
           "tag": "v0.7.1",
@@ -8489,7 +8486,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 3828
+          "downloads": 3854
         },
         {
           "tag": "v0.7.0",
@@ -8573,7 +8570,7 @@
       "canonical": "OverkillLabs3/driveclub-recomp",
       "description": "DriveClub (PS4, version 1.28) running natively on Windows",
       "homepage": null,
-      "stars": 789,
+      "stars": 793,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
@@ -8589,7 +8586,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 9920
+          "downloads": 10435
         },
         {
           "tag": "v0.3.1",
@@ -8600,7 +8597,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 6886
+          "downloads": 6889
         },
         {
           "tag": "v0.3.0",
@@ -8611,7 +8608,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 2980
+          "downloads": 2984
         },
         {
           "tag": "v0.2.5",
@@ -8622,7 +8619,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 8668
+          "downloads": 8677
         },
         {
           "tag": "v0.2.4",
@@ -8633,7 +8630,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 6249
+          "downloads": 6251
         }
       ],
       "releaseDates": [
@@ -8689,7 +8686,7 @@
       "canonical": "GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS",
       "description": "EA SPORTS UFC 3 (PS4) native port for Linux and Windows — SacredFire/bbport runtime + shadPS4-derived Vulkan renderer",
       "homepage": null,
-      "stars": 211,
+      "stars": 213,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
@@ -8706,7 +8703,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 12643
+          "downloads": 13000
         },
         {
           "tag": "ufc3-v0.1.13",
@@ -8718,7 +8715,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 193
+          "downloads": 196
         },
         {
           "tag": "ufc3-v0.1.12",
@@ -8730,7 +8727,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 260
+          "downloads": 261
         },
         {
           "tag": "ufc3-v0.1.11",
@@ -8826,7 +8823,7 @@
       "canonical": "LucaPazienza/gravityrush_pc",
       "description": "Gravity Rush PC Native Port A community-driven project aiming to bring Gravity Rush to PC as a native port, building upon the technical foundation and approach of the God of War PC port. The goal is to make the game run natively on PC while preserving its original gameplay, unique gravity mechanics, and artistic vision.",
       "homepage": null,
-      "stars": 278,
+      "stars": 282,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
@@ -8842,7 +8839,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 1441
+          "downloads": 1635
         },
         {
           "tag": "v0.1.9",
@@ -8864,7 +8861,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 3327
+          "downloads": 3361
         },
         {
           "tag": "v0.1.7",
@@ -8959,7 +8956,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 980
+          "downloads": 1127
         },
         {
           "tag": "beta-2026.10.24-88e912f",
@@ -8971,7 +8968,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 2770
+          "downloads": 2780
         },
         {
           "tag": "beta-2026.10.23-4000f78",
@@ -8983,7 +8980,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 71
+          "downloads": 74
         },
         {
           "tag": "beta-2026.10.23-b4ff25d",
@@ -8995,7 +8992,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 512
+          "downloads": 513
         },
         {
           "tag": "v1.0",
@@ -9007,7 +9004,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 19117
+          "downloads": 19593
         }
       ],
       "releaseDates": [
@@ -9179,7 +9176,7 @@
       "canonical": "bc160201983/medievil_2019_pc_port",
       "description": "MediEvil (PS4, CUSA11227) native PC port on the gow3_pc runtime: PKG install, up to 4K, launcher. No game files included.",
       "homepage": "https://www.patreon.com/c/bilalreloaded",
-      "stars": 197,
+      "stars": 198,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
@@ -9195,7 +9192,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 3238
+          "downloads": 3341
         },
         {
           "tag": "v1.3.6",
@@ -9239,7 +9236,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 722
+          "downloads": 725
         }
       ],
       "releaseDates": [
@@ -9303,7 +9300,7 @@
       "canonical": "LoreanXavier/pt-pc",
       "description": "Native PC port of P.T. (runs from your own PS4 game files)",
       "homepage": "https://www.patreon.com/loreanxavier",
-      "stars": 2276,
+      "stars": 2281,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -9321,7 +9318,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 15349
+          "downloads": 15779
         },
         {
           "tag": "v1.0.7",
@@ -9334,7 +9331,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 10691
+          "downloads": 10700
         },
         {
           "tag": "v1.0.6",
@@ -9347,7 +9344,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 4372
+          "downloads": 4380
         },
         {
           "tag": "v1.0.5",
@@ -9360,7 +9357,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 11306
+          "downloads": 11315
         },
         {
           "tag": "v1.0.4",
@@ -9373,7 +9370,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 2825
+          "downloads": 2833
         }
       ],
       "releaseDates": [
@@ -9425,9 +9422,18 @@
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-27T05:51:35Z",
+      "pushedAt": "2026-10-29T16:44:28Z",
       "createdAt": "2026-10-12T13:11:53Z",
       "releases": [
+        {
+          "tag": "v0.70",
+          "name": "v0.70 — Otimização de Performance: Diminuição da queda de FPS durante as transições de área. • Correção de Erros: Correção do travamento (crash) crítico 0x49800. 💡 Dica de Desempenho: Recomendamos salvar a pasta do jogo em um SSD ou NVMe para garantir a melhor performance possível e evitar engasgos no carregamento.",
+          "url": "https://github.com/AjncSystem/ShadowOfTheColossus-PC/releases/tag/v0.70",
+          "publishedAt": "2026-10-29T16:42:41Z",
+          "prerelease": false,
+          "os": [],
+          "downloads": 566
+        },
         {
           "tag": "v0.60.6-C3",
           "name": "v0.60.6-C3 — Barra de stamina com DLSS e limite de 30 FPS",
@@ -9435,7 +9441,7 @@
           "publishedAt": "2026-10-27T05:43:36Z",
           "prerelease": false,
           "os": [],
-          "downloads": 8256
+          "downloads": 8723
         },
         {
           "tag": "v0.60.6-C2",
@@ -9444,7 +9450,7 @@
           "publishedAt": "2026-10-26T23:04:42Z",
           "prerelease": false,
           "os": [],
-          "downloads": 1688
+          "downloads": 1696
         },
         {
           "tag": "v0.60.6-C1",
@@ -9453,7 +9459,7 @@
           "publishedAt": "2026-10-26T19:52:01Z",
           "prerelease": false,
           "os": [],
-          "downloads": 1038
+          "downloads": 1040
         },
         {
           "tag": "v0.60.6",
@@ -9462,19 +9468,14 @@
           "publishedAt": "2026-10-22T16:44:31Z",
           "prerelease": false,
           "os": [],
-          "downloads": 15625
-        },
-        {
-          "tag": "v0.60.5",
-          "name": "v0.60.5 — Seletor de texturas, menu F1, +FPS, vazamento de memória",
-          "url": "https://github.com/AjncSystem/ShadowOfTheColossus-PC/releases/tag/v0.60.5",
-          "publishedAt": "2026-10-22T01:09:58Z",
-          "prerelease": false,
-          "os": [],
-          "downloads": 4038
+          "downloads": 15627
         }
       ],
       "releaseDates": [
+        {
+          "date": "2026-10-29T16:42:41Z",
+          "prerelease": false
+        },
         {
           "date": "2026-10-27T05:43:36Z",
           "prerelease": false
@@ -9532,7 +9533,7 @@
           "prerelease": false
         }
       ],
-      "releaseCount": 14
+      "releaseCount": 15
     },
     "HayatoG/tlg_pc": {
       "repo": "HayatoG/tlg_pc",
@@ -9556,7 +9557,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 3622
+          "downloads": 3994
         },
         {
           "tag": "v2026.10.24-1a130dd",
@@ -9568,7 +9569,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 6228
+          "downloads": 6239
         },
         {
           "tag": "v2026.10.22-3232792",
@@ -9684,7 +9685,7 @@
       "canonical": "bc160201983/Uncharted-The-Nathan-Drake-Collection-PC-port",
       "description": "Uncharted: The Nathan Drake Collection PC port (no game files)",
       "homepage": "https://www.patreon.com/cw/bilalreloaded",
-      "stars": 647,
+      "stars": 656,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -9700,7 +9701,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 569
+          "downloads": 2131
         },
         {
           "tag": "v0.7.1",
@@ -9711,7 +9712,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 4645
+          "downloads": 4674
         },
         {
           "tag": "v0.7.0",
@@ -9722,7 +9723,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 7156
+          "downloads": 7225
         },
         {
           "tag": "v0.6.2",
@@ -9733,7 +9734,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 4163
+          "downloads": 4169
         },
         {
           "tag": "v0.6.1",
@@ -9744,7 +9745,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 553
+          "downloads": 554
         }
       ],
       "releaseDates": [
@@ -9828,7 +9829,7 @@
       "canonical": "Supermedo/uncharted_pc",
       "description": "Uncharted: The Nathan Drake Collection running natively on Windows - by SuperMedo",
       "homepage": null,
-      "stars": 2079,
+      "stars": 2085,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
@@ -9844,7 +9845,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 24724
+          "downloads": 25643
         },
         {
           "tag": "v0.3.8",
@@ -9855,7 +9856,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 10247
+          "downloads": 10256
         },
         {
           "tag": "v0.3.7",
@@ -9877,7 +9878,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 47091
+          "downloads": 47103
         },
         {
           "tag": "v0.3.5",
@@ -9888,7 +9889,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 462
+          "downloads": 463
         }
       ],
       "releaseDates": [
@@ -9940,7 +9941,7 @@
       "canonical": "DrummingBird1/gow-psp-recomp",
       "description": "Unofficial native PC ports of God of War: Chains of Olympus and Ghost of Sparta (PSP) by static recompilation. Bring your own disc.",
       "homepage": "https://github.com/DrummingBird1/gow-psp-recomp/releases/latest",
-      "stars": 147,
+      "stars": 148,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -9954,7 +9955,7 @@
           "publishedAt": "2026-10-26T05:35:06Z",
           "prerelease": false,
           "os": [],
-          "downloads": 3526
+          "downloads": 3652
         },
         {
           "tag": "v1.2.1",
@@ -10030,7 +10031,7 @@
       "canonical": "elmasas/lcs-recomp",
       "description": null,
       "homepage": null,
-      "stars": 268,
+      "stars": 269,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -10044,7 +10045,7 @@
           "publishedAt": "2026-10-09T07:46:51Z",
           "prerelease": true,
           "os": [],
-          "downloads": 874
+          "downloads": 880
         },
         {
           "tag": "v0.1.6",
@@ -10053,7 +10054,7 @@
           "publishedAt": "2026-10-07T22:43:34Z",
           "prerelease": false,
           "os": [],
-          "downloads": 3201
+          "downloads": 3233
         },
         {
           "tag": "v0.1.5",
@@ -10124,7 +10125,7 @@
       "canonical": "TeamGDB/Yakumo",
       "description": "Static recompilation of a PSP game into a native executable. Vulkan and SDL3. Bring your own copy of the game.",
       "homepage": "https://teamgdb.github.io/Yakumo/",
-      "stars": 542,
+      "stars": 543,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -10143,7 +10144,7 @@
             "macos",
             "android"
           ],
-          "downloads": 15804
+          "downloads": 16030
         },
         {
           "tag": "v0.7.0-test.1",
@@ -10193,7 +10194,7 @@
             "macos",
             "android"
           ],
-          "downloads": 19377
+          "downloads": 19398
         }
       ],
       "releaseDates": [
@@ -10257,13 +10258,22 @@
       "canonical": "TGP482/007FRWL-XBERecomp",
       "description": "An unofficial original Xbox version PC port of 007: From Russia With Love via static recompilation.",
       "homepage": "discord.gg/8dAn4ZSsap",
-      "stars": 115,
+      "stars": 118,
       "license": null,
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-28T17:12:54Z",
+      "pushedAt": "2026-10-29T15:39:54Z",
       "createdAt": "2026-09-30T09:40:40Z",
       "releases": [
+        {
+          "tag": "V2",
+          "name": "FRWL XBERecomp V2",
+          "url": "https://github.com/TGP482/007FRWL-XBERecomp/releases/tag/V2",
+          "publishedAt": "2026-10-29T15:39:55Z",
+          "prerelease": false,
+          "os": [],
+          "downloads": 137
+        },
         {
           "tag": "V1",
           "name": "FRWL XBERecomp V1",
@@ -10271,16 +10281,20 @@
           "publishedAt": "2026-10-24T10:03:48Z",
           "prerelease": false,
           "os": [],
-          "downloads": 2307
+          "downloads": 0
         }
       ],
       "releaseDates": [
+        {
+          "date": "2026-10-29T15:39:55Z",
+          "prerelease": false
+        },
         {
           "date": "2026-10-24T10:03:48Z",
           "prerelease": false
         }
       ],
-      "releaseCount": 1
+      "releaseCount": 2
     },
     "HossEz/fifa-world-cup-2014-recompiled": {
       "repo": "HossEz/fifa-world-cup-2014-recompiled",
@@ -10303,7 +10317,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 4525
+          "downloads": 4851
         },
         {
           "tag": "v0.1.9",
@@ -10325,7 +10339,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 11229
+          "downloads": 11235
         },
         {
           "tag": "v0.1.7",
@@ -10347,7 +10361,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 5233
+          "downloads": 5244
         }
       ],
       "releaseDates": [
@@ -10403,13 +10417,22 @@
       "canonical": "TGP482/BLACK-XBERecomp",
       "description": "An unofficial original Xbox version PC port of BLACK (2006) via static recompilation.",
       "homepage": "https://discord.gg/8dAn4ZSsap",
-      "stars": 798,
+      "stars": 806,
       "license": null,
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-28T16:05:11Z",
+      "pushedAt": "2026-10-29T15:04:00Z",
       "createdAt": "2026-10-03T22:11:56Z",
       "releases": [
+        {
+          "tag": "V3",
+          "name": "BLACK XBERecomp V3",
+          "url": "https://github.com/TGP482/BLACK-XBERecomp/releases/tag/V3",
+          "publishedAt": "2026-10-29T14:24:11Z",
+          "prerelease": false,
+          "os": [],
+          "downloads": 593
+        },
         {
           "tag": "V2",
           "name": "BLACK XBERecomp V2",
@@ -10417,7 +10440,7 @@
           "publishedAt": "2026-10-18T21:00:29Z",
           "prerelease": false,
           "os": [],
-          "downloads": 31964
+          "downloads": 0
         },
         {
           "tag": "V1",
@@ -10431,6 +10454,10 @@
       ],
       "releaseDates": [
         {
+          "date": "2026-10-29T14:24:11Z",
+          "prerelease": false
+        },
+        {
           "date": "2026-10-18T21:00:29Z",
           "prerelease": false
         },
@@ -10439,14 +10466,14 @@
           "prerelease": false
         }
       ],
-      "releaseCount": 2
+      "releaseCount": 3
     },
     "portingpete/Black-2006-Recomp": {
       "repo": "portingpete/Black-2006-Recomp",
       "canonical": "portingpete/Black-2006-Recomp",
       "description": "Native Windows recompilation of BLACK (2006) for original Xbox. Bring your own game files.",
       "homepage": null,
-      "stars": 196,
+      "stars": 197,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -10460,7 +10487,7 @@
           "publishedAt": "2026-10-22T14:54:57Z",
           "prerelease": true,
           "os": [],
-          "downloads": 1706
+          "downloads": 1734
         },
         {
           "tag": "v0.1.0-alpha.2",
@@ -10469,7 +10496,7 @@
           "publishedAt": "2026-10-14T20:43:48Z",
           "prerelease": true,
           "os": [],
-          "downloads": 1529
+          "downloads": 1531
         },
         {
           "tag": "v0.1.0-alpha.1",
@@ -10478,7 +10505,7 @@
           "publishedAt": "2026-10-14T18:49:31Z",
           "prerelease": true,
           "os": [],
-          "downloads": 432
+          "downloads": 434
         }
       ],
       "releaseDates": [
@@ -10502,7 +10529,7 @@
       "canonical": "xenophobentx/takedawn",
       "description": "Unofficial native PC/handheld port of Burnout 3: Takedown (static recompilation). Bring your own disc.",
       "homepage": null,
-      "stars": 457,
+      "stars": 463,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -10521,7 +10548,7 @@
             "macos",
             "android"
           ],
-          "downloads": 12943
+          "downloads": 13320
         },
         {
           "tag": "v0.2.0",
@@ -10535,7 +10562,7 @@
             "macos",
             "android"
           ],
-          "downloads": 15793
+          "downloads": 15895
         },
         {
           "tag": "v0.1.1",
@@ -10549,7 +10576,7 @@
             "macos",
             "android"
           ],
-          "downloads": 1188
+          "downloads": 1191
         },
         {
           "tag": "v0.1.0",
@@ -10563,7 +10590,7 @@
             "macos",
             "android"
           ],
-          "downloads": 243
+          "downloads": 245
         }
       ],
       "releaseDates": [
@@ -10608,7 +10635,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 135
+          "downloads": 191
         },
         {
           "tag": "v0.1.7",
@@ -10704,7 +10731,7 @@
       "canonical": "NoRain211/doaxvb-re",
       "description": "Native Windows port of Dead or Alive Xtreme Beach Volleyball (Xbox), built by static recompilation with a hand-written runtime. Requires your own copy of the game.",
       "homepage": "https://github.com/NoRain211/doaxbv-re/releases/latest",
-      "stars": 229,
+      "stars": 230,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -10721,7 +10748,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 408
+          "downloads": 485
         },
         {
           "tag": "v0.6.0-rc1",
@@ -10733,7 +10760,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 2502
+          "downloads": 2515
         },
         {
           "tag": "v0.5.3",
@@ -10844,11 +10871,11 @@
       "canonical": "JackTulli/halo-64",
       "description": "Halo: Combat Evolved multiplayer on the Nintendo 64: 4-player split screen, bots and Firefight. Built from the halo-ce-universal decompilation; needs your own copy of the Xbox game.",
       "homepage": null,
-      "stars": 170,
+      "stars": 171,
       "license": "CC0-1.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-28T03:36:45Z",
+      "pushedAt": "2026-10-29T18:15:38Z",
       "createdAt": "2026-10-13T13:13:33Z",
       "releases": [
         {
@@ -10858,7 +10885,7 @@
           "publishedAt": "2026-10-28T00:02:39Z",
           "prerelease": false,
           "os": [],
-          "downloads": 94
+          "downloads": 106
         },
         {
           "tag": "v0.6.4",
@@ -10962,7 +10989,7 @@
       "canonical": "OAleex/OpenShao",
       "description": "Unofficial native port of Mortal Kombat: Shaolin Monks (Xbox) through static recompilation.",
       "homepage": null,
-      "stars": 288,
+      "stars": 291,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
@@ -10979,7 +11006,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 3806
+          "downloads": 4010
         }
       ],
       "releaseDates": [
@@ -10995,13 +11022,37 @@
       "canonical": "gamboozino/ngbrecomp",
       "description": "Ninja Gaiden Black (Xbox, 2005) statically recompiled into native Linux and Windows builds, drawn by its own Vulkan renderer. A steady 60 fps, widescreen and ultrawide, keyboard and mouse, Steam Deck ready. Bring your own copy of the game.",
       "homepage": null,
-      "stars": 206,
+      "stars": 208,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-28T15:07:26Z",
+      "pushedAt": "2026-10-29T17:57:09Z",
       "createdAt": "2026-10-15T14:54:44Z",
       "releases": [
+        {
+          "tag": "v0.9.41",
+          "name": "Ninja Gaiden Black Recompiled v0.9.41",
+          "url": "https://github.com/gamboozino/ngbrecomp/releases/tag/v0.9.41",
+          "publishedAt": "2026-10-29T17:57:45Z",
+          "prerelease": true,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 26
+        },
+        {
+          "tag": "v0.9.40",
+          "name": "Ninja Gaiden Black Recompiled v0.9.40",
+          "url": "https://github.com/gamboozino/ngbrecomp/releases/tag/v0.9.40",
+          "publishedAt": "2026-10-29T15:30:15Z",
+          "prerelease": true,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 86
+        },
         {
           "tag": "v0.9.39",
           "name": "Ninja Gaiden Black Recompiled v0.9.39",
@@ -11012,7 +11063,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 590
+          "downloads": 647
         },
         {
           "tag": "v0.9.38",
@@ -11024,7 +11075,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 284
+          "downloads": 287
         },
         {
           "tag": "v0.9.37",
@@ -11036,34 +11087,18 @@
             "windows",
             "linux"
           ],
-          "downloads": 402
-        },
-        {
-          "tag": "v0.9.36",
-          "name": "Ninja Gaiden Black Recompiled v0.9.36",
-          "url": "https://github.com/gamboozino/ngbrecomp/releases/tag/v0.9.36",
-          "publishedAt": "2026-10-27T09:42:54Z",
-          "prerelease": true,
-          "os": [
-            "windows",
-            "linux"
-          ],
-          "downloads": 249
-        },
-        {
-          "tag": "v0.9.35",
-          "name": "Ninja Gaiden Black Recompiled v0.9.35",
-          "url": "https://github.com/gamboozino/ngbrecomp/releases/tag/v0.9.35",
-          "publishedAt": "2026-10-26T23:29:35Z",
-          "prerelease": true,
-          "os": [
-            "windows",
-            "linux"
-          ],
-          "downloads": 529
+          "downloads": 405
         }
       ],
       "releaseDates": [
+        {
+          "date": "2026-10-29T17:57:45Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-10-29T15:30:15Z",
+          "prerelease": true
+        },
         {
           "date": "2026-10-28T13:06:57Z",
           "prerelease": true
@@ -11225,20 +11260,29 @@
           "prerelease": true
         }
       ],
-      "releaseCount": 40
+      "releaseCount": 42
     },
     "TGP482/SCDA-XBERecomp": {
       "repo": "TGP482/SCDA-XBERecomp",
       "canonical": "TGP482/SCDA-XBERecomp",
       "description": "An unofficial original Xbox version PC port of Splinter Cell: Double Agent via static recompilation.",
       "homepage": "https://discord.gg/8dAn4ZSsap",
-      "stars": 387,
+      "stars": 389,
       "license": "MIT",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-28T16:17:59Z",
+      "pushedAt": "2026-10-29T14:40:46Z",
       "createdAt": "2026-09-27T07:17:18Z",
       "releases": [
+        {
+          "tag": "V3",
+          "name": "SCDA XBERecomp V3",
+          "url": "https://github.com/TGP482/SCDA-XBERecomp/releases/tag/V3",
+          "publishedAt": "2026-10-29T14:40:46Z",
+          "prerelease": false,
+          "os": [],
+          "downloads": 198
+        },
         {
           "tag": "V2",
           "name": "SCDA XBERecomp V2",
@@ -11246,7 +11290,7 @@
           "publishedAt": "2026-10-18T21:17:20Z",
           "prerelease": false,
           "os": [],
-          "downloads": 4367
+          "downloads": 0
         },
         {
           "tag": "V1",
@@ -11260,6 +11304,10 @@
       ],
       "releaseDates": [
         {
+          "date": "2026-10-29T14:40:46Z",
+          "prerelease": false
+        },
+        {
           "date": "2026-10-18T21:17:20Z",
           "prerelease": false
         },
@@ -11268,7 +11316,7 @@
           "prerelease": false
         }
       ],
-      "releaseCount": 2
+      "releaseCount": 3
     },
     "sal063/AC6_recomp": {
       "repo": "sal063/AC6_recomp",
@@ -11289,7 +11337,7 @@
           "publishedAt": "2026-08-17T20:00:51Z",
           "prerelease": true,
           "os": [],
-          "downloads": 12826
+          "downloads": 12876
         },
         {
           "tag": "v1.0.0-beta.1",
@@ -11298,7 +11346,7 @@
           "publishedAt": "2026-08-09T19:16:30Z",
           "prerelease": true,
           "os": [],
-          "downloads": 4918
+          "downloads": 4920
         },
         {
           "tag": "v1.0.0-beta",
@@ -11307,7 +11355,7 @@
           "publishedAt": "2026-08-09T01:18:04Z",
           "prerelease": true,
           "os": [],
-          "downloads": 1354
+          "downloads": 1356
         }
       ],
       "releaseDates": [
@@ -11331,7 +11379,7 @@
       "canonical": "FrankHUN88453/CoD3Recomp",
       "description": "Call of Duty 3 (Xbox 360) static recompilation: host runtime, tools and notes",
       "homepage": null,
-      "stars": 370,
+      "stars": 371,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -11347,7 +11395,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 4409
+          "downloads": 4525
         },
         {
           "tag": "v0.4.0",
@@ -11356,7 +11404,7 @@
           "publishedAt": "2026-10-07T15:03:25Z",
           "prerelease": true,
           "os": [],
-          "downloads": 7554
+          "downloads": 7579
         },
         {
           "tag": "v0.3.0",
@@ -11374,7 +11422,7 @@
           "publishedAt": "2026-09-22T20:33:59Z",
           "prerelease": true,
           "os": [],
-          "downloads": 59
+          "downloads": 60
         },
         {
           "tag": "v0.2.2",
@@ -11427,11 +11475,11 @@
       "canonical": "birabittoh/NocturneRecomp",
       "description": "Static recompilation of Castlevania: Symphony of the Night (XBLA) for Windows and Linux, built on the ReXGlue SDK.",
       "homepage": "https://goopie.xyz/#/library/nocturnerecomp",
-      "stars": 397,
+      "stars": 398,
       "license": "MIT",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-27T18:43:09Z",
+      "pushedAt": "2026-10-29T17:09:42Z",
       "createdAt": "2026-06-06T16:40:31Z",
       "releases": [
         {
@@ -11444,7 +11492,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 7037
+          "downloads": 7113
         },
         {
           "tag": "v1.4.4",
@@ -11596,7 +11644,7 @@
       "canonical": "psxrestore/Condemned2Recomp",
       "description": "A static recompilation of Condemned 2: Bloodshot done with RexGlue.",
       "homepage": null,
-      "stars": 271,
+      "stars": 272,
       "license": "BSD-3-Clause",
       "archived": false,
       "isFork": false,
@@ -11612,7 +11660,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 604
+          "downloads": 702
         },
         {
           "tag": "0.5.0",
@@ -11623,7 +11671,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 367
+          "downloads": 369
         },
         {
           "tag": "0.4.0",
@@ -11716,7 +11764,7 @@
       "canonical": "florinp93/hells-gate-recomp",
       "description": "Xbox 360 to PC port of Dante's Inferno using ReXGlue (static recompilation)",
       "homepage": null,
-      "stars": 752,
+      "stars": 754,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -11732,7 +11780,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 24228
+          "downloads": 24670
         },
         {
           "tag": "v0.8.3-beta-hotfix2",
@@ -11743,7 +11791,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 6887
+          "downloads": 6894
         },
         {
           "tag": "v0.8.3-beta-hotfix",
@@ -11776,7 +11824,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 798
+          "downloads": 799
         }
       ],
       "releaseDates": [
@@ -11906,7 +11954,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 1902
+          "downloads": 1946
         },
         {
           "tag": "v1.1.1",
@@ -12003,7 +12051,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1407
+          "downloads": 1415
         },
         {
           "tag": "v0.9.5",
@@ -12091,7 +12139,7 @@
       "canonical": "himdo/Fable-2-Recomp",
       "description": null,
       "homepage": null,
-      "stars": 569,
+      "stars": 572,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -12107,7 +12155,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 8789
+          "downloads": 8918
         },
         {
           "tag": "1.4.1",
@@ -12216,7 +12264,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 2819
+          "downloads": 3300
         },
         {
           "tag": "v0.7.0",
@@ -12228,7 +12276,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 613
+          "downloads": 615
         },
         {
           "tag": "v0.6.1",
@@ -12240,7 +12288,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 12661
+          "downloads": 12687
         },
         {
           "tag": "v0.6.0",
@@ -12252,7 +12300,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 13946
+          "downloads": 13947
         },
         {
           "tag": "v0.5.1",
@@ -12264,7 +12312,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 22299
+          "downloads": 22311
         }
       ],
       "releaseDates": [
@@ -12356,11 +12404,11 @@
       "canonical": "FH1-ReImagined/ForzaHorizon1-ReImagined",
       "description": "Forza Horizon (Xbox 360) natively on PC, rebuilt around the modern Horizon experience: shared online free roam, leaderboards and rivals, 120/144 fps, and a self-hostable online server.",
       "homepage": "https://forza.dyotson.dev/",
-      "stars": 361,
+      "stars": 362,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T07:21:04Z",
+      "pushedAt": "2026-10-29T17:39:38Z",
       "createdAt": "2026-10-10T13:37:16Z",
       "releases": [
         {
@@ -12373,7 +12421,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 3220
+          "downloads": 3538
         },
         {
           "tag": "v0.1.36",
@@ -12385,7 +12433,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1863
+          "downloads": 1865
         },
         {
           "tag": "v0.1.35",
@@ -12421,7 +12469,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1287
+          "downloads": 1295
         }
       ],
       "releaseDates": [
@@ -12585,7 +12633,7 @@
       "canonical": "SunJaycy/GoldenEye-Recomp",
       "description": null,
       "homepage": null,
-      "stars": 919,
+      "stars": 920,
       "license": "Unlicense",
       "archived": false,
       "isFork": false,
@@ -12601,7 +12649,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 28772
+          "downloads": 28786
         },
         {
           "tag": "Goldeneye1.2.3",
@@ -12685,7 +12733,7 @@
       "canonical": "freefrank/LostOdysseyRecomp",
       "description": "Experimental native PC port of Lost Odyssey using static recompilation. No game assets included.",
       "homepage": null,
-      "stars": 858,
+      "stars": 862,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -12704,7 +12752,7 @@
             "macos",
             "android"
           ],
-          "downloads": 5074
+          "downloads": 5364
         },
         {
           "tag": "v1.0.6",
@@ -12732,7 +12780,7 @@
             "macos",
             "android"
           ],
-          "downloads": 1790
+          "downloads": 1791
         },
         {
           "tag": "v1.0.4",
@@ -13056,13 +13104,25 @@
       "canonical": "jorjbarbosa/naruto-rise-recomp",
       "description": null,
       "homepage": null,
-      "stars": 212,
+      "stars": 213,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T01:31:55Z",
+      "pushedAt": "2026-10-29T16:10:11Z",
       "createdAt": "2026-10-01T23:32:33Z",
       "releases": [
+        {
+          "tag": "v0.4.0-beta",
+          "name": "v0.4.0-beta",
+          "url": "https://github.com/jorjbarbosa/naruto-rise-recomp/releases/tag/v0.4.0-beta",
+          "publishedAt": "2026-10-29T14:01:10Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 175
+        },
         {
           "tag": "v0.3.0-beta",
           "name": "v0.3.0-beta",
@@ -13072,7 +13132,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 3741
+          "downloads": 3774
         },
         {
           "tag": "v0.2.0-beta.2",
@@ -13083,7 +13143,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 2176
+          "downloads": 2179
         },
         {
           "tag": "v0.2.0-beta.1",
@@ -13105,21 +13165,14 @@
           "os": [
             "windows"
           ],
-          "downloads": 1511
-        },
-        {
-          "tag": "v0.1.0-beta.2",
-          "name": "v0.1.0-beta.2",
-          "url": "https://github.com/jorjbarbosa/naruto-rise-recomp/releases/tag/v0.1.0-beta.2",
-          "publishedAt": "2026-10-10T16:11:41Z",
-          "prerelease": false,
-          "os": [
-            "windows"
-          ],
-          "downloads": 103
+          "downloads": 1512
         }
       ],
       "releaseDates": [
+        {
+          "date": "2026-10-29T14:01:10Z",
+          "prerelease": false
+        },
         {
           "date": "2026-10-23T00:47:16Z",
           "prerelease": false
@@ -13145,14 +13198,14 @@
           "prerelease": false
         }
       ],
-      "releaseCount": 6
+      "releaseCount": 7
     },
     "SpeedBreakerProject/speedbreaker": {
       "repo": "SpeedBreakerProject/speedbreaker",
       "canonical": "SpeedBreakerProject/speedbreaker",
       "description": "Unofficial static recompilation of the Xbox 360 version of Need for Speed: Most Wanted (2005): a native port for Steam Deck, Steam Machine, Steam Frame, Linux and Mac (iPhone/iPad: sideload the experimental IPA or build it yourself). Bring your own disc: no game files included. Not affiliated with EA or Valve.",
       "homepage": "https://projectugarte.com/speedbreaker/",
-      "stars": 534,
+      "stars": 538,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -13168,7 +13221,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 1098
+          "downloads": 1193
         },
         {
           "tag": "v0.2.0",
@@ -13180,7 +13233,7 @@
             "macos",
             "ios"
           ],
-          "downloads": 1212
+          "downloads": 1287
         },
         {
           "tag": "v0.1.9-windows-beta.1",
@@ -13191,7 +13244,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 628
+          "downloads": 629
         },
         {
           "tag": "v0.1.9",
@@ -13279,7 +13332,7 @@
       "canonical": "TekRantGaming/king-kong-recompiled",
       "description": "Native PC port of Peter Jackson's King Kong (Xbox 360) via static recompilation",
       "homepage": null,
-      "stars": 226,
+      "stars": 228,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -13295,7 +13348,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 1629
+          "downloads": 1692
         },
         {
           "tag": "v1.9.12",
@@ -13306,7 +13359,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 699
+          "downloads": 700
         },
         {
           "tag": "v1.9.11",
@@ -13459,7 +13512,7 @@
       "canonical": "beatrixzy/PGR4-Recomp",
       "description": "A Recompilation of Project Gotham Racing 4",
       "homepage": null,
-      "stars": 228,
+      "stars": 229,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -13473,7 +13526,7 @@
           "publishedAt": "2026-10-17T11:17:35Z",
           "prerelease": false,
           "os": [],
-          "downloads": 2249
+          "downloads": 2303
         },
         {
           "tag": "v1.2.1",
@@ -13565,7 +13618,7 @@
           "os": [
             "linux"
           ],
-          "downloads": 271
+          "downloads": 272
         },
         {
           "tag": "v0.1.5",
@@ -13574,7 +13627,7 @@
           "publishedAt": "2026-10-09T18:25:28Z",
           "prerelease": false,
           "os": [],
-          "downloads": 2375
+          "downloads": 2404
         },
         {
           "tag": "linux-test-05",
@@ -13667,7 +13720,7 @@
           "publishedAt": "2026-09-02T22:18:50Z",
           "prerelease": false,
           "os": [],
-          "downloads": 8071
+          "downloads": 8148
         },
         {
           "tag": "v1.1.7",
@@ -13676,7 +13729,7 @@
           "publishedAt": "2026-09-02T00:34:12Z",
           "prerelease": false,
           "os": [],
-          "downloads": 152
+          "downloads": 153
         },
         {
           "tag": "v1.1.6",
@@ -13685,7 +13738,7 @@
           "publishedAt": "2026-06-28T22:09:35Z",
           "prerelease": false,
           "os": [],
-          "downloads": 6942
+          "downloads": 6945
         },
         {
           "tag": "v1.1.5",
@@ -13755,7 +13808,7 @@
       "canonical": "mchughalex/skate3recomp",
       "description": "A native recompilation of Skate 3 for Windows, Linux, and macOS.",
       "homepage": null,
-      "stars": 1763,
+      "stars": 1764,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -13773,7 +13826,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 104116
+          "downloads": 104523
         },
         {
           "tag": "v2.0.1",
@@ -13786,7 +13839,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 2517
+          "downloads": 2522
         },
         {
           "tag": "v2.0.0",
@@ -13799,7 +13852,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 7563
+          "downloads": 7566
         },
         {
           "tag": "v1.0.5",
@@ -13812,7 +13865,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 7701
+          "downloads": 7702
         },
         {
           "tag": "v1.0.4",
@@ -13873,7 +13926,7 @@
       "canonical": "hedge-dev/UnleashedRecomp",
       "description": "An unofficial PC port of the Xbox 360 version of Sonic Unleashed created through the process of static recompilation.",
       "homepage": null,
-      "stars": 5301,
+      "stars": 5308,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -13889,7 +13942,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 392524
+          "downloads": 392965
         },
         {
           "tag": "v1.0.2",
@@ -13911,7 +13964,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 119965
+          "downloads": 119966
         },
         {
           "tag": "v1.0.0",
@@ -13922,7 +13975,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 70464
+          "downloads": 70467
         }
       ],
       "releaseDates": [
@@ -13950,7 +14003,7 @@
       "canonical": "goliathret/EdgeOfTimeRecomp",
       "description": "An unofficial PC port of the Xbox 360 version of Spider-Man: Edge of Time created through the process of static recompilation.",
       "homepage": null,
-      "stars": 461,
+      "stars": 464,
       "license": "BSD-3-Clause",
       "archived": false,
       "isFork": false,
@@ -13968,7 +14021,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 13693
+          "downloads": 13887
         }
       ],
       "releaseDates": [
@@ -14001,7 +14054,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 620
+          "downloads": 715
         },
         {
           "tag": "v0.1.7",
@@ -14012,7 +14065,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 4321
+          "downloads": 4325
         },
         {
           "tag": "v0.1.6",
@@ -14110,7 +14163,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 8287
+          "downloads": 8468
         },
         {
           "tag": "v0.0.6.4",
@@ -14122,7 +14175,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1336
+          "downloads": 1338
         },
         {
           "tag": "v0.0.6.3",
@@ -14134,7 +14187,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 1826
+          "downloads": 1828
         },
         {
           "tag": "v0.0.6.2",
@@ -14146,7 +14199,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 2779
+          "downloads": 2780
         },
         {
           "tag": "v0.0.6.1",
@@ -14273,7 +14326,7 @@
             "macos",
             "ios"
           ],
-          "downloads": 718
+          "downloads": 742
         },
         {
           "tag": "1.13.0",
@@ -14354,7 +14407,7 @@
       "canonical": "codepdbh/nfsu2-recompiled",
       "description": "Static recompilation of Need for Speed Underground 2 (SPEED2.EXE x86-32 -> C) with pcrecomp. Bring your own game; no game code or data included.",
       "homepage": null,
-      "stars": 301,
+      "stars": 303,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -14370,7 +14423,7 @@
           "os": [
             "android"
           ],
-          "downloads": 13423
+          "downloads": 15271
         },
         {
           "tag": "v0.14.10",
@@ -14381,7 +14434,7 @@
           "os": [
             "android"
           ],
-          "downloads": 44332
+          "downloads": 44461
         },
         {
           "tag": "v0.14.9",
@@ -14392,7 +14445,7 @@
           "os": [
             "android"
           ],
-          "downloads": 39204
+          "downloads": 39461
         },
         {
           "tag": "v0.14.8",
@@ -14403,7 +14456,7 @@
           "os": [
             "android"
           ],
-          "downloads": 10276
+          "downloads": 10280
         },
         {
           "tag": "v0.14.7",
@@ -14414,7 +14467,7 @@
           "os": [
             "android"
           ],
-          "downloads": 14288
+          "downloads": 14296
         }
       ],
       "releaseDates": [
@@ -14462,7 +14515,7 @@
       "canonical": "RSDKModding/RSDKv4-Decompilation",
       "description": "A complete decompilation of Sonic 1 & Sonic 2 (2013) & Retro Engine (v4)",
       "homepage": null,
-      "stars": 1156,
+      "stars": 1157,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -14480,7 +14533,7 @@
             "linux",
             "android"
           ],
-          "downloads": 33196
+          "downloads": 33249
         },
         {
           "tag": "1.3.2",
@@ -14492,7 +14545,7 @@
             "windows",
             "android"
           ],
-          "downloads": 63461
+          "downloads": 63462
         },
         {
           "tag": "1.3.1",
@@ -14504,7 +14557,7 @@
             "windows",
             "android"
           ],
-          "downloads": 22943
+          "downloads": 22944
         },
         {
           "tag": "1.3.0",
@@ -14593,7 +14646,7 @@
             "macos",
             "android"
           ],
-          "downloads": 57041
+          "downloads": 57126
         },
         {
           "tag": "1.3.2",
@@ -14605,7 +14658,7 @@
             "windows",
             "android"
           ],
-          "downloads": 97121
+          "downloads": 97122
         },
         {
           "tag": "1.3.1",
@@ -14617,7 +14670,7 @@
             "windows",
             "android"
           ],
-          "downloads": 41933
+          "downloads": 41936
         },
         {
           "tag": "1.3.0",
@@ -14679,7 +14732,7 @@
       "canonical": "Kitrinx/Ultima7_Decomp",
       "description": "This is a decompiled and byte-verified rebuild of Ultima 7.",
       "homepage": null,
-      "stars": 97,
+      "stars": 98,
       "license": null,
       "archived": false,
       "isFork": false,
@@ -14785,11 +14838,11 @@
       "canonical": "boykopovar/AnyPS5",
       "description": "Tool for automatic PS5 executables porting to Linux and Windows",
       "homepage": "https://boykopovar.github.io/AnyPS5/",
-      "stars": 49424,
+      "stars": 49487,
       "license": "GPL-2.0",
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-29T12:57:18Z",
+      "pushedAt": "2026-10-29T14:01:00Z",
       "createdAt": "2026-08-03T21:30:25Z",
       "releases": [
         {
@@ -14802,7 +14855,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 30849
+          "downloads": 31260
         },
         {
           "tag": "v0.1.2",
@@ -14814,7 +14867,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 51968
+          "downloads": 51973
         },
         {
           "tag": "v0.1.1",
@@ -14826,7 +14879,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 93131
+          "downloads": 93144
         },
         {
           "tag": "v0.1.0",
@@ -14838,7 +14891,7 @@
             "windows",
             "linux"
           ],
-          "downloads": 2543
+          "downloads": 2551
         }
       ],
       "releaseDates": [
@@ -14866,7 +14919,7 @@
       "canonical": "N64Recomp/N64Recomp",
       "description": "Tool to statically recompile N64 games into native executables",
       "homepage": null,
-      "stars": 8329,
+      "stars": 8331,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -14882,7 +14935,7 @@
           "os": [
             "windows"
           ],
-          "downloads": 10024
+          "downloads": 10035
         }
       ],
       "releaseDates": [
@@ -14898,11 +14951,11 @@
       "canonical": "RetroPortingToolKit/ndsrecomp",
       "description": "Very early pre-alpha Nintendo DS static recompiler research · source-only developer snapshot",
       "homepage": "https://discord.gg/Ad9BwSzctP",
-      "stars": 63,
+      "stars": 64,
       "license": null,
       "archived": false,
       "isFork": false,
-      "pushedAt": "2026-10-27T16:41:44Z",
+      "pushedAt": "2026-10-29T16:38:03Z",
       "createdAt": "2026-07-15T07:37:23Z",
       "releases": [
         {
@@ -14941,7 +14994,7 @@
       "canonical": "ran-j/PS2Recomp",
       "description": "Playstation 2 Static Recompiler & Runtime Tool to make native PC ports",
       "homepage": null,
-      "stars": 3731,
+      "stars": 3733,
       "license": "GPL-3.0",
       "archived": false,
       "isFork": false,
@@ -15041,7 +15094,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 294
+          "downloads": 330
         },
         {
           "tag": "v0.17.0",
@@ -15156,7 +15209,7 @@
       "canonical": "BlackLabelHQ/RecompOne",
       "description": "PSX Static Recompiler and Runtime, Not Affiliated With Sony or PlayStation",
       "homepage": null,
-      "stars": 603,
+      "stars": 605,
       "license": "MIT",
       "archived": false,
       "isFork": false,
@@ -15189,7 +15242,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 3333
+          "downloads": 3372
         },
         {
           "tag": "nightly-20261001-ea222e98",
@@ -15202,7 +15255,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 112
+          "downloads": 117
         },
         {
           "tag": "nightly-20260930-7f7c92ef",
@@ -15215,7 +15268,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 36
+          "downloads": 41
         },
         {
           "tag": "nightly-20260925-5cf287f4",
@@ -15228,7 +15281,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 309
+          "downloads": 315
         },
         {
           "tag": "nightly-20260921-923c1a59",
@@ -15241,7 +15294,7 @@
             "linux",
             "macos"
           ],
-          "downloads": 376
+          "downloads": 381
         }
       ],
       "releaseDates": [
