@@ -1,0 +1,120 @@
+---
+/** A fanned, overlapping row of game covers, each linking to its project page. */
+import { entryPath, type Entry } from "../lib/data.ts";
+
+interface Props {
+  entries: Entry[];
+  /** Width of one cover in px; height follows the 3:4 cover shape. */
+  size?: number;
+  label?: string;
+  /** Show at most this many covers; the rest become a "+N" chip. */
+  max?: number;
+  /** How much each cover tucks under the previous one, as a share of its width. */
+  overlap?: number;
+}
+const { entries, size = 34, label, max = Infinity, overlap = 0.45 } = Astro.props;
+const shown = entries.slice(0, max);
+const hidden = entries.length - shown.length;
+const initials = (game: string) =>
+  game
+    .replace(/\(.*\)/, "")
+    .split(/[\s:–-]+/)
+    .filter((w) => /^[A-Za-z0-9]/.test(w))
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+---
+
+{
+  entries.length > 0 && (
+    <ul class="stack" style={`--w:${size}px;--o:${overlap}`} aria-label={label}>
+      {shown.map((e, i) => (
+        <li style={`--i:${i};--r:${i % 2 ? 3 : -3}deg`}>
+          <a href={entryPath(e)} class={e.kind} title={e.game}>
+            {e.cover ? (
+              <img src={e.cover.src} width={e.cover.width} height={e.cover.height} alt={e.game} loading="lazy" decoding="async" />
+            ) : (
+              <span class="ph mono" aria-label={e.game}>
+                {initials(e.game)}
+              </span>
+            )}
+          </a>
+        </li>
+      ))}
+      {hidden > 0 && (
+        <li class="more mono" style={`--i:${shown.length};--r:0deg`}>
+          +{hidden}
+        </li>
+      )}
+    </ul>
+  )
+}
+
+<style>
+  .stack {
+    display: flex;
+    margin: 0;
+    padding: 0 0 0 calc(var(--w) * var(--o));
+    list-style: none;
+  }
+  .stack li {
+    margin-left: calc(var(--w) * var(--o) * -1);
+    /* a gentle fan: alternate tilt, later covers sit lower in the pile */
+    rotate: var(--r);
+    z-index: calc(50 - var(--i));
+    transition:
+      translate 0.2s ease-out,
+      rotate 0.2s ease-out;
+  }
+  .stack li:hover,
+  .stack li:focus-within {
+    z-index: 60;
+    rotate: 0deg;
+    translate: 0 -5px;
+  }
+  .stack a {
+    display: block;
+    width: var(--w);
+    aspect-ratio: 3 / 4;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--surface-2);
+    box-shadow:
+      0 0 0 2px var(--surface),
+      0 6px 14px -6px rgb(0 0 0 / 0.9);
+    text-decoration: none;
+  }
+  .stack a:hover {
+    box-shadow:
+      0 0 0 2px var(--surface),
+      0 0 0 3px rgb(124 240 197 / 0.6),
+      0 8px 18px -6px rgb(0 0 0 / 0.9);
+  }
+  .stack a.port:hover {
+    box-shadow:
+      0 0 0 2px var(--surface),
+      0 0 0 3px rgb(255 179 92 / 0.6),
+      0 8px 18px -6px rgb(0 0 0 / 0.9);
+  }
+  .stack img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .more {
+    align-self: center;
+    margin-left: 0.5rem;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+  .ph {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: calc(var(--w) * 0.3);
+    color: var(--muted);
+  }
+</style>

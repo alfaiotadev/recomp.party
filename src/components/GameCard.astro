@@ -9,12 +9,15 @@ const searchText = [e.game, e.repo, e.tool, PLATFORMS[e.platform], e.meta?.title
 const mark = platformMark(e.platform);
 const box = mark && fitLogoArea(mark, 900, 80, 16);
 const [owner, name] = e.repo.split("/");
+// Scale at which the whole cover fits the 3 : 4.1 card (object-fit: cover crops one axis): the hover zoom target.
+const CARD_ASPECT = 3 / 4.1;
+const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CARD_ASPECT / (e.cover.width / e.cover.height));
 ---
 
 <li class={`card ${e.kind}${e.cover ? "" : " no-cover"}`} data-platform={e.platform} data-kind={e.kind} data-os={e.os.join(" ")} data-search={searchText}>
   {
     e.cover ? (
-      <img class="art" src={e.cover.src} width={e.cover.width} height={e.cover.height} alt="" loading="lazy" decoding="async" />
+      <img class="art" src={e.cover.src} width={e.cover.width} height={e.cover.height} style={`--fit:${fit!.toFixed(3)}`} alt="" loading="lazy" decoding="async" />
     ) : (
       mark && box && <img class="art-mark" src={mark.src} width={box.w * 2.6} height={box.h * 2.6} alt="" loading="lazy" />
     )
@@ -44,10 +47,8 @@ const [owner, name] = e.repo.split("/");
 </li>
 
 <script>
-  // Hover: the cover pans so that each corner of the card shows that corner of the cover, and pointing at
-  // the text fades it out for a look at the whole cover. Mouse only; touch keeps the static card.
-  const EDGE = 0.15; // the outer 15 % of each side already maps to that edge
-  const map = (x: number) => Math.min(1, Math.max(0, (x - EDGE) / (1 - 2 * EDGE))).toFixed(3);
+  // Hover zooms the cover out until all of it fits; pointing at the text fades the text out for a clear
+  // look. Mouse only; touch keeps the static card.
   for (const card of document.querySelectorAll<HTMLElement>("#games .card:not(.no-cover)")) {
     const body = card.querySelector<HTMLElement>(".body")!;
     let settle: ReturnType<typeof setTimeout> | undefined;
@@ -57,14 +58,9 @@ const [owner, name] = e.repo.split("/");
     });
     card.addEventListener("pointermove", (ev) => {
       if (ev.pointerType !== "mouse") return;
-      const r = card.getBoundingClientRect();
-      card.style.setProperty("--u", map((ev.clientX - r.left) / r.width));
-      card.style.setProperty("--v", map((ev.clientY - r.top) / r.height));
       card.classList.toggle("peek", ev.clientY >= body.getBoundingClientRect().top);
     });
     card.addEventListener("pointerleave", () => {
-      card.style.removeProperty("--u");
-      card.style.removeProperty("--v");
       card.classList.remove("peek");
       settle = setTimeout(() => card.classList.remove("live"), 600); // after the 0.5 s zoom back
     });
@@ -104,24 +100,16 @@ const [owner, name] = e.repo.split("/");
     display: none;
   }
 
-  /* --u/--v: pointer position over the card, 0…1. object-position pans the part object-fit crops away, and
-     scaling around the same point keeps that corner of the cover pinned to the card's corner, so the
-     edges never show. */
+  /* Rests slightly zoomed in; hover zooms out to --fit, where the whole cover is visible. */
   .art {
-    --o: calc(var(--u, 0.5) * 100%) calc(var(--v, 0.5) * 100%);
     position: absolute;
     inset: 0;
     z-index: -2;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: var(--o);
-    transform-origin: var(--o);
     scale: 1.15;
-    transition:
-      scale 0.5s ease-out,
-      object-position 0.35s ease-out,
-      transform-origin 0.35s ease-out;
+    transition: scale 0.5s ease-out;
   }
   /* Composited only while the pointer is around (set by the script): avoids a snap on the last animation
      frame without keeping a GPU layer for every card on the page. */
@@ -130,11 +118,10 @@ const [owner, name] = e.repo.split("/");
     backface-visibility: hidden;
   }
   .card:hover .art {
-    scale: 1.1;
+    scale: var(--fit, 1);
   }
   @media (prefers-reduced-motion: reduce) {
     .art {
-      --o: 50% 50%;
       transition: none;
     }
   }
