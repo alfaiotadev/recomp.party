@@ -1,6 +1,7 @@
 ---
 import { PLATFORMS, platformLogo } from "../lib/data.ts";
 import { stats, type Delta } from "../lib/stats.ts";
+import CoverStack from "./CoverStack.astro";
 import Spark from "./Spark.astro";
 
 const { projects, platforms, fresh, updated } = stats;
@@ -45,6 +46,7 @@ const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
     <span class={`cmp ${arrow(fresh.week)}`}>
       <b>{signed(fresh.week.diff)}</b> vs {fresh.week.before} the week before
     </span>
+    <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.22} label="New projects this week" /></div>
   </div>
 
   <div class="tile">
@@ -129,6 +131,9 @@ const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
   .cmp.down b::before {
     content: "▼ ";
     font-size: 0.8em;
+  }
+  .covers {
+    margin-top: 0.75rem;
   }
   .logos {
     margin-top: 0.55rem;

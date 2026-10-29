@@ -1,6 +1,7 @@
 ---
 import { ago, entryPath, fitLogo, PLATFORMS, platformLogo } from "../lib/data.ts";
 import { highlights } from "../lib/highlights.ts";
+import CoverStack from "./CoverStack.astro";
 
 const { risers, fresh, platform } = highlights;
 const slides = [
@@ -44,7 +45,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                 const logo = mini(r.entry.platform);
                 return (
                   <li>
-                    <a href={r.entry.kind === "tool" ? r.entry.url : entryPath(r.entry)} class={`item ${r.entry.kind}`}>
+                    <a href={r.entry.kind === "tool" ? r.entry.url : entryPath(r.entry)} class={`item ${r.entry.kind}${r.entry.cover ? " has-art" : ""}`}>
+                      {r.entry.cover && <img class="art" src={r.entry.cover.src} width={r.entry.cover.width} height={r.entry.cover.height} alt="" loading="lazy" decoding="async" />}
                       <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
                       <span class="big mono">
                         {r.value}
@@ -75,11 +77,14 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <header>
               <p class="eyebrow">{fresh.note}</p>
               <h2>{fresh.title}</h2>
-              {fresh.more > 0 && (
-                <a class="more-new mono" href="/#all-games">
-                  +{fresh.more} <span class="decode" data-words={JSON.stringify(ADJECTIVES)}>awesome</span>{" "}
-                  {fresh.more === 1 ? "release" : "releases"} before these
-                </a>
+              {fresh.rest.length > 0 && (
+                <div class="more-new">
+                  <CoverStack entries={fresh.rest} size={40} max={8} label="Earlier new releases" />
+                  <a class="mono" href="/#all-games">
+                    +{fresh.rest.length} <span class="decode" data-words={JSON.stringify(ADJECTIVES)}>awesome</span>{" "}
+                    {fresh.rest.length === 1 ? "release" : "releases"} before these
+                  </a>
+                </div>
               )}
             </header>
             <ol class="items">
@@ -87,7 +92,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                 const logo = mini(g.platform);
                 return (
                   <li>
-                    <a href={entryPath(g)} class={`item ${g.kind}`}>
+                    <a href={entryPath(g)} class={`item ${g.kind}${g.cover ? " has-art" : ""}`}>
+                      {g.cover && <img class="art" src={g.cover.src} width={g.cover.width} height={g.cover.height} alt="" loading="lazy" decoding="async" />}
                       <span class={`badge ${g.kind}`}>{g.kind}</span>
                       <strong>{g.game}</strong>
                       <span class="meta mono">
@@ -130,7 +136,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <ol class="items">
               {platform.top.map((t) => (
                 <li>
-                  <a href={entryPath(t.entry)} class={`item ${t.entry.kind}`}>
+                  <a href={entryPath(t.entry)} class={`item ${t.entry.kind}${t.entry.cover ? " has-art" : ""}`}>
+                    {t.entry.cover && <img class="art" src={t.entry.cover.src} width={t.entry.cover.width} height={t.entry.cover.height} alt="" loading="lazy" decoding="async" />}
                     <span class="big mono">{t.releases}×</span>
                     <strong>{t.entry.game}</strong>
                     <span class="meta mono">
@@ -311,14 +318,45 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     color: var(--recomp);
   }
   .more-new {
+    margin-top: 0.9rem;
+  }
+  .more-new a {
     display: inline-block;
-    margin-top: 0.7rem;
+    margin-top: 0.55rem;
     font-size: 0.75rem;
     color: var(--muted);
     text-decoration: none;
   }
-  .more-new:hover {
+  .more-new a:hover {
     color: var(--fg);
+  }
+  /* cover as the card's backdrop, shaded where the text sits */
+  .item.has-art {
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .item .art {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    scale: 1.06;
+    transition: scale 0.5s ease-out;
+  }
+  .item:hover .art {
+    scale: 1;
+  }
+  .item.has-art::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom, rgb(11 13 20 / 0.92) 0, rgb(11 13 20 / 0.55) 38%, rgb(11 13 20 / 0.2) 60%, rgb(11 13 20 / 0.9) 100%);
+  }
+  .item.has-art strong {
+    text-shadow: 0 1px 8px rgb(0 0 0 / 0.8);
   }
   .decode {
     color: var(--recomp);

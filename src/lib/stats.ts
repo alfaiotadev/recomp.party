@@ -13,7 +13,8 @@ const within = (iso: string | undefined, [a, b]: [number, number]) => !!iso && D
 const series = (f: (range: [number, number]) => number) =>
   Array.from({ length: WEEKS }, (_, i) => f(week(WEEKS - 1 - i)));
 
-const newIn = (range: [number, number]) => games.filter((g) => within(g.firstReleaseAt, range)).length;
+const newGamesIn = (range: [number, number]) => games.filter((g) => within(g.firstReleaseAt, range));
+const newIn = (range: [number, number]) => newGamesIn(range).length;
 const updatedIn = (range: [number, number]) =>
   games.filter((g) => (g.snap?.releaseDates ?? []).some((r) => within(r.date, range))).length;
 
@@ -32,6 +33,8 @@ export const stats = {
   platforms: { value: platformsInUse.length, ids: platformsInUse },
   fresh: {
     value: newIn(week(0)),
+    /** This week's new projects, newest first. */
+    entries: newGamesIn(week(0)).sort((a, b) => b.firstReleaseAt!.localeCompare(a.firstReleaseAt!)),
     week: delta(newIn(week(0)), newIn(week(1))),
     bars: series(newIn),
     barsLabel: "New projects per week, last 12 weeks",
