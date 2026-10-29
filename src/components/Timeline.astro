@@ -418,7 +418,7 @@ const defaultView = "1y";
   .tl-tip[hidden] {
     display: none;
   }
-  .tl-tip.has-cover {
+  .tl-tip.has-cover:not([hidden]) {
     display: flex;
     gap: 0.7rem;
     max-width: 330px;
