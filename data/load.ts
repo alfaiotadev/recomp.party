@@ -1,13 +1,15 @@
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { parse } from "yaml";
-import { Projects, Rejected, Snapshot, StarHistory, type Project, type Snapshot as SnapshotT } from "./schema.ts";
+import { Games, Projects, Rejected, Snapshot, StarHistory, type Games as GamesT, type Project, type Snapshot as SnapshotT } from "./schema.ts";
 
 // Resolved from the repo root rather than import.meta.url: Astro bundles this module into dist/.
 export const PROJECTS_PATH = resolve(process.cwd(), "data/projects.yaml");
 export const SNAPSHOT_PATH = resolve(process.cwd(), "data/snapshot.json");
 export const STARS_PATH = resolve(process.cwd(), "data/stars.json");
 export const REJECTED_PATH = resolve(process.cwd(), "data/rejected.yaml");
+export const GAMES_PATH = resolve(process.cwd(), "data/games.json");
+export const COVERS_DIR = resolve(process.cwd(), "public/covers");
 
 /** Parse and validate data/projects.yaml; throws a readable error listing every problem. */
 export function loadProjects(path = PROJECTS_PATH): Project[] {
@@ -26,6 +28,11 @@ export function loadSnapshot(path = SNAPSHOT_PATH): SnapshotT {
 
 export function loadRejected(path = REJECTED_PATH): Rejected {
   return Rejected.parse(parse(readFileSync(path, "utf8")) ?? []);
+}
+
+export function loadGames(path = GAMES_PATH): GamesT {
+  if (!existsSync(path)) return {};
+  return Games.parse(JSON.parse(readFileSync(path, "utf8")));
 }
 
 export function loadStarHistory(path = STARS_PATH): StarHistory {

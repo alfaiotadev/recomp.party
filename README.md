@@ -26,13 +26,14 @@ timeline (one lane per original platform) of how the scene is moving.
 ```
 data/projects.yaml  ← curated list (human-merged only)
         │  Fetch data (every 6 h): GitHub GraphQL → data/snapshot.json
+        │                          Wikidata + IGDB → data/games.json, public/covers/
         ▼
 Astro static build  →  GitHub Pages  →  recomp.party
 ```
 
 | Workflow | When | What |
 |---|---|---|
-| `fetch.yml` | every 6 h | refresh `data/snapshot.json` (releases, stars, activity) and commit it |
+| `fetch.yml` | every 6 h | refresh `data/snapshot.json` (releases, stars, activity) and `data/games.json` + covers, and commit them |
 | `deploy.yml` | push to main, after fetch | validate, build with Astro, deploy to GitHub Pages |
 | `discover.yml` | weekly | find candidates (GitHub search, [PixelCherryNinja](https://pixelcherryninja.blogspot.com/) news posts, [MrSujano](https://github.com/MrSujano/Sources/releases) video sources, Hacker News, web search), classify with an LLM, open a PR |
 | `suggestion.yml` | issue labeled `suggestion` | classify the suggested repo, open a PR, reply on the issue |
@@ -68,6 +69,16 @@ GITHUB_TOKEN=$(gh auth token) npm run discover -- --only owner/repo
 ```
 
 Data model: [`data/schema.ts`](data/schema.ts).
+
+### Original games and covers
+
+Each game entry can name the original game's Wikidata item (`wikidata: Q1050284`). `npm run match-wikidata` prints
+candidates for entries without one; pick by hand (remasters and ports often have an item of their own).
+`npm run games` then pulls the title, year, developer, publisher and Wikipedia / MobyGames / IGDB ids from Wikidata
+into `data/games.json`, and downloads the IGDB cover of each game to `public/covers/<id>.webp`. Covers need a Twitch
+app for the [IGDB API](https://api-docs.igdb.com/#account-creation) (free for non-commercial use): set
+`IGDB_CLIENT_ID` and `IGDB_CLIENT_SECRET` as Actions secrets and in `.env`. Without them the step keeps the covers
+it already has.
 
 ## License
 
