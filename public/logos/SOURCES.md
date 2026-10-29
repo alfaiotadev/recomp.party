@@ -26,3 +26,6 @@ They were sanitised (no scripts, no external references), background-stripped wh
 | `ps4.svg` | Simple Icons `playstation4` | CC0-1.0 | https://simpleicons.org/ |
 | `ps5.svg` | Simple Icons `playstation5` | CC0-1.0 | https://simpleicons.org/ |
 | `psp.svg` | Simple Icons `playstationportable` | CC0-1.0 | https://simpleicons.org/ |
+
+`snes-mark.svg` is `snes.svg` with the viewBox cropped to the "SUPER NINTENDO" wordmark: the
+"ENTERTAINMENT SYSTEM" bar is unreadable at card size.

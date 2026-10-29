@@ -1,6 +1,7 @@
 name: Fetch data
 
-# Refresh data/snapshot.json from the GitHub API. A finished run triggers "Deploy site".
+# Refresh data/snapshot.json from the GitHub API, and data/games.json + public/covers from Wikidata and IGDB.
+# A finished run triggers "Deploy site".
 on:
   push:
     branches: [main]
@@ -29,12 +30,17 @@ jobs:
       - run: npm run fetch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm run games
+        continue-on-error: true # Wikidata/IGDB trouble must not hold back the GitHub refresh
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
       - run: npm run validate
-      - name: Commit snapshot if it changed
+      - name: Commit data if it changed
         run: |
-          git diff --quiet data/snapshot.json data/stars.json && { echo "No changes."; exit 0; }
+          git add data/snapshot.json data/stars.json data/games.json public/covers
+          git diff --cached --quiet && { echo "No changes."; exit 0; }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/snapshot.json data/stars.json
           git commit -m "data: refresh snapshot"
           git push

@@ -81,6 +81,7 @@ const defaultView = "1y";
                   data-count={r.entry.snap?.releaseCount ?? 0}
                   data-stars={(r.entry.snap?.stars ?? 0).toLocaleString("en")}
                   data-tool={r.entry.tool ?? ""}
+                  data-cover={r.entry.cover?.src ?? ""}
                 >
                   <rect class="hit" x="0" y="-9" width={W} height="18" />
                   {r.guide && <line class="guide" x1={r.guide.x1} x2={r.guide.x2} y1="0" y2="0" />}
@@ -185,13 +186,22 @@ const defaultView = "1y";
       return el;
     };
     const fill = (d) => {
-      tip.replaceChildren(
+      const text = document.createElement("div");
+      text.append(
         line("t-kind " + d.kind, kinds[d.kind] + (d.tool ? " · " + d.tool : "")),
         line("t-game", d.game),
         line("t-repo", d.repo),
         line("t-meta", `${d.first} → ${d.latest}`),
         line("t-meta", `${d.count} releases · ★ ${d.stars}`),
       );
+      if (d.cover) {
+        const img = document.createElement("img");
+        img.className = "t-cover";
+        img.src = d.cover;
+        img.alt = "";
+        tip.replaceChildren(img, text);
+      } else tip.replaceChildren(text);
+      tip.classList.toggle("has-cover", !!d.cover);
       tip.hidden = false;
     };
     const place = (x, y) => {
@@ -407,6 +417,20 @@ const defaultView = "1y";
   }
   .tl-tip[hidden] {
     display: none;
+  }
+  .tl-tip.has-cover {
+    display: flex;
+    gap: 0.7rem;
+    max-width: 330px;
+  }
+  .tl-tip :global(.t-cover) {
+    flex: none;
+    align-self: flex-start;
+    width: 62px;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 5px;
+    background: var(--surface-2);
   }
   .tl-tip :global(.t-kind) {
     font-family: var(--mono);

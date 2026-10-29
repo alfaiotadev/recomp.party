@@ -7,10 +7,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "fetch": "tsx scripts/fetch.ts",
+    "games": "tsx scripts/games.ts",
     "discover": "tsx scripts/discover.ts",
     "validate": "tsx scripts/validate.ts && tsx scripts/format.ts --check",
     "check": "tsc --noEmit",
-    "format": "tsx scripts/format.ts"
+    "format": "tsx scripts/format.ts",
+    "match-wikidata": "tsx scripts/match-wikidata.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
+    "sharp": "^0.35.5",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
   }

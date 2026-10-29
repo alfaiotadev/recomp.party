@@ -1,6 +1,6 @@
 ---
 import Base from "../../../layouts/Base.astro";
-import { ago, creditLink, entryPath, fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
+import { ago, creditLink, entryPath, fitLogo, gameLinks, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
 
 export function getStaticPaths() {
   return games.map((entry) => {
@@ -16,7 +16,11 @@ const { entry: e } = Astro.props;
 const s = e.snap;
 const logo = platformLogo(e.platform);
 const logoBox = logo && fitLogo(logo, 160, 40);
-const sameGame = games.filter((g) => g !== e && g.game.replace(/ \(.*\)$/, "") === e.game.replace(/ \(.*\)$/, ""));
+const baseName = (g: Entry) => g.game.replace(/ \(.*\)$/, "");
+const sameGame = games.filter((g) => g !== e && ((e.wikidata && g.wikidata === e.wikidata) || baseName(g) === baseName(e)));
+const m = e.meta;
+const makers = m && (m.developers.length ? m.developers : m.publishers);
+const links = gameLinks(e);
 const tool = e.tool ? tools.find((t) => toolUsers(t).includes(e)) : undefined;
 
 // Release strip: every release as a dot across the project's lifetime.
@@ -39,6 +43,9 @@ const facts: [string, string | undefined][] = [
 ---
 
 <Base title={e.game} description={`${e.game} (${PLATFORMS[e.platform]}) — ${KINDS[e.kind].toLowerCase()} by ${e.repo}. ${s?.description ?? ""}`}>
+  <div class={e.cover ? "intro with-cover" : "intro"}>
+  {e.cover && <img class="cover" src={e.cover.src} width={e.cover.width} height={e.cover.height} alt={`${m?.title ?? e.game} cover`} />}
+  <div>
   <div class="head">
     <div>
       <p class="crumbs eyebrow"><a href="/">Games</a> / {PLATFORMS[e.platform]}</p>
@@ -54,12 +61,34 @@ const facts: [string, string | undefined][] = [
   </p>
   {s?.description && <p class="lede">{s.description}</p>}
   {e.note && <p>{e.note}</p>}
+  {
+    m && (
+      <p class="orig mono">
+        Original game: <b>{m.title}</b>
+        {m.year && <> · <b>{m.year}</b></>}
+        {makers && makers.length > 0 && <> · {makers.join(", ")}</>}
+      </p>
+    )
+  }
+  {
+    links.length > 0 && (
+      <ul class="links">
+        {links.map((l) => (
+          <li>
+            <a href={l.href} rel="external">{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 
   <p class="actions">
     {e.latest && <a class="btn primary" href={e.latest.url}>Latest release: {e.latest.tag}</a>}
     <a class="btn" href={e.url}>{e.repo} on GitHub</a>
     {s?.homepage && <a class="btn" href={s.homepage}>Website</a>}
   </p>
+  </div>
+  </div>
 
   <div class="cols">
     <section>
@@ -151,6 +180,65 @@ const facts: [string, string | undefined][] = [
 </Base>
 
 <style>
+  .intro.with-cover {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0 1.75rem;
+    align-items: start;
+  }
+  .cover {
+    margin-top: 2.5rem;
+    width: 160px;
+    height: auto;
+    border-radius: 7px;
+    box-shadow:
+      0 18px 40px -16px rgb(0 0 0 / 0.9),
+      0 0 0 1px rgb(255 255 255 / 0.07);
+  }
+  @media (max-width: 640px) {
+    .intro.with-cover {
+      grid-template-columns: 88px 1fr;
+      gap: 0 1rem;
+    }
+    .cover {
+      width: 88px;
+    }
+  }
+  .orig {
+    margin: 0.4rem 0 0;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .orig b {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .links a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.2rem 0.55rem;
+    background: var(--surface);
+  }
+  .links a:hover {
+    color: var(--fg);
+    border-color: var(--faint);
+  }
+  .links a::after {
+    content: " ↗";
+    color: var(--faint);
+  }
   .head {
     display: flex;
     align-items: end;

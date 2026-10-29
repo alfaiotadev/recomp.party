@@ -1,5 +1,5 @@
-import { loadProjects, loadSnapshot } from "../../data/load.ts";
-import { KINDS, PLATFORMS, type Project, type Release, type RepoSnapshot } from "../../data/schema.ts";
+import { loadGames, loadProjects, loadSnapshot } from "../../data/load.ts";
+import { KINDS, PLATFORMS, type GameMeta, type Project, type Release, type RepoSnapshot } from "../../data/schema.ts";
 
 export { KINDS, PLATFORMS };
 export type PlatformId = keyof typeof PLATFORMS;
@@ -14,14 +14,20 @@ export type Entry = Project & {
   latestReleaseAt: string | undefined;
   /** Distinct OS targets of the latest release. */
   os: Release["os"];
+  /** The original game on Wikidata, if the entry is pinned to one. */
+  meta: GameMeta | undefined;
+  /** IGDB cover as served from public/covers, if there is one. */
+  cover: { src: string; width: number; height: number } | undefined;
 };
 
 const snapshot = loadSnapshot();
+const gameMeta = loadGames();
 export const generatedAt = snapshot.generatedAt;
 
 function toEntry(p: Project): Entry {
   const snap = snapshot.repos[p.repo];
   const dates = snap?.releaseDates ?? [];
+  const meta = p.wikidata ? gameMeta[p.wikidata] : undefined;
   return {
     ...p,
     slug: p.repo,
@@ -31,6 +37,8 @@ function toEntry(p: Project): Entry {
     firstReleaseAt: dates.at(-1)?.date,
     latestReleaseAt: dates[0]?.date,
     os: snap?.releases[0]?.os ?? [],
+    meta,
+    cover: meta?.cover && { src: `/covers/${p.wikidata}.webp`, width: meta.cover.width, height: meta.cover.height },
   };
 }
 
@@ -53,6 +61,19 @@ export function entryPath(e: Pick<Entry, "slug">): string {
 export function creditLink(credit: string): { href: string; label: string } {
   if (/^https?:\/\//.test(credit)) return { href: credit, label: credit.replace(/^https?:\/\/(www\.)?/, "") };
   return { href: `https://github.com/${credit}`, label: credit };
+}
+
+/** Reference sites for the original game, in display order. */
+export function gameLinks(e: Pick<Entry, "wikidata" | "meta">): { label: string; href: string }[] {
+  const m = e.meta;
+  if (!e.wikidata || !m) return [];
+  const links = [
+    m.wikipedia && { label: "Wikipedia", href: `https://en.wikipedia.org/wiki/${encodeURIComponent(m.wikipedia.replaceAll(" ", "_"))}` },
+    m.mobygames && { label: "MobyGames", href: `https://www.mobygames.com/game/${m.mobygames}` },
+    m.igdb && { label: "IGDB", href: `https://www.igdb.com/games/${m.igdb}` },
+    { label: "Wikidata", href: `https://www.wikidata.org/wiki/${e.wikidata}` },
+  ];
+  return links.filter((l): l is { label: string; href: string } => Boolean(l));
 }
 
 const DAY = 86_400_000;
@@ -90,6 +111,17 @@ export type Logo = { src: string; aspect: number };
 export function platformLogo(id: PlatformId): Logo | undefined {
   const aspect = LOGO_ASPECT[id];
   return aspect ? { src: `/logos/${id}.svg`, aspect } : undefined;
+}
+
+/** Compact variant for small badges: the SNES logo without its "ENTERTAINMENT SYSTEM" bar. */
+export function platformMark(id: PlatformId): Logo | undefined {
+  return id === "snes" ? { src: "/logos/snes-mark.svg", aspect: 5.488 } : platformLogo(id);
+}
+
+/** Size a logo by area so wide wordmarks and compact marks look equally heavy, within maxW × maxH. */
+export function fitLogoArea(logo: Logo, area: number, maxW: number, maxH: number): { w: number; h: number } {
+  const h = Math.min(maxH, Math.sqrt(area / logo.aspect), maxW / logo.aspect);
+  return { w: h * logo.aspect, h };
 }
 
 /** Fit a logo into a box: wide wordmarks are capped by width, square marks get more height. */

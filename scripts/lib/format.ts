@@ -12,7 +12,7 @@ const HEADER = `# recomp.party — curated list of playable recomps and ports.
 # Fields: see data/schema.ts. Layout is generated: run \`npm run format\` after editing.
 `;
 
-const FIELDS = ["repo", "game", "platform", "kind", "tool", "based_on", "note", "added"] as const;
+const FIELDS = ["repo", "game", "platform", "kind", "tool", "based_on", "wikidata", "note", "added"] as const;
 
 const scalar = (v: string) => stringify(v, { lineWidth: 0 }).trim();
 
