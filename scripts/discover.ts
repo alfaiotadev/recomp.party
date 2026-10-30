@@ -204,7 +204,8 @@ async function pinWikidata(game: string, repo: string): Promise<string | undefin
   }
   try {
     const list = await wikidataCandidates(game.replace(/\s*\(.*\)$/, ""));
-    const exact = list.filter((c) => titleKey(c.label) === titleKey(game));
+    // a franchise item often shares the first game's title; it is never the game itself
+    const exact = list.filter((c) => titleKey(c.label) === titleKey(game) && !/\bseries\b/i.test(c.description));
     const hit = exact.length === 1 && exact[0]!.igdb ? exact[0] : undefined;
     if (hit) {
       wikidataNote.set(repo, `[${hit.id}](https://www.wikidata.org/wiki/${hit.id}) ${hit.label}${hit.year ? ` (${hit.year})` : ""}`);
