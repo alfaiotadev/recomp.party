@@ -338,6 +338,7 @@
   kind: recomp
   tool: cafe-recomp
   based_on: [Petexy/Tekken-Tag-2-Ultimate-Edition]
+  wikidata: Q1195150
   added: 2026-10-30
 - repo: ryderclanky/BotW-Native
   game: "The Legend of Zelda: Breath of the Wild"
@@ -366,6 +367,7 @@
   platform: switch
   kind: recomp
   based_on: [BelmanteGu/SuperMarioWonderRecomp]
+  wikidata: Q64566657
   added: 2026-10-30
 - repo: K0NL/B2recomp
   game: Bayonetta 2
@@ -473,6 +475,7 @@
   game: Dead or Alive
   platform: ps1
   kind: recomp
+  wikidata: Q2548236
   added: 2026-10-30
 - repo: BlackLabelHQ/MediEvilRecomp
   game: MediEvil
@@ -562,6 +565,7 @@
   kind: recomp
   tool: PS2Recomp
   based_on: [ran-j/PS2Recomp]
+  wikidata: Q2711870
   added: 2026-10-30
 
 # --- PlayStation 3 ---------------------------------------------------------------
@@ -644,6 +648,7 @@
   game: "Sengoku Basara 4: Sumeragi"
   platform: ps4
   kind: port
+  wikidata: Q16259198
   added: 2026-10-30
 - repo: AjncSystem/ShadowOfTheColossus-PC
   game: Shadow of the Colossus
@@ -673,6 +678,7 @@
   game: Until Dawn
   platform: ps4
   kind: recomp
+  wikidata: Q7897632
   added: 2026-10-30
 
 # --- PSP -------------------------------------------------------------------------
@@ -780,6 +786,7 @@
   platform: xbox
   kind: recomp
   tool: Xbox XBE Recomp
+  wikidata: Q589751
   added: 2026-10-30
 - repo: TGP482/SCDA-XBERecomp
   game: "Splinter Cell: Double Agent"
@@ -1002,6 +1009,7 @@
   game: "The Operative: No One Lives Forever"
   platform: pc
   kind: recomp
+  wikidata: Q936968
   added: 2026-10-30
 - repo: Kitrinx/Ultima7_Decomp
   game: Ultima VII
@@ -1015,6 +1023,7 @@
   game: Killer Instinct (arcade) / Killer Instinct 2
   platform: arcade
   kind: port
+  wikidata: Q973459
   added: 2026-10-30
 - repo: cheviman/segasonic-port
   game: SegaSonic The Hedgehog
