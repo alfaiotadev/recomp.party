@@ -121,3 +121,71 @@
   reason: DreamPotato is a Dreamcast VMU emulator, not a static recompilation or
     source‑port of a game.
   date: 2026-10-28
+- repo: CachyOS/linux-cachyos
+  reason: The repository is a custom Linux kernel distribution, not a game static
+    recompilation or source port.
+  date: 2026-10-30
+- repo: Zexyen/Witch-Time
+  reason: Implausible or fake repository with future creation dates and
+    non-existent hardware.
+  date: 2026-10-30
+- repo: aarvsn/PS5Droid
+  reason: PS5Droid is an Android runtime/compatibility layer research project for
+    PS5, not a game static recompilation or game source port.
+  date: 2026-10-30
+- repo: Nycolazs/EoWRecomp
+  reason: The available releases do not run the game yet.
+  date: 2026-10-30
+- repo: ravensclawx/ftpd-sb
+  reason: This is a homebrew FTP server utility, not a game recompilation or
+    source port.
+  date: 2026-10-30
+- repo: PCSX2/myMCpp
+  reason: This is a PlayStation 2 memory card management utility, not a playable
+    game recompilation, source port, or recompiler toolchain.
+  date: 2026-10-30
+- repo: Igloo-Garage/Model-3-Vulkan
+  reason: The repository is an emulator (Vulkan rewrite of Supermodel) not a
+    game-specific static recompilation or source port.
+  date: 2026-10-30
+- repo: lpfoj/lsx4
+  reason: This is a general-purpose emulator for PS4/PS5, not a game-specific
+    static recompilation or source port.
+  date: 2026-10-30
+- repo: igawa6/Raitchi
+  reason: It is a general Switch emulator/shared runtime using native code
+    execution (NCE) rather than a game-specific static recompilation or source
+    port.
+  date: 2026-10-30
+- repo: tortugaveloz/MIRLO64
+  reason: FPGA core implements N64 hardware, not a game-specific recompilation or
+    source port.
+  date: 2026-10-30
+- repo: msmfai/marios-mask
+  reason: The repo provides a ROM patch/mod that requires original N64 ROMs, not a
+    native recompilation or source port.
+  date: 2026-10-30
+- repo: drhelius/Geartowns
+  reason: The repository is an FM Towns emulator, which is an emulator not a
+    game-specific static recompilation or source port.
+  date: 2026-10-30
+- repo: ontoplano/ontoplano
+  reason: The repository is a productivity app, not a game recompilation, port, or
+    related tool.
+  date: 2026-10-30
+- repo: harpmudd/HarpMudd.mp3player
+  reason: The repository is an MP3 player core for Analogue Pocket, not a game
+    recompilation, source port, or related tool.
+  date: 2026-10-30
+- repo: armyofgnomes/analogue-pocket-32x
+  reason: It's an FPGA core/emulator for Sega 32X, not a game-specific static
+    recompilation or source port.
+  date: 2026-10-30
+- repo: gs-soft-it/lumen-emu
+  reason: Lumen Emu is a full PS4/PS5 system emulator, not a game‑specific static
+    recompilation, source port, or recompilation toolchain.
+  date: 2026-10-30
+- repo: OrangeFox86/Hollycast
+  reason: The repository is an emulator (Flycast fork), not a game-specific static
+    recompilation or source port.
+  date: 2026-10-30

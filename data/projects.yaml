@@ -53,6 +53,13 @@
   based_on: [Mr-Wiseguy/banjo-tooie]
   wikidata: Q806598
   added: 2026-10-28
+- repo: SlaveOfIDO/blastcorps-recomp
+  game: Blast Corps
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [N64Recomp/N64Recomp]
+  added: 2026-10-30
 - repo: RevoSucks/BM64Recomp
   game: Bomberman 64
   platform: n64
@@ -109,6 +116,18 @@
   based_on: [n64decomp/007]
   wikidata: Q369086
   added: 2026-10-28
+- repo: danielgomesvieira2000/hybrid-heaven-recomp
+  game: Hybrid Heaven
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [N64Recomp/N64Recomp]
+  added: 2026-10-30
+- repo: TK22-26/JetForceGemini-Recomp
+  game: Jet Force Gemini
+  platform: n64
+  kind: recomp
+  added: 2026-10-30
 - repo: HarbourMasters/SpaghettiKart
   game: Mario Kart 64
   platform: n64
@@ -159,6 +178,18 @@
   tool: N64Recomp
   wikidata: Q1478513
   added: 2026-10-28
+- repo: bryantmh/rush2recompiled
+  game: "Rush 2: Extreme Racing USA"
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-30
+- repo: wootbeer/snprecomp
+  game: Sin and Punishment
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-10-30
 - repo: HarbourMasters/Starship
   game: Star Fox 64
   platform: n64
@@ -233,6 +264,12 @@
   based_on: [ACreTeam/ac-decomp]
   wikidata: Q5345827
   added: 2026-10-28
+- repo: leafyjerk/PS5_LuigisMansion
+  game: Luigi's Mansion
+  platform: gc
+  kind: port
+  based_on: [rob646464/luigis-mansion-recompiled]
+  added: 2026-10-30
 - repo: rob646464/luigis-mansion-recompiled
   game: Luigi's Mansion
   platform: gc
@@ -297,6 +334,13 @@
   added: 2026-10-28
 
 # --- Wii U -----------------------------------------------------------------------
+- repo: josiahg2502-glitch/Smash4PC
+  game: Super Smash Bros. for Wii U
+  platform: wiiu
+  kind: recomp
+  tool: cafe-recomp
+  based_on: [Petexy/Tekken-Tag-2-Ultimate-Edition]
+  added: 2026-10-30
 - repo: ryderclanky/BotW-Native
   game: "The Legend of Zelda: Breath of the Wild"
   platform: wiiu
@@ -319,6 +363,12 @@
   added: 2026-10-28
 
 # --- Switch ----------------------------------------------------------------------
+- repo: Nycolazs/ACNHRecomp
+  game: "Animal Crossing: New Horizons"
+  platform: switch
+  kind: recomp
+  based_on: [BelmanteGu/SuperMarioWonderRecomp]
+  added: 2026-10-30
 - repo: K0NL/B2recomp
   game: Bayonetta 2
   platform: switch
@@ -343,6 +393,13 @@
   kind: recomp
   wikidata: Q54093632
   added: 2026-10-28
+- repo: mamcjr/BOTWRecompAndroid
+  game: "The Legend of Zelda: Breath of the Wild"
+  platform: switch
+  kind: recomp
+  tool: LASRecomp
+  based_on: [peiikai/LASRecomp]
+  added: 2026-10-30
 - repo: Revivedx/SavageWindRecomp
   game: "The Legend of Zelda: Breath of the Wild"
   platform: switch
@@ -361,6 +418,11 @@
   kind: recomp
   wikidata: Q64577191
   added: 2026-10-28
+- repo: valentderah/totk-pc-recomp
+  game: "The Legend of Zelda: Tears of the Kingdom"
+  platform: switch
+  kind: recomp
+  added: 2026-10-30
 
 # --- Nintendo DS -----------------------------------------------------------------
 - repo: mstan/MetroidPrimeHuntersRecomp
@@ -385,6 +447,11 @@
   kind: recomp
   wikidata: Q719176
   added: 2026-10-28
+- repo: 3dge7161/Jiggle-or-Physics
+  game: Dead or Alive
+  platform: ps1
+  kind: recomp
+  added: 2026-10-30
 - repo: BlackLabelHQ/MediEvilRecomp
   game: MediEvil
   platform: ps1
@@ -446,14 +513,47 @@
   based_on: [AshfordFamily/recvx-decomp]
   wikidata: Q1050284
   added: 2026-10-28
+- repo: victor-takai/rogue-galaxy-recomp
+  game: Rogue Galaxy
+  platform: ps2
+  kind: recomp
+  tool: PS2Recomp
+  based_on: [ran-j/PS2Recomp]
+  added: 2026-10-30
 - repo: theclub654/ProjectCane
   game: Sly Cooper and the Thievius Raccoonus
   platform: ps2
   kind: port
   wikidata: Q40627
   added: 2026-10-28
+- repo: LAB0ULANGE/stuntman-pc
+  game: Stuntman
+  platform: ps2
+  kind: port
+  based_on: [danielgomesvieira2000/ps2-port-engine]
+  added: 2026-10-30
+- repo: Yaz-Myst/ZOE-Recompiled
+  game: Zone of the Enders
+  platform: ps2
+  kind: recomp
+  tool: PS2Recomp
+  based_on: [ran-j/PS2Recomp]
+  added: 2026-10-30
 
 # --- PlayStation 3 ---------------------------------------------------------------
+- repo: otavix010/gow-ascension-pc
+  game: "God of War: Ascension"
+  platform: ps3
+  kind: port
+  tool: ps3recomp
+  based_on: [sp00nznet/ps3recomp]
+  added: 2026-10-30
+- repo: undecuple/project-pyrrhus
+  game: Killzone 2
+  platform: ps3
+  kind: port
+  tool: ps3recomp
+  added: 2026-10-30
 - repo: kastieloficial/RE-Code-Veronica-PS3-HD-Recomp-PC
   game: "Resident Evil Code: Veronica X HD"
   platform: ps3
@@ -514,6 +614,11 @@
   kind: port
   wikidata: Q18182633
   added: 2026-10-28
+- repo: razzconnect/basara4-native-pc
+  game: Sengoku Basara 4 Sumeragi
+  platform: ps4
+  kind: port
+  added: 2026-10-30
 - repo: AjncSystem/ShadowOfTheColossus-PC
   game: Shadow of the Colossus
   platform: ps4
@@ -538,6 +643,11 @@
   kind: port
   wikidata: Q20059613
   added: 2026-10-28
+- repo: SuperCatElvis/UntilDawn_PC
+  game: Until Dawn
+  platform: ps4
+  kind: recomp
+  added: 2026-10-30
 
 # --- PSP -------------------------------------------------------------------------
 - repo: DrummingBird1/gow-psp-recomp
@@ -553,6 +663,11 @@
   tool: PSPRecomp
   wikidata: Q94778
   added: 2026-10-28
+- repo: Mango77x/MHForever
+  game: Monster Hunter Freedom Unite
+  platform: psp
+  kind: recomp
+  added: 2026-10-30
 - repo: TeamGDB/Yakumo
   game: Monster Hunter Portable 3rd HD Ver.
   platform: psp
@@ -606,6 +721,12 @@
   kind: recomp
   wikidata: Q1776302
   added: 2026-10-28
+- repo: vyanhursky/DefJamFFNY-recomp
+  game: "Def Jam: Fight for NY"
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  added: 2026-10-30
 - repo: JackTulli/halo-64
   game: "Halo: Combat Evolved"
   platform: xbox
@@ -625,6 +746,12 @@
   kind: recomp
   wikidata: Q6043187
   added: 2026-10-28
+- repo: hk21x/pgr1-recomp
+  game: Project Gotham Racing
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  added: 2026-10-30
 - repo: TGP482/SCDA-XBERecomp
   game: "Splinter Cell: Double Agent"
   platform: xbox
@@ -633,6 +760,17 @@
   based_on: [TGP482/XboxXBE-Recomp]
   wikidata: Q878492
   added: 2026-10-28
+- repo: Antriksh1984/TheWarriors-XBERecomp
+  game: The Warriors
+  platform: xbox
+  kind: port
+  tool: XboxXBERecomp
+  added: 2026-10-30
+- repo: TheDoffman/timesplitters-future-perfect-pc
+  game: "TimeSplitters: Future Perfect"
+  platform: xbox
+  kind: recomp
+  added: 2026-10-30
 
 # --- Xbox 360 --------------------------------------------------------------------
 - repo: sal063/AC6_recomp
@@ -717,6 +855,13 @@
   kind: recomp
   wikidata: Q558753
   added: 2026-10-28
+- repo: holdmysocks/mcla-recomp
+  game: "Midnight Club: Los Angeles"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [mzzvxm/larecomp]
+  added: 2026-10-30
 - repo: jorjbarbosa/naruto-rise-recomp
   game: "Naruto: Rise of a Ninja"
   platform: x360
@@ -724,6 +869,17 @@
   tool: ReXGlue
   wikidata: Q2713853
   added: 2026-10-28
+- repo: jorjbarbosa/broken-bond-recomp
+  game: "Naruto: The Broken Bond"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-10-30
+- repo: SpeedBreakerProject/speedbreaker-carbon
+  game: "Need for Speed: Carbon"
+  platform: x360
+  kind: recomp
+  added: 2026-10-30
 - repo: SpeedBreakerProject/speedbreaker
   game: "Need for Speed: Most Wanted"
   platform: x360
@@ -803,6 +959,11 @@
   kind: recomp
   wikidata: Q726190
   added: 2026-10-28
+- repo: ankushKun/sh23ds
+  game: Silent Hill 2
+  platform: pc
+  kind: port
+  added: 2026-10-30
 - repo: RSDKModding/RSDKv4-Decompilation
   game: Sonic 1 & 2 (2013)
   platform: pc
@@ -822,6 +983,24 @@
   kind: port
   wikidata: Q2376909
   added: 2026-10-28
+
+# --- Arcade ----------------------------------------------------------------------
+- repo: thefixinhixon/UltraCombo
+  game: Killer Instinct
+  platform: arcade
+  kind: recomp
+  added: 2026-10-30
+- repo: cheviman/segasonic-port
+  game: SegaSonic The Hedgehog
+  platform: arcade
+  kind: port
+  based_on: [cheviman/segasonic-decomp]
+  added: 2026-10-30
+- repo: tmcleroy/sfa2-recomp
+  game: Street Fighter Alpha 2
+  platform: arcade
+  kind: recomp
+  added: 2026-10-30
 
 # --- Toolchains ------------------------------------------------------------------
 - repo: boykopovar/AnyPS5
