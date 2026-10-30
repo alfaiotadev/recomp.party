@@ -121,3 +121,9 @@
   reason: DreamPotato is a Dreamcast VMU emulator, not a static recompilation or
     source‑port of a game.
   date: 2026-10-28
+- repo: ankushKun/sh23ds
+  reason: Silent Hill 2 ported to the Nintendo 3DS as homebrew; the site lists native PC/phone builds, not console targets.
+  date: 2026-10-30
+- repo: leafyjerk/PS5_LuigisMansion
+  reason: PS5 homebrew build of Luigi's Mansion Recompiled (already listed); a console target, not a native PC/phone build.
+  date: 2026-10-30
