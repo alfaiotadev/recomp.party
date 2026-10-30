@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { tools } from "../lib/data.ts";
+import { DISCOVERY_PRS, DISCOVERY_RUN_MIN, DISCOVERY_UTC } from "../lib/discovery.ts";
 
 interface Props {
   title?: string;
@@ -34,6 +35,16 @@ const here = Astro.url.pathname;
   <body>
     <header class="site-header">
       <a class="brand" href="/">recomp<span>.party</span></a>
+      <a
+        class="scan"
+        href={DISCOVERY_PRS}
+        data-scan={JSON.stringify({ ...DISCOVERY_UTC, run: DISCOVERY_RUN_MIN })}
+        title={`Discovery scans GitHub and the web for new recomps every day at ${String(DISCOVERY_UTC.hour).padStart(2, "0")}:${String(DISCOVERY_UTC.minute).padStart(2, "0")} UTC (GitHub may start it a little late). Click for its proposals.`}
+      >
+        <span class="radar" aria-hidden="true"></span>
+        <span class="scan-label">next scan</span>
+        <span class="scan-t">T-··:··:··</span>
+      </a>
       <nav>
         {
           nav.map((n) => (
@@ -62,6 +73,7 @@ const here = Astro.url.pathname;
     </footer>
     <script>
       import "../scripts/decode.ts";
+      import "../scripts/scan.ts";
     </script>
   </body>
 </html>

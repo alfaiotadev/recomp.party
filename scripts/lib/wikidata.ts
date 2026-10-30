@@ -26,3 +26,37 @@ export async function sparql(query: string): Promise<Record<string, { value: str
   if (!res.ok) throw new Error(`Wikidata SPARQL ${res.status}: ${await res.text()}`);
   return (await res.json()).results.bindings;
 }
+
+export type WikidataCandidate = { id: string; label: string; description: string; igdb?: string; year?: string };
+
+/** Search Wikidata for a game title; keep items that look like games (IGDB id or "video game" in the description). */
+export async function wikidataCandidates(title: string): Promise<WikidataCandidate[]> {
+  const search = await wikidataApi({ action: "wbsearchentities", search: title, language: "en", type: "item", limit: "8" });
+  const ids: string[] = search.search.map((s: { id: string }) => s.id);
+  if (!ids.length) return [];
+  const got = await wikidataApi({ action: "wbgetentities", ids: ids.join("|"), props: "labels|descriptions|claims", languages: "en|mul" });
+  return ids
+    .map((id) => {
+      const e = got.entities[id];
+      const claim = (p: string) => e.claims?.[p]?.[0]?.mainsnak?.datavalue?.value;
+      return {
+        id,
+        label: e.labels?.en?.value ?? e.labels?.mul?.value ?? "",
+        description: e.descriptions?.en?.value ?? "",
+        igdb: claim("P5794") as string | undefined,
+        year: (claim("P577") as { time?: string } | undefined)?.time?.slice(1, 5),
+      };
+    })
+    .filter((c) => c.igdb || /video game/i.test(c.description));
+}
+
+/** Loose title key: case, accents, punctuation, a leading "The" and a trailing "(…)" don't matter. */
+export const titleKey = (s: string) =>
+  s
+    .replace(/\s*\(.*\)$/, "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/^the /, "");

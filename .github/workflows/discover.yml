@@ -1,10 +1,11 @@
 name: Discover projects
 
-# Weekly: search GitHub, Hacker News and (with GEMINI_API_KEY) the web for new playable recomps/ports,
-# classify them with free LLM tiers, and open one pull request for a human to review.
+# Daily: search GitHub, Hacker News and (with GEMINI_API_KEY) the web for new playable recomps/ports,
+# classify them with free LLM tiers, and open (or update) one pull request for a human to review.
+# The header countdown on the site assumes this schedule: keep DISCOVERY_CRON in src/lib/discovery.ts in sync.
 on:
   schedule:
-    - cron: "41 5 * * 1"
+    - cron: "41 5 * * *"
   workflow_dispatch:
     inputs:
       days:
@@ -45,7 +46,7 @@ jobs:
       - run: npm run validate && npm run build
       - uses: peter-evans/create-pull-request@v8
         with:
-          branch: discover/weekly
+          branch: discover/candidates
           delete-branch: true
           add-paths: |
             data/projects.yaml
