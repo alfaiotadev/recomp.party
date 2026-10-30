@@ -122,8 +122,70 @@
     source‑port of a game.
   date: 2026-10-28
 - repo: ankushKun/sh23ds
-  reason: Silent Hill 2 ported to the Nintendo 3DS as homebrew; the site lists native PC/phone builds, not console targets.
+  reason: Silent Hill 2 ported to the Nintendo 3DS as homebrew; the site lists
+    native PC/phone builds, not console targets.
   date: 2026-10-30
 - repo: leafyjerk/PS5_LuigisMansion
-  reason: PS5 homebrew build of Luigi's Mansion Recompiled (already listed); a console target, not a native PC/phone build.
+  reason: PS5 homebrew build of Luigi's Mansion Recompiled (already listed); a
+    console target, not a native PC/phone build.
+  date: 2026-10-30
+- repo: CachyOS/linux-cachyos
+  reason: This repository is a Linux kernel distribution, not a game static
+    recompilation or source port.
+  date: 2026-10-30
+- repo: aarvsn/PS5Droid
+  reason: The repository is a system‑research project for running Android on PS5,
+    not a game‑specific recompilation, source port, or relevant recompiler tool.
+  date: 2026-10-30
+- repo: ravensclawx/ftpd-sb
+  reason: The repository is a homebrew FTP utility for SmileBASIC, not a static
+    recompilation or source port of a game.
+  date: 2026-10-30
+- repo: PCSX2/myMCpp
+  reason: It's a PS2 memory card manager, not a game recompilation, source port,
+    or recompiler toolchain.
+  date: 2026-10-30
+- repo: Igloo-Garage/Model-3-Vulkan
+  reason: The repository is an emulator (Model 3-Vulkan) for Sega Model 3 arcade
+    hardware, not a game-specific static recompilation or source port.
+  date: 2026-10-30
+- repo: jorjbarbosa/broken-bond-recomp
+  reason: Project requires building from source and has no prebuilt binaries, so
+    it doesn't provide a downloadable runnable release.
+  date: 2026-10-30
+- repo: lpfoj/lsx4
+  reason: LSX4 is a full PS4/5 emulator, not a game-specific static recompilation
+    or source port.
+  date: 2026-10-30
+- repo: tortugaveloz/MIRLO64
+  reason: MIRLO 64 is an FPGA core for the Analogue Pocket, not a game‑specific
+    static recompilation or source‑port, so it does not fit the list criteria.
+  date: 2026-10-30
+- repo: msmfai/marios-mask
+  reason: The repo provides a patcher/mod that combines existing N64 ROMs to play
+    Majora's Mask as Mario, not a static recompilation or source‑port binary.
+  date: 2026-10-30
+- repo: drhelius/Geartowns
+  reason: The repository is an FM Towns emulator, not a game-specific static
+    recompilation or source port.
+  date: 2026-10-30
+- repo: ontoplano/ontoplano
+  reason: The repository is a productivity app, not a game recompilation, source
+    port, or related tool.
+  date: 2026-10-30
+- repo: harpmudd/HarpMudd.mp3player
+  reason: The repository is an MP3 player core for Analogue Pocket, not a game
+    recompilation or source‑port.
+  date: 2026-10-30
+- repo: armyofgnomes/analogue-pocket-32x
+  reason: FPGA core for Analogue Pocket, not a software static recompilation or
+    source port
+  date: 2026-10-30
+- repo: gs-soft-it/lumen-emu
+  reason: Lumen Emu is a PS4/PS5 system emulator, not a game‑specific static
+    recompilation or source port.
+  date: 2026-10-30
+- repo: OrangeFox86/Hollycast
+  reason: Hollycast is a general-purpose Dreamcast/Naomi emulator, not a
+    game-specific recompilation or source port.
   date: 2026-10-30
