@@ -16,7 +16,7 @@ const STAR =
 const STAR_FILL =
   "M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z";
 
-/** Rotated by the decode animation in "+N awesome releases before these". */
+/** Rotated by the decode animation in "+N earlier awesome releases". */
 const ADJECTIVES = [
   "awesome", "glorious", "native", "shiny", "legendary", "tubular", "radical", "pixel-perfect",
   "buttery-smooth", "60-fps", "widescreen", "turbo", "delightful", "bodacious", "spicy", "lovingly-ported",
@@ -83,8 +83,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                 <div class="more-new">
                   <CoverStack entries={fresh.rest} size={40} max={8} label="Earlier new releases" />
                   <a class="mono" href="/#all-games">
-                    +{fresh.rest.length} <span class="decode" data-words={JSON.stringify(ADJECTIVES)}>awesome</span>{" "}
-                    {fresh.rest.length === 1 ? "release" : "releases"} before these
+                    +{fresh.rest.length} earlier <span class="decode" data-words={JSON.stringify(ADJECTIVES)}>awesome</span>{" "}
+                    {fresh.rest.length === 1 ? "release" : "releases"}
                   </a>
                 </div>
               )}
