@@ -108,6 +108,69 @@ main,
     animation: none;
   }
 }
+/* Countdown to the next discovery run: a radar sweep and a T-minus clock. */
+.scan {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: auto;
+  padding: 0.2rem 0.6rem 0.2rem 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--faint);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.scan:hover {
+  color: var(--muted);
+  border-color: rgb(124 240 197 / 0.35);
+}
+.scan-t {
+  color: var(--recomp);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 8px rgb(124 240 197 / 0.45);
+}
+.radar {
+  position: relative;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  border: 1px solid rgb(124 240 197 / 0.45);
+  background: radial-gradient(circle, rgb(124 240 197 / 0.9) 0 1.5px, transparent 2px);
+  overflow: hidden;
+  flex: none;
+}
+.radar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgb(124 240 197 / 0.75), transparent 28%);
+  animation: sweep 2.4s linear infinite;
+}
+.scan.running .radar::after {
+  animation-duration: 0.8s;
+}
+.scan.running .scan-label {
+  display: none;
+}
+@keyframes sweep {
+  to {
+    rotate: 1turn;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .radar::after {
+    animation: none;
+  }
+}
+@media (max-width: 560px) {
+  .scan-label {
+    display: none;
+  }
+}
 .site-header nav {
   display: flex;
   gap: 1.4rem;

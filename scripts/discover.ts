@@ -1,7 +1,7 @@
 /**
  * Find new playable recomps/ports and propose them.
  *
- *   tsx scripts/discover.ts                 # scan all sources (weekly cron)
+ *   tsx scripts/discover.ts                 # scan all sources (daily cron)
  *   tsx scripts/discover.ts --only a/b c/d  # classify specific repos (suggestion issues)
  *
  * Writes proposals into data/projects.yaml and AI rejections into data/rejected.yaml, plus a markdown
@@ -16,6 +16,7 @@ import { z } from "zod";
 import { formatProjects } from "./lib/format.ts";
 import { fetchRepos, rest } from "./lib/github.ts";
 import { chatJSON, llmAvailable } from "./lib/llm.ts";
+import { titleKey, wikidataCandidates } from "./lib/wikidata.ts";
 import {
   fromGitHubSearch,
   fromHackerNews,
@@ -188,18 +189,52 @@ for (const o of outcomes) {
   else review.push(o);
 }
 
+/**
+ * Original game on Wikidata (drives covers and links): reuse the id of a listed entry for the same game,
+ * else pin a search hit only when it is the one item whose label equals the title, and it has an IGDB id.
+ * Remakes often share the original's title, so two exact matches mean "ask a human": the entry stays
+ * unpinned and is flagged in the report.
+ */
+const wikidataNote = new Map<string, string>();
+async function pinWikidata(game: string, repo: string): Promise<string | undefined> {
+  const same = projects.find((p) => p.wikidata && titleKey(p.game) === titleKey(game));
+  if (same) {
+    wikidataNote.set(repo, `${same.wikidata} (as ${same.repo})`);
+    return same.wikidata;
+  }
+  try {
+    const list = await wikidataCandidates(game.replace(/\s*\(.*\)$/, ""));
+    const exact = list.filter((c) => titleKey(c.label) === titleKey(game));
+    const hit = exact.length === 1 && exact[0]!.igdb ? exact[0] : undefined;
+    if (hit) {
+      wikidataNote.set(repo, `[${hit.id}](https://www.wikidata.org/wiki/${hit.id}) ${hit.label}${hit.year ? ` (${hit.year})` : ""}`);
+      return hit.id;
+    }
+    const pick = exact.length > 1 ? exact : list;
+    wikidataNote.set(repo, pick.length ? `⚠️ not pinned${exact.length > 1 ? " (several games with this title)" : ""}; maybe ${pick.slice(0, 3).map((c) => `[${c.id}](https://www.wikidata.org/wiki/${c.id}) ${c.label}${c.year ? ` (${c.year})` : ""}`).join(", ")}` : "⚠️ not found");
+  } catch (err) {
+    wikidataNote.set(repo, `⚠️ lookup failed: ${(err as Error).message.slice(0, 80)}`);
+  }
+  return undefined;
+}
+
 if (added.length) {
-  const entries = added.map(({ snap, verdict: v }) =>
-    Project.parse({
-      repo: snap.canonical,
-      game: v!.game,
-      platform: v!.platform,
-      kind: v!.kind,
-      ...(v!.tool ? { tool: v!.tool } : {}),
-      ...(v!.based_on?.length ? { based_on: v!.based_on } : {}),
-      added: today,
-    }),
-  );
+  const entries: Project[] = [];
+  for (const { snap, verdict: v } of added) {
+    const wikidata = v!.kind === "tool" ? undefined : await pinWikidata(v!.game!, snap.canonical);
+    entries.push(
+      Project.parse({
+        repo: snap.canonical,
+        game: v!.game,
+        platform: v!.platform,
+        kind: v!.kind,
+        ...(v!.tool ? { tool: v!.tool } : {}),
+        ...(v!.based_on?.length ? { based_on: v!.based_on } : {}),
+        ...(wikidata ? { wikidata } : {}),
+        added: today,
+      }),
+    );
+  }
   writeFileSync(PROJECTS_PATH, formatProjects([...projects, ...entries]));
 }
 if (rejectedNow.length) {
@@ -225,6 +260,9 @@ const report = [
   only ? `Checked suggested repos: ${only.map(link).join(", ")}` : `Sources scanned for the last ${DAYS} days: ${sourceSummary}.`,
   "",
   table("Proposed for the list", added, "Added to `data/projects.yaml` in their platform sections. Check the game title, platform and credits."),
+  wikidataNote.size
+    ? `#### Original game on Wikidata\n\nPinned ids give the entry its cover and reference links. Fix or add \`wikidata:\` by hand where flagged (\`npm run match-wikidata\` lists candidates).\n\n${[...wikidataNote].map(([r, n]) => `- ${link(r)}: ${n}`).join("\n")}\n`
+    : "",
   table("Rejected", rejectedNow, "Added to `data/rejected.yaml` so they are not proposed again. Delete a line to give a repo another chance."),
   table("Needs a human look", review, "Not changed in this PR — add by hand if they belong."),
   skipped.length ? `<details><summary>Skipped by filters (${skipped.length})</summary>\n\n${skipped.map((s) => `- ${link(s.repo)} — ${s.why}`).join("\n")}\n</details>\n` : "",
