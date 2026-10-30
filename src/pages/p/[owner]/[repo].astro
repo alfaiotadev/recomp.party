@@ -1,5 +1,6 @@
 ---
 import Base from "../../../layouts/Base.astro";
+import { LINK_ICONS } from "../../../lib/link-icons.ts";
 import { ago, creditLink, entryPath, fitLogo, gameLinks, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
 
 export function getStaticPaths() {
@@ -73,11 +74,21 @@ const facts: [string, string | undefined][] = [
   {
     links.length > 0 && (
       <ul class="links">
-        {links.map((l) => (
-          <li>
-            <a href={l.href} rel="external">{l.label}</a>
-          </li>
-        ))}
+        {links.map((l) => {
+          const icon = LINK_ICONS[l.label];
+          return (
+            <li>
+              <a href={l.href} rel="external">
+                {icon && (
+                  <svg class={icon.stroke ? "ico stroke" : "ico"} viewBox="0 0 24 24" aria-hidden="true">
+                    <path d={icon.d} />
+                  </svg>
+                )}
+                {l.label}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     )
   }
@@ -222,6 +233,9 @@ const facts: [string, string | undefined][] = [
     list-style: none;
   }
   .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     font-family: var(--mono);
     font-size: 0.72rem;
     color: var(--muted);
@@ -234,6 +248,19 @@ const facts: [string, string | undefined][] = [
   .links a:hover {
     color: var(--fg);
     border-color: var(--faint);
+  }
+  .ico {
+    width: 0.95rem;
+    height: 0.95rem;
+    flex: none;
+    fill: currentColor;
+  }
+  .ico.stroke {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
   .links a::after {
     content: " ↗";
