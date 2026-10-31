@@ -189,3 +189,15 @@
   reason: Hollycast is a general-purpose Dreamcast/Naomi emulator, not a
     game-specific recompilation or source port.
   date: 2026-10-30
+- repo: hachi23/unicorn_overlord_pc
+  reason: Not a static recompilation or source port; it is a native PC port using
+    a compatibility layer.
+  date: 2026-10-31
+- repo: kalasyan/recompa
+  reason: Repository is an Android launcher for ports, not a game-specific
+    recompilation or tool
+  date: 2026-10-31
+- repo: TriwindBryan/fulton
+  reason: Repository is a launcher for ports, not a game-specific recompilation,
+    source port, or recompilation toolchain.
+  date: 2026-10-31
