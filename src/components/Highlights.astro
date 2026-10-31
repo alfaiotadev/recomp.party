@@ -4,11 +4,12 @@ import { highlights } from "../lib/highlights.ts";
 import CoverStack from "./CoverStack.astro";
 import StarTrend from "./StarTrend.astro";
 
-const { risers, starTrend, fresh, platform } = highlights;
+const { risers, starTrend, fresh, platform, most } = highlights;
 const slides = [
   risers.items.length && { id: "rising", label: risers.title },
   fresh.items.length && { id: "fresh", label: fresh.title },
   platform && { id: "platform", label: "Platform of the week" },
+  most.length && { id: "most", label: "Most recompiled" },
 ].filter(Boolean) as { id: string; label: string }[];
 /** GitHub's star (Primer Octicons star-16 / star-fill-16, MIT). */
 const STAR =
@@ -144,6 +145,34 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                     <strong>{t.entry.game}</strong>
                     <span class="meta mono">
                       <span>{t.entry.repo.split("/")[0]}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </article>
+        )}
+        {most.length > 0 && (
+          <article class="slide" id="hl-most" aria-label="Most recompiled games">
+            <header>
+              <p class="eyebrow">projects per game</p>
+              <h2>Most recompiled games</h2>
+              <p class="most-note mono">Recomps and ports of the same game, across every platform it came from.</p>
+            </header>
+            <ol class="items">
+              {most.map((m, i) => (
+                <li>
+                  <a href={m.href} class={`item ${m.kind}${m.cover ? " has-art" : ""}`} title={`${m.title}: show all ${m.count} projects`}>
+                    {m.cover && <img class="art" src={m.cover.src} width={m.cover.width} height={m.cover.height} alt="" loading="lazy" decoding="async" />}
+                    <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
+                    <span class="big mono">×{m.count}</span>
+                    <span class="growth mono">{[m.recomps && `${m.recomps} recomp${m.recomps > 1 ? "s" : ""}`, m.ports && `${m.ports} port${m.ports > 1 ? "s" : ""}`].filter(Boolean).join(" · ")}</span>
+                    <strong>{m.title}</strong>
+                    <span class="meta mono plats">
+                      {m.platforms.map((p) => {
+                        const logo = mini(p.id);
+                        return logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={p.name} title={p.name} /> : <span title={p.name}>{p.name.split(" ")[0]}</span>;
+                      })}
                     </span>
                   </a>
                 </li>
@@ -418,6 +447,23 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.1;
+  }
+  .item.mixed:hover {
+    border-color: rgb(232 236 246 / 0.35);
+    box-shadow: 0 6px 24px -12px rgb(232 236 246 / 0.35);
+  }
+  .item.mixed .big {
+    color: var(--fg);
+    text-shadow: 0 0 14px rgb(232 236 246 / 0.3);
+  }
+  .most-note {
+    margin: 0.7rem 0 0;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .meta.plats {
+    justify-content: flex-start;
+    gap: 0.55rem;
   }
   .item.recomp .big {
     color: var(--recomp);
