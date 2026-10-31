@@ -150,3 +150,26 @@ export async function fetchRepos(repos: string[]): Promise<{ found: RepoSnapshot
   return { found, missing };
 }
 
+/**
+ * Repos in which GitHub detects no programming language at all: nothing but a README and release
+ * binaries. Discovery never proposes those — prebuilt executables without source are a malware risk.
+ */
+export async function reposWithoutCode(repos: string[]): Promise<Set<string>> {
+  const none = new Set<string>();
+  for (let i = 0; i < repos.length; i += 50) {
+    const batch = repos.slice(i, i + 50);
+    const query = `query {\n${batch
+      .map((slug, j) => {
+        const [owner, name] = slug.split("/");
+        return `r${j}: repository(owner: ${JSON.stringify(owner)}, name: ${JSON.stringify(name)}) { languages(first: 1) { totalCount } }`;
+      })
+      .join("\n")}\n}`;
+    const res = await graphql<Record<string, { languages: { totalCount: number } } | null>>(query);
+    batch.forEach((slug, j) => {
+      const r = res.data?.[`r${j}`];
+      if (r && r.languages.totalCount === 0) none.add(slug);
+    });
+  }
+  return none;
+}
+
