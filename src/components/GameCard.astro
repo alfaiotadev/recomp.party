@@ -99,6 +99,11 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
   .card[hidden] {
     display: none;
   }
+  /* off-screen cards skip layout and paint until they scroll near the viewport */
+  .card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 280px;
+  }
 
   /* Rests slightly zoomed in; hover zooms out to --fit, where the whole cover is visible. */
   .art {
