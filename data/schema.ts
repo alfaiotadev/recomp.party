@@ -24,6 +24,7 @@ export const PLATFORMS = {
   psp: "PSP",
   xbox: "Xbox",
   x360: "Xbox 360",
+  amiga: "Amiga",
   pc: "PC (DOS/Windows)",
   arcade: "Arcade",
 } as const;
