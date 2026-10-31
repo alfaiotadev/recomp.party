@@ -20,6 +20,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      indexnow: ${{ steps.indexnow.outputs.urls }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -31,6 +33,16 @@ jobs:
       - run: npm ci
       - run: npm run validate
       - run: npm run build
+      # Pages in this build's sitemap that the live site doesn't have yet (all of them if the live one can't be read).
+      - name: List new pages for IndexNow
+        id: indexnow
+        run: |
+          grep -o '<loc>[^<]*' dist/sitemap-0.xml | cut -c6- | sort > /tmp/next.txt
+          { curl -fsL https://recomp.party/sitemap-0.xml | grep -o '<loc>[^<]*' | cut -c6- | sort; } > /tmp/live.txt || : > /tmp/live.txt
+          comm -13 /tmp/live.txt /tmp/next.txt > /tmp/new.txt
+          [ -s /tmp/new.txt ] && echo https://recomp.party/ >> /tmp/new.txt # the home page lists the newcomers
+          echo "urls=$(sort -u /tmp/new.txt | jq -Rnc '[inputs]')" >> "$GITHUB_OUTPUT"
+          echo "$(wc -l < /tmp/new.txt) new page(s)"
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
@@ -45,3 +57,18 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+
+  # Tell Bing, Yandex and other IndexNow engines about new pages once they are live. Google doesn't use IndexNow.
+  indexnow:
+    needs: [build, deploy]
+    if: needs.build.outputs.indexnow != '[]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit to IndexNow
+        continue-on-error: true # a hiccup there must not mark the deploy as failed
+        env:
+          URLS: ${{ needs.build.outputs.indexnow }}
+        run: |
+          jq -n --argjson urls "$URLS" '{host: "recomp.party", key: "dbc09c22839d79217770af17caa340df", urlList: $urls}' \
+            | curl -sS --fail-with-body -H 'Content-Type: application/json; charset=utf-8' --data @- https://api.indexnow.org/indexnow
+          echo "Submitted $(jq length <<< "$URLS") URL(s)."

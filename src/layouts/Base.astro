@@ -6,8 +6,12 @@ import { DISCOVERY_PRS, DISCOVERY_RUN_MIN, DISCOVERY_UTC } from "../lib/discover
 interface Props {
   title?: string;
   description?: string;
+  /** Share image (site-relative path), e.g. the game cover on project pages. */
+  image?: string;
+  /** schema.org data for search engines, emitted as JSON-LD. */
+  jsonLd?: Record<string, unknown>;
 }
-const { title, description = "A tracker for playable static recompilations and source ports of classic games." } = Astro.props;
+const { title, description = "A tracker for playable static recompilations and source ports of classic games.", image, jsonLd } = Astro.props;
 const fullTitle = title ? `${title} · recomp.party` : "recomp.party — playable recomps & ports";
 const nav = [
   { href: "/", label: "Games" },
@@ -28,9 +32,15 @@ const here = Astro.url.pathname;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={new URL(here, Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="recomp.party" />
+    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    {/* covers are portrait: the small card crops them least */}
+    <meta name="twitter:card" content="summary" />
     <link rel="canonical" href={new URL(here, Astro.site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="recomp.party releases" href="/feed.xml" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify({ "@context": "https://schema.org", ...jsonLd }).replaceAll("<", "\\u003c")} />}
     <script is:inline data-goatcounter="https://alfaiotadev.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   </head>
   <body>
