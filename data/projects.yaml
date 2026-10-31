@@ -656,6 +656,7 @@
   game: Ratchet & Clank
   platform: ps2
   kind: recomp
+  wikidata: Q170003
   added: 2026-10-31
 - repo: aikatore/recvx-enhanced-port
   game: "Resident Evil Code: Veronica X"
@@ -701,6 +702,7 @@
   kind: port
   tool: ps3recomp
   based_on: [sp00nznet/ps3recomp]
+  wikidata: Q1153708
   added: 2026-10-31
 - repo: otavix010/gow-ascension-pc
   game: "God of War: Ascension"
@@ -893,6 +895,7 @@
   kind: port
   tool: XboxXBERecomp
   based_on: [TGP482/Xbox-XBERecomp]
+  wikidata: Q2741916
   added: 2026-10-31
 - repo: NoRain211/doa2u-re
   game: Dead or Alive 2 Ultimate
@@ -1257,6 +1260,14 @@
   wikidata: Q953541
   added: 2026-10-31
 
+# --- Amiga -----------------------------------------------------------------------
+- repo: griches/JamesPond2RobocodRecomp
+  game: "James Pond 2: Codename RoboCod"
+  platform: amiga
+  kind: recomp
+  wikidata: Q44346
+  added: 2026-10-31
+
 # --- PC (DOS/Windows) ------------------------------------------------------------
 - repo: codepdbh/nfsmwpc-recompiled
   game: "Need for Speed: Most Wanted (2005)"
@@ -1309,24 +1320,30 @@
   added: 2026-10-31
 
 # --- Arcade ----------------------------------------------------------------------
+- repo: tmcleroy/cps2recomp
+  game: Capcom CPS-2 arcade games
+  platform: arcade
+  kind: recomp
+  note: Street Fighter Alpha 1–3, Super Street Fighter II Turbo, Super Gem Fighter Mini Mix and more in one launcher; replaces the earlier sfa2-recomp.
+  added: 2026-10-31
 - repo: thefixinhixon/UltraCombo
   game: Killer Instinct (arcade) / Killer Instinct 2
   platform: arcade
   kind: port
   wikidata: Q973459
   added: 2026-10-30
+- repo: spacestate1/namco22-decompile
+  game: Namco System 21/22/23 arcade games
+  platform: arcade
+  kind: port
+  note: Time Crisis 1–2, Rave Racer, Ridge Racer 2, Prop Cycle, Dirt Dash, Cyber Sled and more, rebuilt as native Linux and Windows programs.
+  added: 2026-10-31
 - repo: cheviman/segasonic-port
   game: SegaSonic The Hedgehog
   platform: arcade
   kind: port
   based_on: [cheviman/segasonic-decomp]
   wikidata: Q2016642
-  added: 2026-10-30
-- repo: tmcleroy/sfa2-recomp
-  game: Street Fighter Alpha 2
-  platform: arcade
-  kind: recomp
-  wikidata: Q2422795
   added: 2026-10-30
 
 # --- Toolchains ------------------------------------------------------------------

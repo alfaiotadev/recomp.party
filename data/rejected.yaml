@@ -201,3 +201,6 @@
   reason: Repository is a launcher for ports, not a game-specific recompilation,
     source port, or recompilation toolchain.
   date: 2026-10-31
+- repo: tmcleroy/sfa2-recomp
+  reason: Moved into tmcleroy/cps2recomp (CPS-2 Recomp), which is listed instead.
+  date: 2026-10-31
