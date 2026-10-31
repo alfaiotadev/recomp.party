@@ -41,9 +41,27 @@ const facts: [string, string | undefined][] = [
   ["License", s?.license ?? "none specified"],
   ["GitHub stars", s?.stars.toLocaleString("en")],
 ];
+
+const description = `${e.game} (${PLATFORMS[e.platform]}) — ${KINDS[e.kind].toLowerCase()} by ${e.repo}. ${s?.description ?? ""}`;
+const jsonLd = {
+  "@type": "SoftwareApplication",
+  name: `${e.game} (${KINDS[e.kind].toLowerCase()})`,
+  description,
+  url: new URL(entryPath(e), Astro.site).href,
+  applicationCategory: "GameApplication",
+  operatingSystem: e.os.length ? e.os.map((o) => OS_LABELS[o]).join(", ") : undefined,
+  softwareVersion: e.latest?.tag,
+  datePublished: e.firstReleaseAt,
+  dateModified: e.latestReleaseAt,
+  downloadUrl: e.latest?.url,
+  image: e.cover && new URL(e.cover.src, Astro.site).href,
+  license: s?.license ? `https://spdx.org/licenses/${s.license}` : undefined,
+  sameAs: e.url,
+  offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
+};
 ---
 
-<Base title={e.game} description={`${e.game} (${PLATFORMS[e.platform]}) — ${KINDS[e.kind].toLowerCase()} by ${e.repo}. ${s?.description ?? ""}`}>
+<Base title={e.game} description={description} image={e.cover?.src} jsonLd={jsonLd}>
   <div class={e.cover ? "intro with-cover" : "intro"}>
   {e.cover && <img class="cover" src={e.cover.src} width={e.cover.width} height={e.cover.height} alt={`${m?.title ?? e.game} cover`} />}
   <div>

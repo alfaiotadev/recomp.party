@@ -10,7 +10,7 @@ const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o
 const toolStrip = tools.slice(0, 8);
 ---
 
-<Base>
+<Base jsonLd={{ "@type": "WebSite", name: "recomp.party", url: "https://recomp.party/" }}>
   <div class="hero">
     <p class="eyebrow">Static recompilations &amp; source ports</p>
     <h1>Classic games, <span class="glow">recompiled</span> to run natively.</h1>
