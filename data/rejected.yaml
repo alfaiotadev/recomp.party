@@ -204,3 +204,31 @@
 - repo: tmcleroy/sfa2-recomp
   reason: Moved into tmcleroy/cps2recomp (CPS-2 Recomp), which is listed instead.
   date: 2026-10-31
+- repo: horizon-rust/horizon
+  reason: It is an engine rewrite from scratch rather than a static recompilation
+    or source port based on decompiled/original code.
+  date: 2026-10-31
+- repo: inssekt/CocoonFE
+  reason: CocoonFE is an Android emulation frontend, not a game-specific static
+    recompilation or source‑port.
+  date: 2026-10-31
+- repo: blueminder/supermodel-dojo
+  reason: Supermodel Dojo is a fork of a Sega Model 3 emulator, not a
+    game-specific recompilation or source port.
+  date: 2026-10-31
+- repo: alienware377/RootlessViPER4Android
+  reason: The repository is an Android audio effects app, not a game
+    recompilation, source port, or recompiler toolchain.
+  date: 2026-10-31
+- repo: nexgen999/evoX-CoreOS
+  reason: Repository provides PS5 homebrew payload/package collections, not a game
+    recompilation or tool.
+  date: 2026-10-31
+- repo: OpenRAC/OpenRAC
+  reason: The repo is a launcher that runs PS2 Ratchet & Clank games using
+    user‑provided disc images, not a standalone static recompilation or source
+    port.
+  date: 2026-10-31
+- repo: TheWishin/T5DROnline
+  reason: No source code in the repository, only prebuilt binaries in releases.
+  date: 2026-10-31
