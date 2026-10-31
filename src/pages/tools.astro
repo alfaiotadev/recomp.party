@@ -1,6 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
-import { entryPath, fitLogo, PLATFORMS, platformLogo, toolUsers, tools } from "../lib/data.ts";
+import { entryPath, fitLogo, PLATFORMS, platformLogo, toolGames, tools, type Entry } from "../lib/data.ts";
+
+/** Game cards shown before the rest fold away behind "Show all". */
+const SHOWN = 8;
 
 ---
 
@@ -14,9 +17,25 @@ import { entryPath, fitLogo, PLATFORMS, platformLogo, toolUsers, tools } from ".
   <ul class="tools">
     {
       tools.map((t) => {
-        const users = toolUsers(t);
+        const users = toolGames(t);
         const logo = platformLogo(t.platform);
         const box = logo && fitLogo(logo, 90, 18);
+        const cards = (list: Entry[]) => (
+          <ul class="games">
+            {list.map((u) => (
+              <li>
+                <a href={entryPath(u)} class={`g ${u.kind}`} title={`${u.game} (${u.repo})`}>
+                  {u.cover ? (
+                    <img src={u.cover.src} width={u.cover.width} height={u.cover.height} alt="" loading="lazy" decoding="async" />
+                  ) : (
+                    <span class="ph" />
+                  )}
+                  <span class="gt">{u.game}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        );
         return (
           <li>
             {logo && box && <img class="logo-img tlogo" src={logo.src} width={box.w} height={box.h} alt={PLATFORMS[t.platform]} />}
@@ -28,15 +47,21 @@ import { entryPath, fitLogo, PLATFORMS, platformLogo, toolUsers, tools } from ".
             </p>
             {t.snap?.description && <p>{t.snap.description}</p>}
             {users.length > 0 && (
-              <p class="used">
-                Used by:{" "}
-                {users.map((u, i) => (
-                  <>
-                    {i > 0 && ", "}
-                    <a href={entryPath(u)}>{u.game}</a>
-                  </>
-                ))}
-              </p>
+              <div class="used">
+                <p class="used-head mono">
+                  Used by {users.length} {users.length === 1 ? "game" : "games"}
+                </p>
+                {cards(users.slice(0, SHOWN))}
+                {users.length > SHOWN && (
+                  <details>
+                    <summary class="mono">
+                      <span class="closed">Show all {users.length}</span>
+                      <span class="opened">Show fewer</span>
+                    </summary>
+                    {cards(users.slice(SHOWN))}
+                  </details>
+                )}
+              </div>
             )}
           </li>
         );
@@ -60,7 +85,7 @@ import { entryPath, fitLogo, PLATFORMS, platformLogo, toolUsers, tools } from ".
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 0.9rem;
   }
-  .tools li {
+  .tools > li {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 12px;
@@ -84,6 +109,78 @@ import { entryPath, fitLogo, PLATFORMS, platformLogo, toolUsers, tools } from ".
     font-size: 0.9rem;
   }
   .used {
-    font-size: 0.85rem !important;
+    padding-top: 0.8rem;
+  }
+  .used-head {
+    margin: 0 0 0.5rem !important;
+    font-size: 0.7rem !important;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .games {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    gap: 0.35rem;
+  }
+  details .games {
+    margin-top: 0.35rem;
+  }
+  .g {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 0.25rem 0.45rem 0.25rem 0.25rem;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--recomp);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--fg);
+    font-size: 0.76rem;
+    line-height: 1.2;
+  }
+  .g.port {
+    border-left-color: var(--port);
+  }
+  .g:hover {
+    background: var(--hover);
+  }
+  .g img,
+  .g .ph {
+    flex: none;
+    width: 22px;
+    aspect-ratio: 3 / 4;
+    height: auto;
+    border-radius: 2px;
+    object-fit: cover;
+    background: var(--line);
+  }
+  .gt {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  summary {
+    margin-top: 0.45rem;
+    list-style: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+    color: var(--recomp);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .opened,
+  details[open] .closed {
+    display: none;
+  }
+  details[open] .opened {
+    display: inline;
   }
 </style>
