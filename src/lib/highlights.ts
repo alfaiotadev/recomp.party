@@ -159,4 +159,47 @@ function platformOfWeek(): PlatformOfWeek | undefined {
   };
 }
 
-export const highlights = { risers: risers(), starTrend: starTrend(), fresh: newReleases(), platform: platformOfWeek() };
+export type MostRecompiled = {
+  title: string;
+  count: number;
+  recomps: number;
+  ports: number;
+  kind: Entry["kind"] | "mixed";
+  platforms: { id: PlatformId; name: string; logo: Logo | undefined }[];
+  cover?: Entry["cover"];
+  /** Front-page game list filtered to this game. */
+  href: string;
+};
+
+/** Games with the most projects (recomps and ports, any platform); ties go to the one with more stars. */
+function mostRecompiled(): MostRecompiled[] {
+  const byGame = new Map<string, Entry[]>();
+  for (const g of games) {
+    const key = g.wikidata ?? g.game.replace(/\s*\(.*\)$/, "").toLowerCase();
+    byGame.set(key, [...(byGame.get(key) ?? []), g]);
+  }
+  const stars = (list: Entry[]) => list.reduce((n, e) => n + (e.snap?.stars ?? 0), 0);
+  return [...byGame.values()]
+    .filter((list) => list.length > 1)
+    .sort((a, b) => b.length - a.length || stars(b) - stars(a))
+    .slice(0, 5)
+    .map((list) => {
+      const title = list[0]!.meta?.title ?? list.map((e) => e.game.replace(/\s*\(.*\)$/, "")).sort((a, b) => a.length - b.length)[0]!;
+      const recomps = list.filter((e) => e.kind === "recomp").length;
+      const kinds = new Set(list.map((e) => e.kind));
+      const platforms = [...new Set(list.map((e) => e.platform))].map((id) => ({ id, name: PLATFORMS[id], logo: platformLogo(id) }));
+      const search = list[0]!.game.replace(/\s*\(.*\)$/, "");
+      return {
+        title,
+        count: list.length,
+        recomps,
+        ports: list.length - recomps,
+        kind: kinds.size === 1 ? list[0]!.kind : "mixed",
+        platforms,
+        cover: list.find((e) => e.cover)?.cover,
+        href: `/?q=${encodeURIComponent(search)}#all-games`,
+      };
+    });
+}
+
+export const highlights = { risers: risers(), starTrend: starTrend(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled() };

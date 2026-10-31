@@ -112,6 +112,12 @@ const toolStrip = tools.slice(0, 8);
       count.textContent = shown === cards.length ? `${cards.length} games` : `${shown} of ${cards.length} games`;
     };
     form.addEventListener("input", apply);
+    // ?q=… (e.g. from "Most recompiled games") pre-fills the search
+    const q = new URLSearchParams(location.search).get("q");
+    if (q) {
+      form.elements.namedItem("q").value = q;
+      apply();
+    }
   })();
 </script>
 

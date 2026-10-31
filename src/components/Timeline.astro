@@ -29,8 +29,12 @@ const defaultView = "1y";
   </p>
   <div class="tl-views">
     {
-      layouts.map((l) => (
+      layouts.map((l) => {
+        // Only the default range's desktop chart is live; the rest wait in <template>s until shown.
+        const Desktop = l.view.id === defaultView ? "div" : "template";
+        return (
         <div class="tl-view" data-view={l.view.id} data-plan={JSON.stringify(l.plan)}>
+          <Desktop class="part" data-part="desktop">
           <div class="tl-inner">
           <div class="tl-fold" hidden style={`left:0.75%;width:${(LABEL_W / W) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
             <button type="button" class="fold-all" aria-label="Expand every game with several projects">
@@ -117,6 +121,8 @@ const defaultView = "1y";
             )}
           </svg>
           </div>
+          </Desktop>
+          <template class="part" data-part="mobile">
           <div class="tl-m">
             <div class="m-bar-top">
               <div class="tl-fold m-fold" hidden>
@@ -201,8 +207,10 @@ const defaultView = "1y";
               </div>
             ))}
           </div>
+          </template>
         </div>
-      ))
+        );
+      })
     }
   </div>
   <div class="tl-tip" id="tl-tip" role="tooltip" hidden></div>
@@ -214,15 +222,20 @@ const defaultView = "1y";
   const root = document.querySelector<HTMLElement>(".timeline");
   if (root) {
     const views = [...root.querySelectorAll<HTMLElement>(".tl-view")];
-    const selects = [...root.querySelectorAll<HTMLSelectElement>(".tl-sort select")];
+    const phone = matchMedia("(max-width: 760px)");
     const open = new Set<string>(); // group row ids, shared by all three time ranges
     let sort = "first";
+    try {
+      const saved = localStorage.getItem("tl-sort");
+      if (saved) sort = saved;
+    } catch {}
+    const allGroups = new Set(views.flatMap((v) => (JSON.parse(v.dataset.plan!) as PlaceLane[]).flatMap((l) => l.items.filter((i) => i.children).map((i) => i.id))));
 
-    // Desktop: rerun the placement and move rows, lanes, grid lines and the sort control to match.
-    const layoutView = (view: HTMLElement) => {
-      const plan: PlaceLane[] = JSON.parse(view.dataset.plan!);
-      const p = place(plan, sort, (id) => open.has(id));
-      const svg = view.querySelector("svg")!;
+    // Desktop: rerun the placement and move rows, lanes, grid lines and the controls to match.
+    const layoutDesktop = (view: HTMLElement) => {
+      const svg = view.querySelector("svg");
+      if (!svg) return;
+      const p = place(JSON.parse(view.dataset.plan!), sort, (id) => open.has(id));
       svg.setAttribute("viewBox", `0 0 ${svg.viewBox.baseVal.width} ${p.height}`);
       view.querySelectorAll<SVGGElement>(".lane").forEach((g, i) => {
         g.style.transform = `translateY(${p.lanes[i]!.y}px)`;
@@ -248,82 +261,95 @@ const defaultView = "1y";
       }
     };
     // Phone: CSS order follows the sort, groups open their own list.
-    const layoutMobile = () => {
-      for (const li of root.querySelectorAll<HTMLElement>(".m-row")) li.style.order = String(JSON.parse(li.dataset.ranks!)[sort] + 1);
-      for (const li of root.querySelectorAll<HTMLElement>(".m-group")) {
+    const layoutMobile = (view: HTMLElement) => {
+      for (const li of view.querySelectorAll<HTMLElement>(".m-row")) li.style.order = String(JSON.parse(li.dataset.ranks!)[sort] + 1);
+      for (const li of view.querySelectorAll<HTMLElement>(".m-group")) {
         const isOpen = open.has(li.dataset.id!);
         li.classList.toggle("open", isOpen);
         li.querySelector(".m-toggle")!.setAttribute("aria-expanded", String(isOpen));
         li.querySelector<HTMLElement>(".m-children")!.hidden = !isOpen;
       }
     };
-    // "expand all" / "collapse all": every group id across the three time ranges
-    const allGroups = new Set([...root.querySelectorAll<HTMLElement>(".row.group, .m-group")].map((g) => g.dataset.id!));
-    const foldButtons = [...root.querySelectorAll<HTMLButtonElement>(".fold-all")];
-    const syncFold = () => {
+    const syncControls = () => {
       const allOpen = allGroups.size > 0 && [...allGroups].every((id) => open.has(id));
-      for (const b of foldButtons) {
+      for (const b of root.querySelectorAll<HTMLButtonElement>(".fold-all")) {
+        b.closest<HTMLElement>(".tl-fold")!.hidden = allGroups.size === 0;
         b.classList.toggle("open", allOpen);
         b.querySelector(".fold-text")!.textContent = allOpen ? "collapse all" : "expand all";
         b.setAttribute("aria-label", allOpen ? "Collapse every game group" : "Expand every game with several projects");
       }
+      for (const sel of root.querySelectorAll<HTMLSelectElement>(".tl-sort select")) {
+        if (sel.querySelector(`option[value="${sort}"]`)) sel.value = sort;
+        sel.closest<HTMLElement>(".tl-sort")!.hidden = false;
+      }
     };
-    for (const b of foldButtons) {
-      b.closest<HTMLElement>(".tl-fold")!.hidden = allGroups.size === 0;
-      b.addEventListener("click", () => {
-        const allOpen = [...allGroups].every((id) => open.has(id));
-        open.clear();
-        if (!allOpen) for (const id of allGroups) open.add(id);
-        relayout();
-      });
-    }
     const relayout = () => {
-      views.forEach(layoutView);
-      layoutMobile();
-      syncFold();
+      for (const v of views) {
+        layoutDesktop(v);
+        layoutMobile(v);
+      }
+      syncControls();
     };
+
+    // Lazy parts: a range's chart (or its phone list) leaves its <template> the first time it is shown.
+    const current = () => views.find((v) => (root.querySelector<HTMLInputElement>(`#tl-${v.dataset.view}`)!).checked) ?? views[0]!;
+    const materialize = () => {
+      const view = current();
+      const tpl = view.querySelector<HTMLTemplateElement>(`template[data-part="${phone.matches ? "mobile" : "desktop"}"]`);
+      if (!tpl) return;
+      tpl.replaceWith(tpl.content);
+      root.classList.add("no-anim");
+      layoutDesktop(view);
+      layoutMobile(view);
+      syncControls();
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
+    };
+    for (const radio of root.querySelectorAll<HTMLInputElement>('input[name="tl-view"]')) radio.addEventListener("change", materialize);
+    phone.addEventListener("change", materialize);
+    materialize();
+    if (sort !== "first") {
+      root.classList.add("no-anim");
+      relayout();
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
+    } else syncControls();
 
     const toggle = (id: string) => {
       if (open.has(id)) open.delete(id);
       else open.add(id);
       relayout();
     };
-    for (const g of root.querySelectorAll<SVGGElement>(".row.group")) {
-      g.addEventListener("click", () => toggle(g.dataset.id!));
-      g.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          toggle(g.dataset.id!);
-        }
-      });
-    }
-    for (const b of root.querySelectorAll<HTMLButtonElement>(".m-toggle")) {
-      b.addEventListener("click", () => toggle(b.closest<HTMLElement>(".m-group")!.dataset.id!));
-    }
-
-    const applySort = (key: string) => {
-      sort = key;
-      for (const s of selects) s.value = key;
+    // One set of listeners for every row, including the ones materialized later.
+    root.addEventListener("click", (e) => {
+      const t = e.target as Element;
+      const group = t.closest<SVGGElement>(".row.group");
+      if (group) return toggle(group.dataset.id!);
+      const mToggle = t.closest(".m-toggle");
+      if (mToggle) return toggle(mToggle.closest<HTMLElement>(".m-group")!.dataset.id!);
+      if (t.closest(".fold-all")) {
+        const allOpen = [...allGroups].every((id) => open.has(id));
+        open.clear();
+        if (!allOpen) for (const id of allGroups) open.add(id);
+        relayout();
+      }
+    });
+    root.addEventListener("keydown", (e) => {
+      const group = (e.target as Element).closest?.<SVGGElement>(".row.group");
+      if (group && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        toggle(group.dataset.id!);
+      }
+    });
+    root.addEventListener("change", (e) => {
+      const sel = (e.target as Element).closest?.<HTMLSelectElement>(".tl-sort select");
+      if (!sel) return;
+      sort = sel.value;
       relayout();
       try {
-        localStorage.setItem("tl-sort", key);
+        localStorage.setItem("tl-sort", sort);
       } catch {}
-    };
-    for (const s of selects) {
-      s.closest<HTMLElement>(".tl-sort")!.hidden = false;
-      s.addEventListener("change", () => applySort(s.value));
-    }
-    let saved: string | null = null;
-    try {
-      saved = localStorage.getItem("tl-sort");
-    } catch {}
-    if (saved && saved !== "first" && selects[0]?.querySelector(`option[value="${saved}"]`)) {
-      root.classList.add("no-anim");
-      applySort(saved);
-      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
-    }
+    });
 
-    // --- tooltip
+    // --- tooltip (delegated: follows whichever row the pointer or focus is on)
     const tip = document.getElementById("tl-tip")!;
     const kinds: Record<string, string> = { recomp: "Static recompilation", port: "Source port" };
     const line = (cls: string, text: string) => {
@@ -373,17 +399,34 @@ const defaultView = "1y";
       const top = y + pad + h > innerHeight - 8 ? y - pad - h : y + pad;
       tip.style.transform = `translate(${Math.max(8, left)}px, ${Math.max(8, top)}px)`;
     };
-    for (const r of root.querySelectorAll<SVGElement>(".row")) {
-      r.addEventListener("pointerenter", () => fill(r.dataset));
-      r.addEventListener("pointermove", (e) => placeTip(e.clientX, e.clientY));
-      r.addEventListener("pointerleave", () => (tip.hidden = true));
-      r.addEventListener("focus", () => {
-        fill(r.dataset);
-        const b = r.getBoundingClientRect();
-        placeTip(b.left + b.width * 0.3, b.top + b.height / 2);
-      });
-      r.addEventListener("blur", () => (tip.hidden = true));
-    }
+    let hovered: Element | null = null;
+    const rowOf = (t: EventTarget | null) => (t as Element | null)?.closest?.("svg .row") ?? null;
+    root.addEventListener("pointerover", (e) => {
+      const row = rowOf(e.target);
+      if (row && row !== hovered) {
+        hovered = row;
+        fill((row as SVGElement).dataset);
+      }
+    });
+    root.addEventListener("pointerout", (e) => {
+      if (hovered && !hovered.contains(e.relatedTarget as Node | null)) {
+        hovered = null;
+        tip.hidden = true;
+      }
+    });
+    root.addEventListener("pointermove", (e) => {
+      if (hovered) placeTip(e.clientX, e.clientY);
+    });
+    root.addEventListener("focusin", (e) => {
+      const row = rowOf(e.target);
+      if (!row) return;
+      fill((row as SVGElement).dataset);
+      const b = row.getBoundingClientRect();
+      placeTip(b.left + b.width * 0.3, b.top + b.height / 2);
+    });
+    root.addEventListener("focusout", (e) => {
+      if (rowOf(e.target)) tip.hidden = true;
+    });
   }
 </script>
 
@@ -644,8 +687,7 @@ const defaultView = "1y";
     padding: 0.6rem 0.75rem;
     border: 1px solid var(--line);
     border-radius: 9px;
-    background: rgb(18 22 36 / 0.92);
-    backdrop-filter: blur(6px);
+    background: rgb(18 22 36 / 0.97); /* solid: a backdrop blur re-rendered on every pointer move */
     box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.7);
     font-size: 0.8rem;
   }
@@ -775,7 +817,8 @@ const defaultView = "1y";
   .row.port .dot {
     fill: var(--port);
   }
-  .row .dot {
+  /* glow only on the hovered row: a filter on every dot made each hover repaint thousands of them */
+  .row:hover .dot {
     filter: drop-shadow(0 0 2.5px currentColor);
   }
   .row.recomp {
@@ -823,8 +866,13 @@ const defaultView = "1y";
   .tl-m {
     display: none;
   }
+  /* the live range's wrapper; the others wait in <template>s */
+  .part {
+    display: contents;
+  }
   @media (max-width: 760px) {
-    .tl-inner {
+    /* the phone list replaces the chart once the script has built it (no script: the chart stays) */
+    .tl-view:has(.tl-m) .tl-inner {
       display: none;
     }
     .tl-m {
