@@ -15,7 +15,7 @@
   wikidata: Q518987
   added: 2026-10-28
 - repo: RodoLy/HarvestMoonSnesDecomp
-  game: Harvest Moon (USA)
+  game: Harvest Moon
   platform: snes
   kind: recomp
   tool: snesrecomp
@@ -847,12 +847,6 @@
   tool: ps3recomp
   wikidata: Q1050284
   added: 2026-10-29
-- repo: TheWishin/T5DROnline
-  game: "Tekken 5: Dark Resurrection"
-  platform: ps3
-  kind: recomp
-  wikidata: Q2290448
-  added: 2026-10-31
 
 # --- PlayStation 4 ---------------------------------------------------------------
 - repo: deadinside28/bloodborne_pc
@@ -1341,7 +1335,7 @@
 - repo: saulob/marvel-ultimate-alliance-bundle-recompiled
   game: Marvel Ultimate Alliance
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q2337304
   added: 2026-10-31
@@ -1456,7 +1450,7 @@
 - repo: saulob/ssf2t-hd-remix-recompiled
   game: Super Street Fighter II Turbo HD Remix
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q3179278
   added: 2026-10-31
@@ -1634,7 +1628,6 @@
   game: GBARecomp
   platform: gba
   kind: tool
-  tool: GBARecomp
   added: 2026-10-31
 - repo: N64Recomp/N64Recomp
   game: "N64: Recompiled"
@@ -1646,6 +1639,11 @@
   platform: nds
   kind: tool
   added: 2026-10-28
+- repo: mstan/nesrecomp
+  game: NESRecomp
+  platform: nes
+  kind: tool
+  added: 2026-10-31
 - repo: ran-j/PS2Recomp
   game: PS2Recomp
   platform: ps2
