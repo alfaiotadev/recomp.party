@@ -1,6 +1,6 @@
 ---
 import { ago, entryPath, shortDate, type Entry } from "../lib/data.ts";
-import { AXIS_H, CHILD_INDENT, layout, NAME_W, NAME_X, SORTS, views, W } from "../lib/timeline.ts";
+import { AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, SORTS, views, W } from "../lib/timeline.ts";
 
 interface Props {
   games: Entry[];
@@ -32,6 +32,12 @@ const defaultView = "1y";
       layouts.map((l) => (
         <div class="tl-view" data-view={l.view.id} data-plan={JSON.stringify(l.plan)}>
           <div class="tl-inner">
+          <div class="tl-fold" hidden style={`left:0.75%;width:${(LABEL_W / W) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
+            <button type="button" class="fold-all" aria-label="Expand every game with several projects">
+              <span class="fold-chev" aria-hidden="true" />
+              <span class="fold-text">expand all</span>
+            </button>
+          </div>
           <label class="tl-sort" hidden style={`left:${(NAME_X / W) * 100}%;width:${(NAME_W / W) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
             <span>sort</span>
             <select aria-label="Sort projects within each platform">
@@ -112,12 +118,20 @@ const defaultView = "1y";
           </svg>
           </div>
           <div class="tl-m">
-            <label class="tl-sort m-sort" hidden>
-              <span>sort</span>
-              <select aria-label="Sort projects within each platform">
-                {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
-              </select>
-            </label>
+            <div class="m-bar-top">
+              <div class="tl-fold m-fold" hidden>
+                <button type="button" class="fold-all" aria-label="Expand every game with several projects">
+                  <span class="fold-chev" aria-hidden="true" />
+                  <span class="fold-text">expand all</span>
+                </button>
+              </div>
+              <label class="tl-sort m-sort" hidden>
+                <span>sort</span>
+                <select aria-label="Sort projects within each platform">
+                  {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
+                </select>
+              </label>
+            </div>
             {l.lanes.map((lane) => (
               <div class="m-lane">
                 <div class="m-head">
@@ -215,8 +229,7 @@ const defaultView = "1y";
         g.querySelector("rect")!.setAttribute("height", String(p.lanes[i]!.height));
       });
       for (const line of view.querySelectorAll(".to-bottom")) line.setAttribute("y2", String(p.height));
-      const label = view.querySelector<HTMLElement>(".tl-inner > .tl-sort");
-      if (label) label.style.height = `${(AXIS_H / p.height) * 100}%`;
+      for (const el of view.querySelectorAll<HTMLElement>(".tl-inner > .tl-sort, .tl-inner > .tl-fold")) el.style.height = `${(AXIS_H / p.height) * 100}%`;
       for (const row of svg.querySelectorAll<SVGElement>(".row[data-id]")) {
         const id = row.dataset.id!;
         if (p.y[id] === undefined) continue;
@@ -244,9 +257,30 @@ const defaultView = "1y";
         li.querySelector<HTMLElement>(".m-children")!.hidden = !isOpen;
       }
     };
+    // "expand all" / "collapse all": every group id across the three time ranges
+    const allGroups = new Set([...root.querySelectorAll<HTMLElement>(".row.group, .m-group")].map((g) => g.dataset.id!));
+    const foldButtons = [...root.querySelectorAll<HTMLButtonElement>(".fold-all")];
+    const syncFold = () => {
+      const allOpen = allGroups.size > 0 && [...allGroups].every((id) => open.has(id));
+      for (const b of foldButtons) {
+        b.classList.toggle("open", allOpen);
+        b.querySelector(".fold-text")!.textContent = allOpen ? "collapse all" : "expand all";
+        b.setAttribute("aria-label", allOpen ? "Collapse every game group" : "Expand every game with several projects");
+      }
+    };
+    for (const b of foldButtons) {
+      b.closest<HTMLElement>(".tl-fold")!.hidden = allGroups.size === 0;
+      b.addEventListener("click", () => {
+        const allOpen = [...allGroups].every((id) => open.has(id));
+        open.clear();
+        if (!allOpen) for (const id of allGroups) open.add(id);
+        relayout();
+      });
+    }
     const relayout = () => {
       views.forEach(layoutView);
       layoutMobile();
+      syncFold();
     };
 
     const toggle = (id: string) => {
@@ -668,8 +702,55 @@ const defaultView = "1y";
     fill: currentColor;
     fill-opacity: 0.06;
   }
-  .row:focus-visible {
+  /* a clicked row keeps focus: no browser outline; the keyboard gets the highlight and a thin frame */
+  .row:focus {
     outline: none;
+  }
+  .row:focus-visible .hit {
+    stroke: currentColor;
+    stroke-opacity: 0.35;
+  }
+  .tl-fold {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+  }
+  .tl-fold[hidden] {
+    display: none;
+  }
+  .fold-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.1rem 0.45rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .fold-all:hover,
+  .fold-all:focus-visible {
+    color: var(--fg);
+    border-color: rgb(124 240 197 / 0.5);
+    outline: none;
+  }
+  .fold-chev {
+    width: 0.38rem;
+    height: 0.38rem;
+    margin-top: -0.15rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    rotate: 45deg;
+    transition: rotate 0.2s, margin 0.2s;
+  }
+  .fold-all.open .fold-chev {
+    rotate: 225deg;
+    margin-top: 0.2rem;
   }
   .bar {
     stroke-width: 2.5;
@@ -761,11 +842,19 @@ const defaultView = "1y";
       display: none;
     }
   }
+  .m-bar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .m-fold {
+    position: static;
+  }
   .m-sort {
     position: static;
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0.6rem;
+    margin-left: auto;
   }
   .m-lane {
     margin-bottom: 1rem;
