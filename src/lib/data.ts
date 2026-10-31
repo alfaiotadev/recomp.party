@@ -141,3 +141,13 @@ export function toolUsers(tool: Entry): Entry[] {
     return names.some((n) => n === k || n.startsWith(k) || k.startsWith(n));
   });
 }
+
+/** One project per game built with a toolchain (the most-starred one), most-starred first. */
+export function toolGames(tool: Entry): Entry[] {
+  const byGame = new Map<string, Entry>();
+  for (const u of [...toolUsers(tool)].sort((a, b) => (b.snap?.stars ?? 0) - (a.snap?.stars ?? 0))) {
+    const key = u.wikidata ?? u.game.toLowerCase();
+    if (!byGame.has(key)) byGame.set(key, u);
+  }
+  return [...byGame.values()];
+}

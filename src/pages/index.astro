@@ -4,7 +4,7 @@ import Highlights from "../components/Highlights.astro";
 import StatTiles from "../components/StatTiles.astro";
 import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
-import { ago, fitLogo, games, generatedAt, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolUsers, tools } from "../lib/data.ts";
+import { ago, fitLogo, games, generatedAt, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolGames, tools } from "../lib/data.ts";
 
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
 const toolStrip = tools.slice(0, 8);
@@ -39,7 +39,7 @@ const toolStrip = tools.slice(0, 8);
       {
         toolStrip.map((t) => {
           const logo = platformLogo(t.platform);
-          const n = toolUsers(t).length;
+          const n = toolGames(t).length;
           return (
             <li>
               <a href={t.url}>
