@@ -31,6 +31,7 @@ const here = Astro.url.pathname;
     <link rel="canonical" href={new URL(here, Astro.site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="recomp.party releases" href="/feed.xml" />
+    <script is:inline data-goatcounter="https://alfaiotadev.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -70,10 +71,15 @@ const here = Astro.url.pathname;
         recomp.party links to projects; it hosts no games or game files. All projects require your own legally obtained
         copy of the game.
       </p>
+      <p>
+        Visits and outbound clicks are counted with <a href="https://www.goatcounter.com/">GoatCounter</a>: no cookies, no
+        personal data.
+      </p>
     </footer>
     <script>
       import "../scripts/decode.ts";
       import "../scripts/scan.ts";
+      import "../scripts/outbound.ts";
     </script>
   </body>
 </html>
