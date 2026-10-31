@@ -1,6 +1,6 @@
 ---
 import { ago, entryPath, shortDate, type Entry } from "../lib/data.ts";
-import { AXIS_H, layout, NAME_W, NAME_X, SORTS, views, W } from "../lib/timeline.ts";
+import { AXIS_H, CHILD_INDENT, layout, NAME_W, NAME_X, SORTS, views, W } from "../lib/timeline.ts";
 
 interface Props {
   games: Entry[];
@@ -30,71 +30,84 @@ const defaultView = "1y";
   <div class="tl-views">
     {
       layouts.map((l) => (
-        <div class="tl-view" data-view={l.view.id}>
+        <div class="tl-view" data-view={l.view.id} data-plan={JSON.stringify(l.plan)}>
           <div class="tl-inner">
-          <label class="tl-sort" hidden style={`left:${(NAME_X / W) * 100}%;width:${(NAME_W / W) * 100}%;height:${(AXIS_H / l.height) * 100}%`}>
+          <label class="tl-sort" hidden style={`left:${(NAME_X / W) * 100}%;width:${(NAME_W / W) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
             <span>sort</span>
             <select aria-label="Sort projects within each platform">
               {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
             </select>
           </label>
-          <svg viewBox={`0 0 ${W} ${l.height}`} role="img" aria-label={`${l.view.label}: releases per platform`}>
+          <svg viewBox={`0 0 ${W} ${l.initial.height}`} role="img" aria-label={`${l.view.label}: releases per platform`}>
             {l.lanes.map((lane, i) => (
-              <g class="lane">
-                <rect class={i % 2 ? "lane-bg odd" : "lane-bg"} x="0" y={lane.y} width={W} height={lane.height} />
+              <g class="lane" style={`transform:translateY(${l.initial.lanes[i]!.y}px)`}>
+                <rect class={i % 2 ? "lane-bg odd" : "lane-bg"} x="0" y="0" width={W} height={l.initial.lanes[i]!.height} />
                 {lane.logo ? (
-                  <image class="logo-img" href={lane.logo.src} x="12" y={lane.y + 10 + (24 - lane.logo.h) / 2} width={lane.logo.w} height={lane.logo.h}>
+                  <image class="logo-img" href={lane.logo.src} x="12" y={10 + (24 - lane.logo.h) / 2} width={lane.logo.w} height={lane.logo.h}>
                     <title>{lane.name}</title>
                   </image>
                 ) : (
-                  <text class="lane-name" x="12" y={lane.y + 28}>
+                  <text class="lane-name" x="12" y="28">
                     {lane.name}
                   </text>
                 )}
-                <text class="lane-count" x="12" y={lane.y + 48}>
-                  {lane.rows.length} {lane.rows.length === 1 ? "project" : "projects"}
+                <text class="lane-count" x="12" y="48">
+                  {lane.count} {lane.count === 1 ? "project" : "projects"}
                 </text>
               </g>
             ))}
             {l.ticks.map((t) => (
               <g class={t.major ? "tick major" : "tick"}>
-                <line x1={t.x} x2={t.x} y1={AXIS_H - 4} y2={l.height} />
+                <line class="to-bottom" x1={t.x} x2={t.x} y1={AXIS_H - 4} y2={l.initial.height} />
                 <text x={t.x + 3} y={AXIS_H - 8}>
                   {t.label}
                 </text>
               </g>
             ))}
-            <line class="now" x1={l.nowX} x2={l.nowX} y1={AXIS_H - 4} y2={l.height} />
+            <line class="now to-bottom" x1={l.nowX} x2={l.nowX} y1={AXIS_H - 4} y2={l.initial.height} />
             {l.lanes.flatMap((lane, i) =>
-              lane.rows.map((r) => (
-                <a
-                  href={r.href}
-                  class={`row ${r.entry.kind}${i % 2 ? " odd" : ""}`}
-                  style={`transform:translateY(${r.y}px)`}
-                  aria-label={`${r.entry.game} (${r.entry.repo})`}
-                  data-slots={JSON.stringify(r.slots)}
-                  data-game={r.entry.game}
-                  data-repo={r.entry.repo}
-                  data-kind={r.entry.kind}
-                  data-first={shortDate(r.entry.firstReleaseAt!)}
-                  data-latest={shortDate(r.entry.latestReleaseAt!)}
-                  data-count={r.entry.snap?.releaseCount ?? 0}
-                  data-stars={(r.entry.snap?.stars ?? 0).toLocaleString("en")}
-                  data-tool={r.entry.tool ?? ""}
-                  data-cover={r.entry.cover?.src ?? ""}
-                >
-                  <rect class="hit" x="0" y="-9" width={W} height="18" />
-                  {r.guide && <line class="guide" x1={r.guide.x1} x2={r.guide.x2} y1="0" y2="0" />}
-                  <line class="bar" x1={r.x1} x2={r.x2} y1="0" y2="0" />
-                  {r.clipped && <path class="bar-clip" d={`M${r.x1 + 6} -4 L${r.x1} 0 L${r.x1 + 6} 4`} />}
-                  {r.dots.map((d) => (
-                    <circle class={d.prerelease ? "dot pre" : "dot"} cx={d.x} cy="0" r="3.2" />
-                  ))}
-                  <text class="label" x={NAME_X} y="4">
-                    {r.name}
-                  </text>
-                </a>
-              )),
+              lane.items.flatMap((it) => {
+                const r = it.row;
+                const odd = i % 2 ? " odd" : "";
+                const marks = (row: typeof r, x0: number) => (
+                  <>
+                    <rect class="hit" x="0" y="-9" width={W} height="18" />
+                    {row.guide && <line class="guide" x1={row.guide.x1} x2={row.guide.x2} y1="0" y2="0" />}
+                    <line class="bar" x1={row.x1} x2={row.x2} y1="0" y2="0" />
+                    {row.clipped && <path class="bar-clip" d={`M${row.x1 + 6} -4 L${row.x1} 0 L${row.x1 + 6} 4`} />}
+                    {row.dots.map((d) => (
+                      <circle class={`dot k-${d.kind}${d.prerelease ? " pre" : ""}`} cx={d.x} cy="0" r="3.2" />
+                    ))}
+                    <text class={x0 > NAME_X ? "label repo-label" : "label"} x={x0} y="4">
+                      {row.name}
+                    </text>
+                  </>
+                );
+                if (!it.children) {
+                  return [
+                    <a href={r.href} class={`row ${r.entry.kind}${odd}`} data-id={r.id} style={`transform:translateY(${l.initial.y[r.id]}px)`} aria-label={`${r.entry.game} (${r.entry.repo})`} data-game={r.entry.game} data-repo={r.entry.repo} data-kind={r.entry.kind} data-first={shortDate(r.entry.firstReleaseAt!)} data-latest={shortDate(r.entry.latestReleaseAt!)} data-count={r.entry.snap?.releaseCount ?? 0} data-stars={(r.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={r.entry.tool ?? ""} data-cover={r.entry.cover?.src ?? ""}>
+                      {marks(r, NAME_X)}
+                    </a>,
+                  ];
+                }
+                const g = it.group!;
+                const badgeX = NAME_X + r.name.length * 6.1 + 7;
+                return [
+                  ...it.children.map((c) => (
+                    <a href={c.href} class={`row child shut ${c.entry.kind}${odd}`} data-id={c.id} data-parent={r.id} tabindex="-1" aria-hidden="true" style={`transform:translateY(${l.initial.y[c.id]}px)`} aria-label={`${c.entry.game} (${c.entry.repo})`} data-game={c.entry.game} data-repo={c.entry.repo} data-kind={c.entry.kind} data-first={shortDate(c.entry.firstReleaseAt!)} data-latest={shortDate(c.entry.latestReleaseAt!)} data-count={c.entry.snap?.releaseCount ?? 0} data-stars={(c.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={c.entry.tool ?? ""} data-cover={c.entry.cover?.src ?? ""}>
+                      {marks(c, NAME_X + CHILD_INDENT)}
+                    </a>
+                  )),
+                  <g class={`row group ${g.kind}${odd}`} data-id={r.id} role="button" tabindex="0" aria-expanded="false" aria-label={`${r.name}: ${g.count} projects, show them`} style={`transform:translateY(${l.initial.y[r.id]}px)`} data-group={g.count} data-game={r.name} data-kind={g.kind} data-kinds={it.children.map((c) => c.entry.kind).join(" ")} data-first={shortDate(g.first)} data-latest={shortDate(g.latest)} data-count={g.releases} data-stars={g.stars.toLocaleString("en")} data-cover={g.cover ?? ""}>
+                    {marks(r, NAME_X)}
+                    <path class="chev" d={`M${NAME_X - 13} -3 L${NAME_X - 9} 1 L${NAME_X - 5} -3`} />
+                    <rect class="badge-bg" x={badgeX} y="-6.5" width={g.count > 9 ? 22 : 17} height="13" rx="6.5" />
+                    <text class="badge-n" x={badgeX + (g.count > 9 ? 11 : 8.5)} y="3.5">
+                      ×{g.count}
+                    </text>
+                  </g>,
+                ];
+              }),
             )}
           </svg>
           </div>
@@ -110,7 +123,7 @@ const defaultView = "1y";
                 <div class="m-head">
                   <div class="m-plat">
                     {lane.logo ? <img class="logo-img" src={lane.logo.src} width={lane.logo.w * 0.85} height={lane.logo.h * 0.85} alt={lane.name} /> : <strong>{lane.name}</strong>}
-                    <span class="m-count">{lane.rows.length} {lane.rows.length === 1 ? "project" : "projects"}</span>
+                    <span class="m-count">{lane.count} {lane.count === 1 ? "project" : "projects"}</span>
                   </div>
                   <div class="m-axis" aria-hidden="true">
                     {l.mobile.ticks.filter((tk, k) => tk.major || l.view.ticks === "year" || k % 2 === 0).map((tk) => (
@@ -123,21 +136,53 @@ const defaultView = "1y";
                     {l.mobile.ticks.map((tk) => <span class={tk.major ? "major" : ""} style={`left:${tk.p}%`} />)}
                     <span class="m-now" style={`left:${l.mobile.now}%`} />
                   </li>
-                  {lane.rows.map((r) => (
-                    <li class={`m-row ${r.entry.kind}`} style={`order:${r.ranks.first + 1}`} data-ranks={JSON.stringify(r.ranks)}>
-                      <a href={entryPath(r.entry)}>
-                        <span class="m-name">{r.entry.game}</span>
-                        <span class="m-when">{ago(r.entry.latestReleaseAt)}</span>
-                        <span class="m-track">
-                          {r.clipped && <span class="m-clip" />}
-                          <span class="m-bar" style={`left:${r.pct.x1}%;width:${Math.max(0, r.pct.x2 - r.pct.x1)}%`} />
-                          {r.pct.dots.map((d) => (
-                            <span class={d.prerelease ? "m-dot pre" : "m-dot"} style={`left:${d.x}%`} />
+                  {lane.items.map((it) => {
+                    const r = it.row;
+                    const mtrack = (row: typeof r) => (
+                      <span class="m-track">
+                        {row.clipped && <span class="m-clip" />}
+                        <span class="m-bar" style={`left:${row.pct.x1}%;width:${Math.max(0, row.pct.x2 - row.pct.x1)}%`} />
+                        {row.pct.dots.map((d) => (
+                          <span class={`m-dot k-${d.kind}${d.prerelease ? " pre" : ""}`} style={`left:${d.x}%`} />
+                        ))}
+                      </span>
+                    );
+                    if (!it.children) {
+                      return (
+                        <li class={`m-row ${r.entry.kind}`} style={`order:${r.ranks.first! + 1}`} data-ranks={JSON.stringify(r.ranks)}>
+                          <a href={entryPath(r.entry)}>
+                            <span class="m-name">{r.entry.game}</span>
+                            <span class="m-when">{ago(r.entry.latestReleaseAt)}</span>
+                            {mtrack(r)}
+                          </a>
+                        </li>
+                      );
+                    }
+                    const g = it.group!;
+                    return (
+                      <li class={`m-row m-group ${g.kind}`} style={`order:${r.ranks.first! + 1}`} data-ranks={JSON.stringify(r.ranks)} data-id={r.id}>
+                        <button type="button" class="m-toggle" aria-expanded="false">
+                          <span class="m-name">
+                            <span class="m-chev" aria-hidden="true" />
+                            {r.name} <span class="m-badge">×{g.count}</span>
+                          </span>
+                          <span class="m-when">{ago(g.latest)}</span>
+                          {mtrack(r)}
+                        </button>
+                        <ol class="m-children" hidden>
+                          {it.children.map((c) => (
+                            <li class={`m-row m-child ${c.entry.kind}`} style={`order:${c.ranks.first! + 1}`} data-ranks={JSON.stringify(c.ranks)}>
+                              <a href={entryPath(c.entry)}>
+                                <span class="m-name m-repo">{c.entry.repo}</span>
+                                <span class="m-when">{ago(c.entry.latestReleaseAt)}</span>
+                                {mtrack(c)}
+                              </a>
+                            </li>
                           ))}
-                        </span>
-                      </a>
-                    </li>
-                  ))}
+                        </ol>
+                      </li>
+                    );
+                  })}
                 </ol>
               </div>
             ))}
@@ -149,51 +194,133 @@ const defaultView = "1y";
   <div class="tl-tip" id="tl-tip" role="tooltip" hidden></div>
 </section>
 
-<script is:inline>
-  (() => {
-    const root = document.querySelector(".timeline");
-    if (!root) return;
-    const rows = [...root.querySelectorAll("a.row")];
-    const mrows = [...root.querySelectorAll("li.m-row")];
+<script>
+  import { place, AXIS_H, type PlaceLane } from "../lib/timeline-place.ts";
 
-    // --- sorting: rows move between precomputed slots; platform lanes stay fixed
-    const selects = [...root.querySelectorAll(".tl-sort select")];
-    const apply = (key) => {
-      for (const r of rows) r.style.transform = `translateY(${JSON.parse(r.dataset.slots)[key]}px)`;
-      for (const m of mrows) m.style.order = JSON.parse(m.dataset.ranks)[key] + 1;
+  const root = document.querySelector<HTMLElement>(".timeline");
+  if (root) {
+    const views = [...root.querySelectorAll<HTMLElement>(".tl-view")];
+    const selects = [...root.querySelectorAll<HTMLSelectElement>(".tl-sort select")];
+    const open = new Set<string>(); // group row ids, shared by all three time ranges
+    let sort = "first";
+
+    // Desktop: rerun the placement and move rows, lanes, grid lines and the sort control to match.
+    const layoutView = (view: HTMLElement) => {
+      const plan: PlaceLane[] = JSON.parse(view.dataset.plan!);
+      const p = place(plan, sort, (id) => open.has(id));
+      const svg = view.querySelector("svg")!;
+      svg.setAttribute("viewBox", `0 0 ${svg.viewBox.baseVal.width} ${p.height}`);
+      view.querySelectorAll<SVGGElement>(".lane").forEach((g, i) => {
+        g.style.transform = `translateY(${p.lanes[i]!.y}px)`;
+        g.querySelector("rect")!.setAttribute("height", String(p.lanes[i]!.height));
+      });
+      for (const line of view.querySelectorAll(".to-bottom")) line.setAttribute("y2", String(p.height));
+      const label = view.querySelector<HTMLElement>(".tl-inner > .tl-sort");
+      if (label) label.style.height = `${(AXIS_H / p.height) * 100}%`;
+      for (const row of svg.querySelectorAll<SVGElement>(".row[data-id]")) {
+        const id = row.dataset.id!;
+        if (p.y[id] === undefined) continue;
+        row.style.transform = `translateY(${p.y[id]}px)`;
+        if (row.classList.contains("child")) {
+          const shut = p.hidden.has(id);
+          row.classList.toggle("shut", shut);
+          row.setAttribute("tabindex", shut ? "-1" : "0");
+          row.setAttribute("aria-hidden", String(shut));
+        } else if (row.classList.contains("group")) {
+          const isOpen = open.has(id);
+          row.classList.toggle("open", isOpen);
+          row.setAttribute("aria-expanded", String(isOpen));
+          row.setAttribute("aria-label", row.getAttribute("aria-label")!.replace(/, (show|hide) them$/, isOpen ? ", hide them" : ", show them"));
+        }
+      }
+    };
+    // Phone: CSS order follows the sort, groups open their own list.
+    const layoutMobile = () => {
+      for (const li of root.querySelectorAll<HTMLElement>(".m-row")) li.style.order = String(JSON.parse(li.dataset.ranks!)[sort] + 1);
+      for (const li of root.querySelectorAll<HTMLElement>(".m-group")) {
+        const isOpen = open.has(li.dataset.id!);
+        li.classList.toggle("open", isOpen);
+        li.querySelector(".m-toggle")!.setAttribute("aria-expanded", String(isOpen));
+        li.querySelector<HTMLElement>(".m-children")!.hidden = !isOpen;
+      }
+    };
+    const relayout = () => {
+      views.forEach(layoutView);
+      layoutMobile();
+    };
+
+    const toggle = (id: string) => {
+      if (open.has(id)) open.delete(id);
+      else open.add(id);
+      relayout();
+    };
+    for (const g of root.querySelectorAll<SVGGElement>(".row.group")) {
+      g.addEventListener("click", () => toggle(g.dataset.id!));
+      g.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggle(g.dataset.id!);
+        }
+      });
+    }
+    for (const b of root.querySelectorAll<HTMLButtonElement>(".m-toggle")) {
+      b.addEventListener("click", () => toggle(b.closest<HTMLElement>(".m-group")!.dataset.id!));
+    }
+
+    const applySort = (key: string) => {
+      sort = key;
       for (const s of selects) s.value = key;
-      try { localStorage.setItem("tl-sort", key); } catch {}
+      relayout();
+      try {
+        localStorage.setItem("tl-sort", key);
+      } catch {}
     };
     for (const s of selects) {
-      s.closest(".tl-sort").hidden = false;
-      s.addEventListener("change", () => apply(s.value));
+      s.closest<HTMLElement>(".tl-sort")!.hidden = false;
+      s.addEventListener("change", () => applySort(s.value));
     }
-    let saved = null;
-    try { saved = localStorage.getItem("tl-sort"); } catch {}
+    let saved: string | null = null;
+    try {
+      saved = localStorage.getItem("tl-sort");
+    } catch {}
     if (saved && saved !== "first" && selects[0]?.querySelector(`option[value="${saved}"]`)) {
       root.classList.add("no-anim");
-      apply(saved);
+      applySort(saved);
       requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
     }
 
     // --- tooltip
-    const tip = document.getElementById("tl-tip");
-    const kinds = { recomp: "Static recompilation", port: "Source port" };
-    const line = (cls, text) => {
+    const tip = document.getElementById("tl-tip")!;
+    const kinds: Record<string, string> = { recomp: "Static recompilation", port: "Source port" };
+    const line = (cls: string, text: string) => {
       const el = document.createElement("div");
       el.className = cls;
       el.textContent = text;
       return el;
     };
-    const fill = (d) => {
+    const fill = (d: DOMStringMap) => {
       const text = document.createElement("div");
-      text.append(
-        line("t-kind " + d.kind, kinds[d.kind] + (d.tool ? " · " + d.tool : "")),
-        line("t-game", d.game),
-        line("t-repo", d.repo),
-        line("t-meta", `${d.first} → ${d.latest}`),
-        line("t-meta", `${d.count} releases · ★ ${d.stars}`),
-      );
+      if (d.group) {
+        const kindsIn = d.kinds!.split(" ");
+        const recomps = kindsIn.filter((k) => k === "recomp").length;
+        const ports = kindsIn.length - recomps;
+        const mix = [recomps && `${recomps} recomp${recomps > 1 ? "s" : ""}`, ports && `${ports} port${ports > 1 ? "s" : ""}`].filter(Boolean).join(" · ");
+        text.append(
+          line(`t-kind ${d.kind}`, `${d.group} projects · ${mix}`),
+          line("t-game", d.game!),
+          line("t-repo", "click to list them"),
+          line("t-meta", `${d.first} → ${d.latest}`),
+          line("t-meta", `${d.count} releases · ★ ${d.stars}`),
+        );
+      } else {
+        text.append(
+          line(`t-kind ${d.kind}`, kinds[d.kind!] + (d.tool ? " · " + d.tool : "")),
+          line("t-game", d.game!),
+          line("t-repo", d.repo!),
+          line("t-meta", `${d.first} → ${d.latest}`),
+          line("t-meta", `${d.count} releases · ★ ${d.stars}`),
+        );
+      }
       if (d.cover) {
         const img = document.createElement("img");
         img.className = "t-cover";
@@ -204,24 +331,26 @@ const defaultView = "1y";
       tip.classList.toggle("has-cover", !!d.cover);
       tip.hidden = false;
     };
-    const place = (x, y) => {
-      const pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+    const placeTip = (x: number, y: number) => {
+      const pad = 14,
+        w = tip.offsetWidth,
+        h = tip.offsetHeight;
       const left = x + pad + w > innerWidth - 8 ? x - pad - w : x + pad;
       const top = y + pad + h > innerHeight - 8 ? y - pad - h : y + pad;
       tip.style.transform = `translate(${Math.max(8, left)}px, ${Math.max(8, top)}px)`;
     };
-    for (const r of rows) {
+    for (const r of root.querySelectorAll<SVGElement>(".row")) {
       r.addEventListener("pointerenter", () => fill(r.dataset));
-      r.addEventListener("pointermove", (e) => place(e.clientX, e.clientY));
+      r.addEventListener("pointermove", (e) => placeTip(e.clientX, e.clientY));
       r.addEventListener("pointerleave", () => (tip.hidden = true));
       r.addEventListener("focus", () => {
         fill(r.dataset);
         const b = r.getBoundingClientRect();
-        place(b.left + b.width * 0.3, b.top + b.height / 2);
+        placeTip(b.left + b.width * 0.3, b.top + b.height / 2);
       });
       r.addEventListener("blur", () => (tip.hidden = true));
     }
-  })();
+  }
 </script>
 
 <style>
@@ -389,16 +518,87 @@ const defaultView = "1y";
     border-color: rgb(124 240 197 / 0.5);
     outline: none;
   }
-  .row {
-    transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  .row,
+  .lane {
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.3s;
   }
-  .no-anim .row {
+  .no-anim :is(.row, .lane) {
     transition: none;
   }
   @media (prefers-reduced-motion: reduce) {
-    .row {
+    .row,
+    .lane {
       transition: none;
     }
+  }
+  /* a game's projects: hidden under the group row until it opens */
+  .row.child.shut {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .row.group {
+    cursor: pointer;
+  }
+  .chev {
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transform-box: fill-box;
+    transform-origin: center;
+    rotate: -90deg;
+    transition: rotate 0.2s;
+  }
+  .row.group.open .chev {
+    rotate: 0deg;
+  }
+  .row.group:hover .chev {
+    stroke: currentColor;
+  }
+  .badge-bg {
+    fill: var(--surface-2);
+    stroke: var(--line);
+  }
+  .badge-n {
+    font-family: var(--mono);
+    font-size: 8.5px;
+    fill: var(--muted);
+    text-anchor: middle;
+  }
+  .row.group:hover .badge-n {
+    fill: currentColor;
+  }
+  .label.repo-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    fill: var(--muted);
+  }
+  /* recomps and ports in one group: neutral bar, each dot in its own project's colour */
+  .row.mixed {
+    color: var(--fg);
+  }
+  .row.mixed .bar,
+  .row.mixed .bar-clip {
+    stroke: var(--muted);
+  }
+  .dot.k-recomp {
+    fill: var(--recomp);
+    color: var(--recomp);
+  }
+  .dot.k-port {
+    fill: var(--port);
+    color: var(--port);
+  }
+  .dot.pre.k-recomp {
+    fill: var(--surface);
+    stroke: var(--recomp);
+  }
+  .dot.pre.k-port {
+    fill: var(--surface);
+    stroke: var(--port);
   }
   .tl-tip {
     position: fixed;
@@ -638,20 +838,81 @@ const defaultView = "1y";
     opacity: 0.8;
     box-shadow: 0 0 4px var(--accent);
   }
-  .m-row a {
+  .m-row a,
+  .m-toggle {
     position: relative;
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    background: none;
+    border: 0;
+    cursor: pointer;
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 0.1rem 0.6rem;
     padding: 0.45rem 0.8rem 0.5rem;
     text-decoration: none;
   }
+  .m-toggle:active,
   .m-row a:active {
     background: rgb(255 255 255 / 0.04);
   }
   .m-name {
     font-size: 0.88rem;
     line-height: 1.25;
+  }
+  .m-chev {
+    display: inline-block;
+    width: 0.4rem;
+    height: 0.4rem;
+    margin: 0 0.45rem 0.12rem 0.05rem;
+    border-right: 1.5px solid var(--muted);
+    border-bottom: 1.5px solid var(--muted);
+    rotate: -45deg;
+    transition: rotate 0.2s;
+  }
+  .m-group.open .m-chev {
+    rotate: 45deg;
+  }
+  .m-badge {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--muted);
+    padding: 0 0.35rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface-2);
+    vertical-align: 0.1rem;
+  }
+  .m-children {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0.2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .m-children[hidden] {
+    display: none;
+  }
+  .m-child a {
+    padding-left: 1.8rem;
+  }
+  .m-repo {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .m-group.mixed .m-bar {
+    background: var(--muted);
+  }
+  .m-dot.k-recomp {
+    background: var(--recomp);
+    border-color: var(--recomp);
+  }
+  .m-dot.k-port {
+    background: var(--port);
+    border-color: var(--port);
   }
   .m-when {
     font-family: var(--mono);
