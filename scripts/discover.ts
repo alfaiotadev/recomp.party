@@ -14,7 +14,7 @@ import { loadProjects, loadRejected, loadSnapshot, PROJECTS_PATH, REJECTED_PATH 
 import { PLATFORMS, Project, type RepoSnapshot } from "../data/schema.ts";
 import { z } from "zod";
 import { formatProjects } from "./lib/format.ts";
-import { fetchRepos, rest } from "./lib/github.ts";
+import { fetchRepos, reposWithoutCode, rest } from "./lib/github.ts";
 import { chatJSON, llmAvailable } from "./lib/llm.ts";
 import { titleKey, wikidataCandidates } from "./lib/wikidata.ts";
 import {
@@ -83,6 +83,7 @@ console.log(`Collected ${raw.length} mentions → ${slugs.length} repos not yet 
 
 // --- 2. cheap filters on GitHub metadata ------------------------------------------------------
 const { found } = await fetchRepos(slugs);
+const noCode = await reposWithoutCode(found.map((s) => s.canonical));
 const skipped: { repo: string; why: string }[] = [];
 const eligible: RepoSnapshot[] = [];
 for (const s of found) {
@@ -96,7 +97,9 @@ for (const s of found) {
         ? "no release yet"
         : latest.downloads === 0 && latest.os.length === 0
           ? "release has no downloadable builds"
-          : !only && s.stars < MIN_STARS
+          : noCode.has(s.canonical)
+            ? "no source code, only release binaries"
+            : !only && s.stars < MIN_STARS
             ? `fewer than ${MIN_STARS} stars`
             : null;
   if (why) skipped.push({ repo: s.canonical, why });
