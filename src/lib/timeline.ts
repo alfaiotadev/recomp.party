@@ -9,7 +9,7 @@ export { AXIS_H };
  */
 
 export const W = 1140;
-const LABEL_W = 132;
+export const LABEL_W = 132;
 export const NAME_X = LABEL_W + 4;
 export const NAME_W = 236;
 const CHAR_W = 6.1; // ~6.1 px per 11px character
