@@ -20,6 +20,7 @@ const previous = loadGames();
 // Newer items often carry only a language-neutral "mul" label, so that is the fallback for English.
 const rows = await sparql(`
   SELECT ?item ?title (MIN(?date) AS ?first) ?wikipedia ?igdb ?moby
+         (GROUP_CONCAT(DISTINCT CONCAT(STR(?dateValue), "@", STR(?precision)); separator="|") AS ?dates)
          (GROUP_CONCAT(DISTINCT ?devName; separator="|") AS ?devs)
          (GROUP_CONCAT(DISTINCT ?pubName; separator="|") AS ?pubs)
   WHERE {
@@ -28,6 +29,7 @@ const rows = await sparql(`
     OPTIONAL { ?item rdfs:label ?mul. FILTER(LANG(?mul) = "mul") }
     BIND(COALESCE(?en, ?mul) AS ?title)
     OPTIONAL { ?item wdt:P577 ?date }
+    OPTIONAL { ?item p:P577/psv:P577 [ wikibase:timeValue ?dateValue; wikibase:timePrecision ?precision ] }
     OPTIONAL { ?wp schema:about ?item; schema:isPartOf <https://en.wikipedia.org/>; schema:name ?wikipedia }
     OPTIONAL { ?item wdt:P5794 ?igdb }
     OPTIONAL { ?item wdt:P1933 ?moby }
@@ -35,6 +37,18 @@ const rows = await sparql(`
     OPTIONAL { ?item wdt:P123 ?pub. OPTIONAL { ?pub rdfs:label ?pubEn. FILTER(LANG(?pubEn) = "en") } OPTIONAL { ?pub rdfs:label ?pubMul. FILTER(LANG(?pubMul) = "mul") } BIND(COALESCE(?pubEn, ?pubMul) AS ?pubName) }
   }
   GROUP BY ?item ?title ?wikipedia ?igdb ?moby`);
+
+/** Earliest of "date@precision" values, cut to what is known: 11 = day, 10 = month, 9 = year. */
+function released(dates: string | undefined): string | undefined {
+  const known = (dates ?? "")
+    .split("|")
+    .map((d) => d.split("@"))
+    .filter(([date, prec]) => date && Number(prec) >= 9 && !date.startsWith("-"))
+    .map(([date, prec]) => ({ at: date!.slice(0, 10), cut: date!.slice(0, Number(prec) >= 11 ? 10 : Number(prec) === 10 ? 7 : 4) }))
+    // earliest first; on the same day prefer the most precise value
+    .sort((a, b) => a.at.localeCompare(b.at) || b.cut.length - a.cut.length);
+  return known[0]?.cut;
+}
 
 const games: Record<string, GameMeta> = {};
 for (const r of rows) {
@@ -44,6 +58,7 @@ for (const r of rows) {
   games[id] = {
     title: r.title?.value ?? id,
     year: r.first ? Number(r.first.value.slice(0, 4)) : undefined,
+    released: released(r.dates?.value),
     developers: split(r.devs),
     publishers: split(r.pubs),
     wikipedia: r.wikipedia?.value,
