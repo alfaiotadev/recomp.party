@@ -149,9 +149,8 @@ const logoSize = (id: PlatformId) => {
 </div>
 
 <script>
-  // "26y 8m 22d ago" for the original game, "1d 18:23 ago" for the recomp's first GitHub release. Only the units
-  // that are needed show. Dates known only to the month or year ("2000-02", "2000") stop at that unit.
-  const pad = (n: number) => String(n).padStart(2, "0");
+  // "26y 8mo 22d ago" for the original game, "1d 18h 23m ago" for the recomp's first GitHub release. Units show
+  // from the largest one needed. Dates known only to the month or year ("2000-02", "2000") stop at that unit.
   function since(iso: string, clock: boolean, now = new Date()): string {
     const parsed = new Date(iso.length === 4 ? `${iso}-01-01` : iso.length === 7 ? `${iso}-01` : iso);
     const t = parsed > now ? now : parsed; // a clock running slightly behind must not go negative
@@ -165,8 +164,15 @@ const logoSize = (id: PlatformId) => {
       m--;
     }
     if (m < 0) (m += 12), y--;
-    const parts = [y && `${y}y`, (iso.length > 4 && (y || m)) && `${m}m`, iso.length > 7 && (y || m || d) && `${d}d`].filter(Boolean);
-    if (clock) parts.push(`${pad(Math.floor(mins / 60))}:${pad(mins % 60)}`);
+    const h = Math.floor(mins / 60);
+    const parts = [
+      y && `${y}y`,
+      iso.length > 4 && (y || m) && `${m}mo`,
+      iso.length > 7 && (y || m || d) && `${d}d`,
+      clock && (y || m || d || h) && `${h}h`,
+      clock && `${mins % 60}m`,
+    ].filter(Boolean);
+    if (parts.length === 1 && parts[0] === "0m") return "just now";
     return parts.length ? `${iso.length === 4 ? "~" : ""}${parts.join(" ")} ago` : "today";
   }
   const els = [...document.querySelectorAll<HTMLElement>("[data-ago]")];
