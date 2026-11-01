@@ -1,5 +1,5 @@
 ---
-import { entryPath, PLATFORMS, platformLogo, type PlatformId } from "../lib/data.ts";
+import { entryPath, PLATFORMS, platformLogo, platformMark, type PlatformId } from "../lib/data.ts";
 import { stats, type Delta } from "../lib/stats.ts";
 import CoverStack from "./CoverStack.astro";
 import Spark from "./Spark.astro";
@@ -8,6 +8,8 @@ const { projects, platforms, fresh, updated } = stats;
 const arrow = (d: Delta) => (d.diff > 0 ? "up" : d.diff < 0 ? "down" : "flat");
 const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
 const { newest } = projects;
+const newestMark = newest && platformMark(newest.platform);
+const newestOwner = newest?.repo.split("/")[0];
 const cal = updated.calendar;
 const calMax = Math.max(1, ...cal.days.map((d) => d ?? 0));
 const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -31,12 +33,30 @@ const logoSize = (id: PlatformId) => {
     <span class="label">playable projects</span>
     {
       newest && (
-        <a class="cmp newest" href={entryPath(newest)} data-since={newest.firstReleaseAt}>
-          {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" /> : <span class="ph" />}
-          <span>
-            newest: <u>{newest.game}</u>, first release <b class="since">{newest.firstReleaseAt!.slice(0, 10)}</b>
+        <div class="cmp newest" data-since={newest.firstReleaseAt}>
+          <a class="nw-cover" href={entryPath(newest)} tabindex="-1" aria-hidden="true">
+            {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" /> : <span class="ph" />}
+          </a>
+          <span class="nw-text">
+            <span>
+              newest: <a href={entryPath(newest)}>{newest.game}</a>
+            </span>
+            <span>
+              first release <b class="since">{newest.firstReleaseAt!.slice(0, 10)}</b>
+            </span>
+            <span class="nw-meta">
+              {newestMark ? (
+                <img class="logo-img" src={newestMark.src} height="10" width={+(10 * newestMark.aspect).toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
+              ) : (
+                <span>{PLATFORMS[newest.platform]}</span>
+              )}
+              {newest.tool && <span>· {newest.tool}</span>}
+              <span>
+                · by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
+              </span>
+            </span>
           </span>
-        </a>
+        </div>
       )
     }
   </div>
@@ -211,23 +231,45 @@ const logoSize = (id: PlatformId) => {
     gap: 0.6rem;
     white-space: normal;
     line-height: 1.5;
-    text-decoration: none;
   }
-  .newest img,
-  .newest .ph {
+  .nw-cover {
     flex: none;
-    width: 30px;
-    height: 40px;
+    display: block;
+  }
+  .nw-cover img,
+  .nw-cover .ph {
+    display: block;
+    width: 36px;
+    height: 48px;
     object-fit: cover;
     border-radius: 3px;
     background: var(--surface-2);
     box-shadow: 0 4px 10px -4px rgb(0 0 0 / 0.9);
   }
-  .newest u {
+  .nw-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .nw-text > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .newest a {
     color: var(--muted);
   }
-  .newest:hover u {
+  .newest a:hover {
     color: var(--fg);
+  }
+  .nw-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .nw-meta img {
+    flex: none;
+    opacity: 0.6;
   }
   /* Calendar week so far: a bar per day, "?" for the days still to come. */
   .wk {
@@ -410,6 +452,13 @@ const logoSize = (id: PlatformId) => {
       height: 22px;
     }
     .cmp {
+      white-space: normal;
+    }
+    /* half-width tile: the text needs the room more than the cover does */
+    .nw-cover {
+      display: none;
+    }
+    .nw-text > span {
       white-space: normal;
     }
     /* ten covers don't fit a half-width tile: smaller and more tucked in */
