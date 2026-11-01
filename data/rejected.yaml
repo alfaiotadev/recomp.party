@@ -251,3 +251,19 @@
   reason: Decomp Buddy is a launcher/installer for many ports, not a game-specific
     recompilation or recompiler toolchain.
   date: 2026-11-01
+- repo: JayElDragon/poke-survivor
+  reason: It's a fan-made Godot port of a fan game, not a static recompilation or
+    source port of an original console title.
+  date: 2026-11-01
+- repo: TryTheSauceBoss/Pokewilds-Godot
+  reason: It's a fan remake/port with assets, not a static recompilation of an
+    original console game.
+  date: 2026-11-01
+- repo: mfrafael/xenia-dashboard
+  reason: The repository provides a dashboard UI for the Xenia emulator, not a
+    playable native recompilation or source port of a game.
+  date: 2026-11-01
+- repo: EoinODoodles/dinomod-enhanced-recompiled
+  reason: Repository provides a mod/patch for an existing recompilation, not a
+    standalone playable recompilation or tool.
+  date: 2026-11-01
