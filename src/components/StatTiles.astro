@@ -44,16 +44,15 @@ const logoSize = (id: PlatformId) => {
             <span>
               first release <b class="since">{newest.firstReleaseAt!.slice(0, 10)}</b>
             </span>
-            <span class="nw-meta">
+            <span class="nw-platform">
               {newestMark ? (
-                <img class="logo-img" src={newestMark.src} height="10" width={+(10 * newestMark.aspect).toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
+                <img class="logo-img" src={newestMark.src} height="11" width={+(11 * newestMark.aspect).toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
               ) : (
-                <span>{PLATFORMS[newest.platform]}</span>
+                PLATFORMS[newest.platform]
               )}
-              {newest.tool && <span>· {newest.tool}</span>}
-              <span>
-                · by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
-              </span>
+            </span>
+            <span>
+              {newest.tool && <>{newest.tool} · </>}by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
             </span>
           </span>
         </div>
@@ -225,12 +224,14 @@ const logoSize = (id: PlatformId) => {
   .covers {
     margin-top: 0.75rem;
   }
+  /* fills the rest of the tile and centres in it, so the row's taller tiles leave no hole */
   .newest {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.85rem;
     white-space: normal;
-    line-height: 1.5;
+    line-height: 1.8;
   }
   .nw-cover {
     flex: none;
@@ -239,8 +240,8 @@ const logoSize = (id: PlatformId) => {
   .nw-cover img,
   .nw-cover .ph {
     display: block;
-    width: 36px;
-    height: 48px;
+    width: 54px;
+    height: 72px;
     object-fit: cover;
     border-radius: 3px;
     background: var(--surface-2);
@@ -262,13 +263,15 @@ const logoSize = (id: PlatformId) => {
   .newest a:hover {
     color: var(--fg);
   }
-  .nw-meta {
+  .newest .since {
+    display: block;
+  }
+  .nw-platform {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
+    height: 1.8em;
   }
-  .nw-meta img {
-    flex: none;
+  .nw-platform img {
     opacity: 0.6;
   }
   /* Calendar week so far: a bar per day, "?" for the days still to come. */
