@@ -41,26 +41,30 @@ const logoSize = (id: PlatformId) => {
             <span>
               newest: <a href={entryPath(newest)}>{newest.game}</a>
             </span>
-            <span class="nw-row">
-              original
-              {newestMark ? (
-                <img class="logo-img" src={newestMark.src} height="11" width={+(11 * newestMark.aspect).toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
+            <span class="rel">
+              <span class="nw-row">
+                original
+                {newestMark ? (
+                  <img class="logo-img" src={newestMark.src} height="11" width={+(11 * newestMark.aspect).toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
+                ) : (
+                  PLATFORMS[newest.platform]
+                )}
+                release
+              </span>
+              {newest.meta?.released ? (
+                <b class="ago" data-ago={newest.meta.released} title={newest.meta.released}>
+                  {newest.meta.released}
+                </b>
               ) : (
-                PLATFORMS[newest.platform]
+                <b class="ago unknown">date unknown</b>
               )}
-              release
             </span>
-            {newest.meta?.released ? (
-              <b class="ago" data-ago={newest.meta.released} title={newest.meta.released}>
-                {newest.meta.released}
+            <span class="rel">
+              <span>recomp GitHub release</span>
+              <b class="ago" data-ago={newest.firstReleaseAt} data-clock title={newest.firstReleaseAt}>
+                {newest.firstReleaseAt!.slice(0, 10)}
               </b>
-            ) : (
-              <b class="ago unknown">date unknown</b>
-            )}
-            <span>recomp GitHub release</span>
-            <b class="ago" data-ago={newest.firstReleaseAt} data-clock title={newest.firstReleaseAt}>
-              {newest.firstReleaseAt!.slice(0, 10)}
-            </b>
+            </span>
             <span>
               {newest.tool && <>{newest.tool} · </>}by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
             </span>
@@ -283,6 +287,16 @@ const logoSize = (id: PlatformId) => {
   }
   .newest a:hover {
     color: var(--fg);
+  }
+  /* each release in its own small frame */
+  .rel {
+    display: flex;
+    flex-direction: column;
+    margin: 0.15rem 0;
+    padding: 0.05rem 0.5rem 0.1rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    line-height: 1.4;
   }
   .newest .ago {
     display: block;
