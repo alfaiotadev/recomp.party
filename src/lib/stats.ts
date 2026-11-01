@@ -1,5 +1,5 @@
 /** Front-page stat tiles: headline numbers, a comparison line and 12-week bar series. */
-import { ago, games, platformsInUse } from "./data.ts";
+import { games, platformsInUse } from "./data.ts";
 
 const DAY = 86_400_000;
 const now = Date.now();
@@ -21,12 +21,12 @@ const updatedIn = (range: [number, number]) =>
 export type Delta = { now: number; before: number; diff: number };
 const delta = (a: number, b: number): Delta => ({ now: a, before: b, diff: a - b });
 
-const newest = games.map((g) => g.firstReleaseAt).filter(Boolean).sort().at(-1);
 
 export const stats = {
   projects: {
     value: games.length,
-    note: `newest first release ${ago(newest)}`,
+    /** The project whose first release is the most recent. */
+    newest: games.filter((g) => g.firstReleaseAt).sort((a, b) => b.firstReleaseAt!.localeCompare(a.firstReleaseAt!))[0],
     bars: series(([, end]) => games.filter((g) => g.firstReleaseAt && Date.parse(g.firstReleaseAt) < end).length),
     barsLabel: "Playable projects over the last 12 weeks",
   },

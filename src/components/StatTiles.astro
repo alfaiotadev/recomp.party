@@ -1,5 +1,5 @@
 ---
-import { PLATFORMS, platformLogo } from "../lib/data.ts";
+import { entryPath, PLATFORMS, platformLogo, type PlatformId } from "../lib/data.ts";
 import { stats, type Delta } from "../lib/stats.ts";
 import CoverStack from "./CoverStack.astro";
 import Spark from "./Spark.astro";
@@ -7,6 +7,16 @@ import Spark from "./Spark.astro";
 const { projects, platforms, fresh, updated } = stats;
 const arrow = (d: Delta) => (d.diff > 0 ? "up" : d.diff < 0 ? "down" : "flat");
 const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
+const { newest } = projects;
+// Platform logos drift in three lanes; each lane holds its logos twice so the loop is seamless.
+const lanes = [0, 1, 2].map((k) => platforms.ids.filter((_, i) => i % 3 === k));
+const logoSize = (id: PlatformId) => {
+  const l = platformLogo(id);
+  if (!l) return undefined;
+  // same visual area for every logo, so wordmarks and square marks weigh the same
+  const h = Math.min(22, Math.sqrt(980 / l.aspect));
+  return { src: l.src, w: +(h * l.aspect).toFixed(1), h: +h.toFixed(1) };
+};
 ---
 
 <div class="stats">
@@ -16,25 +26,44 @@ const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
       <Spark values={projects.bars} label={projects.barsLabel} />
     </div>
     <span class="label">playable projects</span>
-    <span class="cmp">{projects.note}</span>
+    {
+      newest && (
+        <span class="cmp newest" data-since={newest.firstReleaseAt}>
+          newest: <a href={entryPath(newest)}>{newest.game}</a>, first release <b class="since">{newest.firstReleaseAt!.slice(0, 10)}</b>
+        </span>
+      )
+    }
   </div>
 
-  <div class="tile">
-    <div class="top">
-      <span class="n">{platforms.value}</span>
-    </div>
-    <span class="label">original platforms</span>
-    <span class="logos">
+  <div class="tile plat">
+    <div class="drift">
       {
-        platforms.ids.map((id) => {
-          const l = platformLogo(id);
-          if (!l) return <span class="logo-text" title={PLATFORMS[id]}>{PLATFORMS[id].split(" ")[0]}</span>;
-          // same visual area for every logo, so wordmarks and square marks weigh the same
-          const h = Math.min(13, Math.sqrt(250 / l.aspect));
-          return <img class="logo-img" src={l.src} width={+(h * l.aspect).toFixed(1)} height={+h.toFixed(1)} alt={PLATFORMS[id]} title={PLATFORMS[id]} loading="lazy" />;
-        })
+        lanes.map((ids, k) => (
+          <div class={`lane l${k}`}>
+            {[0, 1].map((copy) =>
+              ids.map((id) => {
+                const l = logoSize(id);
+                return (
+                  <span class="item" aria-hidden={copy ? "true" : undefined}>
+                    {l ? (
+                      <img class="logo-img" src={l.src} width={l.w} height={l.h} alt={copy ? "" : PLATFORMS[id]} title={PLATFORMS[id]} loading="lazy" />
+                    ) : (
+                      <span class="logo-text" title={PLATFORMS[id]}>
+                        {PLATFORMS[id].split(" ")[0]}
+                      </span>
+                    )}
+                  </span>
+                );
+              }),
+            )}
+          </div>
+        ))
       }
-    </span>
+    </div>
+    <div class="plate">
+      <span class="n">{platforms.value}</span>
+      <span class="label">original platforms</span>
+    </div>
   </div>
 
   <div class="tile">
@@ -60,6 +89,22 @@ const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
     </span>
   </div>
 </div>
+
+<script>
+  // "newest: …, first release 1d 18:01:15 ago", ticking every second
+  const pad = (n: number) => String(n).padStart(2, "0");
+  for (const el of document.querySelectorAll<HTMLElement>("[data-since]")) {
+    const t0 = Date.parse(el.dataset.since!);
+    const out = el.querySelector(".since")!;
+    const tick = () => {
+      const s = Math.max(0, Math.floor((Date.now() - t0) / 1000));
+      const d = Math.floor(s / 86400);
+      out.textContent = `${d ? `${d}d ` : ""}${pad(Math.floor(s / 3600) % 24)}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)} ago`;
+    };
+    tick();
+    setInterval(tick, 1000);
+  }
+</script>
 
 <style>
   .stats {
@@ -135,25 +180,107 @@ const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
   .covers {
     margin-top: 0.75rem;
   }
-  .logos {
-    margin-top: 0.55rem;
-    padding-top: 0.5rem;
-    border-top: 1px dashed var(--line);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.35rem 0.55rem;
+  .newest {
+    white-space: normal;
+    line-height: 1.5;
   }
-  .logos img {
-    opacity: 0.6;
+  .newest a {
+    color: var(--muted);
+  }
+  .newest b {
+    color: var(--recomp);
+    font-variant-numeric: tabular-nums;
+  }
+  /* Platforms: logos drift sideways in three lanes under a plate with the count. */
+  .plat {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    min-height: 9.5rem;
+  }
+  .drift {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  .lane {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: drift 44s linear infinite;
+  }
+  .lane.l1 {
+    animation-direction: reverse;
+    animation-duration: 54s;
+  }
+  .lane.l2 {
+    animation-duration: 49s;
+  }
+  .plat:hover .lane {
+    animation-play-state: paused;
+  }
+  /* padding instead of gap: both copies are then exactly the same width, so -50% loops seamlessly */
+  .item {
+    display: flex;
+    align-items: center;
+    padding-right: 1.6rem;
+  }
+  .item img {
+    opacity: 0.45;
     transition: opacity 0.15s;
   }
-  .logos img:hover {
+  .item img:hover {
     opacity: 1;
+  }
+  @keyframes drift {
+    to {
+      translate: -50% 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .drift {
+      inset: 0.6rem;
+      flex-flow: row wrap;
+      align-content: space-evenly;
+      justify-content: center;
+    }
+    .lane {
+      display: contents;
+      animation: none;
+    }
+    .item {
+      padding: 0 0.35rem;
+    }
+    .item img {
+      width: auto;
+      height: 0.8rem; /* width follows from the width/height attributes' aspect ratio */
+    }
+    .item[aria-hidden] {
+      display: none;
+    }
+  }
+  .plate {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.3rem 0.8rem 0.4rem;
+    white-space: nowrap;
+    background: rgb(18 22 36 / 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 16px 10px rgb(18 22 36 / 0.9);
+    pointer-events: none;
   }
   .logo-text {
     font-family: var(--mono);
-    font-size: 0.55rem;
+    font-size: 0.7rem;
+    opacity: 0.6;
     font-weight: 700;
     color: var(--muted);
     letter-spacing: 0.04em;
