@@ -232,3 +232,22 @@
 - repo: TheWishin/T5DROnline
   reason: No source code in the repository, only prebuilt binaries in releases.
   date: 2026-10-31
+- repo: Wemino/MadnessPatch
+  reason: "This is a bugfix mod/patch for the official PC port of Alice: Madness
+    Returns, not a static recompilation or source port."
+  date: 2026-11-01
+- repo: Wemino/MarkerPatch
+  reason: This is a bugfix patch/mod for the existing PC game, not a static
+    recompilation or source port.
+  date: 2026-11-01
+- repo: elripalda/RecompLauncher
+  reason: Launchers are explicitly excluded from recomp.party.
+  date: 2026-11-01
+- repo: PARTYMANX/partymod-thps3
+  reason: The repo provides a patch/mod for the existing PC port, not a static
+    recompilation or source port of the original console game.
+  date: 2026-11-01
+- repo: TanookiStudios/decomp-buddy
+  reason: Decomp Buddy is a launcher/installer for many ports, not a game-specific
+    recompilation or recompiler toolchain.
+  date: 2026-11-01
