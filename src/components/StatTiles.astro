@@ -440,31 +440,16 @@ const logoSize = (id: PlatformId) => {
       --o: 0.6 !important;
     }
   }
+  /* phones: one tile per row, so each gets the full width */
   @media (max-width: 520px) {
+    .stats {
+      grid-template-columns: minmax(0, 1fr);
+    }
     .tile {
-      padding: 0.8rem 0.85rem;
+      padding: 0.85rem 1rem;
     }
-    .n {
-      font-size: 1.6rem;
-    }
-    .top :global(.spark) {
-      width: 64px;
-      height: 22px;
-    }
-    .cmp {
-      white-space: normal;
-    }
-    /* half-width tile: the text needs the room more than the cover does */
-    .nw-cover {
-      display: none;
-    }
-    .nw-text > span {
-      white-space: normal;
-    }
-    /* ten covers don't fit a half-width tile: smaller and more tucked in */
     .covers :global(.stack) {
-      --w: 22px !important;
-      --o: 0.6 !important;
+      --o: 0.3 !important;
     }
   }
 </style>
