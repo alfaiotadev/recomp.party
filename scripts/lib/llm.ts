@@ -3,8 +3,9 @@
  *
  * (GitHub Models was retired on 2026-07-30; its endpoint now answers 200 "OK" without running a model.)
  * Every provider below exposes /chat/completions with the same request shape and has a free tier.
- * Providers whose key is not set are skipped. Requests are paced per provider; a per-minute 429 waits
- * and retries the same provider, a daily-quota 429 or repeated failures move on to the next one.
+ * Providers whose key is not set are skipped. Requests are paced per provider; a per-minute 429 moves
+ * the provider to the back of the queue (the next one answers right away), a daily-quota 429 or repeated
+ * 429s drop it for the rest of the run.
  * Order matters: earlier providers gave better classifications in testing (2026-10-28). With no keys at all, `chatJSON` returns null and callers fall back to heuristics.
  */
 import type { z } from "zod";
@@ -71,6 +72,15 @@ export function llmAvailable(): boolean {
 /** Providers that ran out of quota (or kept failing) are skipped for the rest of the run. */
 const exhausted = new Set<string>();
 const lastCall = new Map<string, number>();
+/** Provider names in the order they are asked; a rate-limited one moves to the back until it has cooled down. */
+const queue: string[] = [];
+const coolUntil = new Map<string, number>();
+
+function queued(): Provider[] {
+  const list = providers();
+  for (const p of list) if (!queue.includes(p.name)) queue.push(p.name);
+  return queue.map((n) => list.find((p) => p.name === n)).filter((p): p is Provider => Boolean(p));
+}
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /** Seconds to wait from a 429: Retry-After header, Gemini's retryDelay, or "try again in 12.3s" text. */
@@ -96,50 +106,56 @@ export async function chatJSON<T>(
   user: string,
   schema: z.ZodType<T>,
 ): Promise<{ data: T; provider: string } | null> {
-  for (const p of providers()) {
-    for (let attempt = 0; attempt < 3 && !exhausted.has(p.name); attempt++) {
-      const wait = (lastCall.get(p.name) ?? 0) + p.minGapMs - Date.now();
-      if (wait > 0) await sleep(wait);
-      lastCall.set(p.name, Date.now());
-      try {
-        const res = await fetch(p.url, {
-          method: "POST",
-          headers: { authorization: `Bearer ${p.key}`, "content-type": "application/json" },
-          body: JSON.stringify({
-            model: p.model,
-            temperature: 0,
-            messages: [
-              { role: "system", content: system },
-              { role: "user", content: user },
-            ],
-          }),
-          signal: AbortSignal.timeout(90_000),
-        });
-        if (res.status === 429) {
-          const text = await res.text();
-          const secs = retryAfter(res, text);
-          if (isDailyQuota(text) || (secs ?? 20) > 90 || attempt === 2) {
-            exhausted.add(p.name);
-            console.warn(`  [llm] ${p.name}: quota exhausted, skipping for this run`);
-            break;
-          }
-          console.warn(`  [llm] ${p.name}: rate limited, waiting ${Math.ceil(secs ?? 20)} s`);
-          await sleep((secs ?? 20) * 1000 + 500);
+  const failed = new Set<string>();
+  const limited = new Map<string, number>(); // per-minute 429s in this call
+  for (;;) {
+    const p = queued().find((q) => !exhausted.has(q.name) && !failed.has(q.name));
+    if (!p) return null;
+    const wait = Math.max((lastCall.get(p.name) ?? 0) + p.minGapMs, coolUntil.get(p.name) ?? 0) - Date.now();
+    if (wait > 0) await sleep(wait);
+    lastCall.set(p.name, Date.now());
+    try {
+      const res = await fetch(p.url, {
+        method: "POST",
+        headers: { authorization: `Bearer ${p.key}`, "content-type": "application/json" },
+        body: JSON.stringify({
+          model: p.model,
+          temperature: 0,
+          messages: [
+            { role: "system", content: system },
+            { role: "user", content: user },
+          ],
+        }),
+        signal: AbortSignal.timeout(90_000),
+      });
+      if (res.status === 429) {
+        const text = await res.text();
+        const secs = retryAfter(res, text);
+        const hits = (limited.get(p.name) ?? 0) + 1;
+        limited.set(p.name, hits);
+        if (isDailyQuota(text) || (secs ?? 20) > 90 || hits === 3) {
+          exhausted.add(p.name);
+          console.warn(`  [llm] ${p.name}: quota exhausted, skipping for this run`);
           continue;
         }
-        if (res.status >= 500) throw new Error(`HTTP ${res.status}`); // overloaded: try the next provider
-        if (!res.ok) throw new Error(`HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
-        const body = (await res.json()) as { choices?: { message?: { content?: string } }[] };
-        const parsed = schema.safeParse(extractJSON(body.choices?.[0]?.message?.content ?? ""));
-        if (!parsed.success) throw new Error(`reply failed validation: ${parsed.error.issues[0]?.message}`);
-        return { data: parsed.data, provider: `${p.name}/${p.model}` };
-      } catch (err) {
-        console.warn(`  [llm] ${p.name}: ${(err as Error).message}`);
-        break;
+        // Don't sit out the limit: the next provider answers now, this one waits at the back.
+        coolUntil.set(p.name, Date.now() + (secs ?? 20) * 1000 + 500);
+        queue.splice(queue.indexOf(p.name), 1);
+        queue.push(p.name);
+        console.warn(`  [llm] ${p.name}: rate limited for ${Math.ceil(secs ?? 20)} s, moved to the back of the queue`);
+        continue;
       }
+      if (res.status >= 500) throw new Error(`HTTP ${res.status}`); // overloaded: try the next provider
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
+      const body = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+      const parsed = schema.safeParse(extractJSON(body.choices?.[0]?.message?.content ?? ""));
+      if (!parsed.success) throw new Error(`reply failed validation: ${parsed.error.issues[0]?.message}`);
+      return { data: parsed.data, provider: `${p.name}/${p.model}` };
+    } catch (err) {
+      console.warn(`  [llm] ${p.name}: ${(err as Error).message}`);
+      failed.add(p.name);
     }
   }
-  return null;
 }
 /**
  * Ask Gemini with Google Search grounding and return the answer text. Grounding may need a billed

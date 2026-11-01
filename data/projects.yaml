@@ -266,13 +266,6 @@
   tool: N64Recomp
   wikidata: Q1705294
   added: 2026-10-28
-- repo: chrissotraidis/annepad
-  game: Pokémon Stadium
-  platform: n64
-  kind: recomp
-  based_on: [mstan/PokemonStadiumRecomp]
-  wikidata: Q2034425
-  added: 2026-11-01
 - repo: Rainchus/Quest64-Recomp
   game: Quest 64
   platform: n64
@@ -923,12 +916,6 @@
   based_on: [RetroPortingToolKit/psxrecomp]
   wikidata: Q739784
   added: 2026-10-28
-- repo: omegakatana92/RidgeRacer4Recomp
-  game: Ridge Racer Type 4
-  platform: ps1
-  kind: recomp
-  tool: PSXRecomp
-  added: 2026-11-01
 - repo: JFryy/reshadowtower
   game: Shadow Tower
   platform: ps1
