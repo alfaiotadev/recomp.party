@@ -267,3 +267,10 @@
   reason: Repository provides a mod/patch for an existing recompilation, not a
     standalone playable recompilation or tool.
   date: 2026-11-01
+- repo: chrissotraidis/annepad
+  reason: Releases ship only a build recipe (padmint.json), no playable build.
+  date: 2026-11-02
+- repo: omegakatana92/RidgeRacer4Recomp
+  reason: Almost no source in the repo (20 kB), and an early release asset may hold
+    the game itself.
+  date: 2026-11-02
