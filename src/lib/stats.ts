@@ -18,6 +18,20 @@ const newIn = (range: [number, number]) => newGamesIn(range).length;
 const updatedIn = (range: [number, number]) =>
   games.filter((g) => (g.snap?.releaseDates ?? []).some((r) => within(r.date, range))).length;
 
+/** The calendar week (ISO, UTC) so far: releases per day Mon–Sun, null for days still to come. */
+function calendarWeek() {
+  const d = new Date(now);
+  const today = (d.getUTCDay() + 6) % 7; // Monday = 0
+  const monday = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - today * DAY;
+  const thursday = new Date(monday + 3 * DAY); // ISO weeks belong to the year of their Thursday
+  const number = Math.floor((thursday.getTime() - Date.UTC(thursday.getUTCFullYear(), 0, 1)) / DAY / 7) + 1;
+  const dates = games.flatMap((g) => (g.snap?.releaseDates ?? []).map((r) => Date.parse(r.date)));
+  const days = Array.from({ length: 7 }, (_, i) =>
+    i > today ? null : dates.filter((t) => t >= monday + i * DAY && t < monday + (i + 1) * DAY).length,
+  );
+  return { number, today, days, total: days.reduce<number>((a, b) => a + (b ?? 0), 0) };
+}
+
 export type Delta = { now: number; before: number; diff: number };
 const delta = (a: number, b: number): Delta => ({ now: a, before: b, diff: a - b });
 
@@ -44,5 +58,6 @@ export const stats = {
     week: delta(updatedIn(week(0)), updatedIn(week(1))),
     bars: series(updatedIn),
     barsLabel: "Projects with a release per week, last 12 weeks",
+    calendar: calendarWeek(),
   },
 };

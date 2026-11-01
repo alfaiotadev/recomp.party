@@ -8,6 +8,9 @@ const { projects, platforms, fresh, updated } = stats;
 const arrow = (d: Delta) => (d.diff > 0 ? "up" : d.diff < 0 ? "down" : "flat");
 const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
 const { newest } = projects;
+const cal = updated.calendar;
+const calMax = Math.max(1, ...cal.days.map((d) => d ?? 0));
+const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 // Platform logos drift in three lanes; each lane holds its logos twice so the loop is seamless.
 const lanes = [0, 1, 2].map((k) => platforms.ids.filter((_, i) => i % 3 === k));
 const logoSize = (id: PlatformId) => {
@@ -28,9 +31,12 @@ const logoSize = (id: PlatformId) => {
     <span class="label">playable projects</span>
     {
       newest && (
-        <span class="cmp newest" data-since={newest.firstReleaseAt}>
-          newest: <a href={entryPath(newest)}>{newest.game}</a>, first release <b class="since">{newest.firstReleaseAt!.slice(0, 10)}</b>
-        </span>
+        <a class="cmp newest" href={entryPath(newest)} data-since={newest.firstReleaseAt}>
+          {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" /> : <span class="ph" />}
+          <span>
+            newest: <u>{newest.game}</u>, first release <b class="since">{newest.firstReleaseAt!.slice(0, 10)}</b>
+          </span>
+        </a>
       )
     }
   </div>
@@ -75,7 +81,7 @@ const logoSize = (id: PlatformId) => {
     <span class={`cmp ${arrow(fresh.week)}`}>
       <b>{signed(fresh.week.diff)}</b> vs {fresh.week.before} the week before
     </span>
-    <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.22} label="New projects this week" /></div>
+    <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.3} label="New projects this week" /></div>
   </div>
 
   <div class="tile">
@@ -87,6 +93,25 @@ const logoSize = (id: PlatformId) => {
     <span class={`cmp ${arrow(updated.week)}`}>
       <b>{signed(updated.week.diff)}</b> vs {updated.week.before} the week before
     </span>
+    <div class="wk">
+      <div class="wk-head mono">
+        <span>
+          week <b>{cal.number}</b>
+        </span>
+        <span>{cal.total.toLocaleString("en")} releases</span>
+      </div>
+      <ol class="wk-bars" aria-label={`Releases per day in week ${cal.number}`}>
+        {
+          cal.days.map((d, i) => (
+            <li class={`day${i === cal.today ? " today" : ""}${d === null ? " future" : ""}`} title={d === null ? `${DAY_NAMES[i]}: still to come` : `${DAY_NAMES[i]}: ${d} releases${i === cal.today ? " so far" : ""}`}>
+              <span class="cnt">{d ?? ""}</span>
+              <span class="col">{d === null ? <span class="q">?</span> : <span class="bar" style={`height:${Math.max(4, (d / calMax) * 100)}%`} />}</span>
+              <span class="dl">{DAY_NAMES[i]![0]}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </div>
 </div>
 
@@ -181,11 +206,92 @@ const logoSize = (id: PlatformId) => {
     margin-top: 0.75rem;
   }
   .newest {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     white-space: normal;
     line-height: 1.5;
+    text-decoration: none;
   }
-  .newest a {
+  .newest img,
+  .newest .ph {
+    flex: none;
+    width: 30px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 3px;
+    background: var(--surface-2);
+    box-shadow: 0 4px 10px -4px rgb(0 0 0 / 0.9);
+  }
+  .newest u {
     color: var(--muted);
+  }
+  .newest:hover u {
+    color: var(--fg);
+  }
+  /* Calendar week so far: a bar per day, "?" for the days still to come. */
+  .wk {
+    margin-top: 0.75rem;
+    font-family: var(--mono);
+  }
+  .wk-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.62rem;
+    color: var(--faint);
+  }
+  .wk-head b {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .wk-bars {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    height: 3rem;
+    margin: 0.2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .day {
+    display: grid;
+    grid-template-rows: 10px minmax(0, 1fr) 12px;
+    justify-items: center;
+    min-height: 0;
+    font-size: 0.5rem;
+    color: var(--faint);
+  }
+  .col {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .bar {
+    width: 100%;
+    background: var(--muted);
+    opacity: 0.45;
+    border-radius: 2px 2px 0 0;
+  }
+  .q {
+    font-size: 0.75rem;
+    line-height: 1;
+    opacity: 0.45;
+  }
+  .dl {
+    align-self: end;
+    font-size: 0.55rem;
+  }
+  .future .dl {
+    opacity: 0.45;
+  }
+  .today {
+    color: var(--recomp);
+  }
+  .today .bar {
+    background: var(--recomp);
+    opacity: 1;
   }
   .newest b {
     color: var(--recomp);
@@ -286,6 +392,12 @@ const logoSize = (id: PlatformId) => {
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
+  /* narrower four-column rows: tuck the covers further in so the "+N" chip stays inside the tile */
+  @media (max-width: 1240px) {
+    .covers :global(.stack) {
+      --o: 0.6 !important;
+    }
+  }
   @media (max-width: 520px) {
     .tile {
       padding: 0.8rem 0.85rem;
@@ -299,6 +411,11 @@ const logoSize = (id: PlatformId) => {
     }
     .cmp {
       white-space: normal;
+    }
+    /* ten covers don't fit a half-width tile: smaller and more tucked in */
+    .covers :global(.stack) {
+      --w: 22px !important;
+      --o: 0.6 !important;
     }
   }
 </style>
