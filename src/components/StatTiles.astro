@@ -22,6 +22,18 @@ const logoSize = (id: PlatformId) => {
   const h = Math.min(22, Math.sqrt(980 / l.aspect));
   return { src: l.src, w: +(h * l.aspect).toFixed(1), h: +h.toFixed(1) };
 };
+// Lanes move in whole-pixel steps: every item has an integer width, so the lane's loop distance is an integer
+// too. Sub-pixel motion made the thin strokes of the logos shimmer as they were resampled every frame.
+const GAP = 26;
+const SPEED = 16; // px per second
+const itemWidth = (id: PlatformId) => {
+  const l = logoSize(id);
+  return (l ? Math.ceil(l.w) : Math.ceil(PLATFORMS[id].split(" ")[0]!.length * 7.5)) + GAP;
+};
+const laneStyle = (ids: PlatformId[], k: number) => {
+  const d = ids.reduce((sum, id) => sum + itemWidth(id), 0);
+  return `--d:-${d}px;--n:${d};--t:${((d / SPEED) * [1, 1.2, 1.1][k]!).toFixed(1)}s`;
+};
 ---
 
 <div class="stats">
@@ -78,12 +90,12 @@ const logoSize = (id: PlatformId) => {
     <div class="drift">
       {
         lanes.map((ids, k) => (
-          <div class={`lane l${k}`}>
+          <div class={`lane l${k}`} style={laneStyle(ids, k)}>
             {[0, 1].map((copy) =>
               ids.map((id) => {
                 const l = logoSize(id);
                 return (
-                  <span class="item" aria-hidden={copy ? "true" : undefined}>
+                  <span class="item" style={`width:${itemWidth(id)}px`} aria-hidden={copy ? "true" : undefined}>
                     {l ? (
                       <img class="logo-img" src={l.src} width={l.w} height={l.h} alt={copy ? "" : PLATFORMS[id]} title={PLATFORMS[id]} loading="lazy" />
                     ) : (
@@ -402,23 +414,20 @@ const logoSize = (id: PlatformId) => {
     display: flex;
     align-items: center;
     width: max-content;
-    animation: drift 44s linear infinite;
+    animation: drift var(--t) steps(var(--n)) infinite;
+    will-change: transform; /* its own layer: moved by the compositor, the logos' filter isn't redrawn */
   }
   .lane.l1 {
     animation-direction: reverse;
-    animation-duration: 54s;
-  }
-  .lane.l2 {
-    animation-duration: 49s;
   }
   .plat:hover .lane {
     animation-play-state: paused;
   }
-  /* padding instead of gap: both copies are then exactly the same width, so -50% loops seamlessly */
   .item {
+    flex: none;
     display: flex;
     align-items: center;
-    padding-right: 1.6rem;
+    white-space: nowrap;
   }
   .item img {
     opacity: 0.45;
@@ -429,7 +438,7 @@ const logoSize = (id: PlatformId) => {
   }
   @keyframes drift {
     to {
-      translate: -50% 0;
+      transform: translate3d(var(--d), 0, 0);
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -444,6 +453,7 @@ const logoSize = (id: PlatformId) => {
       animation: none;
     }
     .item {
+      width: auto !important;
       padding: 0 0.35rem;
     }
     .item img {
