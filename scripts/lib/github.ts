@@ -24,14 +24,34 @@ export async function rest<T>(path: string, init: RequestInit = {}): Promise<T> 
 
 type GqlResponse<T> = { data?: T; errors?: { type?: string; path?: (string | number)[]; message: string }[] };
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** Seconds to back off after a throttled or flaky response, or undefined when the error is final. */
+function backoff(res: Response, body: string, attempt: number): number | undefined {
+  const throttled = res.status === 429 || (res.status === 403 && /rate limit/i.test(body));
+  if (!throttled && res.status < 500) return undefined;
+  const after = Number(res.headers.get("retry-after"));
+  if (after > 0) return after;
+  const reset = Number(res.headers.get("x-ratelimit-reset"));
+  if (res.headers.get("x-ratelimit-remaining") === "0" && reset) return Math.max(1, reset - Date.now() / 1000);
+  // Secondary limits give no hint; GitHub asks for at least a minute.
+  return throttled ? 60 * attempt : 5 * attempt;
+}
+
 export async function graphql<T>(query: string, variables: Record<string, unknown> = {}): Promise<GqlResponse<T>> {
-  const res = await fetch(`${API}/graphql`, {
-    method: "POST",
-    headers: headers(),
-    body: JSON.stringify({ query, variables }),
-  });
-  if (!res.ok) throw new Error(`GitHub GraphQL: ${res.status} ${await res.text()}`);
-  return (await res.json()) as GqlResponse<T>;
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(`${API}/graphql`, {
+      method: "POST",
+      headers: headers(),
+      body: JSON.stringify({ query, variables }),
+    });
+    if (res.ok) return (await res.json()) as GqlResponse<T>;
+    const body = await res.text();
+    const wait = attempt < 5 ? backoff(res, body, attempt) : undefined;
+    if (wait === undefined || wait > 900) throw new Error(`GitHub GraphQL: ${res.status} ${body}`);
+    console.warn(`  [github] GraphQL ${res.status}, retrying in ${Math.ceil(wait)} s`);
+    await sleep(wait * 1000);
+  }
 }
 
 const OS_PATTERNS: [(typeof OS)[number], RegExp][] = [
