@@ -353,15 +353,17 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 4px;
-    height: 3rem;
+    height: 3.4rem;
     margin: 0.2rem 0 0;
     padding: 0;
     list-style: none;
   }
   .day {
     display: grid;
-    grid-template-rows: 10px minmax(0, 1fr) 12px;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    row-gap: 3px;
     justify-items: center;
+    line-height: 1;
     min-height: 0;
     font-size: 0.5rem;
     color: var(--faint);
@@ -385,7 +387,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     opacity: 0.45;
   }
   .dl {
-    align-self: end;
+    padding-top: 2px;
     font-size: 0.55rem;
   }
   .future .dl {
