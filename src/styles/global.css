@@ -109,11 +109,17 @@ main,
   }
 }
 /* Countdown to the next discovery run: a radar sweep and a T-minus clock. */
-.scan {
+.pills {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-right: auto;
+}
+.scan,
+.review {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-right: auto;
   padding: 0.2rem 0.6rem 0.2rem 0.45rem;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -123,7 +129,18 @@ main,
   text-decoration: none;
   white-space: nowrap;
 }
-.scan:hover {
+.review {
+  padding: 0.2rem 0.6rem;
+}
+.review[hidden] {
+  display: none;
+}
+.review-n {
+  color: var(--port);
+  font-variant-numeric: tabular-nums;
+}
+.scan:hover,
+.review:hover {
   color: var(--muted);
   border-color: rgb(124 240 197 / 0.35);
 }
@@ -167,7 +184,8 @@ main,
   }
 }
 @media (max-width: 560px) {
-  .scan-label {
+  .scan-label,
+  .review-label {
     display: none;
   }
 }

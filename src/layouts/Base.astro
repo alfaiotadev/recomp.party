@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { tools } from "../lib/data.ts";
-import { DISCOVERY_PRS, DISCOVERY_RUN_MIN, DISCOVERY_UTC } from "../lib/discovery.ts";
+import { CANDIDATE_PRS, DISCOVERY_PRS, DISCOVERY_RUN_MIN, DISCOVERY_UTC } from "../lib/discovery.ts";
 
 interface Props {
   title?: string;
@@ -46,6 +46,7 @@ const here = Astro.url.pathname;
   <body>
     <header class="site-header">
       <a class="brand" href="/">recomp<span>.party</span></a>
+      <div class="pills">
       <a
         class="scan"
         href={DISCOVERY_PRS}
@@ -56,6 +57,11 @@ const here = Astro.url.pathname;
         <span class="scan-label">next scan</span>
         <span class="scan-t">T-··:··:··</span>
       </a>
+      <a class="review" href={CANDIDATE_PRS} data-review hidden>
+        <span class="review-n"></span>
+        <span class="review-label">in review</span>
+      </a>
+      </div>
       <nav>
         {
           nav.map((n) => (
@@ -89,6 +95,7 @@ const here = Astro.url.pathname;
     <script>
       import "../scripts/decode.ts";
       import "../scripts/scan.ts";
+      import "../scripts/review.ts";
       import "../scripts/outbound.ts";
     </script>
   </body>
