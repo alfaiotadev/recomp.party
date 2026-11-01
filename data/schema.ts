@@ -114,6 +114,8 @@ export const GameMeta = z.object({
   title: z.string(),
   /** Year of the earliest publication date. */
   year: z.number().optional(),
+  /** Earliest publication date at the precision Wikidata knows it: "YYYY-MM-DD", "YYYY-MM" or "YYYY". */
+  released: z.string().regex(/^\d{4}(-\d{2}(-\d{2})?)?$/).optional(),
   developers: z.array(z.string()),
   publishers: z.array(z.string()),
   /** External ids from Wikidata; links are built from these. */

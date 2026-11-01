@@ -33,7 +33,7 @@ const logoSize = (id: PlatformId) => {
     <span class="label">playable projects</span>
     {
       newest && (
-        <div class="cmp newest" data-since={newest.firstReleaseAt}>
+        <div class="cmp newest">
           <a class="nw-cover" href={entryPath(newest)} tabindex="-1" aria-hidden="true">
             {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" /> : <span class="ph" />}
           </a>
@@ -41,16 +41,26 @@ const logoSize = (id: PlatformId) => {
             <span>
               newest: <a href={entryPath(newest)}>{newest.game}</a>
             </span>
-            <span>
-              first release <b class="since">{newest.firstReleaseAt!.slice(0, 10)}</b>
-            </span>
-            <span class="nw-platform">
+            <span class="nw-row">
+              original
               {newestMark ? (
                 <img class="logo-img" src={newestMark.src} height="11" width={+(11 * newestMark.aspect).toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
               ) : (
                 PLATFORMS[newest.platform]
               )}
+              release
             </span>
+            {newest.meta?.released ? (
+              <b class="ago" data-ago={newest.meta.released} title={newest.meta.released}>
+                {newest.meta.released}
+              </b>
+            ) : (
+              <b class="ago unknown">date unknown</b>
+            )}
+            <span>recomp GitHub release</span>
+            <b class="ago" data-ago={newest.firstReleaseAt} data-clock title={newest.firstReleaseAt}>
+              {newest.firstReleaseAt!.slice(0, 10)}
+            </b>
             <span>
               {newest.tool && <>{newest.tool} · </>}by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
             </span>
@@ -135,19 +145,30 @@ const logoSize = (id: PlatformId) => {
 </div>
 
 <script>
-  // "newest: …, first release 1d 18:01:15 ago", ticking every second
+  // "26y 8m 22d ago" for the original game, "1d 18:23 ago" for the recomp's first GitHub release. Only the units
+  // that are needed show. Dates known only to the month or year ("2000-02", "2000") stop at that unit.
   const pad = (n: number) => String(n).padStart(2, "0");
-  for (const el of document.querySelectorAll<HTMLElement>("[data-since]")) {
-    const t0 = Date.parse(el.dataset.since!);
-    const out = el.querySelector(".since")!;
-    const tick = () => {
-      const s = Math.max(0, Math.floor((Date.now() - t0) / 1000));
-      const d = Math.floor(s / 86400);
-      out.textContent = `${d ? `${d}d ` : ""}${pad(Math.floor(s / 3600) % 24)}:${pad(Math.floor(s / 60) % 60)}:${pad(s % 60)} ago`;
-    };
-    tick();
-    setInterval(tick, 1000);
+  function since(iso: string, clock: boolean, now = new Date()): string {
+    const parsed = new Date(iso.length === 4 ? `${iso}-01-01` : iso.length === 7 ? `${iso}-01` : iso);
+    const t = parsed > now ? now : parsed; // a clock running slightly behind must not go negative
+    let y = now.getUTCFullYear() - t.getUTCFullYear();
+    let m = now.getUTCMonth() - t.getUTCMonth();
+    let d = now.getUTCDate() - t.getUTCDate();
+    let mins = clock ? now.getUTCHours() * 60 + now.getUTCMinutes() - (t.getUTCHours() * 60 + t.getUTCMinutes()) : 0;
+    if (mins < 0) (mins += 1440), d--;
+    if (d < 0) {
+      d += new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 0)).getUTCDate(); // days in the previous month
+      m--;
+    }
+    if (m < 0) (m += 12), y--;
+    const parts = [y && `${y}y`, (iso.length > 4 && (y || m)) && `${m}m`, iso.length > 7 && (y || m || d) && `${d}d`].filter(Boolean);
+    if (clock) parts.push(`${pad(Math.floor(mins / 60))}:${pad(mins % 60)}`);
+    return parts.length ? `${iso.length === 4 ? "~" : ""}${parts.join(" ")} ago` : "today";
   }
+  const els = [...document.querySelectorAll<HTMLElement>("[data-ago]")];
+  const tick = () => els.forEach((el) => (el.textContent = since(el.dataset.ago!, "clock" in el.dataset)));
+  tick();
+  setInterval(tick, 15_000);
 </script>
 
 <style>
@@ -231,7 +252,7 @@ const logoSize = (id: PlatformId) => {
     align-items: center;
     gap: 0.85rem;
     white-space: normal;
-    line-height: 1.8;
+    line-height: 1.6;
   }
   .nw-cover {
     flex: none;
@@ -263,15 +284,22 @@ const logoSize = (id: PlatformId) => {
   .newest a:hover {
     color: var(--fg);
   }
-  .newest .since {
+  .newest .ago {
     display: block;
+    color: var(--recomp);
+    font-variant-numeric: tabular-nums;
   }
-  .nw-platform {
+  .newest .ago.unknown {
+    color: var(--faint);
+    font-weight: 400;
+  }
+  .nw-row {
     display: flex;
     align-items: center;
-    height: 1.8em;
+    gap: 0.4rem;
   }
-  .nw-platform img {
+  .nw-row img {
+    flex: none;
     opacity: 0.6;
   }
   /* Calendar week so far: a bar per day, "?" for the days still to come. */
