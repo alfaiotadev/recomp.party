@@ -104,7 +104,7 @@ export const OS_LABELS: Record<Release["os"][number], string> = {
 };
 
 /** Platforms with a monochrome-ready logo in public/logos (see public/logos/SOURCES.md), with width/height ratio. */
-const LOGO_ASPECT: Partial<Record<PlatformId, number>> = {"snes": 3.945, "n64": 6.913, "gc": 4.434, "wii": 2.299, "wiiu": 3.541, "switch": 0.983, "gb": 5.711, "gbc": 2.45, "nds": 7.243, "3ds": 8.455, "genesis": 4.848, "dc": 1.323, "xbox": 3.873, "x360": 6.264, "ps1": 1.276, "ps2": 5.797, "ps3": 4.669, "ps4": 4.678, "ps5": 4.66, "psp": 5.797};
+const LOGO_ASPECT: Partial<Record<PlatformId, number>> = {"nes": 2.708, "snes": 3.945, "n64": 6.913, "gc": 4.434, "wii": 2.299, "wiiu": 3.541, "switch": 0.983, "gb": 5.711, "gbc": 2.45, "gba": 11.188, "nds": 7.243, "3ds": 8.455, "genesis": 4.848, "dc": 1.323, "xbox": 3.873, "x360": 6.264, "ps1": 1.276, "ps2": 5.797, "ps3": 4.669, "ps4": 4.678, "ps5": 4.66, "psp": 5.797, "amiga": 3.033};
 
 export type Logo = { src: string; aspect: number };
 
