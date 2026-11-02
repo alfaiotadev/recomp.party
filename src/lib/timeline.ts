@@ -14,7 +14,7 @@ export const NAME_X = LABEL_W + 4;
 export const NAME_W = 236;
 const CHAR_W = 6.1; // ~6.1 px per 11px character
 const MAX_CHARS = Math.floor((NAME_W - 14) / CHAR_W);
-const PAD_R = 12;
+export const PAD_R = 12;
 /** Child rows (a group's projects) are indented under the group's name. */
 export const CHILD_INDENT = 12;
 
