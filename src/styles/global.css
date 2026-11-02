@@ -109,6 +109,9 @@ main,
 .brand[data-pop="bubbly"]::after {
   background-image: url("../assets/bubbly.svg");
 }
+.brand[data-pop="robot"]::after {
+  background-image: url("../assets/robot.svg");
+}
 @keyframes pop {
   to {
     background-position-x: 133.333%;
