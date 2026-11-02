@@ -1,4 +1,23 @@
 {
+ "Q11168": {
+  "title": "Super Mario Bros.",
+  "year": 1985,
+  "released": "1985",
+  "developers": [
+   "Nintendo Entertainment Analysis & Development"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "wikipedia": "Super Mario Bros.",
+  "igdb": "super-mario-bros",
+  "mobygames": "super-mario-bros",
+  "cover": {
+   "igdbImage": "co6pib",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q12395": {
   "title": "The Legend of Zelda",
   "year": 1986,
@@ -34,6 +53,45 @@
   "mobygames": "forza-motorsport-4",
   "cover": {
    "igdbImage": "co2290",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q35627": {
+  "title": "Sonic the Hedgehog 2",
+  "year": 1992,
+  "released": "1992-11-21",
+  "developers": [
+   "Sonic Team"
+  ],
+  "publishers": [
+   "Sega"
+  ],
+  "wikipedia": "Sonic the Hedgehog 2",
+  "igdb": "sonic-the-hedgehog-2",
+  "mobygames": "sonic-the-hedgehog-2",
+  "cover": {
+   "igdbImage": "co5kkj",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q37123": {
+  "title": "Sonic the Hedgehog",
+  "year": 1991,
+  "released": "1991-06-23",
+  "developers": [
+   "Konami",
+   "Sonic Team"
+  ],
+  "publishers": [
+   "Sega"
+  ],
+  "wikipedia": "Sonic the Hedgehog (1991 video game)",
+  "igdb": "sonic-the-hedgehog",
+  "mobygames": "sonic-the-hedgehog",
+  "cover": {
+   "igdbImage": "coanlj",
    "width": 400,
    "height": 533
   }
@@ -188,6 +246,25 @@
    "height": 534
   }
  },
+ "Q161202": {
+  "title": "James Bond 007: Everything or Nothing",
+  "year": 2004,
+  "released": "2004-02-17",
+  "developers": [
+   "Visceral Games"
+  ],
+  "publishers": [
+   "Electronic Arts"
+  ],
+  "wikipedia": "James Bond 007: Everything or Nothing",
+  "igdb": "james-bond-007-everything-or-nothing",
+  "mobygames": "007-everything-or-nothing-",
+  "cover": {
+   "igdbImage": "co21s1",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q170003": {
   "title": "Ratchet & Clank",
   "year": 2002,
@@ -303,6 +380,25 @@
    "height": 533
   }
  },
+ "Q235710": {
+  "title": "Futurama",
+  "year": 2003,
+  "released": "2003-08-01",
+  "developers": [
+   "Unique Development Studios"
+  ],
+  "publishers": [
+   "Vivendi"
+  ],
+  "wikipedia": "Futurama (video game)",
+  "igdb": "futurama",
+  "mobygames": "futurama",
+  "cover": {
+   "igdbImage": "co2ji2",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q247210": {
   "title": "Need for Speed: Underground",
   "year": 2003,
@@ -375,7 +471,7 @@
   ],
   "wikipedia": "Call of Duty 3",
   "igdb": "call-of-duty-3",
-  "mobygames": "call-of-duty-3-special-edition_",
+  "mobygames": "call-of-duty-3",
   "cover": {
    "igdbImage": "co1wku",
    "width": 400,
@@ -452,10 +548,10 @@
    "Nintendo"
   ],
   "wikipedia": "The Legend of Zelda: A Link to the Past",
-  "igdb": "the-legend-of-zelda-a-link-to-the-past",
+  "igdb": "the-legend-of-zelda-a-link-to-the-past--1",
   "mobygames": "legend-of-zelda-a-link-to-the-past",
   "cover": {
-   "igdbImage": "co3vzn",
+   "igdbImage": "co5x34",
    "width": 400,
    "height": 533
   }
@@ -513,6 +609,25 @@
   "mobygames": "lord-of-the-rings-the-return-of-the-king",
   "cover": {
    "igdbImage": "co20of",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q473852": {
+  "title": "Prototype",
+  "year": 2009,
+  "released": "2009-06-09",
+  "developers": [
+   "Radical Entertainment"
+  ],
+  "publishers": [
+   "Activision"
+  ],
+  "wikipedia": "Prototype (video game)",
+  "igdb": "prototype",
+  "mobygames": "prototype__",
+  "cover": {
+   "igdbImage": "co1ql2",
    "width": 400,
    "height": 533
   }
@@ -771,6 +886,25 @@
    "height": 533
   }
  },
+ "Q609063": {
+  "title": "Pokémon FireRed and LeafGreen",
+  "year": 2004,
+  "released": "2004-01-29",
+  "developers": [
+   "Game Freak"
+  ],
+  "publishers": [
+   "Nintendo",
+   "The Pokémon Company"
+  ],
+  "wikipedia": "Pokémon FireRed and LeafGreen",
+  "igdb": "pokemon-firered-version",
+  "cover": {
+   "igdbImage": "co1ziq",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q637137": {
   "title": "Pokémon Red and Blue",
   "year": 1998,
@@ -867,6 +1001,25 @@
    "height": 533
   }
  },
+ "Q686865": {
+  "title": "Shin Megami Tensei: Nine",
+  "year": 2002,
+  "released": "2002-12-05",
+  "developers": [
+   "Nex Entertainment"
+  ],
+  "publishers": [
+   "Atlus"
+  ],
+  "wikipedia": "Shin Megami Tensei: Nine",
+  "igdb": "shin-megami-tensei-nine",
+  "mobygames": "shin-megami-tensei-nine",
+  "cover": {
+   "igdbImage": "co2y9r",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q689877": {
   "title": "Army of Two",
   "year": 2008,
@@ -901,6 +1054,26 @@
   "mobygames": "forza-motorsport-2",
   "cover": {
    "igdbImage": "co39yh",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q715292": {
+  "title": "Prince of Persia: The Sands of Time",
+  "year": 2003,
+  "released": "2003-10-28",
+  "developers": [
+   "Ubisoft Montreal"
+  ],
+  "publishers": [
+   "Sony Interactive Entertainment",
+   "Ubisoft"
+  ],
+  "wikipedia": "Prince of Persia: The Sands of Time",
+  "igdb": "prince-of-persia-the-sands-of-time",
+  "mobygames": "prince-of-persia-the-sands-of-time",
+  "cover": {
+   "igdbImage": "co4t8l",
    "width": 400,
    "height": 533
   }
@@ -1077,6 +1250,26 @@
    "height": 533
   }
  },
+ "Q761815": {
+  "title": "Chrono Trigger",
+  "year": 1995,
+  "released": "1995-03-11",
+  "developers": [
+   "Square"
+  ],
+  "publishers": [
+   "Square",
+   "Square Enix"
+  ],
+  "wikipedia": "Chrono Trigger",
+  "igdb": "chrono-trigger",
+  "mobygames": "chrono-trigger",
+  "cover": {
+   "igdbImage": "co3plw",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q770585": {
   "title": "Virtua Fighter 3",
   "year": 1996,
@@ -1187,6 +1380,25 @@
   "mobygames": "fear-first-encounter-assault-recon",
   "cover": {
    "igdbImage": "co1utk",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q817369": {
+  "title": "God of War",
+  "year": 2005,
+  "released": "2005-03-22",
+  "developers": [
+   "Santa Monica Studio"
+  ],
+  "publishers": [
+   "Sony Interactive Entertainment"
+  ],
+  "wikipedia": "God of War (2005 video game)",
+  "igdb": "god-of-war",
+  "mobygames": "god-of-war",
+  "cover": {
+   "igdbImage": "co3ddc",
    "width": 400,
    "height": 533
   }
@@ -1593,6 +1805,25 @@
    "height": 533
   }
  },
+ "Q1037535": {
+  "title": "Championship Manager: Season 01/02",
+  "year": 2001,
+  "released": "2001-10-12",
+  "developers": [
+   "Sports Interactive"
+  ],
+  "publishers": [
+   "Eidos Interactive"
+  ],
+  "wikipedia": "Championship Manager: Season 01/02",
+  "igdb": "championship-manager-season-01-02",
+  "mobygames": "championship-manager-season-0102",
+  "cover": {
+   "igdbImage": "co2sd3",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q1041427": {
   "title": "The Binding of Isaac",
   "year": 2011,
@@ -1780,6 +2011,25 @@
   "mobygames": "wario-land-shake-it",
   "cover": {
    "igdbImage": "co1wnw",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q1069537": {
+  "title": "Medal of Honor",
+  "year": 1999,
+  "released": "1999-10-31",
+  "developers": [
+   "Danger Close Games"
+  ],
+  "publishers": [
+   "Electronic Arts"
+  ],
+  "wikipedia": "Medal of Honor (1999 video game)",
+  "igdb": "medal-of-honor--2",
+  "mobygames": "medal-of-honor",
+  "cover": {
+   "igdbImage": "co2q3l",
    "width": 400,
    "height": 533
   }
@@ -2147,6 +2397,25 @@
    "height": 533
   }
  },
+ "Q1224677": {
+  "title": "Digimon World 3",
+  "year": 2002,
+  "released": "2002-06-05",
+  "developers": [
+   "Bandai"
+  ],
+  "publishers": [
+   "Bandai Namco Entertainment"
+  ],
+  "wikipedia": "Digimon World 3",
+  "igdb": "digimon-world-3",
+  "mobygames": "digimon-world-3",
+  "cover": {
+   "igdbImage": "co7znc",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q1257775": {
   "title": "Crash Twinsanity",
   "year": 2004,
@@ -2238,6 +2507,26 @@
   "mobygames": "perfect-dark",
   "cover": {
    "igdbImage": "co77xv",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q1416931": {
+  "title": "Rayman 3: Hoodlum Havoc",
+  "year": 2003,
+  "released": "2003-02-21",
+  "developers": [
+   "Ubisoft",
+   "Ubisoft Shanghai"
+  ],
+  "publishers": [
+   "Feral Interactive"
+  ],
+  "wikipedia": "Rayman 3: Hoodlum Havoc",
+  "igdb": "rayman-3-hoodlum-havoc",
+  "mobygames": "rayman-3-hoodlum-havoc",
+  "cover": {
+   "igdbImage": "co3jky",
    "width": 400,
    "height": 533
   }
@@ -2675,7 +2964,7 @@
   ],
   "wikipedia": "Tom Clancy's Ghost Recon 2",
   "igdb": "tom-clancy-s-ghost-recon-2",
-  "mobygames": "tom-clancys-ghost-recon-2-2011-final-assault",
+  "mobygames": "tom-clancys-ghost-recon-2",
   "cover": {
    "igdbImage": "co1yhn",
    "width": 400,
@@ -2699,6 +2988,44 @@
    "igdbImage": "co47qq",
    "width": 400,
    "height": 533
+  }
+ },
+ "Q1891590": {
+  "title": "Ultima Underworld: The Stygian Abyss",
+  "year": 1992,
+  "released": "1992-03-21",
+  "developers": [
+   "Looking Glass Studios"
+  ],
+  "publishers": [
+   "Origin Systems"
+  ],
+  "wikipedia": "Ultima Underworld: The Stygian Abyss",
+  "igdb": "ultima-underworld-the-stygian-abyss",
+  "mobygames": "ultima-underworld-the-stygian-abyss",
+  "cover": {
+   "igdbImage": "co5xjp",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q1948338": {
+  "title": "Dragon Quest VIII",
+  "year": 2004,
+  "released": "2004-11-27",
+  "developers": [
+   "Level-5"
+  ],
+  "publishers": [
+   "Square Enix"
+  ],
+  "wikipedia": "Dragon Quest VIII",
+  "igdb": "dragon-quest-viii-journey-of-the-cursed-king",
+  "mobygames": "dragon-quest-viii-journey-of-the-cursed-king",
+  "cover": {
+   "igdbImage": "co7vf2",
+   "width": 400,
+   "height": 534
   }
  },
  "Q1974230": {
@@ -2835,6 +3162,25 @@
    "igdbImage": "co1zsw",
    "width": 400,
    "height": 533
+  }
+ },
+ "Q2020055": {
+  "title": "Saints Row",
+  "year": 2006,
+  "released": "2006-08-29",
+  "developers": [
+   "Volition"
+  ],
+  "publishers": [
+   "THQ"
+  ],
+  "wikipedia": "Saints Row (2006 video game)",
+  "igdb": "saints-row",
+  "mobygames": "saints-row",
+  "cover": {
+   "igdbImage": "co2w7c",
+   "width": 400,
+   "height": 534
   }
  },
  "Q2037482": {
@@ -3104,6 +3450,25 @@
    "height": 533
   }
  },
+ "Q2312963": {
+  "title": "Ratchet & Clank Future: A Crack in Time",
+  "year": 2009,
+  "released": "2009-10-27",
+  "developers": [
+   "Insomniac Games"
+  ],
+  "publishers": [
+   "Sony Interactive Entertainment"
+  ],
+  "wikipedia": "Ratchet & Clank Future: A Crack in Time",
+  "igdb": "ratchet-clank-future-a-crack-in-time",
+  "mobygames": "ratchet-clank-future-a-crack-in-time",
+  "cover": {
+   "igdbImage": "co6fjt",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q2315670": {
   "title": "Yu-Gi-Oh! GX Tag Force",
   "year": 2006,
@@ -3290,6 +3655,25 @@
   "mobygames": "ssx-tricky",
   "cover": {
    "igdbImage": "co2sup",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q2403747": {
+  "title": "Blinx 2: Masters of Time and Space",
+  "year": 2004,
+  "released": "2004-11-18",
+  "developers": [
+   "Artoon"
+  ],
+  "publishers": [
+   "Xbox Game Studios"
+  ],
+  "wikipedia": "Blinx 2: Masters of Time and Space",
+  "igdb": "blinx-2-masters-of-time-and-space",
+  "mobygames": "blinx-2-masters-of-time-space",
+  "cover": {
+   "igdbImage": "co2ip4",
    "width": 400,
    "height": 533
   }
@@ -3920,6 +4304,25 @@
    "height": 533
   }
  },
+ "Q2982637": {
+  "title": "Colin McRae Rally 2005",
+  "year": 2004,
+  "released": "2004",
+  "developers": [
+   "Codemasters"
+  ],
+  "publishers": [
+   "Codemasters"
+  ],
+  "wikipedia": "Colin McRae Rally 2005",
+  "igdb": "colin-mcrae-rally-2005",
+  "mobygames": "colin-mcrae-rally-2005",
+  "cover": {
+   "igdbImage": "co7jbj",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q3099600": {
   "title": "Sin and Punishment",
   "year": 2000,
@@ -4111,6 +4514,25 @@
    "height": 534
   }
  },
+ "Q3564656": {
+  "title": "WCW vs. nWo: World Tour",
+  "year": 1997,
+  "released": "1997-11-30",
+  "developers": [
+   "Asmik Ace Entertainment"
+  ],
+  "publishers": [
+   "THQ"
+  ],
+  "wikipedia": "WCW vs. nWo: World Tour",
+  "igdb": "wcw-vs-nwo-world-tour",
+  "mobygames": "wcw-vs-nwo-world-tour",
+  "cover": {
+   "igdbImage": "co5xsp",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q3772920": {
   "title": "GoldenEye 007: Reloaded",
   "developers": [
@@ -4140,6 +4562,25 @@
   "mobygames": "tim-burtons-the-nightmare-before-christmas-oogies-revenge",
   "cover": {
    "igdbImage": "co2rn4",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q4019766": {
+  "title": "Wild 9",
+  "year": 1998,
+  "released": "1998-09-30",
+  "developers": [
+   "Shiny Entertainment"
+  ],
+  "publishers": [
+   "Interplay Entertainment"
+  ],
+  "wikipedia": "Wild 9",
+  "igdb": "wild-9",
+  "mobygames": "wild-9",
+  "cover": {
+   "igdbImage": "co2n5r",
    "width": 400,
    "height": 533
   }
@@ -4386,6 +4827,24 @@
   "mobygames": "harvest-moon",
   "cover": {
    "igdbImage": "co43o8",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q7167962": {
+  "title": "Perfect Dark",
+  "year": 2010,
+  "released": "2010-03-17",
+  "developers": [
+   "4J Studios"
+  ],
+  "publishers": [
+   "Xbox Game Studios"
+  ],
+  "wikipedia": "Perfect Dark (2010 video game)",
+  "igdb": "perfect-dark--1",
+  "cover": {
+   "igdbImage": "co2yib",
    "width": 400,
    "height": 533
   }
@@ -4678,6 +5137,25 @@
    "height": 533
   }
  },
+ "Q19057897": {
+  "title": "The Last of Us Remastered",
+  "year": 2014,
+  "released": "2014-07-29",
+  "developers": [
+   "Naughty Dog"
+  ],
+  "publishers": [
+   "Sony Interactive Entertainment"
+  ],
+  "wikipedia": "The Last of Us Remastered",
+  "igdb": "the-last-of-us-remastered",
+  "mobygames": "last-of-us-remastered",
+  "cover": {
+   "igdbImage": "co5zks",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q20059613": {
   "title": "Uncharted: The Nathan Drake Collection",
   "year": 2015,
@@ -4814,10 +5292,10 @@
    "Sony Interactive Entertainment"
   ],
   "wikipedia": "Shadow of the Colossus (2018 video game)",
-  "igdb": "shadow-of-the-colossus-special-edition",
+  "igdb": "shadow-of-the-colossus--1",
   "mobygames": "shadow-of-the-colossus_",
   "cover": {
-   "igdbImage": "co2g0e",
+   "igdbImage": "cobmel",
    "width": 400,
    "height": 533
   }
@@ -4838,6 +5316,25 @@
   "mobygames": "super-smash-bros-ultimate",
   "cover": {
    "igdbImage": "co2255",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q54456778": {
+  "title": "Pokémon Let's Go, Pikachu! and Let's Go, Eevee!",
+  "year": 2018,
+  "released": "2018-11-16",
+  "developers": [
+   "Game Freak"
+  ],
+  "publishers": [
+   "Nintendo",
+   "The Pokémon Company"
+  ],
+  "wikipedia": "Pokémon: Let's Go, Pikachu! and Let's Go, Eevee!",
+  "igdb": "pokemon-lets-go-pikachu",
+  "cover": {
+   "igdbImage": "co1zjy",
    "width": 400,
    "height": 533
   }
@@ -5077,6 +5574,24 @@
   "igdb": "xenoblade-chronicles-x-definitive-edition",
   "cover": {
    "igdbImage": "cob8r3",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q133567959": {
+  "title": "Tomodachi Life: Living the Dream",
+  "year": 2026,
+  "released": "2026-04-16",
+  "developers": [
+   "Nintendo Entertainment Planning & Development"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "wikipedia": "Tomodachi Life: Living the Dream",
+  "igdb": "tomodachi-life-living-the-dream",
+  "cover": {
+   "igdbImage": "cobdqd",
    "width": 400,
    "height": 533
   }
