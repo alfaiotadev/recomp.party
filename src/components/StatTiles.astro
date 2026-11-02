@@ -1,5 +1,5 @@
 ---
-import { entryPath, PLATFORMS, platformLogo, platformMark, type PlatformId } from "../lib/data.ts";
+import { entryPath, fitLogoArea, PLATFORMS, platformLogo, platformMark, type PlatformId } from "../lib/data.ts";
 import { stats, type Delta } from "../lib/stats.ts";
 import CoverStack from "./CoverStack.astro";
 import Spark from "./Spark.astro";
@@ -9,6 +9,8 @@ const arrow = (d: Delta) => (d.diff > 0 ? "up" : d.diff < 0 ? "down" : "flat");
 const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
 const { newest } = projects;
 const newestMark = newest && platformMark(newest.platform);
+// Sized by area within a cap, so a long wordmark (XBOX 360, GAME BOY ADVANCE) still fits beside "OG … release".
+const newestLogo = newestMark && fitLogoArea(newestMark, 380, 64, 12);
 const newestOwner = newest?.repo.split("/")[0];
 const days = updated.days;
 const dayMax = Math.max(1, ...days.days);
@@ -54,9 +56,9 @@ const laneStyle = (ids: PlatformId[], k: number) => {
             </span>
             <span class="rel">
               <span class="nw-row">
-                original
+                <abbr title="original">OG</abbr>
                 {newestMark ? (
-                  <img class="logo-img" src={newestMark.src} height="11" width={+(11 * newestMark.aspect).toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
+                  <img class="logo-img" src={newestMark.src} height={+newestLogo!.h.toFixed(1)} width={+newestLogo!.w.toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
                 ) : (
                   PLATFORMS[newest.platform]
                 )}
@@ -327,8 +329,13 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   }
   .nw-row {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0 0.4rem;
+  }
+  .nw-row abbr {
+    text-decoration: none;
+    cursor: help;
   }
   .nw-row img {
     flex: none;
