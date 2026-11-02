@@ -3,7 +3,8 @@
  * hours late, so the badge reads the real run state from the GitHub API (unauthenticated, cached for the
  * session) and only counts down by the clock:
  *   scanning…   a discovery run is queued or in progress
- *   due T+…     today's scheduled time has passed but GitHub has not started the run yet
+ *   queued      today's scheduled time has passed but GitHub has not started the run yet (it often
+ *               lags hours behind, so no overdue counter)
  *   T-…         countdown to the next scheduled run
  */
 const API = "https://api.github.com/repos/alfaiotadev/recomp.party/actions/workflows/discover.yml/runs?per_page=5";
@@ -57,8 +58,7 @@ for (const el of document.querySelectorAll<HTMLElement>("[data-scan]")) {
     if (running) {
       out.textContent = "scanning…";
     } else if (due) {
-      label.textContent = "due";
-      out.textContent = `T+${clock(now - today)}`;
+      out.textContent = "queued at GitHub";
     } else {
       label.textContent = "next scan";
       out.textContent = `T-${clock((now < today ? today : today + 86_400_000) - now)}`;
