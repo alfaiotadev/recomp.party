@@ -49,7 +49,7 @@ const here = Astro.url.pathname;
       <script is:inline>
         // A different party animation on every page load (sprites in src/assets, styles in global.css).
         (() => {
-          const all = ["tada", "disco", "fireworks", "bubbly", "slime", "robot", "ghost"];
+          const all = ["tada", "disco", "fireworks", "bubbly", "robot"];
           let last = null;
           try { last = sessionStorage.getItem("pop"); } catch {}
           const pick = all.filter((n) => n !== last)[Math.floor(Math.random() * (all.length - 1))];

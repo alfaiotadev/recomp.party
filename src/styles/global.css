@@ -109,14 +109,8 @@ main,
 .brand[data-pop="bubbly"]::after {
   background-image: url("../assets/bubbly.svg");
 }
-.brand[data-pop="slime"]::after {
-  background-image: url("../assets/slime.svg");
-}
 .brand[data-pop="robot"]::after {
   background-image: url("../assets/robot.svg");
-}
-.brand[data-pop="ghost"]::after {
-  background-image: url("../assets/ghost.svg");
 }
 @keyframes pop {
   to {
