@@ -1,7 +1,8 @@
 ---
 /**
- * Stars gained per day across all games, as a small line. The readout under it shows the latest day and
- * follows the pointer. With a single day of history there is no line yet, only the readout.
+ * Stars gained per day across all games, as a small line with each day's value above its point. The readout
+ * under it shows the latest day and follows the pointer. With a single day of history there is no line yet,
+ * only the readout.
  */
 import type { StarDay } from "../lib/highlights.ts";
 
@@ -27,12 +28,24 @@ const last = days.at(-1);
   last && (
     <figure class="trend" data-points={JSON.stringify(points.map((p) => ({ x: p.x, y: p.y, t: fmt(p) })))}>
       {points.length > 1 && (
+        <div class="plot">
         <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} role="img" aria-label={`Stars gained per day: ${days.map(fmt).join(", ")}`}>
           <path class="area" d={area} />
           <path class="line" d={line} />
           <line class="cross" x1="0" x2="0" y1="0" y2={H} hidden />
           <circle class="dot" cx={points.at(-1)!.x} cy={points.at(-1)!.y} r="3.5" />
         </svg>
+        {/* HTML labels over the SVG, so the text keeps its size however wide the chart is drawn */}
+        {points.map((p, i) => (
+          <span
+            class={`val mono${i === 0 ? " first" : ""}${i === points.length - 1 ? " last on" : ""}`}
+            style={`left:${((p.x / W) * 100).toFixed(2)}%;top:${((p.y / H) * 100).toFixed(2)}%`}
+            aria-hidden="true"
+          >
+            {p.gained.toLocaleString("en")}
+          </span>
+        ))}
+        </div>
       )}
       <figcaption class="mono">
         <b>+{last.gained.toLocaleString("en")}</b> stars since yesterday
@@ -49,6 +62,8 @@ const last = days.at(-1);
     const dot = svg.querySelector<SVGCircleElement>(".dot")!;
     const cross = svg.querySelector<SVGLineElement>(".cross")!;
     const cap = fig.querySelector("figcaption")!;
+    const vals = [...fig.querySelectorAll<HTMLElement>(".val")];
+    const mark = (i: number) => vals.forEach((v, k) => v.classList.toggle("on", k === i));
     const rest = cap.innerHTML;
     const show = (p: (typeof pts)[number]) => {
       dot.setAttribute("cx", String(p.x));
@@ -61,11 +76,13 @@ const last = days.at(-1);
       const vx = ((ev.clientX - r.left) / r.width) * svg.viewBox.baseVal.width;
       const p = pts.reduce((a, b) => (Math.abs(b.x - vx) < Math.abs(a.x - vx) ? b : a));
       show(p);
+      mark(pts.indexOf(p));
       cross.hidden = false;
       cap.textContent = p.t;
     });
     svg.addEventListener("pointerleave", () => {
       show(pts.at(-1)!);
+      mark(pts.length - 1);
       cross.hidden = true;
       cap.innerHTML = rest;
     });
@@ -74,12 +91,39 @@ const last = days.at(-1);
 
 <style>
   .trend {
-    margin: 0.9rem 0 0;
+    margin: 1.6rem 0 0; /* headroom for the value labels */
+  }
+  .plot {
+    position: relative;
+    max-width: 200px;
+  }
+  /* phones: the chart spans the card */
+  @media (max-width: 720px) {
+    .plot {
+      max-width: none;
+    }
+  }
+  .val {
+    position: absolute;
+    translate: -50% calc(-100% - 6px);
+    font-size: 0.6rem;
+    line-height: 1;
+    color: var(--faint);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .val.first {
+    translate: -4px calc(-100% - 6px);
+  }
+  .val.last {
+    translate: calc(-100% + 4px) calc(-100% - 6px);
+  }
+  .val.on {
+    color: var(--recomp);
   }
   svg {
     display: block;
     width: 100%;
-    max-width: 200px;
     height: auto;
     overflow: visible;
     cursor: crosshair;
@@ -94,6 +138,10 @@ const last = days.at(-1);
     stroke-linejoin: round;
     stroke-linecap: round;
     vector-effect: non-scaling-stroke;
+  }
+  /* the hidden attribute alone doesn't hide an SVG element */
+  .cross[hidden] {
+    display: none;
   }
   .cross {
     stroke: var(--faint);
