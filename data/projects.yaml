@@ -13,6 +13,7 @@
   platform: nes
   kind: recomp
   tool: nesrecomp
+  wikidata: Q11168
   added: 2026-11-01
 - repo: mstan/LegendOfZeldaNESRecomp
   game: The Legend of Zelda
@@ -419,6 +420,7 @@
   kind: recomp
   tool: N64Recomp
   based_on: [N64Recomp/N64Recomp]
+  wikidata: Q3564656
   added: 2026-11-01
 - repo: jessetbh/WCWnWoRevengeRecomp
   game: WCW/nWo Revenge
@@ -640,6 +642,7 @@
   game: Tekken Tag Tournament 2 Wii U Edition
   platform: wiiu
   kind: recomp
+  wikidata: Q672049
   added: 2026-10-31
 - repo: ryderclanky/BotW-Native
   game: "The Legend of Zelda: Breath of the Wild"
@@ -718,6 +721,7 @@
   kind: recomp
   tool: LAS Recomp
   based_on: [peiikai/LASRecomp]
+  wikidata: Q54456778
   added: 2026-11-01
 - repo: smm2recomp/smm2recomp
   game: Super Mario Maker 2
@@ -789,6 +793,7 @@
   game: "Tomodachi Life: Living the Dream"
   platform: switch
   kind: recomp
+  wikidata: Q133567959
   added: 2026-11-02
 - repo: jmars125/xcx-recomp
   game: "Xenoblade Chronicles X: Definitive Edition"
@@ -840,6 +845,7 @@
   platform: gba
   kind: recomp
   based_on: [pret/pokefirered]
+  wikidata: Q609063
   added: 2026-11-01
 
 # --- Nintendo DS -----------------------------------------------------------------
@@ -847,6 +853,7 @@
   game: Chrono Trigger
   platform: nds
   kind: recomp
+  wikidata: Q761815
   added: 2026-10-31
 - repo: AlonsoTlol/DS-Kart-Recompiled
   game: Mario Kart DS
@@ -897,12 +904,14 @@
   kind: recomp
   tool: segagenesisrecomp
   based_on: [mstan/segagenesisrecomp]
+  wikidata: Q37123
   added: 2026-11-02
 - repo: mstan/SonicTheHedgehog2Recomp
   game: Sonic the Hedgehog 2
   platform: genesis
   kind: recomp
   tool: segagenesisrecomp
+  wikidata: Q35627
   added: 2026-11-01
 
 # --- PlayStation -----------------------------------------------------------------
@@ -943,6 +952,7 @@
   game: Digimon World 2003
   platform: ps1
   kind: recomp
+  wikidata: Q1224677
   added: 2026-11-01
 - repo: obaidr1/hercules-recompiled
   game: Disney's Hercules
@@ -961,6 +971,7 @@
   platform: ps1
   kind: recomp
   tool: psxrecomp
+  wikidata: Q1069537
   added: 2026-11-01
 - repo: BlackLabelHQ/MediEvilRecomp
   game: MediEvil
@@ -1059,6 +1070,7 @@
   platform: ps1
   kind: recomp
   tool: psxrecomp
+  wikidata: Q4019766
   added: 2026-11-02
 - repo: Unchiga/Yu-Gi-Oh-Forbidden-Memories-Recompiled
   game: Yu-Gi-Oh! Forbidden Memories
@@ -1099,6 +1111,7 @@
   kind: recomp
   tool: PS2Recomp
   based_on: [ran-j/PS2Recomp]
+  wikidata: Q1948338
   added: 2026-10-31
 - repo: Mikompilation/MikuPan
   game: Fatal Frame
@@ -1110,12 +1123,14 @@
   game: God of War
   platform: ps2
   kind: recomp
+  wikidata: Q817369
   added: 2026-11-01
 - repo: Vnnc1/gow-native-pc
   game: God of War
   platform: ps2
   kind: recomp
   tool: PS2Recomp
+  wikidata: Q817369
   added: 2026-10-31
 - repo: moesuito/gt4-staticrecomp
   game: Gran Turismo 4
@@ -1255,6 +1270,7 @@
   platform: ps3
   kind: recomp
   tool: ps3recomp
+  wikidata: Q2312963
   added: 2026-11-01
 - repo: kastieloficial/RE-Code-Veronica-PS3-HD-Recomp-PC
   game: "Resident Evil Code: Veronica X HD"
@@ -1364,6 +1380,7 @@
   game: The Last of Us Remastered
   platform: ps4
   kind: port
+  wikidata: Q19057897
   added: 2026-11-02
 - repo: IgorAugustoHH/The-Order-1886-PC-Port
   game: "The Order: 1886"
@@ -1447,6 +1464,7 @@
   platform: xbox
   kind: recomp
   tool: XboxXBE-Recomp
+  wikidata: Q161202
   added: 2026-11-01
 - repo: TGP482/007FRWL-XBERecomp
   game: "007: From Russia With Love"
@@ -1460,6 +1478,7 @@
   kind: recomp
   tool: XboxXBE-Recomp
   based_on: [TGP482/XboxXBE-Recomp]
+  wikidata: Q161188
   added: 2026-11-01
 - repo: HossEz/fifa-world-cup-2014-recompiled
   game: 2014 FIFA World Cup Brazil
@@ -1487,6 +1506,7 @@
   platform: xbox
   kind: recomp
   tool: xboxrecomp
+  wikidata: Q2403747
   added: 2026-11-02
 - repo: bromurok/BloodyRoarExtremeRecomp
   game: Bloody Roar Extreme
@@ -1512,6 +1532,7 @@
   platform: xbox
   kind: recomp
   tool: XboxXBE-Recomp
+  wikidata: Q2982637
   added: 2026-11-01
 - repo: cdetv/conker-live-recompiled
   game: "Conker: Live & Reloaded"
@@ -1587,6 +1608,7 @@
   game: "Futurama: The Game"
   platform: xbox
   kind: recomp
+  wikidata: Q235710
   added: 2026-11-01
 - repo: chrissotraidis/projectreach
   game: "Halo: Combat Evolved"
@@ -1645,6 +1667,7 @@
   game: "Prince of Persia: The Sands of Time"
   platform: xbox
   kind: recomp
+  wikidata: Q715292
   added: 2026-10-31
 - repo: hk21x/pgr1-recomp
   game: Project Gotham Racing
@@ -1666,6 +1689,7 @@
   kind: recomp
   tool: xboxrecomp
   based_on: [sp00nznet/xboxrecomp]
+  wikidata: Q686865
   added: 2026-11-02
 - repo: TGP482/SCDA-XBERecomp
   game: "Splinter Cell: Double Agent"
@@ -2090,6 +2114,7 @@
   platform: x360
   kind: recomp
   tool: ReXGlue
+  wikidata: Q7167962
   added: 2026-11-01
 - repo: nikolaygorb/PerfectDarkZeroRecomp
   game: Perfect Dark Zero
@@ -2136,6 +2161,7 @@
   game: Rayman 3 HD
   platform: x360
   kind: recomp
+  wikidata: Q1416931
   added: 2026-11-01
 - repo: tokeneffortports/ReCompiledSteel
   game: Real Steel
@@ -2155,6 +2181,7 @@
   platform: x360
   kind: recomp
   tool: ReXGlue
+  wikidata: Q2020055
   added: 2026-11-02
 - repo: LittleBitUA/DownpourRecomp
   game: "Silent Hill: Downpour"
@@ -2318,6 +2345,7 @@
   game: Championship Manager 01/02
   platform: pc
   kind: port
+  wikidata: Q1037535
   added: 2026-11-01
 - repo: ZloiKILLER/nfs3recompiled-android
   game: "Need for Speed III: Hot Pursuit"
@@ -2362,6 +2390,7 @@
   game: Prototype (2009)
   platform: pc
   kind: port
+  wikidata: Q473852
   added: 2026-11-02
 - repo: RSDKModding/RSDKv4-Decompilation
   game: Sonic 1 & 2 (2013)
@@ -2404,6 +2433,7 @@
   game: Ultima Underworld
   platform: pc
   kind: port
+  wikidata: Q1891590
   added: 2026-10-31
 - repo: Kitrinx/Ultima7_Decomp
   game: Ultima VII
