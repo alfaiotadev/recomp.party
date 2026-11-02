@@ -342,3 +342,11 @@ section {
   filter: brightness(0) invert(1);
   opacity: 0.85;
 }
+/* Stand-in for a missing cover: a framed picture, with "No image" where the slot is big enough to read it. */
+.cover-ph {
+  background: var(--surface-2) url("../assets/no-cover.svg") center / 100% auto no-repeat;
+}
+.cover-ph.icon {
+  background-image: url("../assets/no-cover-icon.svg");
+  background-size: 72% auto;
+}

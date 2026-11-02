@@ -19,15 +19,6 @@ const total = wrap ? Math.max(max, wrap.max) : max;
 const shown = entries.slice(0, total);
 const hidden = entries.length - Math.min(max, entries.length);
 const hiddenWrapped = wrap ? entries.length - shown.length : 0;
-const initials = (game: string) =>
-  game
-    .replace(/\(.*\)/, "")
-    .split(/[\s:–-]+/)
-    .filter((w) => /^[A-Za-z0-9]/.test(w))
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
 ---
 
 {
@@ -39,9 +30,7 @@ const initials = (game: string) =>
             {e.cover ? (
               <img src={e.cover.src} width={e.cover.width} height={e.cover.height} alt={e.game} loading="lazy" decoding="async" />
             ) : (
-              <span class="ph mono" aria-label={e.game}>
-                {initials(e.game)}
-              </span>
+              <span class="ph cover-ph icon" role="img" aria-label={e.game} />
             )}
           </a>
         </li>
@@ -139,11 +128,8 @@ const initials = (game: string) =>
     }
   }
   .ph {
-    display: grid;
-    place-items: center;
+    display: block;
     width: 100%;
     height: 100%;
-    font-size: calc(var(--w) * 0.3);
-    color: var(--muted);
   }
 </style>
