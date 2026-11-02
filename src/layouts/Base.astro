@@ -46,6 +46,17 @@ const here = Astro.url.pathname;
   <body>
     <header class="site-header">
       <a class="brand" href="/">recomp<span>.party</span></a>
+      <script is:inline>
+        // A different party animation on every page load (sprites in src/assets, styles in global.css).
+        (() => {
+          const all = ["tada", "disco", "fireworks", "bubbly"];
+          let last = null;
+          try { last = sessionStorage.getItem("pop"); } catch {}
+          const pick = all.filter((n) => n !== last)[Math.floor(Math.random() * (all.length - 1))];
+          document.currentScript.previousElementSibling.dataset.pop = pick;
+          try { sessionStorage.setItem("pop", pick); } catch {}
+        })();
+      </script>
       <div class="pills">
       <a
         class="scan"

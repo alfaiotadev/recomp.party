@@ -88,7 +88,8 @@ main,
   text-shadow: 0 0 12px rgb(124 240 197 / 0.5);
 }
 .brand::after {
-  /* Four-frame party popper (src/assets/tada.svg; bundled so a new drawing gets a new URL), one loop per old cursor blink (1.1 s). */
+  /* Four-frame party animation (src/assets/*.svg; bundled so a new drawing gets a new URL), one loop per old cursor blink (1.1 s).
+     The popper is the default; Base.astro picks another one on each page load. */
   content: "";
   display: inline-block;
   /* Emoji size as Slack sets it next to text; negative block margins keep the header height. */
@@ -98,6 +99,15 @@ main,
   vertical-align: -0.3em;
   background: url("../assets/tada.svg") 0 0 / 400% 100% no-repeat;
   animation: pop 1.1s steps(4) infinite;
+}
+.brand[data-pop="disco"]::after {
+  background-image: url("../assets/disco.svg");
+}
+.brand[data-pop="fireworks"]::after {
+  background-image: url("../assets/fireworks.svg");
+}
+.brand[data-pop="bubbly"]::after {
+  background-image: url("../assets/bubbly.svg");
 }
 @keyframes pop {
   to {
