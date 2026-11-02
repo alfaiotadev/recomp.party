@@ -1,5 +1,5 @@
 /** Front-page stat tiles: headline numbers, a comparison line and 12-week bar series. */
-import { games, generatedAt, platformsInUse } from "./data.ts";
+import { games, platformsInUse } from "./data.ts";
 
 const DAY = 86_400_000;
 const now = Date.now();
@@ -12,8 +12,8 @@ const monday =
 
 /** Calendar week k (0 = this week, so far) as a [start, end) time range. */
 const week = (k: number): [number, number] => [monday - k * 7 * DAY, k === 0 ? now : monday - (k - 1) * 7 * DAY];
-/** Last week up to the same weekday and time the data reaches, so a week in progress is compared fairly. */
-const lastWeekSoFar: [number, number] = [monday - 7 * DAY, Math.min(now, Date.parse(generatedAt)) - 7 * DAY];
+/** Last week up to the same weekday and time, so a week in progress is compared fairly. */
+const lastWeekSoFar: [number, number] = [monday - 7 * DAY, now - 7 * DAY];
 const within = (iso: string | undefined, [a, b]: [number, number]) => !!iso && Date.parse(iso) >= a && Date.parse(iso) < b;
 
 /** Oldest week first, so the bars read left → right towards "now". */
