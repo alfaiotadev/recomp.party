@@ -4,7 +4,9 @@ const UA = "recomp.party/1.0 (https://recomp.party; https://github.com/alfaiotad
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export async function wikidataApi(params: Record<string, string>, tries = 6): Promise<any> {
-  const url = `https://www.wikidata.org/w/api.php?${new URLSearchParams({ ...params, format: "json", maxlag: "5" })}`;
+  // No maxlag: it is meant for bots that edit. These are reads, and with it every lookup failed whenever the
+  // query-service replicas fell 5+ s behind (e.g. the 2026-11-02 discovery run).
+  const url = `https://www.wikidata.org/w/api.php?${new URLSearchParams({ ...params, format: "json" })}`;
   for (let attempt = 1; ; attempt++) {
     await sleep(250); // stay well under the anonymous rate limit
     const res = await fetch(url, { headers: { "User-Agent": UA } });
@@ -12,8 +14,7 @@ export async function wikidataApi(params: Record<string, string>, tries = 6): Pr
     if (body && !body.error) return body;
     const why = body?.error ? `${body.error.code}: ${body.error.info}` : `HTTP ${res.status}`;
     if (attempt >= tries) throw new Error(`Wikidata API ${why} (${url})`);
-    // maxlag: the servers are behind (often 5–10 s); back off for longer than on other errors
-    await sleep((body?.error?.code === "maxlag" ? 5000 : 2000) * attempt);
+    await sleep(2000 * attempt);
   }
 }
 
