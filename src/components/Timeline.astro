@@ -38,7 +38,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     <span class="sw pre"></span> pre-release
     {" "}<span class="legend-note">— each row runs from a project's first release to its latest one.</span>
   </p>
-  <div class="d-plat-filter" role="group" aria-label="Show one platform">
+  <div class="d-plat-filter" role="group" aria-label="Platforms to show">
     <button type="button" class="all" data-plat="" aria-pressed="true">All</button>
     {lanePlatforms.map((p) => (
       <button type="button" data-plat={p.id} aria-pressed="false" title={p.name}>
@@ -48,8 +48,9 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   </div>
   <label class="m-plat-filter">
     <span class="visually-hidden">Platform</span>
-    <select aria-label="Show one platform">
+    <select aria-label="Platforms to show">
       <option value="">All platforms</option>
+      <option value="*" hidden disabled>Several platforms</option>
       {lanePlatforms.map((p) => <option value={p.id}>{p.name}</option>)}
     </select>
   </label>
@@ -263,7 +264,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       const svg = view.querySelector("svg");
       if (!svg) return;
       const plan = JSON.parse(view.dataset.plan!) as PlaceLane[];
-      const shown = plan.filter((l) => !plat || l.id === plat);
+      const shown = plan.filter((l) => !plats.size || plats.has(l.id!));
       const p = place(shown, sort, (id) => open.has(id));
       svg.setAttribute("viewBox", `0 0 ${svg.viewBox.baseVal.width} ${p.height}`);
       view.querySelectorAll<SVGGElement>(".lane").forEach((g, i) => {
@@ -316,31 +317,38 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         sel.closest<HTMLElement>(".tl-sort")!.hidden = false;
       }
     };
-    // One platform's lane (or all) in every range, including ones materialized later: logo buttons on
-    // desktop, a select on phones, one shared choice.
+    // Platforms to show (none picked = all) in every range, including ones materialized later: toggling
+    // logo buttons on desktop, a one-platform select on phones, one shared choice.
     const platSelect = root.querySelector<HTMLSelectElement>(".m-plat-filter select")!;
     const platButtons = [...root.querySelectorAll<HTMLButtonElement>(".d-plat-filter button")];
     const empty = root.querySelector<HTMLElement>(".m-empty")!;
-    let plat = "";
+    let plats = new Set<string>();
     const filterLanes = () => {
-      for (const lane of root.querySelectorAll<HTMLElement>(".m-lane")) lane.hidden = Boolean(plat) && lane.dataset.platform !== plat;
+      for (const lane of root.querySelectorAll<HTMLElement>(".m-lane")) lane.hidden = plats.size > 0 && !plats.has(lane.dataset.platform!);
       const lanes = JSON.parse(current().dataset.plan!) as PlaceLane[];
-      empty.hidden = !plat || lanes.some((l) => l.id === plat);
+      empty.hidden = !plats.size || lanes.some((l) => plats.has(l.id!));
     };
-    const setPlat = (value: string) => {
-      plat = value;
-      platSelect.value = value;
-      for (const b of platButtons) b.setAttribute("aria-pressed", String(b.dataset.plat === value));
+    const setPlats = (next: Set<string>) => {
+      plats = next;
+      platSelect.value = plats.size === 0 ? "" : plats.size === 1 ? [...plats][0]! : "*";
+      for (const b of platButtons) b.setAttribute("aria-pressed", String(b.dataset.plat ? plats.has(b.dataset.plat) : plats.size === 0));
       root.classList.add("no-anim");
       for (const v of views) layoutDesktop(v);
       filterLanes();
       requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
       try {
-        localStorage.setItem("tl-plat", value);
+        localStorage.setItem("tl-plat", JSON.stringify([...plats]));
       } catch {}
     };
-    platSelect.addEventListener("change", () => setPlat(platSelect.value));
-    for (const b of platButtons) b.addEventListener("click", () => setPlat(b.dataset.plat === plat ? "" : b.dataset.plat!));
+    platSelect.addEventListener("change", () => setPlats(new Set(platSelect.value ? [platSelect.value] : [])));
+    for (const b of platButtons)
+      b.addEventListener("click", () => {
+        const id = b.dataset.plat;
+        if (!id) return setPlats(new Set()); // "All" resets
+        const next = new Set(plats);
+        if (!next.delete(id)) next.add(id);
+        setPlats(next);
+      });
     const relayout = () => {
       for (const v of views) {
         layoutDesktop(v);
@@ -367,8 +375,11 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     phone.addEventListener("change", materialize);
     materialize();
     try {
+      // an array of platform ids (older visits stored one id as a plain string)
       const saved = localStorage.getItem("tl-plat");
-      if (saved && platSelect.querySelector(`option[value="${saved}"]`)) setPlat(saved);
+      const ids: string[] = saved?.startsWith("[") ? JSON.parse(saved) : saved ? [saved] : [];
+      const known = ids.filter((id) => platButtons.some((b) => b.dataset.plat === id));
+      if (known.length) setPlats(new Set(known));
     } catch {}
     if (sort !== "first") {
       root.classList.add("no-anim");

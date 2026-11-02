@@ -35,3 +35,6 @@ They were sanitised (no scripts, no external references), background-stripped wh
 
 `nes.svg` drops the white fill inside the "Nintendo" oval and `gba.svg` drops the blue badge behind the
 letters: the site renders logos as white silhouettes, and those fills would merge the lettering into a blob.
+
+`pc.svg` and `arcade.svg` are drawn for this site (no trademark to borrow): a monitor reading
+DOS / WINDOWS beside a tower, and a cabinet silhouette with ARCADE, both in a 3×5 pixel font.
