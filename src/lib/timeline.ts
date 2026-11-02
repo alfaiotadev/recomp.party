@@ -52,7 +52,15 @@ function ranks<T>(list: T[], get: (t: T) => Stats): Map<T, Ranks> {
   return out;
 }
 
-export type TimelineView = { id: string; label: string; start: number; end: number; ticks: "month" | "year" };
+export type TimelineView = {
+  id: string;
+  label: string;
+  /** Tab label on phones. */
+  short: string;
+  start: number;
+  end: number;
+  ticks: "hour" | "day" | "week" | "month" | "year";
+};
 
 type Dot = { x: number; prerelease: boolean; date: string; kind: Entry["kind"] };
 
@@ -109,30 +117,51 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 export function views(now = Date.now()): TimelineView[] {
   const d = new Date(now);
   const monthsBack = (n: number) => Date.UTC(d.getUTCFullYear(), d.getUTCMonth() - n, 1);
+  const daysBack = (n: number) => now - n * DAY;
   // A little headroom on the right so the newest dots don't sit on the edge.
   const end = (start: number) => now + (now - start) * 0.03;
+  const view = (id: string, label: string, short: string, start: number, ticks: TimelineView["ticks"]): TimelineView => ({ id, label, short, start, end: end(start), ticks });
   return [
-    { id: "3m", label: "Last 3 months", start: monthsBack(2), end: end(monthsBack(2)), ticks: "month" },
-    { id: "1y", label: "Last year", start: monthsBack(11), end: end(monthsBack(11)), ticks: "month" },
-    { id: "all", label: "All time", start: Date.UTC(2021, 0, 1), end: end(Date.UTC(2021, 0, 1)), ticks: "year" },
+    view("1d", "Today", "1d", daysBack(1), "hour"),
+    view("1w", "Last week", "1w", daysBack(7), "day"),
+    view("1m", "Last month", "1m", daysBack(30), "week"),
+    view("1y", "Last year", "1y", monthsBack(11), "month"),
+    view("all", "All time", "all", Date.UTC(2021, 0, 1), "year"),
   ];
 }
 
+const DAY = 86_400_000;
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+/** Tick times and labels: every 3 hours, every day, every Monday, every month or every year (UTC). */
 function ticksFor(view: TimelineView, x: (t: number) => number): Layout["ticks"] {
   const out: Layout["ticks"] = [];
   const s = new Date(view.start);
-  let y = s.getUTCFullYear();
-  let m = view.ticks === "year" ? 0 : s.getUTCMonth();
-  if (view.ticks === "year" && Date.UTC(y, 0, 1) < view.start) y++;
-  for (;;) {
-    const t = Date.UTC(y, m, 1);
-    if (t > view.end) break;
-    if (t >= view.start) {
-      const major = m === 0;
-      out.push({ x: x(t), label: view.ticks === "year" ? String(y) : major ? `${MONTHS[m]} ${y}` : MONTHS[m], major });
+  const dayStart = Date.UTC(s.getUTCFullYear(), s.getUTCMonth(), s.getUTCDate());
+  const dayLabel = (t: number) => `${new Date(t).getUTCDate()} ${MONTHS[new Date(t).getUTCMonth()]}`;
+  const push = (t: number, label: string, major: boolean) => {
+    if (t >= view.start && t <= view.end) out.push({ x: x(t), label, major });
+  };
+  if (view.ticks === "hour") {
+    for (let t = dayStart; t <= view.end; t += 3 * 3_600_000) {
+      const h = new Date(t).getUTCHours();
+      push(t, h === 0 ? dayLabel(t) : `${String(h).padStart(2, "0")}:00`, h === 0);
     }
-    if (view.ticks === "year") y++;
-    else if (++m === 12) (m = 0), y++;
+  } else if (view.ticks === "day") {
+    for (let t = dayStart; t <= view.end; t += DAY) push(t, `${WEEKDAYS[new Date(t).getUTCDay()]} ${new Date(t).getUTCDate()}`, new Date(t).getUTCDay() === 1);
+  } else if (view.ticks === "week") {
+    const monday = dayStart - ((new Date(dayStart).getUTCDay() + 6) % 7) * DAY;
+    for (let t = monday; t <= view.end; t += 7 * DAY) push(t, dayLabel(t), new Date(t).getUTCDate() <= 7);
+  } else {
+    let y = s.getUTCFullYear();
+    let m = view.ticks === "year" ? 0 : s.getUTCMonth();
+    if (view.ticks === "year" && Date.UTC(y, 0, 1) < view.start) y++;
+    for (let t = Date.UTC(y, m, 1); t <= view.end; t = Date.UTC(y, m, 1)) {
+      const major = m === 0;
+      push(t, view.ticks === "year" ? String(y) : major ? `${MONTHS[m]} ${y}` : MONTHS[m]!, major);
+      if (view.ticks === "year") y++;
+      else if (++m === 12) (m = 0), y++;
+    }
   }
   return out;
 }

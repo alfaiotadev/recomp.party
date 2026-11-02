@@ -11,10 +11,14 @@ interface Props {
   max?: number;
   /** How much each cover tucks under the previous one, as a share of its width. */
   overlap?: number;
+  /** Phones: wrap onto more rows with this many covers and this overlap. */
+  wrap?: { max: number; overlap: number };
 }
-const { entries, size = 34, label, max = Infinity, overlap = 0.45 } = Astro.props;
-const shown = entries.slice(0, max);
-const hidden = entries.length - shown.length;
+const { entries, size = 34, label, max = Infinity, overlap = 0.45, wrap } = Astro.props;
+const total = wrap ? Math.max(max, wrap.max) : max;
+const shown = entries.slice(0, total);
+const hidden = entries.length - Math.min(max, entries.length);
+const hiddenWrapped = wrap ? entries.length - shown.length : 0;
 const initials = (game: string) =>
   game
     .replace(/\(.*\)/, "")
@@ -28,9 +32,9 @@ const initials = (game: string) =>
 
 {
   entries.length > 0 && (
-    <ul class="stack" style={`--w:${size}px;--o:${overlap}`} aria-label={label}>
+    <ul class={wrap ? "stack wrap" : "stack"} style={`--w:${size}px;--o:${overlap}${wrap ? `;--ow:${wrap.overlap}` : ""}`} aria-label={label}>
       {shown.map((e, i) => (
-        <li style={`--i:${i};--r:${i % 2 ? 3 : -3}deg`}>
+        <li class={i >= max ? "extra" : undefined} style={`--i:${i};--r:${i % 2 ? 3 : -3}deg`}>
           <a href={entryPath(e)} class={e.kind} title={e.game}>
             {e.cover ? (
               <img src={e.cover.src} width={e.cover.width} height={e.cover.height} alt={e.game} loading="lazy" decoding="async" />
@@ -43,8 +47,13 @@ const initials = (game: string) =>
         </li>
       ))}
       {hidden > 0 && (
-        <li class="more mono" style={`--i:${shown.length};--r:0deg`}>
+        <li class={wrap ? "more mono wide" : "more mono"} style={`--i:${shown.length};--r:0deg`}>
           +{hidden}
+        </li>
+      )}
+      {hiddenWrapped > 0 && (
+        <li class="more mono narrow" style={`--i:${shown.length};--r:0deg`}>
+          +{hiddenWrapped}
         </li>
       )}
     </ul>
@@ -55,11 +64,12 @@ const initials = (game: string) =>
   .stack {
     display: flex;
     margin: 0;
-    padding: 0 0 0 calc(var(--w) * var(--o));
+    padding: 0;
     list-style: none;
   }
+  /* the overlap is a negative right margin, so a wrapped row starts flush left like the first */
   .stack li {
-    margin-left: calc(var(--w) * var(--o) * -1);
+    margin-right: calc(var(--w) * var(--o) * -1);
     /* a gentle fan: alternate tilt, later covers sit lower in the pile */
     rotate: var(--r);
     z-index: calc(50 - var(--i));
@@ -105,9 +115,28 @@ const initials = (game: string) =>
   }
   .stack li.more {
     align-self: center;
-    margin-left: 0.5rem;
+    margin-left: calc(var(--w) * var(--o) + 0.5rem);
     font-size: 0.68rem;
     color: var(--muted);
+  }
+  .stack li.extra,
+  .stack li.more.narrow {
+    display: none;
+  }
+  @media (max-width: 520px) {
+    .stack.wrap {
+      --o: var(--ow) !important;
+      flex-wrap: wrap;
+      row-gap: 8px;
+      padding-right: calc(var(--w) * var(--o));
+    }
+    .stack.wrap li.extra,
+    .stack.wrap li.more.narrow {
+      display: block;
+    }
+    .stack.wrap li.more.wide {
+      display: none;
+    }
   }
   .ph {
     display: grid;

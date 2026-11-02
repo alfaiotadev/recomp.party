@@ -8,6 +8,8 @@ interface Props {
 const { games } = Astro.props;
 const layouts = views().map((v) => layout(games, v));
 const defaultView = "1y";
+// Phone filter: every platform with a lane in the widest range.
+const lanePlatforms = layouts.at(-1)!.lanes.map((l) => ({ id: l.id, name: l.name }));
 ---
 
 <section class="timeline" aria-label="Release timeline by platform">
@@ -18,7 +20,12 @@ const defaultView = "1y";
       <h2>One lane per original platform</h2>
     </div>
     <div class="tl-tabs" role="group" aria-label="Time range">
-      {layouts.map((l) => <label for={`tl-${l.view.id}`}>{l.view.label}</label>)}
+      {layouts.map((l) => (
+        <label for={`tl-${l.view.id}`} title={l.view.label}>
+          <span class="tab-long">{l.view.label}</span>
+          <span class="tab-short">{l.view.short}</span>
+        </label>
+      ))}
     </div>
   </div>
   <p class="tl-legend">
@@ -27,6 +34,14 @@ const defaultView = "1y";
     <span class="sw pre"></span> pre-release
     {" "}<span class="legend-note">— each row runs from a project's first release to its latest one.</span>
   </p>
+  <label class="m-plat-filter">
+    <span class="visually-hidden">Platform</span>
+    <select aria-label="Show one platform">
+      <option value="">All platforms</option>
+      {lanePlatforms.map((p) => <option value={p.id}>{p.name}</option>)}
+    </select>
+  </label>
+  <p class="m-empty" hidden>No releases for this platform in this range.</p>
   <div class="tl-views">
     {
       layouts.map((l) => {
@@ -139,7 +154,7 @@ const defaultView = "1y";
               </label>
             </div>
             {l.lanes.map((lane) => (
-              <div class="m-lane">
+              <div class="m-lane" data-platform={lane.id}>
                 <div class="m-head">
                   <div class="m-plat">
                     {lane.logo ? <img class="logo-img" src={lane.logo.src} width={lane.logo.w * 0.85} height={lane.logo.h * 0.85} alt={lane.name} /> : <strong>{lane.name}</strong>}
@@ -283,6 +298,24 @@ const defaultView = "1y";
         sel.closest<HTMLElement>(".tl-sort")!.hidden = false;
       }
     };
+    // Phone: show one platform's lane (or all) in every range, including ones materialized later.
+    const platSelect = root.querySelector<HTMLSelectElement>(".m-plat-filter select")!;
+    const empty = root.querySelector<HTMLElement>(".m-empty")!;
+    const filterLanes = () => {
+      const plat = platSelect.value;
+      for (const lane of root.querySelectorAll<HTMLElement>(".m-lane")) lane.hidden = Boolean(plat) && lane.dataset.platform !== plat;
+      empty.hidden = !current().querySelector(".tl-m") || Boolean(current().querySelector(".m-lane:not([hidden])"));
+    };
+    try {
+      const saved = localStorage.getItem("tl-plat");
+      if (saved && platSelect.querySelector(`option[value="${saved}"]`)) platSelect.value = saved;
+    } catch {}
+    platSelect.addEventListener("change", () => {
+      filterLanes();
+      try {
+        localStorage.setItem("tl-plat", platSelect.value);
+      } catch {}
+    });
     const relayout = () => {
       for (const v of views) {
         layoutDesktop(v);
@@ -296,12 +329,13 @@ const defaultView = "1y";
     const materialize = () => {
       const view = current();
       const tpl = view.querySelector<HTMLTemplateElement>(`template[data-part="${phone.matches ? "mobile" : "desktop"}"]`);
-      if (!tpl) return;
+      if (!tpl) return filterLanes();
       tpl.replaceWith(tpl.content);
       root.classList.add("no-anim");
       layoutDesktop(view);
       layoutMobile(view);
       syncControls();
+      filterLanes();
       requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
     };
     for (const radio of root.querySelectorAll<HTMLInputElement>('input[name="tl-view"]')) radio.addEventListener("change", materialize);
@@ -465,14 +499,23 @@ const defaultView = "1y";
   .tl-tabs label:hover {
     color: var(--fg);
   }
-  #tl-3m:checked ~ .tl-head label[for="tl-3m"],
+  .tab-short,
+  .m-plat-filter,
+  .m-empty {
+    display: none;
+  }
+#tl-1d:checked ~ .tl-head label[for="tl-1d"],
+  #tl-1w:checked ~ .tl-head label[for="tl-1w"],
+  #tl-1m:checked ~ .tl-head label[for="tl-1m"],
   #tl-1y:checked ~ .tl-head label[for="tl-1y"],
   #tl-all:checked ~ .tl-head label[for="tl-all"] {
     background: var(--surface-2);
     color: var(--recomp);
     box-shadow: inset 0 0 0 1px rgb(124 240 197 / 0.3);
   }
-  #tl-3m:focus-visible ~ .tl-head label[for="tl-3m"],
+#tl-1d:focus-visible ~ .tl-head label[for="tl-1d"],
+  #tl-1w:focus-visible ~ .tl-head label[for="tl-1w"],
+  #tl-1m:focus-visible ~ .tl-head label[for="tl-1m"],
   #tl-1y:focus-visible ~ .tl-head label[for="tl-1y"],
   #tl-all:focus-visible ~ .tl-head label[for="tl-all"] {
     outline: 2px solid var(--recomp);
@@ -490,7 +533,9 @@ const defaultView = "1y";
   .tl-view svg {
     min-width: 0;
   }
-  #tl-3m:checked ~ .tl-views [data-view="3m"],
+#tl-1d:checked ~ .tl-views [data-view="1d"],
+  #tl-1w:checked ~ .tl-views [data-view="1w"],
+  #tl-1m:checked ~ .tl-views [data-view="1m"],
   #tl-1y:checked ~ .tl-views [data-view="1y"],
   #tl-all:checked ~ .tl-views [data-view="all"] {
     display: block;
@@ -888,6 +933,46 @@ const defaultView = "1y";
     }
     .legend-note {
       display: none;
+    }
+    /* five ranges: short labels, tabs share the full width */
+    .tl-tabs {
+      display: flex;
+      width: 100%;
+    }
+    .tl-tabs label {
+      flex: 1;
+      text-align: center;
+      padding: 0.35rem 0;
+    }
+    .tab-long {
+      display: none;
+    }
+    .tab-short {
+      display: inline;
+    }
+    .m-plat-filter {
+      display: block;
+      margin: 0 0 0.8rem;
+    }
+    .m-plat-filter select {
+      width: 100%;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--fg);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 0.45rem 0.6rem;
+    }
+    .m-empty:not([hidden]) {
+      display: block;
+      padding: 1rem;
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      color: var(--faint);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      text-align: center;
     }
   }
   .m-bar-top {

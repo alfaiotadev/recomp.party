@@ -126,7 +126,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     <span class={`cmp ${arrow(fresh.week)}`}>
       <b>{signed(fresh.week.diff)}</b> vs {fresh.week.before} the week before
     </span>
-    <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.3} label="New projects this week" /></div>
+    <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.3} wrap={{ max: 20, overlap: 0.12 }} label="New projects this week" /></div>
   </div>
 
   <div class="tile">
@@ -498,7 +498,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     text-transform: uppercase;
   }
   /* narrower four-column rows: tuck the covers further in so the "+N" chip stays inside the tile */
-  @media (max-width: 1240px) {
+  @media (521px <= width <= 1240px) {
     .covers :global(.stack) {
       --o: 0.6 !important;
     }
@@ -508,11 +508,17 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     .stats {
       grid-template-columns: minmax(0, 1fr);
     }
+    /* separate cards instead of one panel split by hairlines */
+    .stats {
+      gap: 0.7rem;
+      background: none;
+      border: 0;
+      overflow: visible;
+    }
     .tile {
       padding: 0.85rem 1rem;
-    }
-    .covers :global(.stack) {
-      --o: 0.3 !important;
+      border: 1px solid var(--line);
+      border-radius: 12px;
     }
   }
 </style>
