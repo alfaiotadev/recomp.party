@@ -18,15 +18,31 @@ export async function wikidataApi(params: Record<string, string>, tries = 6): Pr
   }
 }
 
-/** Run a SPARQL query against the Wikidata Query Service; returns the result bindings. */
-export async function sparql(query: string): Promise<Record<string, { value: string }>[]> {
-  const res = await fetch("https://query.wikidata.org/sparql", {
-    method: "POST",
-    headers: { "User-Agent": UA, Accept: "application/sparql-results+json", "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ query }),
-  });
-  if (!res.ok) throw new Error(`Wikidata SPARQL ${res.status}: ${await res.text()}`);
-  return (await res.json()).results.bindings;
+/**
+ * Run a SPARQL query against the Wikidata Query Service; returns the result bindings. The service is often
+ * overloaded (502/503/429, timeouts), so it retries with a growing pause before giving up.
+ */
+export async function sparql(query: string, tries = 5): Promise<Record<string, { value: string }>[]> {
+  for (let attempt = 1; ; attempt++) {
+    let why: string;
+    try {
+      const res = await fetch("https://query.wikidata.org/sparql", {
+        method: "POST",
+        headers: { "User-Agent": UA, Accept: "application/sparql-results+json", "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ query }),
+        signal: AbortSignal.timeout(90_000),
+      });
+      if (res.ok) return (await res.json()).results.bindings;
+      why = `${res.status}: ${(await res.text()).slice(0, 200)}`;
+      if (res.status < 500 && res.status !== 429) throw new Error(`Wikidata SPARQL ${why}`); // a bad query: don't retry
+    } catch (err) {
+      if ((err as Error).message.startsWith("Wikidata SPARQL")) throw err;
+      why = (err as Error).message;
+    }
+    if (attempt >= tries) throw new Error(`Wikidata SPARQL ${why}`);
+    console.warn(`  [wikidata] SPARQL ${why.split("\n")[0]}; retrying in ${15 * attempt} s`);
+    await sleep(15_000 * attempt);
+  }
 }
 
 export type WikidataCandidate = { id: string; label: string; description: string; igdb?: string; year?: string };
