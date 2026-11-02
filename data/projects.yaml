@@ -870,7 +870,7 @@
   added: 2026-11-01
 
 # --- Nintendo 3DS ----------------------------------------------------------------
-- repo: WINDROID-EMU/RECOMP-ZELDA-3DS-ANDROID
+- repo: coccofresco/TriAevum
   game: "The Legend of Zelda: Ocarina of Time 3D"
   platform: 3ds
   kind: recomp
@@ -905,14 +905,6 @@
   tool: segagenesisrecomp
   added: 2026-11-01
 
-# --- Dreamcast -------------------------------------------------------------------
-- repo: beckerd/psp_jgr_portable
-  game: Jet Grind Radio
-  platform: dc
-  kind: port
-  wikidata: Q54938490
-  added: 2026-11-02
-
 # --- PlayStation -----------------------------------------------------------------
 - repo: DiegoDeDios/AlienReRecomp
   game: Alien Resurrection
@@ -928,12 +920,6 @@
   based_on: [mstan/psxrecomp]
   wikidata: Q960773
   added: 2026-10-31
-- repo: kerokline/BreathOfFire3PCPort
-  game: Breath of Fire III
-  platform: ps1
-  kind: recomp
-  wikidata: Q2302461
-  added: 2026-11-02
 - repo: BlackLabelHQ/SymphonyRecomp
   game: "Castlevania: Symphony of the Night"
   platform: ps1
@@ -2024,13 +2010,6 @@
   tool: ReXGlue
   wikidata: Q2337304
   added: 2026-10-31
-- repo: ChaosTheory1075/mp3-ps5
-  game: Max Payne 3
-  platform: x360
-  kind: recomp
-  tool: ReXGlue
-  based_on: [elripalda/gta4-ps5]
-  added: 2026-11-02
 - repo: holdmysocks/mcla-recomp
   game: "Midnight Club: Los Angeles"
   platform: x360
@@ -2329,6 +2308,12 @@
   added: 2026-10-31
 
 # --- PC (DOS/Windows) ------------------------------------------------------------
+- repo: kerokline/BreathOfFire3PCPort
+  game: Breath of Fire III
+  platform: pc
+  kind: recomp
+  wikidata: Q2302461
+  added: 2026-11-02
 - repo: maxevans60/cm0102-bosman-edition
   game: Championship Manager 01/02
   platform: pc
@@ -2377,12 +2362,6 @@
   game: Prototype (2009)
   platform: pc
   kind: port
-  added: 2026-11-02
-- repo: vallfrr/sh4vita
-  game: "Silent Hill 4: The Room"
-  platform: pc
-  kind: port
-  wikidata: Q613124
   added: 2026-11-02
 - repo: RSDKModding/RSDKv4-Decompilation
   game: Sonic 1 & 2 (2013)
@@ -2477,11 +2456,6 @@
   kind: port
   wikidata: Q6113095
   added: 2026-11-02
-- repo: MaryNCRT/Ultimate-Mortal-Kombat-3-iOS-Decompiled
-  game: Ultimate Mortal Kombat 3
-  platform: arcade
-  kind: port
-  added: 2026-11-02
 - repo: mr-finster/vf1-recomp
   game: Virtua Fighter
   platform: arcade
@@ -2507,12 +2481,6 @@
   platform: ps5
   kind: tool
   added: 2026-10-28
-- repo: bloodborne-native/bloodborne-recomp
-  game: Bloodborne
-  platform: ps4
-  kind: tool
-  tool: bloodborne-recomp
-  added: 2026-11-02
 - repo: mstan/gbarecomp
   game: GBARecomp
   platform: gba
