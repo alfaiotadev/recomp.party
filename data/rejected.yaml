@@ -271,6 +271,14 @@
   reason: Releases ship only a build recipe (padmint.json), no playable build.
   date: 2026-11-02
 - repo: omegakatana92/RidgeRacer4Recomp
-  reason: Almost no source in the repo (20 kB), and an early release asset may hold
-    the game itself.
+  reason: Almost no source in the repo (20 kB), and an early release asset may
+    hold the game itself.
+  date: 2026-11-02
+- repo: nodecode-ai/nodecode
+  reason: This project is an AI coding agent software, not a game recompilation,
+    source port, or game porting tool.
+  date: 2026-11-02
+- repo: jessetbh/AkiLauncher
+  reason: Launcher repository; launchers are explicitly rejected per the curation
+    policy.
   date: 2026-11-02
