@@ -88,7 +88,7 @@ main,
   text-shadow: 0 0 12px rgb(124 240 197 / 0.5);
 }
 .brand::after {
-  /* Three-frame party popper (public/tada.svg), at the old cursor blink's pace. */
+  /* Four-frame party popper (public/tada.svg), one loop per old cursor blink (1.1 s). */
   content: "";
   display: inline-block;
   /* Emoji size as Slack sets it next to text; negative block margins keep the header height. */
@@ -96,12 +96,12 @@ main,
   height: 1.45em;
   margin: -0.25em 0 -0.25em 0.2em;
   vertical-align: -0.3em;
-  background: url("/tada.svg") 0 0 / 300% 100% no-repeat;
-  animation: pop 1.1s steps(3) infinite;
+  background: url("/tada.svg") 0 0 / 400% 100% no-repeat;
+  animation: pop 1.1s steps(4) infinite;
 }
 @keyframes pop {
   to {
-    background-position-x: 150%;
+    background-position-x: 133.333%;
   }
 }
 @media (prefers-reduced-motion: reduce) {
