@@ -48,7 +48,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
       newest && (
         <div class="cmp newest">
           <a class="nw-cover" href={entryPath(newest)} tabindex="-1" aria-hidden="true">
-            {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" /> : <span class="ph" />}
+            {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" /> : <span class="ph cover-ph" title="No cover yet" />}
           </a>
           <span class="nw-text">
             <span>
@@ -289,7 +289,6 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     height: 72px;
     object-fit: cover;
     border-radius: 3px;
-    background: var(--surface-2);
     box-shadow: 0 4px 10px -4px rgb(0 0 0 / 0.9);
   }
   .nw-text {

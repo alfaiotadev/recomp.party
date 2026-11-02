@@ -28,7 +28,7 @@ const SHOWN = 8;
                   {u.cover ? (
                     <img src={u.cover.src} width={u.cover.width} height={u.cover.height} alt="" loading="lazy" decoding="async" />
                   ) : (
-                    <span class="ph" />
+                    <span class="ph cover-ph icon" />
                   )}
                   <span class="gt">{u.game}</span>
                 </a>
@@ -158,7 +158,6 @@ const SHOWN = 8;
     height: auto;
     border-radius: 2px;
     object-fit: cover;
-    background: var(--line);
   }
   .gt {
     display: -webkit-box;
