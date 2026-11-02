@@ -10,9 +10,8 @@ const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
 const { newest } = projects;
 const newestMark = newest && platformMark(newest.platform);
 const newestOwner = newest?.repo.split("/")[0];
-const cal = updated.calendar;
-const calMax = Math.max(1, ...cal.days.map((d) => d ?? 0));
-const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const days = updated.days;
+const dayMax = Math.max(1, ...days.days);
 // Platform logos drift in three lanes; each lane holds its logos twice so the loop is seamless.
 const lanes = [0, 1, 2].map((k) => platforms.ids.filter((_, i) => i % 3 === k));
 const logoSize = (id: PlatformId) => {
@@ -122,11 +121,11 @@ const laneStyle = (ids: PlatformId[], k: number) => {
       <span class="n glow">{fresh.value}</span>
       <Spark values={fresh.bars} label={fresh.barsLabel} />
     </div>
-    <span class="label">new projects released this week</span>
+    <span class="label">new projects in the last 7 days</span>
     <span class={`cmp ${arrow(fresh.week)}`}>
-      <b>{signed(fresh.week.diff)}</b> vs {fresh.week.before} by now last week
+      <b>{signed(fresh.week.diff)}</b> vs {fresh.week.before} the 7 days before
     </span>
-    <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.3} wrap={{ max: 20, overlap: 0.12 }} label="New projects this week" /></div>
+    <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.3} wrap={{ max: 20, overlap: 0.12 }} label="New projects in the last 7 days" /></div>
   </div>
 
   <div class="tile">
@@ -134,26 +133,27 @@ const laneStyle = (ids: PlatformId[], k: number) => {
       <span class="n">{updated.value}</span>
       <Spark values={updated.bars} label={updated.barsLabel} />
     </div>
-    <span class="label">projects with releases this week</span>
+    <span class="label">projects updated in the last 7 days</span>
     <span class={`cmp ${arrow(updated.week)}`}>
-      <b>{signed(updated.week.diff)}</b> vs {updated.week.before} by now last week
+      <b>{signed(updated.week.diff)}</b> vs {updated.week.before} the 7 days before
     </span>
     <div class="wk">
       <div class="wk-head mono">
-        <span>
-          week <b>{cal.number}</b>
-        </span>
-        <span>{cal.total.toLocaleString("en")} releases</span>
+        <span>last <b>7</b> days</span>
+        <span>{days.total.toLocaleString("en")} releases</span>
       </div>
-      <ol class="wk-bars" aria-label={`Releases per day in week ${cal.number}`}>
+      <ol class="wk-bars" aria-label="Releases per 24 hours over the last 7 days">
         {
-          cal.days.map((d, i) => (
-            <li class={`day${i === cal.today ? " today" : ""}${d === null ? " future" : ""}`} title={d === null ? `${DAY_NAMES[i]}: still to come` : `${DAY_NAMES[i]}: ${d} releases${i === cal.today ? " so far" : ""}`}>
-              <span class="cnt">{d ?? ""}</span>
-              <span class="col">{d === null ? <span class="q">?</span> : <span class="bar" style={`height:${Math.max(4, (d / calMax) * 100)}%`} />}</span>
-              <span class="dl">{DAY_NAMES[i]![0]}</span>
-            </li>
-          ))
+          days.days.map((d, i) => {
+            const ago = 6 - i; // 0 = the latest 24 hours
+            return (
+              <li class={`day${ago === 0 ? " today" : ""}`} title={`${ago === 0 ? "Last 24 hours" : `${ago * 24}–${(ago + 1) * 24} hours ago`}: ${d} releases`}>
+                <span class="cnt">{d}</span>
+                <span class="col"><span class="bar" style={`height:${Math.max(4, (d / dayMax) * 100)}%`} /></span>
+                <span class="dl">{ago === 0 ? "24h" : `-${ago}d`}</span>
+              </li>
+            );
+          })
         }
       </ol>
     </div>
@@ -334,7 +334,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     flex: none;
     opacity: 0.6;
   }
-  /* Calendar week so far: a bar per day, "?" for the days still to come. */
+  /* The last 7 days: a bar per 24 hours, the latest on the right. */
   .wk {
     margin-top: 0.75rem;
     font-family: var(--mono);
@@ -381,17 +381,9 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     opacity: 0.45;
     border-radius: 2px 2px 0 0;
   }
-  .q {
-    font-size: 0.75rem;
-    line-height: 1;
-    opacity: 0.45;
-  }
   .dl {
     padding-top: 2px;
     font-size: 0.55rem;
-  }
-  .future .dl {
-    opacity: 0.45;
   }
   .today {
     color: var(--recomp);

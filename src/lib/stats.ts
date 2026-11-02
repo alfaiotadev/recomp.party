@@ -5,15 +5,8 @@ const DAY = 86_400_000;
 const now = Date.now();
 const WEEKS = 12;
 
-/** Monday 00:00 UTC of the current ISO week: the weekly numbers start from zero there. */
-const nowDate = new Date(now);
-const monday =
-  Date.UTC(nowDate.getUTCFullYear(), nowDate.getUTCMonth(), nowDate.getUTCDate()) - ((nowDate.getUTCDay() + 6) % 7) * DAY;
-
-/** Calendar week k (0 = this week, so far) as a [start, end) time range. */
-const week = (k: number): [number, number] => [monday - k * 7 * DAY, k === 0 ? now : monday - (k - 1) * 7 * DAY];
-/** Last week up to the same weekday and time, so a week in progress is compared fairly. */
-const lastWeekSoFar: [number, number] = [monday - 7 * DAY, now - 7 * DAY];
+/** Week k as the 168 hours ending k weeks before the build (0 = the last 7 days). */
+const week = (k: number): [number, number] => [now - (k + 1) * 7 * DAY, now - k * 7 * DAY];
 const within = (iso: string | undefined, [a, b]: [number, number]) => !!iso && Date.parse(iso) >= a && Date.parse(iso) < b;
 
 /** Oldest week first, so the bars read left → right towards "now". */
@@ -25,16 +18,14 @@ const newIn = (range: [number, number]) => newGamesIn(range).length;
 const updatedIn = (range: [number, number]) =>
   games.filter((g) => (g.snap?.releaseDates ?? []).some((r) => within(r.date, range))).length;
 
-/** The calendar week (ISO, UTC) so far: releases per day Mon–Sun, null for days still to come. */
-function calendarWeek() {
-  const today = Math.floor((now - monday) / DAY); // Monday = 0
-  const thursday = new Date(monday + 3 * DAY); // ISO weeks belong to the year of their Thursday
-  const number = Math.floor((thursday.getTime() - Date.UTC(thursday.getUTCFullYear(), 0, 1)) / DAY / 7) + 1;
+/** Releases per 24 hours over the last 7 days, oldest first (the last entry is the latest 24 hours). */
+function lastDays() {
   const dates = games.flatMap((g) => (g.snap?.releaseDates ?? []).map((r) => Date.parse(r.date)));
-  const days = Array.from({ length: 7 }, (_, i) =>
-    i > today ? null : dates.filter((t) => t >= monday + i * DAY && t < monday + (i + 1) * DAY).length,
-  );
-  return { number, today, days, total: days.reduce<number>((a, b) => a + (b ?? 0), 0) };
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const end = now - (6 - i) * DAY;
+    return dates.filter((t) => t >= end - DAY && t < end).length;
+  });
+  return { days, total: days.reduce((a, b) => a + b, 0) };
 }
 
 export type Delta = { now: number; before: number; diff: number };
@@ -54,15 +45,15 @@ export const stats = {
     value: newIn(week(0)),
     /** This week's new projects, newest first. */
     entries: newGamesIn(week(0)).sort((a, b) => b.firstReleaseAt!.localeCompare(a.firstReleaseAt!)),
-    week: delta(newIn(week(0)), newIn(lastWeekSoFar)),
+    week: delta(newIn(week(0)), newIn(week(1))),
     bars: series(newIn),
-    barsLabel: "New projects per calendar week, last 12 weeks (this one so far)",
+    barsLabel: "New projects per 7 days, last 12 weeks",
   },
   updated: {
     value: updatedIn(week(0)),
-    week: delta(updatedIn(week(0)), updatedIn(lastWeekSoFar)),
+    week: delta(updatedIn(week(0)), updatedIn(week(1))),
     bars: series(updatedIn),
-    barsLabel: "Projects with a release per calendar week, last 12 weeks (this one so far)",
-    calendar: calendarWeek(),
+    barsLabel: "Projects with a release per 7 days, last 12 weeks",
+    days: lastDays(),
   },
 };
