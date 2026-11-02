@@ -266,6 +266,7 @@ export function layout(games: Entry[], view: TimelineView, now = Date.now()): La
   }
 
   const plan: PlaceLane[] = lanes.map((l) => ({
+    id: l.id,
     items: l.items.map((it) => ({ id: it.row.id, ranks: it.row.ranks, children: it.children?.map((c) => ({ id: c.id, ranks: c.ranks })) })),
   }));
   const ticks = ticksFor(view, x);
