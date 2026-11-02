@@ -173,6 +173,13 @@ main,
 .scan.running .scan-label {
   display: none;
 }
+.scan.due .scan-t {
+  color: var(--port);
+  text-shadow: none;
+}
+.scan.due .radar::after {
+  animation-duration: 6s;
+}
 @keyframes sweep {
   to {
     rotate: 1turn;
