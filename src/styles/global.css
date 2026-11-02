@@ -131,6 +131,7 @@ main,
   margin-right: auto;
 }
 .scan,
+.fresh,
 .review {
   display: inline-flex;
   align-items: center;
@@ -155,6 +156,7 @@ main,
   font-variant-numeric: tabular-nums;
 }
 .scan:hover,
+.fresh:hover,
 .review:hover {
   color: var(--muted);
   border-color: rgb(124 240 197 / 0.35);
@@ -206,8 +208,19 @@ main,
     animation: none;
   }
 }
+.fresh {
+  padding: 0.2rem 0.6rem;
+}
+.fresh-t {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.fresh.stale .fresh-t {
+  color: var(--port);
+}
 @media (max-width: 560px) {
   .scan-label,
+  .fresh-label,
   .review-label {
     display: none;
   }

@@ -4,7 +4,7 @@ import Highlights from "../components/Highlights.astro";
 import StatTiles from "../components/StatTiles.astro";
 import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
-import { ago, fitLogo, games, generatedAt, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolGames, tools } from "../lib/data.ts";
+import { fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolGames, tools } from "../lib/data.ts";
 
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
 const toolStrip = tools.slice(0, 8);
@@ -21,7 +21,6 @@ const toolStrip = tools.slice(0, 8);
   </div>
 
   <StatTiles />
-  <p class="refreshed mono">data refreshed {ago(generatedAt)}</p>
 
   <Highlights />
 
@@ -168,12 +167,6 @@ const toolStrip = tools.slice(0, 8);
   .hero .lede {
     max-width: 62rem;
     text-wrap: pretty;
-  }
-  .refreshed {
-    margin: 0.5rem 0 0;
-    font-size: 0.7rem;
-    color: var(--faint);
-    text-align: right;
   }
   .sec-head {
     display: flex;
