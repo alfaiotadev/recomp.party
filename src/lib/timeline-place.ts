@@ -10,7 +10,8 @@ export const AXIS_H = 30; // also hosts the sort control above the name column
 
 export type Ranks = Record<string, number>;
 export type PlaceItem = { id: string; ranks: Ranks; children?: { id: string; ranks: Ranks }[] };
-export type PlaceLane = { items: PlaceItem[] };
+/** `id` is the platform, so the browser can show one lane on its own. */
+export type PlaceLane = { id?: string; items: PlaceItem[] };
 
 export type Placement = {
   /** Row centre per row id; a closed group's children sit on the group row. */

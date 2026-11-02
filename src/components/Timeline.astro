@@ -1,5 +1,5 @@
 ---
-import { ago, entryPath, shortDate, type Entry } from "../lib/data.ts";
+import { ago, entryPath, fitLogoArea, platformLogo, shortDate, type Entry, type PlatformId } from "../lib/data.ts";
 import { AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, SORTS, views, W } from "../lib/timeline.ts";
 
 interface Props {
@@ -8,8 +8,12 @@ interface Props {
 const { games } = Astro.props;
 const layouts = views().map((v) => layout(games, v));
 const defaultView = "1y";
-// Phone filter: every platform with a lane in the widest range.
-const lanePlatforms = layouts.at(-1)!.lanes.map((l) => ({ id: l.id, name: l.name }));
+// Platform filter (logo buttons on desktop, a select on phones): every platform with a lane in the widest range.
+const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
+  const logo = platformLogo(l.id as PlatformId);
+  // same visual weight for wordmarks and square marks
+  return { id: l.id, name: l.name, logo: logo && { src: logo.src, ...fitLogoArea(logo, 700, 84, 18) } };
+});
 ---
 
 <section class="timeline" aria-label="Release timeline by platform">
@@ -34,6 +38,14 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => ({ id: l.id, name: l.name
     <span class="sw pre"></span> pre-release
     {" "}<span class="legend-note">— each row runs from a project's first release to its latest one.</span>
   </p>
+  <div class="d-plat-filter" role="group" aria-label="Show one platform">
+    <button type="button" class="all" data-plat="" aria-pressed="true">All</button>
+    {lanePlatforms.map((p) => (
+      <button type="button" data-plat={p.id} aria-pressed="false" title={p.name}>
+        {p.logo ? <img class="logo-img" src={p.logo.src} width={+p.logo.w.toFixed(1)} height={+p.logo.h.toFixed(1)} alt={p.name} /> : p.name}
+      </button>
+    ))}
+  </div>
   <label class="m-plat-filter">
     <span class="visually-hidden">Platform</span>
     <select aria-label="Show one platform">
@@ -250,16 +262,22 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => ({ id: l.id, name: l.name
     const layoutDesktop = (view: HTMLElement) => {
       const svg = view.querySelector("svg");
       if (!svg) return;
-      const p = place(JSON.parse(view.dataset.plan!), sort, (id) => open.has(id));
+      const plan = JSON.parse(view.dataset.plan!) as PlaceLane[];
+      const shown = plan.filter((l) => !plat || l.id === plat);
+      const p = place(shown, sort, (id) => open.has(id));
       svg.setAttribute("viewBox", `0 0 ${svg.viewBox.baseVal.width} ${p.height}`);
       view.querySelectorAll<SVGGElement>(".lane").forEach((g, i) => {
-        g.style.transform = `translateY(${p.lanes[i]!.y}px)`;
-        g.querySelector("rect")!.setAttribute("height", String(p.lanes[i]!.height));
+        const k = shown.indexOf(plan[i]!);
+        g.style.display = k < 0 ? "none" : "";
+        if (k < 0) return;
+        g.style.transform = `translateY(${p.lanes[k]!.y}px)`;
+        g.querySelector("rect")!.setAttribute("height", String(p.lanes[k]!.height));
       });
       for (const line of view.querySelectorAll(".to-bottom")) line.setAttribute("y2", String(p.height));
       for (const el of view.querySelectorAll<HTMLElement>(".tl-inner > .tl-sort, .tl-inner > .tl-fold")) el.style.height = `${(AXIS_H / p.height) * 100}%`;
       for (const row of svg.querySelectorAll<SVGElement>(".row[data-id]")) {
         const id = row.dataset.id!;
+        row.style.display = p.y[id] === undefined ? "none" : "";
         if (p.y[id] === undefined) continue;
         row.style.transform = `translateY(${p.y[id]}px)`;
         if (row.classList.contains("child")) {
@@ -298,24 +316,31 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => ({ id: l.id, name: l.name
         sel.closest<HTMLElement>(".tl-sort")!.hidden = false;
       }
     };
-    // Phone: show one platform's lane (or all) in every range, including ones materialized later.
+    // One platform's lane (or all) in every range, including ones materialized later: logo buttons on
+    // desktop, a select on phones, one shared choice.
     const platSelect = root.querySelector<HTMLSelectElement>(".m-plat-filter select")!;
+    const platButtons = [...root.querySelectorAll<HTMLButtonElement>(".d-plat-filter button")];
     const empty = root.querySelector<HTMLElement>(".m-empty")!;
+    let plat = "";
     const filterLanes = () => {
-      const plat = platSelect.value;
       for (const lane of root.querySelectorAll<HTMLElement>(".m-lane")) lane.hidden = Boolean(plat) && lane.dataset.platform !== plat;
-      empty.hidden = !current().querySelector(".tl-m") || Boolean(current().querySelector(".m-lane:not([hidden])"));
+      const lanes = JSON.parse(current().dataset.plan!) as PlaceLane[];
+      empty.hidden = !plat || lanes.some((l) => l.id === plat);
     };
-    try {
-      const saved = localStorage.getItem("tl-plat");
-      if (saved && platSelect.querySelector(`option[value="${saved}"]`)) platSelect.value = saved;
-    } catch {}
-    platSelect.addEventListener("change", () => {
+    const setPlat = (value: string) => {
+      plat = value;
+      platSelect.value = value;
+      for (const b of platButtons) b.setAttribute("aria-pressed", String(b.dataset.plat === value));
+      root.classList.add("no-anim");
+      for (const v of views) layoutDesktop(v);
       filterLanes();
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
       try {
-        localStorage.setItem("tl-plat", platSelect.value);
+        localStorage.setItem("tl-plat", value);
       } catch {}
-    });
+    };
+    platSelect.addEventListener("change", () => setPlat(platSelect.value));
+    for (const b of platButtons) b.addEventListener("click", () => setPlat(b.dataset.plat === plat ? "" : b.dataset.plat!));
     const relayout = () => {
       for (const v of views) {
         layoutDesktop(v);
@@ -341,6 +366,10 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => ({ id: l.id, name: l.name
     for (const radio of root.querySelectorAll<HTMLInputElement>('input[name="tl-view"]')) radio.addEventListener("change", materialize);
     phone.addEventListener("change", materialize);
     materialize();
+    try {
+      const saved = localStorage.getItem("tl-plat");
+      if (saved && platSelect.querySelector(`option[value="${saved}"]`)) setPlat(saved);
+    } catch {}
     if (sort !== "first") {
       root.classList.add("no-anim");
       relayout();
@@ -503,6 +532,59 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => ({ id: l.id, name: l.name
   .m-plat-filter,
   .m-empty {
     display: none;
+  }
+  .d-plat-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    margin: 0 0 0.9rem;
+  }
+  .d-plat-filter button {
+    display: inline-flex;
+    align-items: center;
+    height: 2rem;
+    padding: 0 0.55rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: none;
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  .d-plat-filter img {
+    opacity: 0.4;
+    transition: opacity 0.15s;
+  }
+  .d-plat-filter button:hover {
+    color: var(--fg);
+  }
+  .d-plat-filter button:hover img {
+    opacity: 0.8;
+  }
+  .d-plat-filter button[aria-pressed="true"] {
+    background: var(--surface-2);
+    border-color: rgb(124 240 197 / 0.3);
+    color: var(--recomp);
+  }
+  .d-plat-filter button[aria-pressed="true"] img {
+    opacity: 1;
+  }
+  .d-plat-filter button:focus-visible {
+    outline: 2px solid var(--recomp);
+  }
+  .m-empty:not([hidden]) {
+    display: block;
+    margin: 0 0 0.9rem;
+    padding: 1rem;
+    border: 1px dashed var(--line);
+    border-radius: 12px;
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-align: center;
   }
 #tl-1d:checked ~ .tl-head label[for="tl-1d"],
   #tl-1w:checked ~ .tl-head label[for="tl-1w"],
@@ -964,15 +1046,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => ({ id: l.id, name: l.name
       border-radius: 6px;
       padding: 0.45rem 0.6rem;
     }
-    .m-empty:not([hidden]) {
-      display: block;
-      padding: 1rem;
-      border: 1px dashed var(--line);
-      border-radius: 12px;
-      color: var(--faint);
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      text-align: center;
+    .d-plat-filter {
+      display: none;
     }
   }
   .m-bar-top {
