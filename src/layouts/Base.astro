@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { tools } from "../lib/data.ts";
+import { generatedAt, tools } from "../lib/data.ts";
 import { CANDIDATE_PRS, DISCOVERY_PRS, DISCOVERY_UTC } from "../lib/discovery.ts";
 
 interface Props {
@@ -68,6 +68,15 @@ const here = Astro.url.pathname;
         <span class="scan-label">next scan</span>
         <span class="scan-t">T-··:··:··</span>
       </a>
+      <a
+        class="fresh"
+        href="https://github.com/alfaiotadev/recomp.party/actions/workflows/fetch.yml"
+        data-fresh={generatedAt}
+        title={`GitHub data last fetched ${generatedAt.slice(0, 16).replace("T", " ")} UTC; it refreshes every six hours. Click for the fetch runs.`}
+      >
+        <span class="fresh-label">data</span>
+        <span class="fresh-t">··:·· ago</span>
+      </a>
       <a class="review" href={CANDIDATE_PRS} data-review hidden>
         <span class="review-n"></span>
         <span class="review-label">in review</span>
@@ -106,6 +115,7 @@ const here = Astro.url.pathname;
     <script>
       import "../scripts/decode.ts";
       import "../scripts/scan.ts";
+      import "../scripts/fresh.ts";
       import "../scripts/review.ts";
       import "../scripts/outbound.ts";
     </script>

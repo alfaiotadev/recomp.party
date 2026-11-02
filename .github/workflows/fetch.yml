@@ -43,4 +43,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "data: refresh snapshot"
-          git push
+          # main often moves during the run (merges, discovery); only this job writes these files, so a rebase is safe.
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((i * 10))
+          done
+          exit 1
