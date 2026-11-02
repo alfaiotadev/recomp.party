@@ -267,4 +267,74 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
     flex: none;
     color: var(--muted);
   }
+
+  /* List layout (toggle above the grid): a thumbnail row with the platform on the right. */
+  :global(#games.list) .card {
+    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: 2.6rem minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 0.75rem;
+    padding: 0.4rem 0.7rem 0.4rem 0.45rem;
+    border-left: 2px solid var(--recomp);
+    contain-intrinsic-size: auto 72px;
+  }
+  :global(#games.list) .card.port {
+    border-left-color: var(--port);
+  }
+  :global(#games.list) .card::before,
+  :global(#games.list) .card::after {
+    display: none;
+  }
+  :global(#games.list) .art,
+  :global(#games.list) .art-mark {
+    position: static;
+    grid-column: 1;
+    grid-row: 1;
+    width: 2.6rem;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    scale: 1;
+    translate: none;
+    border-radius: 3px;
+    z-index: 0;
+  }
+  :global(#games.list) .art-mark {
+    object-fit: contain;
+    opacity: 0.25;
+  }
+  :global(#games.list) .card:hover .art {
+    scale: 1;
+  }
+  :global(#games.list) .body {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0;
+  }
+  :global(#games.list) .card.peek .body {
+    opacity: 1;
+  }
+  :global(#games.list) .card.peek .release {
+    pointer-events: auto;
+  }
+  :global(#games.list) .top {
+    position: static;
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+    margin-top: 0.2rem;
+  }
+  :global(#games.list) .top .badge {
+    display: none;
+  }
+  :global(#games.list) h3 {
+    font-size: 0.92rem;
+    text-shadow: none;
+  }
+  :global(#games.list) .repo {
+    -webkit-line-clamp: 1;
+  }
+  :global(#games.list) .release {
+    padding-top: 0.2rem;
+  }
 </style>

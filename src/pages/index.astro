@@ -83,7 +83,20 @@ const toolStrip = tools.slice(0, 8);
         </select>
       </form>
     </div>
-    <p class="muted count mono" id="count" aria-live="polite">{games.length} games</p>
+    <div class="list-bar">
+      <p class="muted count mono" id="count" aria-live="polite">{games.length} games</p>
+      <div class="views" role="group" aria-label="Layout">
+        <button type="button" data-layout="list" aria-pressed="false" title="List">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3.5h12M2 8h12M2 12.5h12" /></svg>
+        </button>
+        <button type="button" data-layout="one" class="phone-only" aria-pressed="false" title="One column">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="10" height="12" rx="1.5" /></svg>
+        </button>
+        <button type="button" data-layout="grid" aria-pressed="true" title="Grid">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="2" width="5" height="5" rx="1" /><rect x="9" y="2" width="5" height="5" rx="1" /><rect x="2" y="9" width="5" height="5" rx="1" /><rect x="9" y="9" width="5" height="5" rx="1" /></svg>
+        </button>
+      </div>
+    </div>
     <ul class="grid" id="games">
       {games.map((g) => <GameCard entry={g} />)}
     </ul>
@@ -112,6 +125,25 @@ const toolStrip = tools.slice(0, 8);
       count.textContent = shown === cards.length ? `${cards.length} games` : `${shown} of ${cards.length} games`;
     };
     form.addEventListener("input", apply);
+    // Layout: list, one column (phones) or the card grid; remembered per browser.
+    const list = document.getElementById("games");
+    const buttons = [...document.querySelectorAll(".views button")];
+    const setLayout = (mode) => {
+      list.classList.remove("list", "one");
+      if (mode !== "grid") list.classList.add(mode);
+      for (const b of buttons) b.setAttribute("aria-pressed", String(b.dataset.layout === mode));
+    };
+    for (const b of buttons)
+      b.addEventListener("click", () => {
+        setLayout(b.dataset.layout);
+        try {
+          localStorage.setItem("games-layout", b.dataset.layout);
+        } catch {}
+      });
+    try {
+      const saved = localStorage.getItem("games-layout");
+      if (saved === "list" || saved === "one") setLayout(saved);
+    } catch {}
     // ?q=… (e.g. from "Most recompiled games") pre-fills the search
     const q = new URLSearchParams(location.search).get("q");
     if (q) {
@@ -233,9 +265,68 @@ const toolStrip = tools.slice(0, 8);
       flex: 1;
     }
   }
+  .list-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: -0.4rem 0 0.8rem;
+  }
   .count {
     font-size: 0.72rem;
-    margin: -0.4rem 0 0.8rem;
+    margin: 0;
+  }
+  .views {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: var(--surface);
+  }
+  .views button {
+    display: grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.6rem;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .views button:hover {
+    color: var(--fg);
+  }
+  .views button[aria-pressed="true"] {
+    background: var(--surface-2);
+    color: var(--recomp);
+    box-shadow: inset 0 0 0 1px rgb(124 240 197 / 0.3);
+  }
+  .views svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+  /* one column is a phone layout; on wider screens the grid already fits several */
+  .phone-only {
+    display: none !important;
+  }
+  .grid.list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4rem;
+  }
+  @media (max-width: 720px) {
+    .phone-only {
+      display: grid !important;
+    }
+    .grid.one {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
   .grid {
     display: grid;
