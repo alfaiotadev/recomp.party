@@ -1,6 +1,6 @@
 ---
 import { ago, entryPath, fitLogoArea, platformLogo, shortDate, type Entry, type PlatformId } from "../lib/data.ts";
-import { AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, SORTS, views, W } from "../lib/timeline.ts";
+import { AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, PAD_R, SORTS, views, W } from "../lib/timeline.ts";
 
 interface Props {
   games: Entry[];
@@ -61,7 +61,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         // Only the default range's desktop chart is live; the rest wait in <template>s until shown.
         const Desktop = l.view.id === defaultView ? "div" : "template";
         return (
-        <div class="tl-view" data-view={l.view.id} data-plan={JSON.stringify(l.plan)}>
+        <div class="tl-view" data-view={l.view.id} data-plan={JSON.stringify(l.plan)} data-axis={l.view.id === "1d" ? JSON.stringify({ start: l.view.start, end: l.view.end, l: NAME_X + NAME_W, r: W - PAD_R }) : undefined}>
+          {l.view.id === "1d" && <p class="today-none" hidden>No releases yet today.</p>}
           <Desktop class="part" data-part="desktop">
           <div class="tl-inner">
           <div class="tl-fold" hidden style={`left:0.75%;width:${(LABEL_W / W) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
@@ -259,16 +260,148 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     } catch {}
     const allGroups = new Set(views.flatMap((v) => (JSON.parse(v.dataset.plan!) as PlaceLane[]).flatMap((l) => l.items.filter((i) => i.children).map((i) => i.id))));
 
+    // "Today" is the visitor's own calendar day. The build renders the last 24 hours, which always
+    // contains the visitor's last midnight; here every time position in that range is mapped onto
+    // local 00:00–24:00 and whatever came before midnight is dropped.
+    const todayHidden = new Map<HTMLElement, Set<string>>(); // view → row ids with nothing today
+    const SVG = "http://www.w3.org/2000/svg";
+    // Elements made here need the component's scoped-style attribute (data-astro-cid-…) to pick up its CSS.
+    const cid = [...root.attributes].find((at) => at.name.startsWith("data-astro-cid-"))?.name;
+    const scoped = <T extends Element>(el: T): T => {
+      if (cid) el.setAttribute(cid, "");
+      for (const c of el.children) scoped(c);
+      return el;
+    };
+    const retimeToday = (view: HTMLElement, part: "desktop" | "mobile") => {
+      const a = JSON.parse(view.dataset.axis!) as { start: number; end: number; l: number; r: number };
+      const day0 = new Date();
+      day0.setHours(0, 0, 0, 0);
+      const day1 = new Date(day0);
+      day1.setDate(day1.getDate() + 1);
+      const s = day0.getTime(), e = day1.getTime();
+      const span = a.r - a.l;
+      const tOfX = (x: number) => a.start + ((x - a.l) / span) * (a.end - a.start);
+      const xOfT = (t: number) => a.l + ((t - s) / (e - s)) * span;
+      const tOfP = (p: number) => a.start + (p / 100) * (a.end - a.start);
+      const pOfT = (t: number) => +(((t - s) / (e - s)) * 100).toFixed(2);
+      const ticks: { t: number; label: string; major: boolean }[] = [];
+      for (const d = new Date(day0); d.getTime() < e; d.setHours(d.getHours() + 3)) {
+        const h = d.getHours();
+        ticks.push({ t: d.getTime(), label: h === 0 ? d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : `${String(h).padStart(2, "0")}:00`, major: h === 0 });
+      }
+      const hidden = todayHidden.get(view) ?? new Set<string>();
+      todayHidden.set(view, hidden);
+      let shown = 0;
+
+      if (part === "desktop") {
+        const svg = view.querySelector("svg")!;
+        for (const row of svg.querySelectorAll<SVGElement>(".row[data-id]")) {
+          const bar = row.querySelector(".bar")!;
+          const t1 = tOfX(+bar.getAttribute("x1")!), t2 = tOfX(+bar.getAttribute("x2")!);
+          if (t2 < s) {
+            hidden.add(row.dataset.id!);
+            continue;
+          }
+          if (!row.classList.contains("group")) shown++;
+          const x1 = Math.max(a.l, xOfT(t1));
+          bar.setAttribute("x1", String(x1));
+          bar.setAttribute("x2", String(xOfT(t2)));
+          for (const dot of row.querySelectorAll("circle.dot")) {
+            const t = tOfX(+dot.getAttribute("cx")!);
+            if (t < s) dot.remove();
+            else dot.setAttribute("cx", String(xOfT(t)));
+          }
+          row.querySelector(".bar-clip")?.remove();
+          if (t1 < s) {
+            const clip = document.createElementNS(SVG, "path");
+            clip.setAttribute("class", "bar-clip");
+            clip.setAttribute("d", `M${x1 + 6} -4 L${x1} 0 L${x1 + 6} 4`);
+            bar.after(scoped(clip));
+          }
+          const guide = row.querySelector(".guide");
+          if (guide && x1 - 6 - +guide.getAttribute("x1")! > 10) guide.setAttribute("x2", String(x1 - 6));
+          else guide?.remove();
+        }
+        svg.querySelectorAll(".tick").forEach((t) => t.remove());
+        const now = svg.querySelector(".now")!;
+        for (const tk of ticks) {
+          const g = document.createElementNS(SVG, "g");
+          g.setAttribute("class", tk.major ? "tick major" : "tick");
+          const x = xOfT(tk.t);
+          const line = document.createElementNS(SVG, "line");
+          line.setAttribute("class", "to-bottom");
+          for (const [k, v] of Object.entries({ x1: x, x2: x, y1: AXIS_H - 4, y2: svg.viewBox.baseVal.height })) line.setAttribute(k, String(v));
+          const text = document.createElementNS(SVG, "text");
+          text.setAttribute("x", String(x + 3));
+          text.setAttribute("y", String(AXIS_H - 8));
+          text.textContent = tk.label;
+          g.append(line, text);
+          now.before(scoped(g));
+        }
+        now.setAttribute("x1", String(xOfT(Date.now())));
+        now.setAttribute("x2", String(xOfT(Date.now())));
+        // per-lane project counts for the day
+        const plan = JSON.parse(view.dataset.plan!) as PlaceLane[];
+        view.querySelectorAll<SVGGElement>(".lane").forEach((g, i) => {
+          const n = plan[i]!.items.reduce((sum, it) => sum + (it.children ? it.children.filter((c) => !hidden.has(c.id)).length : hidden.has(it.id) ? 0 : 1), 0);
+          g.querySelector(".lane-count")!.textContent = `${n} ${n === 1 ? "project" : "projects"}`;
+        });
+      } else {
+        const m = view.querySelector<HTMLElement>(".tl-m")!;
+        for (const li of m.querySelectorAll<HTMLElement>(".m-row")) {
+          const track = li.querySelector<HTMLElement>(":scope > a > .m-track, :scope > button > .m-track")!;
+          const bar = track.querySelector<HTMLElement>(".m-bar")!;
+          const p1 = parseFloat(bar.style.left), p2 = p1 + parseFloat(bar.style.width);
+          const t1 = tOfP(p1), t2 = tOfP(p2);
+          if (t2 < s) {
+            li.classList.add("not-today");
+            continue;
+          }
+          if (!li.classList.contains("m-group")) shown++;
+          const q1 = Math.max(0, pOfT(t1));
+          bar.style.left = `${q1}%`;
+          bar.style.width = `${Math.max(0, pOfT(t2) - q1)}%`;
+          for (const dot of track.querySelectorAll<HTMLElement>(".m-dot")) {
+            const t = tOfP(parseFloat(dot.style.left));
+            if (t < s) dot.remove();
+            else dot.style.left = `${pOfT(t)}%`;
+          }
+          const clip = track.querySelector(".m-clip");
+          if (t1 >= s) clip?.remove();
+          else if (!clip) track.prepend(scoped(Object.assign(document.createElement("span"), { className: "m-clip" })));
+        }
+        for (const lane of m.querySelectorAll<HTMLElement>(".m-lane")) {
+          const n = lane.querySelectorAll(".m-row:not(.m-group):not(.not-today)").length;
+          lane.classList.toggle("not-today", n === 0);
+          lane.querySelector(".m-count")!.textContent = `${n} ${n === 1 ? "project" : "projects"}`;
+          const axis = lane.querySelector(".m-axis")!;
+          axis.replaceChildren(...ticks.filter((tk, k) => tk.major || k % 2 === 0).map((tk) => scoped(Object.assign(document.createElement("span"), { textContent: tk.label, style: `left:${pOfT(tk.t)}%` }))));
+          const grid = lane.querySelector(".m-grid")!;
+          grid.replaceChildren(
+            ...ticks.map((tk) => scoped(Object.assign(document.createElement("span"), { className: tk.major ? "major" : "", style: `left:${pOfT(tk.t)}%` }))),
+            scoped(Object.assign(document.createElement("span"), { className: "m-now", style: `left:${pOfT(Date.now())}%` })),
+          );
+        }
+      }
+      view.querySelector<HTMLElement>(".today-none")!.hidden = shown > 0;
+    };
+
     // Desktop: rerun the placement and move rows, lanes, grid lines and the controls to match.
     const layoutDesktop = (view: HTMLElement) => {
       const svg = view.querySelector("svg");
       if (!svg) return;
       const plan = JSON.parse(view.dataset.plan!) as PlaceLane[];
-      const shown = plan.filter((l) => !plats.size || plats.has(l.id!));
+      const off = todayHidden.get(view);
+      const today = (lanes: PlaceLane[]) =>
+        lanes
+          .map((l) => ({ ...l, items: l.items.filter((it) => !off!.has(it.id)).map((it) => (it.children ? { ...it, children: it.children.filter((c) => !off!.has(c.id)) } : it)) }))
+          .filter((l) => l.items.length);
+      const visible = off ? today(plan) : plan;
+      const shown = visible.filter((l) => !plats.size || plats.has(l.id!));
       const p = place(shown, sort, (id) => open.has(id));
       svg.setAttribute("viewBox", `0 0 ${svg.viewBox.baseVal.width} ${p.height}`);
       view.querySelectorAll<SVGGElement>(".lane").forEach((g, i) => {
-        const k = shown.indexOf(plan[i]!);
+        const k = shown.findIndex((l) => l.id === plan[i]!.id);
         g.style.display = k < 0 ? "none" : "";
         if (k < 0) return;
         g.style.transform = `translateY(${p.lanes[k]!.y}px)`;
@@ -364,6 +497,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       const tpl = view.querySelector<HTMLTemplateElement>(`template[data-part="${phone.matches ? "mobile" : "desktop"}"]`);
       if (!tpl) return filterLanes();
       tpl.replaceWith(tpl.content);
+      if (view.dataset.axis) retimeToday(view, phone.matches ? "mobile" : "desktop");
       root.classList.add("no-anim");
       layoutDesktop(view);
       layoutMobile(view);
@@ -586,6 +720,10 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   .d-plat-filter button:focus-visible {
     outline: 2px solid var(--recomp);
   }
+  .not-today {
+    display: none !important;
+  }
+  .today-none:not([hidden]),
   .m-empty:not([hidden]) {
     display: block;
     margin: 0 0 0.9rem;
