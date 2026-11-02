@@ -2,6 +2,9 @@
 import { loadStarHistory } from "../../data/load.ts";
 import { games, PLATFORMS, platformLogo, type Entry, type Logo, type PlatformId } from "./data.ts";
 
+/** Cards per slide: three full rows of two on phones; wider screens show the first five (or four) in one row. */
+const CARDS = 6;
+
 const DAY = 86_400_000;
 const now = Date.now();
 const weekAgo = now - 7 * DAY;
@@ -50,7 +53,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
       })
       .filter((r) => r.delta > 0)
       .sort((a, b) => b.delta - a.delta)
-      .slice(0, 5)
+      .slice(0, CARDS)
       .map(({ entry, delta, before }) => ({
         entry,
         value: `+${delta.toLocaleString("en")}`,
@@ -67,7 +70,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
       return { entry, perDay: entry.snap!.stars / days };
     })
     .sort((a, b) => b.perDay - a.perDay)
-    .slice(0, 5)
+    .slice(0, CARDS)
     .map(({ entry, perDay }) => ({
       entry,
       value: `${Math.round(perDay).toLocaleString("en")}/day`,
@@ -85,9 +88,9 @@ function newReleases(): { title: string; note: string; items: Entry[]; rest: Ent
   return {
     title: days === 7 ? "New this week" : "New in the last two weeks",
     note: "first playable release",
-    items: sorted.slice(0, 5),
+    items: sorted.slice(0, CARDS),
     /** Earlier releases in the same window that don't fit on the cards. */
-    rest: sorted.slice(5),
+    rest: sorted.slice(CARDS),
   };
 }
 
@@ -152,7 +155,7 @@ function platformOfWeek(): PlatformOfWeek | undefined {
     logo: platformLogo(current.id),
     releases: current.releases,
     projects: current.list.length,
-    top: current.list.sort((a, b) => b.releases - a.releases).slice(0, 4),
+    top: current.list.sort((a, b) => b.releases - a.releases).slice(0, CARDS),
     weeksOnTop,
     streak,
     ranking: current.ranked.slice(0, 5).map((r) => ({ id: r.id, name: PLATFORMS[r.id], logo: platformLogo(r.id), releases: r.releases })),
@@ -182,7 +185,7 @@ function mostRecompiled(): MostRecompiled[] {
   return [...byGame.values()]
     .filter((list) => list.length > 1)
     .sort((a, b) => b.length - a.length || stars(b) - stars(a))
-    .slice(0, 5)
+    .slice(0, CARDS)
     .map((list) => {
       const title = list[0]!.meta?.title ?? list.map((e) => e.game.replace(/\s*\(.*\)$/, "")).sort((a, b) => a.length - b.length)[0]!;
       const recomps = list.filter((e) => e.kind === "recomp").length;

@@ -335,9 +335,16 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     min-height: 168px;
   }
   @media (max-width: 760px) {
+    /* every slide is as tall as the tallest one: spread the card rows over the spare height */
     .slide {
       grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
       gap: 0.8rem;
+    }
+    .slide .items {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: space-between;
+      row-gap: 0.8rem;
     }
   }
   .slide header h2 {
@@ -402,7 +409,12 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0.6rem;
   }
-  /* medium widths fit four cards per row: drop the fifth instead of leaving it alone on a row */
+  /* one row of cards above phone width: five fit, medium widths four; phones show all six in rows of two */
+  @media (min-width: 761px) {
+    .items li:nth-child(n + 6) {
+      display: none;
+    }
+  }
   @media (min-width: 761px) and (max-width: 1180px) {
     .items li:nth-child(5) {
       display: none;
