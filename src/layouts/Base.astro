@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { tools } from "../lib/data.ts";
-import { CANDIDATE_PRS, DISCOVERY_PRS, DISCOVERY_RUN_MIN, DISCOVERY_UTC } from "../lib/discovery.ts";
+import { CANDIDATE_PRS, DISCOVERY_PRS, DISCOVERY_UTC } from "../lib/discovery.ts";
 
 interface Props {
   title?: string;
@@ -50,8 +50,8 @@ const here = Astro.url.pathname;
       <a
         class="scan"
         href={DISCOVERY_PRS}
-        data-scan={JSON.stringify({ ...DISCOVERY_UTC, run: DISCOVERY_RUN_MIN })}
-        title={`Discovery scans GitHub and the web for new recomps every day at ${String(DISCOVERY_UTC.hour).padStart(2, "0")}:${String(DISCOVERY_UTC.minute).padStart(2, "0")} UTC (GitHub may start it a little late). Click for its proposals.`}
+        data-scan={JSON.stringify(DISCOVERY_UTC)}
+        title={`Discovery scans GitHub and the web for new recomps every day at ${String(DISCOVERY_UTC.hour).padStart(2, "0")}:${String(DISCOVERY_UTC.minute).padStart(2, "0")} UTC; GitHub often starts it hours late, so the badge shows the real run state. Click for its proposals.`}
       >
         <span class="radar" aria-hidden="true"></span>
         <span class="scan-label">next scan</span>
