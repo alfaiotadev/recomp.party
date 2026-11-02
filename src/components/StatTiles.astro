@@ -124,7 +124,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     </div>
     <span class="label">new projects released this week</span>
     <span class={`cmp ${arrow(fresh.week)}`}>
-      <b>{signed(fresh.week.diff)}</b> vs {fresh.week.before} the week before
+      <b>{signed(fresh.week.diff)}</b> vs {fresh.week.before} by now last week
     </span>
     <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.3} wrap={{ max: 20, overlap: 0.12 }} label="New projects this week" /></div>
   </div>
@@ -136,7 +136,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     </div>
     <span class="label">projects with releases this week</span>
     <span class={`cmp ${arrow(updated.week)}`}>
-      <b>{signed(updated.week.diff)}</b> vs {updated.week.before} the week before
+      <b>{signed(updated.week.diff)}</b> vs {updated.week.before} by now last week
     </span>
     <div class="wk">
       <div class="wk-head mono">

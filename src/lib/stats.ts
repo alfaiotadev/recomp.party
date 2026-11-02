@@ -1,12 +1,19 @@
 /** Front-page stat tiles: headline numbers, a comparison line and 12-week bar series. */
-import { games, platformsInUse } from "./data.ts";
+import { games, generatedAt, platformsInUse } from "./data.ts";
 
 const DAY = 86_400_000;
 const now = Date.now();
 const WEEKS = 12;
 
-/** Week k (0 = the last 7 days) as a [start, end) time range. */
-const week = (k: number): [number, number] => [now - (k + 1) * 7 * DAY, now - k * 7 * DAY];
+/** Monday 00:00 UTC of the current ISO week: the weekly numbers start from zero there. */
+const nowDate = new Date(now);
+const monday =
+  Date.UTC(nowDate.getUTCFullYear(), nowDate.getUTCMonth(), nowDate.getUTCDate()) - ((nowDate.getUTCDay() + 6) % 7) * DAY;
+
+/** Calendar week k (0 = this week, so far) as a [start, end) time range. */
+const week = (k: number): [number, number] => [monday - k * 7 * DAY, k === 0 ? now : monday - (k - 1) * 7 * DAY];
+/** Last week up to the same weekday and time the data reaches, so a week in progress is compared fairly. */
+const lastWeekSoFar: [number, number] = [monday - 7 * DAY, Math.min(now, Date.parse(generatedAt)) - 7 * DAY];
 const within = (iso: string | undefined, [a, b]: [number, number]) => !!iso && Date.parse(iso) >= a && Date.parse(iso) < b;
 
 /** Oldest week first, so the bars read left → right towards "now". */
@@ -20,9 +27,7 @@ const updatedIn = (range: [number, number]) =>
 
 /** The calendar week (ISO, UTC) so far: releases per day Mon–Sun, null for days still to come. */
 function calendarWeek() {
-  const d = new Date(now);
-  const today = (d.getUTCDay() + 6) % 7; // Monday = 0
-  const monday = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - today * DAY;
+  const today = Math.floor((now - monday) / DAY); // Monday = 0
   const thursday = new Date(monday + 3 * DAY); // ISO weeks belong to the year of their Thursday
   const number = Math.floor((thursday.getTime() - Date.UTC(thursday.getUTCFullYear(), 0, 1)) / DAY / 7) + 1;
   const dates = games.flatMap((g) => (g.snap?.releaseDates ?? []).map((r) => Date.parse(r.date)));
@@ -49,15 +54,15 @@ export const stats = {
     value: newIn(week(0)),
     /** This week's new projects, newest first. */
     entries: newGamesIn(week(0)).sort((a, b) => b.firstReleaseAt!.localeCompare(a.firstReleaseAt!)),
-    week: delta(newIn(week(0)), newIn(week(1))),
+    week: delta(newIn(week(0)), newIn(lastWeekSoFar)),
     bars: series(newIn),
-    barsLabel: "New projects per week, last 12 weeks",
+    barsLabel: "New projects per calendar week, last 12 weeks (this one so far)",
   },
   updated: {
     value: updatedIn(week(0)),
-    week: delta(updatedIn(week(0)), updatedIn(week(1))),
+    week: delta(updatedIn(week(0)), updatedIn(lastWeekSoFar)),
     bars: series(updatedIn),
-    barsLabel: "Projects with a release per week, last 12 weeks",
+    barsLabel: "Projects with a release per calendar week, last 12 weeks (this one so far)",
     calendar: calendarWeek(),
   },
 };
