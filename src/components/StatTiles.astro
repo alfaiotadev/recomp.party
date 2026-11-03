@@ -47,7 +47,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     {
       newest && (
         <div class="cmp newest">
-          <span class="nw-line">
+          <span class="nw-line nw-c">
             newest: <a href={entryPath(newest)}>{newest.game}</a>
           </span>
           <a class="nw-cover" href={entryPath(newest)} tabindex="-1" aria-hidden="true">
@@ -79,7 +79,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
               </b>
             </span>
           </span>
-          <span class="nw-line nw-by">
+          <span class="nw-line nw-c">
             {newest.tool && <>{newest.tool} · </>}by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
           </span>
         </div>
@@ -308,7 +308,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .nw-by {
+  .nw-c {
     text-align: center;
   }
   .newest a {
