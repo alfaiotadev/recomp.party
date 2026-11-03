@@ -1,7 +1,7 @@
 ---
 import { ago, entryPath, fitLogoArea, MILESTONE_KINDS, milestones, VENDORS, platformLogo, shortDate, type Entry, type PlatformId } from "../lib/data.ts";
-import { aiFilterOptions, aiTokens } from "../lib/ai.ts";
-import { VENDOR_ICONS } from "../lib/vendor-icons.ts";
+import { aiFilterGroups, aiTokens, shortModel, topCredit, type Credit } from "../lib/ai.ts";
+import { CREDIT_ICONS, VENDOR_ICONS } from "../lib/vendor-icons.ts";
 import { AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, PAD_R, SORTS, views, W } from "../lib/timeline.ts";
 
 interface Props {
@@ -10,6 +10,14 @@ interface Props {
 const { games } = Astro.props;
 const layouts = views().map((v) => layout(games, v, milestones));
 // AI co-author filter: each game's credited models and vendors (data/ai.json), for the browser
+/** The model credited most in a row's projects, if its vendor has a logo; drawn before the row's name. */
+const rowAi = (entries: Entry[]): Credit | undefined =>
+  entries
+    .map((e) => topCredit(e))
+    .filter((c): c is Credit => !!c && !!CREDIT_ICONS[c.vendor])
+    .sort((a, b) => b.commits - a.commits)[0];
+const aiName = (c: Credit | undefined) => (c ? (c.versioned ? shortModel(c.model) : (c.tool ?? c.model)) : "");
+const AI_X = NAME_X - 25; // logo column, left of a group's chevron
 const aiMap = Object.fromEntries(games.map((g) => [g.repo, aiTokens(g)]).filter(([, t]) => t));
 const dayMonth = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const defaultView = "1y";
@@ -44,7 +52,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     {milestones.length > 0 && <><span class="sw mile"></span> milestone</>}
     {" "}<span class="legend-note">— each row runs from a project's first release to its latest one.</span>
   </p>
-  <div class="d-plat-filter" role="group" aria-label="Platforms to show">
+  <div class="fbox d-plat-filter" role="group" aria-label="Platforms to show">
+    <span class="fbox-h">Platform</span>
     <button type="button" class="all" data-plat="" aria-pressed="true">All</button>
     {lanePlatforms.map((p) => (
       <button type="button" data-plat={p.id} aria-pressed="false" title={p.name}>
@@ -60,13 +69,25 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       {lanePlatforms.map((p) => <option value={p.id}>{p.name}</option>)}
     </select>
   </label>
-  <label class="tl-ai">
-    <span>AI co-author</span>
-    <select aria-label="Show only projects whose commits credit this model or agent" data-map={JSON.stringify(aiMap)}>
-      <option value="">Any</option>
-      {aiFilterOptions.map((o) => <option value={o.value}>{o.label}</option>)}
-    </select>
-  </label>
+  <div class="fbox tl-ai" role="group" aria-label="Show projects whose commits credit these models or agents" data-map={JSON.stringify(aiMap)}>
+    <span class="fbox-h">AI co-author</span>
+    <button type="button" class="all" data-ai="" aria-pressed="true">All</button>
+    {aiFilterGroups.map((g) => (
+      <span class={`ai-group v-${g.vendor}`}>
+        {g.whole && CREDIT_ICONS[g.vendor] && (
+          <button type="button" class="ai-chip whole" data-ai={g.value} aria-pressed="false" title={g.title} aria-label={g.title}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d={CREDIT_ICONS[g.vendor]} /></svg>
+          </button>
+        )}
+        {g.models.map((m) => (
+          <button type="button" class="ai-chip" data-ai={m.value} aria-pressed="false" title={`${m.title} · ${m.n} projects`}>
+            {!g.whole && CREDIT_ICONS[g.vendor] && <svg viewBox="0 0 24 24" aria-hidden="true"><path d={CREDIT_ICONS[g.vendor]} /></svg>}
+            {m.label}
+          </button>
+        ))}
+      </span>
+    ))}
+  </div>
   <p class="m-empty" hidden>No releases for this platform in this range.</p>
   <div class="tl-views">
     {
@@ -145,8 +166,9 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
               lane.items.flatMap((it) => {
                 const r = it.row;
                 const odd = i % 2 ? " odd" : "";
-                const marks = (row: typeof r, x0: number) => (
+                const marks = (row: typeof r, x0: number, who: Credit | undefined) => (
                   <>
+                    {who && <path class={`row-ai v-${who.vendor}`} d={CREDIT_ICONS[who.vendor]} transform={`translate(${x0 > NAME_X ? NAME_X : AI_X} -4.5) scale(0.375)`} />}
                     <rect class="hit" x="0" y="-9" width={W} height="18" />
                     {row.guide && <line class="guide" x1={row.guide.x1} x2={row.guide.x2} y1="0" y2="0" />}
                     <line class="bar" x1={row.x1} x2={row.x2} y1="0" y2="0" />
@@ -161,8 +183,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                 );
                 if (!it.children) {
                   return [
-                    <a href={r.href} class={`row ${r.entry.kind}${odd}`} data-id={r.id} style={`transform:translateY(${l.initial.y[r.id]}px)`} aria-label={`${r.entry.game} (${r.entry.repo})`} data-game={r.entry.game} data-repo={r.entry.repo} data-kind={r.entry.kind} data-first={shortDate(r.entry.firstReleaseAt!)} data-latest={shortDate(r.entry.latestReleaseAt!)} data-count={r.entry.snap?.releaseCount ?? 0} data-stars={(r.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={r.entry.tool ?? ""} data-cover={r.entry.cover?.src ?? ""}>
-                      {marks(r, NAME_X)}
+                    <a href={r.href} class={`row ${r.entry.kind}${odd}`} data-id={r.id} style={`transform:translateY(${l.initial.y[r.id]}px)`} aria-label={`${r.entry.game} (${r.entry.repo})`} data-game={r.entry.game} data-repo={r.entry.repo} data-kind={r.entry.kind} data-first={shortDate(r.entry.firstReleaseAt!)} data-latest={shortDate(r.entry.latestReleaseAt!)} data-count={r.entry.snap?.releaseCount ?? 0} data-stars={(r.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={r.entry.tool ?? ""} data-cover={r.entry.cover?.src ?? ""} data-ai={aiName(rowAi([r.entry]))}>
+                      {marks(r, NAME_X, rowAi([r.entry]))}
                     </a>,
                   ];
                 }
@@ -170,12 +192,12 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                 const badgeX = NAME_X + r.name.length * 6.1 + 7;
                 return [
                   ...it.children.map((c) => (
-                    <a href={c.href} class={`row child shut ${c.entry.kind}${odd}`} data-id={c.id} data-parent={r.id} tabindex="-1" aria-hidden="true" style={`transform:translateY(${l.initial.y[c.id]}px)`} aria-label={`${c.entry.game} (${c.entry.repo})`} data-game={c.entry.game} data-repo={c.entry.repo} data-kind={c.entry.kind} data-first={shortDate(c.entry.firstReleaseAt!)} data-latest={shortDate(c.entry.latestReleaseAt!)} data-count={c.entry.snap?.releaseCount ?? 0} data-stars={(c.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={c.entry.tool ?? ""} data-cover={c.entry.cover?.src ?? ""}>
-                      {marks(c, NAME_X + CHILD_INDENT)}
+                    <a href={c.href} class={`row child shut ${c.entry.kind}${odd}`} data-id={c.id} data-parent={r.id} tabindex="-1" aria-hidden="true" style={`transform:translateY(${l.initial.y[c.id]}px)`} aria-label={`${c.entry.game} (${c.entry.repo})`} data-game={c.entry.game} data-repo={c.entry.repo} data-kind={c.entry.kind} data-first={shortDate(c.entry.firstReleaseAt!)} data-latest={shortDate(c.entry.latestReleaseAt!)} data-count={c.entry.snap?.releaseCount ?? 0} data-stars={(c.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={c.entry.tool ?? ""} data-cover={c.entry.cover?.src ?? ""} data-ai={aiName(rowAi([c.entry]))}>
+                      {marks(c, NAME_X + CHILD_INDENT, rowAi([c.entry]))}
                     </a>
                   )),
-                  <g class={`row group ${g.kind}${odd}`} data-id={r.id} role="button" tabindex="0" aria-expanded="false" aria-label={`${r.name}: ${g.count} projects, show them`} style={`transform:translateY(${l.initial.y[r.id]}px)`} data-group={g.count} data-game={r.name} data-kind={g.kind} data-kinds={it.children.map((c) => c.entry.kind).join(" ")} data-first={shortDate(g.first)} data-latest={shortDate(g.latest)} data-count={g.releases} data-stars={g.stars.toLocaleString("en")} data-cover={g.cover ?? ""}>
-                    {marks(r, NAME_X)}
+                  <g class={`row group ${g.kind}${odd}`} data-id={r.id} role="button" tabindex="0" aria-expanded="false" aria-label={`${r.name}: ${g.count} projects, show them`} style={`transform:translateY(${l.initial.y[r.id]}px)`} data-group={g.count} data-game={r.name} data-kind={g.kind} data-kinds={it.children.map((c) => c.entry.kind).join(" ")} data-first={shortDate(g.first)} data-latest={shortDate(g.latest)} data-count={g.releases} data-stars={g.stars.toLocaleString("en")} data-cover={g.cover ?? ""} data-ai={aiName(rowAi(it.children.map((c) => c.entry)))}>
+                    {marks(r, NAME_X, rowAi(it.children.map((c) => c.entry)))}
                     <path class="chev" d={`M${NAME_X - 13} -3 L${NAME_X - 9} 1 L${NAME_X - 5} -3`} />
                     <rect class="badge-bg" x={badgeX} y="-6.5" width={g.count > 9 ? 22 : 17} height="13" rx="6.5" />
                     <text class="badge-n" x={badgeX + (g.count > 9 ? 11 : 8.5)} y="3.5">
@@ -251,7 +273,10 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                       return (
                         <li class={`m-row ${r.entry.kind}`} style={`order:${r.ranks.first! + 1}`} data-ranks={JSON.stringify(r.ranks)} data-repo={r.entry.repo}>
                           <a href={entryPath(r.entry)}>
-                            <span class="m-name">{r.entry.game}</span>
+                            <span class="m-name">
+                              {(() => { const w = rowAi([r.entry]); return w && <svg class={`m-ai v-${w.vendor}`} viewBox="0 0 24 24" aria-label={aiName(w)}><path d={CREDIT_ICONS[w.vendor]} /></svg>; })()}
+                              {r.entry.game}
+                            </span>
                             <span class="m-when">{ago(r.entry.latestReleaseAt)}</span>
                             {mtrack(r)}
                           </a>
@@ -264,6 +289,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                         <button type="button" class="m-toggle" aria-expanded="false">
                           <span class="m-name">
                             <span class="m-chev" aria-hidden="true" />
+                            {(() => { const w = rowAi(it.children.map((c) => c.entry)); return w && <svg class={`m-ai v-${w.vendor}`} viewBox="0 0 24 24" aria-label={aiName(w)}><path d={CREDIT_ICONS[w.vendor]} /></svg>; })()}
                             {r.name} <span class="m-badge">×{g.count}</span>
                           </span>
                           <span class="m-when">{ago(g.latest)}</span>
@@ -273,7 +299,10 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                           {it.children.map((c) => (
                             <li class={`m-row m-child ${c.entry.kind}`} style={`order:${c.ranks.first! + 1}`} data-ranks={JSON.stringify(c.ranks)} data-repo={c.entry.repo}>
                               <a href={entryPath(c.entry)}>
-                                <span class="m-name m-repo">{c.entry.repo}</span>
+                                <span class="m-name m-repo">
+                                  {(() => { const w = rowAi([c.entry]); return w && <svg class={`m-ai v-${w.vendor}`} viewBox="0 0 24 24" aria-label={aiName(w)}><path d={CREDIT_ICONS[w.vendor]} /></svg>; })()}
+                                  {c.entry.repo}
+                                </span>
                                 <span class="m-when">{ago(c.entry.latestReleaseAt)}</span>
                                 {mtrack(c)}
                               </a>
@@ -532,18 +561,25 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       const lanes = JSON.parse(current().dataset.plan!) as PlaceLane[];
       empty.hidden = !plats.size || lanes.some((l) => plats.has(l.id!));
     };
-    const aiSelect = root.querySelector<HTMLSelectElement>(".tl-ai select")!;
-    const aiMap = JSON.parse(aiSelect.dataset.map!) as Record<string, string>;
-    let aiSel = "";
+    // AI co-authors to show (none picked = all): a project stays if its commits credit any picked model or vendor
+    const aiBox = root.querySelector<HTMLElement>(".tl-ai")!;
+    const aiMap = JSON.parse(aiBox.dataset.map!) as Record<string, string>;
+    const aiButtons = [...aiBox.querySelectorAll<HTMLButtonElement>("button")];
+    let aiSel = new Set<string>();
     /** Project row ids are repos; group rows ("g:…") are kept or dropped with their projects. */
-    const aiOk = (id: string) => !aiSel || id.startsWith("g:") || (aiMap[id] ?? "").split(" ").includes(aiSel);
-    aiSelect.addEventListener("change", () => {
-      aiSel = aiSelect.value;
-      root.classList.add("no-anim");
-      for (const v of views) layoutDesktop(v);
-      filterLanes();
-      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
-    });
+    const aiOk = (id: string) => !aiSel.size || id.startsWith("g:") || (aiMap[id] ?? "").split(" ").some((t) => aiSel.has(t));
+    for (const b of aiButtons)
+      b.addEventListener("click", () => {
+        const next = new Set(aiSel);
+        if (!b.dataset.ai) next.clear(); // "All" resets
+        else if (!next.delete(b.dataset.ai)) next.add(b.dataset.ai);
+        aiSel = next;
+        for (const x of aiButtons) x.setAttribute("aria-pressed", String(x.dataset.ai ? aiSel.has(x.dataset.ai) : aiSel.size === 0));
+        root.classList.add("no-anim");
+        for (const v of views) layoutDesktop(v);
+        filterLanes();
+        requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
+      });
     const setPlats = (next: Set<string>) => {
       plats = next;
       platSelect.value = plats.size === 0 ? "" : plats.size === 1 ? [...plats][0]! : "*";
@@ -690,6 +726,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
           line("t-meta", `${d.count} releases · ★ ${d.stars}`),
         );
       }
+      if (d.ai) text.append(line("t-meta", `AI co-author: ${d.ai}`));
       if (d.cover) {
         const img = document.createElement("img");
         img.className = "t-cover";
@@ -786,7 +823,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     justify-content: center;
     align-items: center;
     gap: 0.3rem;
-    margin: 0 0 0.9rem;
+    margin: 0 0 1.1rem;
   }
   .d-plat-filter button {
     display: inline-flex;
@@ -822,27 +859,97 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   .d-plat-filter button:focus-visible {
     outline: 2px solid var(--recomp);
   }
-  .tl-ai {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin: -0.4rem 0 0.9rem;
+  /* filter boxes: platforms, then AI co-authors */
+  .fbox {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0.55rem 0.6rem 0.45rem;
+  }
+  .fbox-h {
+    position: absolute;
+    top: -0.5rem;
+    left: 0.75rem;
+    padding: 0 0.35rem;
+    background: var(--bg);
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--faint);
   }
-  .tl-ai select {
-    font: inherit;
-    color: var(--fg);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 0.2rem 0.4rem;
+  .tl-ai {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem 0.6rem;
+    margin: 0 0 0.9rem;
   }
-  .tl-ai select:focus {
-    border-color: rgb(124 240 197 / 0.5);
-    outline: none;
+  .tl-ai .all {
+    height: 1.7rem;
+    padding: 0 0.55rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: none;
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  .ai-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+  }
+  .ai-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    height: 1.7rem;
+    padding: 0 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: none;
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .ai-chip.whole {
+    padding: 0 0.4rem;
+  }
+  .ai-chip svg {
+    display: block;
+    width: 0.85rem;
+    min-width: 0; /* not the chart's 900px */
+    height: 0.85rem;
+    flex: none;
+    fill: var(--mc, var(--muted));
+    opacity: 0.5;
+    transition: opacity 0.15s;
+  }
+  .tl-ai button:hover {
+    color: var(--fg);
+  }
+  .tl-ai button:hover svg {
+    opacity: 0.9;
+  }
+  .tl-ai button[aria-pressed="true"] {
+    background: var(--surface-2);
+    border-color: color-mix(in srgb, var(--mc, var(--recomp)) 45%, transparent);
+    color: var(--fg);
+  }
+  .tl-ai .all[aria-pressed="true"] {
+    border-color: rgb(124 240 197 / 0.3);
+    color: var(--recomp);
+  }
+  .tl-ai button[aria-pressed="true"] svg {
+    opacity: 1;
+  }
+  .tl-ai button:focus-visible {
+    outline: 2px solid var(--recomp);
   }
   .not-ai,
   .not-today {
@@ -1107,6 +1214,23 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   }
   .row.group:hover .badge-n {
     fill: currentColor;
+  }
+  .row-ai {
+    fill: var(--mc);
+    opacity: 0.7;
+  }
+  .row:hover .row-ai {
+    opacity: 1;
+  }
+  .m-ai {
+    display: inline-block;
+    width: 0.8em;
+    min-width: 0;
+    height: 0.8em;
+    margin-right: 0.35em;
+    vertical-align: -0.05em;
+    fill: var(--mc);
+    opacity: 0.8;
   }
   .label.repo-label {
     font-family: var(--mono);
@@ -1381,6 +1505,20 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     }
     .d-plat-filter {
       display: none;
+    }
+    /* one scrolling row of chips */
+    .tl-ai {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    /* a scrolling box would clip a label sitting on its border */
+    .tl-ai .fbox-h {
+      position: static;
+      flex: none;
+      padding: 0;
+      background: none;
     }
   }
   .m-bar-top {
