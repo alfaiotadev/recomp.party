@@ -35,10 +35,14 @@ jobs:
         env:
           IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
           IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+      - run: npm run ai
+        continue-on-error: true # a slow or failing commit scan must not hold back the release refresh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run validate
       - name: Commit data if it changed
         run: |
-          git add data/snapshot.json data/stars.json data/games.json public/covers
+          git add data/snapshot.json data/stars.json data/games.json data/ai.json public/covers
           git diff --cached --quiet && { echo "No changes."; exit 0; }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

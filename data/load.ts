@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { parse } from "yaml";
-import { Games, Milestones, Projects, Rejected, Snapshot, StarHistory, type Games as GamesT, type Milestone, type Project, type Snapshot as SnapshotT } from "./schema.ts";
+import { AiData, Games, Milestones, Projects, Rejected, Snapshot, StarHistory, type AiData as AiDataT, type Games as GamesT, type Milestone, type Project, type Snapshot as SnapshotT } from "./schema.ts";
 
 // Resolved from the repo root rather than import.meta.url: Astro bundles this module into dist/.
 export const PROJECTS_PATH = resolve(process.cwd(), "data/projects.yaml");
@@ -10,6 +10,7 @@ export const STARS_PATH = resolve(process.cwd(), "data/stars.json");
 export const REJECTED_PATH = resolve(process.cwd(), "data/rejected.yaml");
 export const GAMES_PATH = resolve(process.cwd(), "data/games.json");
 export const MILESTONES_PATH = resolve(process.cwd(), "data/milestones.yaml");
+export const AI_PATH = resolve(process.cwd(), "data/ai.json");
 export const COVERS_DIR = resolve(process.cwd(), "public/covers");
 
 /** Parse and validate data/projects.yaml; throws a readable error listing every problem. */
@@ -51,3 +52,11 @@ export function loadMilestones(path = MILESTONES_PATH): Milestone[] {
   }
   return result.data.sort((a, b) => a.date.localeCompare(b.date));
 }
+
+export function loadAi(path = AI_PATH): AiDataT {
+  if (!existsSync(path)) return { generatedAt: new Date(0).toISOString(), since: AI_SINCE, repos: {} };
+  return AiData.parse(JSON.parse(readFileSync(path, "utf8")));
+}
+
+/** Claude Code's first release: older commits predate the agents this data looks for. */
+export const AI_SINCE = "2025-02-24";

@@ -1,5 +1,7 @@
 ---
+import { aiTokens, shortModel, topCredit } from "../lib/ai.ts";
 import { ago, entryPath, fitLogoArea, KINDS, PLATFORMS, platformMark, type Entry } from "../lib/data.ts";
+import { CREDIT_ICONS } from "../lib/vendor-icons.ts";
 
 interface Props {
   entry: Entry;
@@ -11,10 +13,11 @@ const box = mark && fitLogoArea(mark, 900, 80, 16);
 const [owner, name] = e.repo.split("/");
 // Scale at which the whole cover fits the 3 : 4.1 card (object-fit: cover crops one axis): the hover zoom target.
 const CARD_ASPECT = 3 / 4.1;
+const ai = topCredit(e);
 const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CARD_ASPECT / (e.cover.width / e.cover.height));
 ---
 
-<li class={`card ${e.kind}${e.cover ? "" : " no-cover"}`} data-platform={e.platform} data-kind={e.kind} data-os={e.os.join(" ")} data-search={searchText}>
+<li class={`card ${e.kind}${e.cover ? "" : " no-cover"}`} data-platform={e.platform} data-kind={e.kind} data-os={e.os.join(" ")} data-ai={aiTokens(e)} data-search={searchText}>
   {
     e.cover ? (
       <img class="art" src={e.cover.src} width={e.cover.width} height={e.cover.height} style={`--fit:${fit!.toFixed(3)}`} alt="" loading="lazy" decoding="async" />
@@ -25,11 +28,22 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
   <div class="top">
     <span class={`badge ${e.kind}`} title={KINDS[e.kind]}>{e.kind}</span>
     {e.snap?.archived && <span class="badge">archived</span>}
+
     <span class="plat" title={PLATFORMS[e.platform]}>
       {mark && box ? <img class="logo-img" src={mark.src} width={box.w.toFixed(1)} height={box.h.toFixed(1)} alt={PLATFORMS[e.platform]} /> : PLATFORMS[e.platform]}
     </span>
   </div>
   <div class="body">
+    {
+      ai && CREDIT_ICONS[ai.vendor] && (
+        <span class={`ai v-${ai.vendor}`} title={`Most credited AI co-author: ${ai.versioned ? ai.model : (ai.tool ?? ai.model)} (${ai.commits.toLocaleString("en")} commits)`}>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d={CREDIT_ICONS[ai.vendor]} />
+          </svg>
+          <span>{ai.versioned ? shortModel(ai.model) : (ai.tool ?? ai.model)}</span>
+        </span>
+      )
+    }
     <h3><a href={entryPath(e)}>{e.game}</a></h3>
     <p class="repo">{owner}/<wbr />{name}{e.tool && <span class="tool"> · {e.tool}</span>}</p>
     {
@@ -68,6 +82,26 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
 </script>
 
 <style>
+  .ai {
+    display: inline-flex;
+    align-self: flex-start;
+    margin-bottom: 0.3rem;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.05rem 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgb(11 13 20 / 0.75);
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+  .ai svg {
+    width: 0.7rem;
+    height: 0.7rem;
+    fill: var(--mc);
+  }
   .card {
     position: relative;
     isolation: isolate;

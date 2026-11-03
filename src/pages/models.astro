@@ -1,0 +1,548 @@
+---
+import Base from "../layouts/Base.astro";
+import { aiOf, aiSince, aiTotals, CONFIDENCE, modelKey, modelStats, monthlySeries, shortModel } from "../lib/ai.ts";
+import { entryPath, milestonePath, milestones, shortDate } from "../lib/data.ts";
+import { CREDIT_ICONS, VENDOR_ICONS } from "../lib/vendor-icons.ts";
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthLabel = (m: string) => `${MONTHS[+m.slice(5) - 1]}${m.endsWith("-01") ? ` ${m.slice(0, 4)}` : ""}`;
+const fmt = (n: number) => n.toLocaleString("en");
+const iconOf = (vendor: string) => CREDIT_ICONS[vendor];
+
+// --- chart: credited commits per month, stacked by model
+const { series, months } = monthlySeries();
+const W = 1000,
+  TOP = 34, // milestone logos
+  H = 300,
+  L = 48,
+  R = 8,
+  B = 22;
+const plotH = H - TOP - B;
+const band = months.length ? (W - L - R) / months.length : 0;
+const totals = months.map((m) => m.values.reduce((a, b) => a + b, 0));
+const step = (() => {
+  const raw = Math.max(1, ...totals) / 4;
+  const p = 10 ** Math.floor(Math.log10(raw));
+  return [1, 2, 2.5, 5, 10].map((k) => k * p).find((s) => s >= raw) ?? raw;
+})();
+const nMax = Math.ceil(Math.max(1, ...totals) / step) * step;
+/** Two readings of the same bars: commits per month, or each model's share of the month. */
+const scales = [
+  { id: "n", max: nMax, ticks: Array.from({ length: Math.round(nMax / step) + 1 }, (_, k) => k * step), tick: (v: number) => fmt(v), value: (v: number) => v },
+  { id: "share", max: 100, ticks: [0, 25, 50, 75, 100], tick: (v: number) => `${v}%`, value: (v: number, k: number) => (totals[k] ? (v / totals[k]!) * 100 : 0) },
+];
+const yOf = (max: number) => (v: number) => TOP + plotH - (v / max) * plotH;
+const labelEvery = Math.ceil(months.length / 12);
+const first = months[0]?.month;
+const marks = milestones
+  .filter((m) => m.kind === "model" && first && m.date.slice(0, 7) >= first)
+  .map((m) => {
+    const k = months.findIndex((mo) => mo.month === m.date.slice(0, 7));
+    const days = new Date(Date.UTC(+m.date.slice(0, 4), +m.date.slice(5, 7), 0)).getUTCDate();
+    return { m, x: L + k * band + ((+m.date.slice(8) - 0.5) / days) * band };
+  })
+  .filter((mk) => mk.x >= L);
+
+const top = modelStats[0];
+---
+
+<Base title="Models" description="Which AI models and versions co-wrote the recomps and ports on recomp.party, read from their commits.">
+  <p class="eyebrow crumbs">AI co-authors</p>
+  <h1>Models behind the recomps</h1>
+  <p class="lede">
+    Coding agents sign their work: Claude Code adds a <code>Co-authored-by</code> line naming the exact model to every commit
+    it makes, and Codex, Copilot and others leave their own marks. This page counts those lines across every listed
+    project's commits since {shortDate(aiSince)}.
+  </p>
+
+  <div class="tiles">
+    <div class="tile">
+      <b>{fmt(aiTotals.credited)}</b>
+      <span>commits credit a model or agent</span>
+    </div>
+    <div class="tile">
+      <b>{aiTotals.repos}<small> / {aiTotals.scanned}</small></b>
+      <span>projects with credited commits</span>
+    </div>
+    {
+      top && (
+        <div class={`tile v-${top.vendor}`}>
+          <b>
+            {iconOf(top.vendor) && (
+              <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
+                <path d={iconOf(top.vendor)} />
+              </svg>
+            )}
+            {shortModel(top.model)}
+          </b>
+          <span>
+            the biggest contributor: {Math.round((top.commits / Math.max(1, aiTotals.credited)) * 100)}% of credited commits, in{" "}
+            {top.repos.length} projects
+          </span>
+        </div>
+      )
+    }
+  </div>
+
+  <section class="chart-box">
+    <h2>Credited commits per month</h2>
+    <ul class="legend">
+      {series.map((s, k) => (
+        <li>
+          <span class={`sw s${k + 1}`} />
+          {s === "Other" ? "Other models and agents" : shortModel(s)}
+        </li>
+      ))}
+    </ul>
+    <div class="scale-tabs" role="group" aria-label="Bar height">
+      <input type="radio" name="ai-scale" id="ai-n" checked /><label for="ai-n">Commits</label>
+      <input type="radio" name="ai-scale" id="ai-share" /><label for="ai-share">Share of month</label>
+    </div>
+    {
+      scales.map((sc) => {
+        const y = yOf(sc.max);
+        return (
+          <svg class={`chart chart-${sc.id}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={sc.id === "n" ? "Stacked bars of credited commits per month by model; the table below has every figure." : "Each model's share of the month's credited commits, stacked to 100%."}>
+            {sc.ticks.map((v) => (
+              <g class="grid">
+                <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} />
+                <text x={L - 6} y={y(v) + 3.5}>{sc.tick(v)}</text>
+              </g>
+            ))}
+            {marks.map(({ m, x }) => (
+              <a href={milestonePath(m)} class={`mile v-${m.vendor}`}>
+                <title>{`${shortDate(m.date)}: ${m.title}`}</title>
+                <line x1={x} x2={x} y1={TOP - 8} y2={TOP + plotH} />
+                <circle cx={x} cy={TOP - 16} r="9" />
+                <path d={VENDOR_ICONS[m.vendor]} transform={`translate(${x - 6} ${TOP - 22}) scale(0.5)`} />
+              </a>
+            ))}
+            {months.map((mo, k) => {
+              let acc = 0;
+              const x = L + k * band + 1;
+              const w = Math.max(1, band - 2);
+              return (
+                <g class="col">
+                  {mo.values.map((v, s) => {
+                    if (!v) return null;
+                    const y0 = y(acc);
+                    acc += sc.value(v, k);
+                    const h = y0 - y(acc);
+                    return (
+                      <rect class={`seg s${s + 1}`} x={x} y={y(acc)} width={w} height={Math.max(0.5, h - (h > 3 ? 2 : 0))} data-month={monthLabel(mo.month).replace(/^(\w+)$/, `$1 ${mo.month.slice(0, 4)}`)} data-model={series[s] === "Other" ? "Other models and agents" : series[s]} data-n={`${fmt(v)} commits of ${fmt(totals[k]!)} (${Math.round((v / totals[k]!) * 100)}%)`} />
+                    );
+                  })}
+                  {k % labelEvery === 0 && (
+                    <text class="mlabel" x={x + w / 2} y={H - 6}>
+                      {monthLabel(mo.month)}
+                    </text>
+                  )}
+                </g>
+              );
+            })}
+          </svg>
+        );
+      })
+    }
+    <div class="tip" id="ai-tip" role="tooltip" hidden></div>
+  </section>
+
+  <section>
+    <h2>Every credited model</h2>
+    <table class="board">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th class="num">Commits</th>
+          <th class="num">Share</th>
+          <th class="num">Projects</th>
+          <th>Seen</th>
+          <th>Most credited in</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          modelStats.map((s) => (
+            <tr class={`v-${s.vendor}`}>
+              <td>
+                <span class="model">
+                  {iconOf(s.vendor) ? (
+                    <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d={iconOf(s.vendor)} />
+                    </svg>
+                  ) : (
+                    <span class="logo dot" />
+                  )}
+                  <a href={`/?ai=${modelKey(s.model)}#all-games`} title="Show these projects">
+                    {s.versioned ? shortModel(s.model) : (s.tool ?? s.model)}
+                  </a>
+                </span>
+                {!s.versioned && <span class="unsure">version not stated{s.likely && <>, likely {s.likely} by date</>}</span>}
+              </td>
+              <td class="num">{fmt(s.commits)}</td>
+              <td class="num">{((s.commits / Math.max(1, aiTotals.credited)) * 100).toFixed(1)}%</td>
+              <td class="num">{s.repos.length}</td>
+              <td class="mono when">
+                {shortDate(s.first)} → {shortDate(s.last)}
+              </td>
+              <td class="repos">
+                {s.repos.slice(0, 3).map((g, k) => (
+                  <>
+                    {k > 0 && ", "}
+                    <a href={entryPath(g)}>{g.game}</a>
+                  </>
+                ))}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </section>
+
+  {
+    aiTotals.filesOnly.length > 0 && (
+      <section>
+        <details>
+          <summary>
+            <h2>Agent files, no credited commits ({aiTotals.filesOnly.length} projects)</h2>
+          </summary>
+          <p class="note">
+            These keep instructions for a coding agent in the repo (CLAUDE.md, AGENTS.md, …) but no commit names a model
+            — the trailers may be switched off or squashed away. A hint of which agent, not a count, so they are left out
+            of the figures above.
+          </p>
+          <ul class="files">
+            {aiTotals.filesOnly.map((g) => (
+              <li>
+                <a href={entryPath(g)}>{g.game}</a> <span class="mono">{aiOf(g)!.files.join(", ")}</span>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </section>
+    )
+  }
+
+  <section>
+    <h2>How this is counted</h2>
+    <ul class="method">
+      <li>
+        <b>Named</b> (certain, {CONFIDENCE.named.toFixed(1)}): the commit names the model and version, e.g.
+        <code>Co-authored-by: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;</code>.
+      </li>
+      <li>
+        <b>Agent only</b> ({CONFIDENCE.agent.toFixed(1)}): the commit names the agent but not the model, e.g.
+        <code>Codex &lt;noreply@openai.com&gt;</code> or a Copilot bot. The model is a guess: the vendor's newest release at
+        the time.
+      </li>
+      <li>
+        <b>Agent files</b> ({CONFIDENCE.files.toFixed(1)}): no credited commits, only an agent's instruction file in the
+        repo. Not counted.
+      </li>
+      <li>
+        A project without any of these may still have used AI: many setups leave no trace in the commits. These are lower
+        bounds, from the default branch only, and a commit naming two models counts for both.
+      </li>
+    </ul>
+  </section>
+</Base>
+
+<script>
+  const tip = document.getElementById("ai-tip")!;
+  for (const chart of document.querySelectorAll<SVGElement>(".chart")) {
+  chart.addEventListener("pointermove", (e) => {
+    const seg = (e.target as Element).closest<SVGRectElement>(".seg");
+    if (!seg) return void (tip.hidden = true);
+    const d = seg.dataset;
+    const line = (cls: string, text: string) => Object.assign(document.createElement("div"), { className: cls, textContent: text });
+    tip.replaceChildren(line("t-m", d.month!), line("t-model", d.model!), line("t-n", d.n!));
+    tip.hidden = false;
+    const x = e.clientX + 14 + tip.offsetWidth > innerWidth - 8 ? e.clientX - 14 - tip.offsetWidth : e.clientX + 14;
+    tip.style.transform = `translate(${x}px, ${e.clientY + 14}px)`;
+  });
+  chart.addEventListener("pointerleave", () => (tip.hidden = true));
+  }
+</script>
+
+<style>
+  /* categorical slots, dark steps, validated against --surface: colour follows first appearance */
+  .chart-box {
+    --s1: #3987e5;
+    --s2: #d95926;
+    --s3: #199e70;
+    --s4: #c98500;
+    --s5: #d55181;
+    --s6: #008300;
+    --s7: #9085e9;
+    --s8: #e66767;
+  }
+  .s1 { --c: var(--s1); }
+  .s2 { --c: var(--s2); }
+  .s3 { --c: var(--s3); }
+  .s4 { --c: var(--s4); }
+  .s5 { --c: var(--s5); }
+  .s6 { --c: var(--s6); }
+  .s7 { --c: var(--s7); }
+  .s8 { --c: var(--s8); }
+  .crumbs {
+    margin: 2.5rem 0 0;
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.8rem;
+    margin: 1.5rem 0 2rem;
+  }
+  .tile {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .tile b {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 1.7rem;
+    line-height: 1.2;
+  }
+  .tile b small {
+    font-size: 1rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .tile span {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .logo {
+    width: 1em;
+    height: 1em;
+    flex: none;
+    fill: var(--mc, var(--muted));
+  }
+  .logo.dot {
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    margin: 0 0.22em;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .chart-box {
+    padding: 1rem 1.1rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  .chart-box h2 {
+    margin-top: 0;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    list-style: none;
+    margin: 0 0 0.6rem;
+    padding: 0;
+    font-size: 0.8rem;
+    color: var(--fg);
+  }
+  .sw {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-right: 0.35rem;
+    border-radius: 2px;
+    background: var(--c);
+    vertical-align: -0.05rem;
+  }
+  .chart {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--mono);
+  }
+  .scale-tabs {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    margin-bottom: 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+  }
+  .scale-tabs input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .scale-tabs label {
+    padding: 0.2rem 0.6rem;
+    border-radius: 5px;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .scale-tabs input:checked + label {
+    background: var(--surface-2);
+    color: var(--recomp);
+  }
+  .scale-tabs input:focus-visible + label {
+    outline: 2px solid var(--recomp);
+  }
+  .chart-share {
+    display: none;
+  }
+  .chart-box:has(#ai-share:checked) .chart-share {
+    display: block;
+  }
+  .chart-box:has(#ai-share:checked) .chart-n {
+    display: none;
+  }
+  .grid line {
+    stroke: var(--line);
+  }
+  .grid text,
+  .mlabel {
+    font-size: 10px;
+    fill: var(--faint);
+  }
+  .grid text {
+    text-anchor: end;
+  }
+  .mlabel {
+    text-anchor: middle;
+  }
+  .seg {
+    fill: var(--c);
+  }
+  .col:hover .seg {
+    opacity: 0.85;
+  }
+  .col .seg:hover {
+    opacity: 1;
+    stroke: var(--fg);
+    stroke-width: 1;
+  }
+  .mile {
+    color: var(--mc);
+  }
+  .mile line {
+    stroke: currentColor;
+    stroke-dasharray: 3 4;
+    opacity: 0.5;
+  }
+  .mile circle {
+    fill: var(--surface);
+    stroke: currentColor;
+    stroke-opacity: 0.5;
+  }
+  .mile path {
+    fill: currentColor;
+  }
+  .tip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    pointer-events: none;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgb(18 22 36 / 0.97);
+    font-size: 0.8rem;
+  }
+  .tip[hidden] {
+    display: none;
+  }
+  .tip :global(.t-m),
+  .tip :global(.t-n) {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .tip :global(.t-model) {
+    font-weight: 650;
+  }
+  .board {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  .board th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--faint);
+    border-bottom: 1px solid var(--line);
+    padding: 0.4rem 0.5rem;
+  }
+  .board td {
+    padding: 0.45rem 0.5rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .num {
+    text-align: right !important;
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+  .model {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+  }
+  .model a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .model a:hover {
+    text-decoration: underline;
+  }
+  .unsure {
+    display: block;
+    margin-left: 1.45rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .when {
+    font-size: 0.72rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .repos {
+    font-size: 0.8rem;
+  }
+  @media (max-width: 760px) {
+    .board th:nth-child(3),
+    .board td:nth-child(3),
+    .board th:nth-child(5),
+    .board td:nth-child(5),
+    .board th:nth-child(6),
+    .board td:nth-child(6) {
+      display: none;
+    }
+  }
+  summary h2 {
+    display: inline;
+  }
+  summary {
+    cursor: pointer;
+  }
+  .note,
+  .method {
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .files {
+    font-size: 0.85rem;
+  }
+  .files .mono {
+    font-size: 0.72rem;
+    color: var(--faint);
+  }
+</style>
