@@ -1,0 +1,162 @@
+---
+import Base from "../../layouts/Base.astro";
+import { games, MILESTONE_KINDS, VENDORS, milestonePath, milestones, shortDate, type Milestone } from "../../lib/data.ts";
+
+export function getStaticPaths() {
+  return milestones.map((m) => ({ params: { id: m.id }, props: { m } }));
+}
+
+interface Props {
+  m: Milestone;
+}
+const { m } = Astro.props;
+const i = milestones.indexOf(m);
+const prev = milestones[i - 1];
+const next = milestones[i + 1];
+
+// Releases per week (Monday–Sunday, UTC) of every listed game, eight weeks either side of the milestone.
+const DAY = 86_400_000;
+const WEEK = 7 * DAY;
+const at = Date.parse(m.date);
+const monday = (t: number) => t - ((new Date(t).getUTCDay() + 6) % 7) * DAY;
+const w0 = monday(at) - 8 * WEEK;
+const thisWeek = monday(Date.now());
+const weeks = Array.from({ length: 17 }, (_, k) => ({ t: w0 + k * WEEK, n: 0, partial: false })).filter((w) => w.t <= thisWeek);
+for (const g of games)
+  for (const r of g.snap?.releaseDates ?? []) {
+    const k = Math.floor((Date.parse(r.date) - w0) / WEEK);
+    if (weeks[k]) weeks[k].n++;
+  }
+// the current week is still running, and new projects are usually listed one to three weeks after they appear
+for (const w of weeks) w.partial = w.t + WEEK > Date.now() - 14 * DAY;
+const max = Math.max(1, ...weeks.map((w) => w.n));
+const CW = 800,
+  CH = 140,
+  BW = CW / 17;
+const markX = ((at - w0) / WEEK) * BW;
+const fmt = (t: number) => new Date(t).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
+
+const paragraphs = m.summary.trim().split(/\n\s*\n/);
+const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(/\s+/g, " ")}`;
+---
+
+<Base title={m.title} description={description}>
+  <p class="crumbs eyebrow"><a href="/">Timeline</a> / <a href="/m/">Milestones</a></p>
+  <h1>{m.title}</h1>
+  <p class="badges">
+    <span class={`badge v-${m.vendor}`}>{MILESTONE_KINDS[m.kind]}</span>
+    <span class="badge">{VENDORS[m.vendor]}</span>
+    <span class="badge">{shortDate(m.date)}</span>
+  </p>
+  {paragraphs.map((p, k) => <p class={k === 0 ? "lede" : undefined}>{p}</p>)}
+  <p class="sources mono">
+    Sources:{" "}
+    {
+      m.sources.map((s, k) => (
+        <>
+          {k > 0 && " · "}
+          <a href={s.url} rel="external">{s.label}</a>
+        </>
+      ))
+    }
+  </p>
+
+  <section>
+    <h2>Releases around this date</h2>
+    <svg class={`weeks v-${m.vendor}`} viewBox={`0 0 ${CW} ${CH + 22}`} role="img" aria-label={`Releases per week, ${fmt(w0)} to ${fmt(weeks.at(-1)!.t)}`}>
+      {
+        weeks.map((w, k) => {
+          const h = (w.n / max) * (CH - 16);
+          return (
+            <g class={w.partial ? "wk partial" : "wk"}>
+              <rect x={k * BW + 4} y={CH - h} width={BW - 8} height={h} rx="2" />
+              <text class="n" x={k * BW + BW / 2} y={CH - h - 4}>{w.n}</text>
+              {k % 2 === 0 && <text class="d" x={k * BW + BW / 2} y={CH + 15}>{fmt(w.t)}</text>}
+            </g>
+          );
+        })
+      }
+      <line class="mark" x1={markX} x2={markX} y1="0" y2={CH} />
+    </svg>
+    <p class="note">
+      Releases per week across every project listed on recomp.party; the dashed line is {shortDate(m.date)}. A date on
+      the timeline is context, not a cause. Faded weeks are still filling in: new projects are usually listed one to
+      three weeks after they appear.
+    </p>
+  </section>
+
+  {
+    (prev || next) && (
+      <nav class="pager">
+        {prev ? <a href={milestonePath(prev)}>← {shortDate(prev.date)} · {prev.label}</a> : <span />}
+        {next && <a href={milestonePath(next)}>{shortDate(next.date)} · {next.label} →</a>}
+      </nav>
+    )
+  }
+</Base>
+
+<style>
+  .crumbs {
+    margin: 2.5rem 0 0;
+  }
+  .crumbs a {
+    text-decoration: none;
+  }
+  .crumbs + h1 {
+    margin-top: 0.5rem;
+  }
+  .badges {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .badge[class*="v-"] {
+    color: var(--mc);
+    border-color: var(--mc);
+  }
+  .sources {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .weeks {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .wk rect {
+    fill: var(--recomp);
+    opacity: 0.75;
+  }
+  .wk.partial rect {
+    opacity: 0.3;
+  }
+  .wk text {
+    font-family: var(--mono);
+    text-anchor: middle;
+  }
+  .wk .n {
+    font-size: 10px;
+    fill: var(--muted);
+  }
+  .wk .d {
+    font-size: 10px;
+    fill: var(--faint);
+  }
+  .mark {
+    stroke: var(--mc);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 4;
+  }
+  .note {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+  }
+</style>

@@ -1,12 +1,14 @@
 ---
-import { ago, entryPath, fitLogoArea, platformLogo, shortDate, type Entry, type PlatformId } from "../lib/data.ts";
+import { ago, entryPath, fitLogoArea, MILESTONE_KINDS, milestones, VENDORS, platformLogo, shortDate, type Entry, type PlatformId } from "../lib/data.ts";
+import { VENDOR_ICONS } from "../lib/vendor-icons.ts";
 import { AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, PAD_R, SORTS, views, W } from "../lib/timeline.ts";
 
 interface Props {
   games: Entry[];
 }
 const { games } = Astro.props;
-const layouts = views().map((v) => layout(games, v));
+const layouts = views().map((v) => layout(games, v, milestones));
+const dayMonth = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const defaultView = "1y";
 // Platform filter (logo buttons on desktop, a select on phones): every platform with a lane in the widest range.
 const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
@@ -36,6 +38,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     <span class="sw recomp"></span> static recompilation
     <span class="sw port"></span> source port
     <span class="sw pre"></span> pre-release
+    {milestones.length > 0 && <><span class="sw mile"></span> milestone</>}
     {" "}<span class="legend-note">— each row runs from a project's first release to its latest one.</span>
   </p>
   <div class="d-plat-filter" role="group" aria-label="Platforms to show">
@@ -61,17 +64,17 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         // Only the default range's desktop chart is live; the rest wait in <template>s until shown.
         const Desktop = l.view.id === defaultView ? "div" : "template";
         return (
-        <div class="tl-view" data-view={l.view.id} data-plan={JSON.stringify(l.plan)} data-axis={l.view.id === "1d" ? JSON.stringify({ start: l.view.start, end: l.view.end, l: NAME_X + NAME_W, r: W - PAD_R }) : undefined}>
+        <div class="tl-view" data-view={l.view.id} data-top={l.top} data-plan={JSON.stringify(l.plan)} data-axis={l.view.id === "1d" ? JSON.stringify({ start: l.view.start, end: l.view.end, l: NAME_X + NAME_W, r: W - PAD_R }) : undefined}>
           {l.view.id === "1d" && <p class="today-none" hidden>No releases yet today.</p>}
           <Desktop class="part" data-part="desktop">
           <div class="tl-inner">
-          <div class="tl-fold" hidden style={`left:0.75%;width:${(LABEL_W / W) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
+          <div class="tl-fold" hidden style={`left:0.75%;width:${(LABEL_W / W) * 100}%;top:${(l.top / l.initial.height) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
             <button type="button" class="fold-all" aria-label="Expand every game with several projects">
               <span class="fold-chev" aria-hidden="true" />
               <span class="fold-text">expand all</span>
             </button>
           </div>
-          <label class="tl-sort" hidden style={`left:${(NAME_X / W) * 100}%;width:${(NAME_W / W) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
+          <label class="tl-sort" hidden style={`left:${(NAME_X / W) * 100}%;width:${(NAME_W / W) * 100}%;top:${(l.top / l.initial.height) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
             <span>sort</span>
             <select aria-label="Sort projects within each platform">
               {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
@@ -97,13 +100,32 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
             ))}
             {l.ticks.map((t) => (
               <g class={t.major ? "tick major" : "tick"}>
-                <line class="to-bottom" x1={t.x} x2={t.x} y1={AXIS_H - 4} y2={l.initial.height} />
-                <text x={t.x + 3} y={AXIS_H - 8}>
+                <line class="to-bottom" x1={t.x} x2={t.x} y1={l.top + AXIS_H - 4} y2={l.initial.height} />
+                <text x={t.x + 3} y={l.top + AXIS_H - 8}>
                   {t.label}
                 </text>
               </g>
             ))}
-            <line class="now to-bottom" x1={l.nowX} x2={l.nowX} y1={AXIS_H - 4} y2={l.initial.height} />
+            <line class="now to-bottom" x1={l.nowX} x2={l.nowX} y1={l.top + AXIS_H - 4} y2={l.initial.height} />
+            {l.marks.map((mk) => {
+              const ly = l.top - 11; // logo centre, on the line just above the axis
+              const ty = mk.row === 1 ? 14 : 30; // first line's baseline: row 0 sits on the logo; a second line goes below
+              const hit = mk.row === null ? { x: mk.x - 9, w: 18 } : { x: Math.min(mk.cx - mk.w / 2, mk.x - 9) - 3, w: Math.max(mk.cx + mk.w / 2, mk.x + 9) - Math.min(mk.cx - mk.w / 2, mk.x - 9) + 6 };
+              return (
+                <a class={`mile v-${mk.m.vendor}`} href={mk.href} aria-label={`${MILESTONE_KINDS[mk.m.kind]}, ${shortDate(mk.m.date)}: ${mk.m.title}`} data-mile={`${MILESTONE_KINDS[mk.m.kind]} · ${VENDORS[mk.m.vendor]}`} data-vendor={mk.m.vendor} data-title={mk.m.title} data-date={shortDate(mk.m.date)}>
+                  <line class="mile-line to-bottom" x1={mk.x} x2={mk.x} y1={ly + 7} y2={l.initial.height} />
+                  <rect class="mile-hit" x={hit.x} y="0" width={hit.w} height={l.top} rx="4" />
+                  <circle class="mile-disc" cx={mk.x} cy={ly} r="8" />
+                  <path class="mile-logo" d={VENDOR_ICONS[mk.m.vendor]} transform={`translate(${mk.x - 5.5} ${ly - 5.5}) scale(${11 / 24})`} />
+                  {mk.row !== null && (
+                    <>
+                      <text class="mile-label" x={mk.cx} y={ty}>{mk.lines[0]}</text>
+                      {mk.lines[1] && <text class={mk.m.sub ? "mile-sub" : "mile-label"} x={mk.cx} y={ty + 16}>{mk.lines[1]}</text>}
+                    </>
+                  )}
+                </a>
+              );
+            })}
             {l.lanes.flatMap((lane, i) =>
               lane.items.flatMap((it) => {
                 const r = it.row;
@@ -167,6 +189,18 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                 </select>
               </label>
             </div>
+            {l.marks.length > 0 && (
+              <div class="m-miles">
+                <div class="m-mile-track">
+                  {l.marks.map((mk, k) => (
+                    <button type="button" class={`m-mile-btn v-${mk.m.vendor}`} style={`left:${l.mobile.miles[k]}%`} aria-expanded="false" aria-label={`${dayMonth(mk.m.date)}: ${mk.m.title}`} data-href={mk.href} data-date={dayMonth(mk.m.date)} data-label={mk.m.sub ? `${mk.m.label} · ${mk.m.sub}` : mk.m.label}>
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d={VENDOR_ICONS[mk.m.vendor]} /></svg>
+                    </button>
+                  ))}
+                </div>
+                <p class="m-mile-cap" hidden></p>
+              </div>
+            )}
             {l.lanes.map((lane) => (
               <div class="m-lane" data-platform={lane.id}>
                 <div class="m-head">
@@ -184,6 +218,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                   <li class="m-grid" aria-hidden="true">
                     {l.mobile.ticks.map((tk) => <span class={tk.major ? "major" : ""} style={`left:${tk.p}%`} />)}
                     <span class="m-now" style={`left:${l.mobile.now}%`} />
+                    {l.marks.map((mk) => <span class={`m-mile v-${mk.m.vendor}`} style={`left:${mk.p}%`} />)}
                   </li>
                   {lane.items.map((it) => {
                     const r = it.row;
@@ -398,7 +433,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
           .filter((l) => l.items.length);
       const visible = off ? today(plan) : plan;
       const shown = visible.filter((l) => !plats.size || plats.has(l.id!));
-      const p = place(shown, sort, (id) => open.has(id));
+      const top = +(view.dataset.top ?? 0);
+      const p = place(shown, sort, (id) => open.has(id), top);
       svg.setAttribute("viewBox", `0 0 ${svg.viewBox.baseVal.width} ${p.height}`);
       view.querySelectorAll<SVGGElement>(".lane").forEach((g, i) => {
         const k = shown.findIndex((l) => l.id === plan[i]!.id);
@@ -408,7 +444,10 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         g.querySelector("rect")!.setAttribute("height", String(p.lanes[k]!.height));
       });
       for (const line of view.querySelectorAll(".to-bottom")) line.setAttribute("y2", String(p.height));
-      for (const el of view.querySelectorAll<HTMLElement>(".tl-inner > .tl-sort, .tl-inner > .tl-fold")) el.style.height = `${(AXIS_H / p.height) * 100}%`;
+      for (const el of view.querySelectorAll<HTMLElement>(".tl-inner > .tl-sort, .tl-inner > .tl-fold")) {
+        el.style.top = `${(top / p.height) * 100}%`;
+        el.style.height = `${(AXIS_H / p.height) * 100}%`;
+      }
       for (const row of svg.querySelectorAll<SVGElement>(".row[data-id]")) {
         const id = row.dataset.id!;
         row.style.display = p.y[id] === undefined ? "none" : "";
@@ -531,6 +570,22 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       const t = e.target as Element;
       const group = t.closest<SVGGElement>(".row.group");
       if (group) return toggle(group.dataset.id!);
+      const mile = t.closest<HTMLButtonElement>(".m-mile-btn");
+      if (mile) {
+        const box = mile.closest(".m-miles")!;
+        const cap = box.querySelector<HTMLElement>(".m-mile-cap")!;
+        const wasOpen = mile.getAttribute("aria-expanded") === "true";
+        for (const b of box.querySelectorAll(".m-mile-btn")) b.setAttribute("aria-expanded", "false");
+        cap.hidden = wasOpen;
+        if (wasOpen) return;
+        mile.setAttribute("aria-expanded", "true");
+        const d = mile.dataset;
+        const date = Object.assign(document.createElement("span"), { className: "m-mile-date", textContent: d.date });
+        const link = Object.assign(document.createElement("a"), { href: d.href, textContent: "details →" });
+        cap.className = `m-mile-cap ${[...mile.classList].find((c) => c.startsWith("v-"))}`;
+        cap.replaceChildren(scoped(date), ` ${d.label} `, scoped(link));
+        return;
+      }
       const mToggle = t.closest(".m-toggle");
       if (mToggle) return toggle(mToggle.closest<HTMLElement>(".m-group")!.dataset.id!);
       if (t.closest(".fold-all")) {
@@ -568,7 +623,9 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     };
     const fill = (d: DOMStringMap) => {
       const text = document.createElement("div");
-      if (d.group) {
+      if (d.mile) {
+        text.append(line(`t-kind v-${d.vendor}`, d.mile), line("t-game", d.title!), line("t-meta", d.date!), line("t-repo", "click for details"));
+      } else if (d.group) {
         const kindsIn = d.kinds!.split(" ");
         const recomps = kindsIn.filter((k) => k === "recomp").length;
         const ports = kindsIn.length - recomps;
@@ -597,6 +654,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         tip.replaceChildren(img, text);
       } else tip.replaceChildren(text);
       tip.classList.toggle("has-cover", !!d.cover);
+      tip.classList.toggle("is-mile", !!d.mile);
       tip.hidden = false;
     };
     const placeTip = (x: number, y: number) => {
@@ -608,7 +666,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       tip.style.transform = `translate(${Math.max(8, left)}px, ${Math.max(8, top)}px)`;
     };
     let hovered: Element | null = null;
-    const rowOf = (t: EventTarget | null) => (t as Element | null)?.closest?.("svg .row") ?? null;
+    const rowOf = (t: EventTarget | null) => (t as Element | null)?.closest?.("svg .row, svg .mile") ?? null;
     root.addEventListener("pointerover", (e) => {
       const row = rowOf(e.target);
       if (row && row !== hovered) {
@@ -798,6 +856,65 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   }
   .sw.pre {
     border: 2px solid var(--muted);
+  }
+  .sw.mile {
+    width: 0;
+    height: 0.85rem;
+    border-radius: 0;
+    border-left: 1.5px dashed var(--muted);
+    vertical-align: -0.15rem;
+  }
+  /* milestones: an outside event, one colour per kind */
+  .mile {
+    color: var(--mc);
+    cursor: pointer;
+  }
+  .mile-line {
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .mile-hit {
+    fill: transparent;
+  }
+  .mile-disc {
+    fill: var(--surface);
+    stroke: currentColor;
+    stroke-opacity: 0.5;
+  }
+  .mile-logo {
+    fill: currentColor;
+  }
+  .mile-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    fill: currentColor;
+    text-anchor: middle;
+  }
+  .mile-sub {
+    font-family: var(--mono);
+    font-size: 9px;
+    fill: var(--muted);
+    text-anchor: middle;
+  }
+  .mile:hover .mile-hit,
+  .mile:focus-visible .mile-hit {
+    fill: currentColor;
+    fill-opacity: 0.08;
+  }
+  .mile:hover .mile-line {
+    opacity: 1;
+  }
+  .mile:hover .mile-disc {
+    stroke-opacity: 1;
+  }
+  .mile:focus {
+    outline: none;
+  }
+  .tl-tip.is-mile :global(.t-kind) {
+    color: var(--mc);
   }
   svg {
     display: block;
@@ -1278,6 +1395,63 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   .m-grid span.major {
     opacity: 1;
     background: var(--faint);
+  }
+  .m-grid .m-mile {
+    width: 0;
+    background: none;
+    border-left: 1px dashed var(--mc);
+    opacity: 0.7;
+  }
+  /* phone: the range's milestones as vendor logos along the time axis; a tap names one */
+  .m-miles {
+    margin: 0 0 0.8rem;
+  }
+  .m-mile-track {
+    position: relative;
+    height: 1.4rem;
+    margin: 0 calc(0.8rem + 1px);
+    border-bottom: 1px dashed var(--line);
+  }
+  .m-mile-btn {
+    position: absolute;
+    top: 0;
+    width: 1.3rem;
+    height: 1.3rem;
+    padding: 0.2rem;
+    transform: translateX(-50%);
+    border: 1px solid var(--mc);
+    border-radius: 50%;
+    background: var(--surface);
+    cursor: pointer;
+  }
+  .m-mile-btn svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: var(--mc);
+  }
+  .m-mile-btn[aria-expanded="true"] {
+    background: var(--mc);
+  }
+  .m-mile-btn[aria-expanded="true"] svg {
+    fill: var(--bg);
+  }
+  .m-mile-cap {
+    margin: 0.45rem 0.8rem 0;
+    font-size: 0.8rem;
+  }
+  .m-mile-cap[hidden] {
+    display: none;
+  }
+  .m-mile-cap a {
+    margin-left: 0.3rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+  }
+  .m-mile-date {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--mc);
   }
   .m-grid .m-now {
     background: var(--accent);

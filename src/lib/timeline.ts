@@ -1,7 +1,7 @@
-import { entryPath, fitLogo, PLATFORMS, platformLogo, platformsInUse, type Entry } from "./data.ts";
-import { AXIS_H, place, type PlaceLane, type Placement, type Ranks } from "./timeline-place.ts";
+import { entryPath, fitLogo, milestonePath, PLATFORMS, platformLogo, platformsInUse, type Entry, type Milestone } from "./data.ts";
+import { AXIS_H, BAND_H, place, type PlaceLane, type Placement, type Ranks } from "./timeline-place.ts";
 
-export { AXIS_H };
+export { AXIS_H, BAND_H };
 
 /**
  * Layout for the swimlane timeline: one lane per source platform, one row per project.
@@ -100,8 +100,19 @@ export type Lane = {
   items: Item[];
 };
 
+/**
+ * A milestone: its vendor's logo on a dashed line, with the label centred above it on one of two rows
+ * (`row` 0 right above the logo, 1 above that; for two lines, the row of the first). Two `lines` (label and sub, or a long label wrapped) take both rows. `row: null`
+ * leaves just the logo; the tooltip and the milestone's page still carry the text. `cx` is the label's
+ * centre, nudged in from the edges.
+ */
+export type Mark = { m: Milestone; href: string; x: number; p: number; cx: number; row: 0 | 1 | null; w: number; lines: string[] };
+
 export type Layout = {
   view: TimelineView;
+  /** Height of the milestone band (0 when no milestone falls in the range). */
+  top: number;
+  marks: Mark[];
   lanes: Lane[];
   /** Input for `place()`, rendered into the page for the browser to rerun. */
   plan: PlaceLane[];
@@ -109,8 +120,17 @@ export type Layout = {
   initial: Placement;
   ticks: { x: number; label: string; major: boolean }[];
   nowX: number;
-  mobile: { ticks: { p: number; label: string; major: boolean }[]; now: number };
+  /** `miles`: logo positions on phones, spread so neighbouring logos stay tappable. */
+  mobile: { ticks: { p: number; label: string; major: boolean }[]; now: number; miles: number[] };
 };
+
+/** Push positions (percent, ascending) at least `gap` apart, keeping them within 0–100. */
+function spread(ps: number[], gap: number): number[] {
+  const out = [...ps];
+  for (let i = 1; i < out.length; i++) out[i] = Math.max(out[i]!, out[i - 1]! + gap);
+  for (let i = out.length - 1; i >= 0; i--) out[i] = Math.min(out[i]!, i === out.length - 1 ? 97 : out[i + 1]! - gap);
+  return out.map((p) => +p.toFixed(2));
+}
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -171,7 +191,57 @@ const gameKey = (e: Entry) => e.wikidata ?? e.game.replace(/\s*\(.*\)$/, "").toL
 const baseTitle = (game: string) => game.replace(/\s*\(.*\)$/, "");
 const clip = (text: string, max: number) => (text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text);
 
-export function layout(games: Entry[], view: TimelineView, now = Date.now()): Layout {
+const LABEL_CHAR = 6; // 10.5px semibold sans
+const SUB_CHAR = 5.4; // 9px mono
+const MARK_GAP = 6; // between the line and its label, and between neighbouring labels
+
+/** A label split at the space that leaves the shorter longest line ("Gemini 4 Argon" → "Gemini 4", "Argon"). */
+function wrap(label: string): [string, string] | undefined {
+  let best: [string, string] | undefined;
+  for (let i = label.indexOf(" "); i > 0; i = label.indexOf(" ", i + 1)) {
+    const two: [string, string] = [label.slice(0, i), label.slice(i + 1)];
+    if (!best || Math.max(...two.map((t) => t.length)) < Math.max(...best.map((t) => t.length))) best = two;
+  }
+  return best;
+}
+
+/**
+ * Place milestone labels newest first, so the latest events keep theirs: one line right above the logo,
+ * else on the row above that, else wrapped onto both; a label with a `sub` needs both rows. Otherwise logo only.
+ */
+function marks(list: Milestone[], view: TimelineView, x: (t: number) => number, pct: (px: number) => number, minX: number, maxX: number): Mark[] {
+  // "Today" is re-timed to the visitor's day in the browser; a milestone there would need moving too.
+  if (view.ticks === "hour") return [];
+  const inView = list.filter((m) => Date.parse(m.date) >= view.start && Date.parse(m.date) <= view.end);
+  const taken: [number, number][][] = [[], []];
+  const free = (rows: number[], a: number, b: number) => rows.every((r) => taken[r]!.every(([c, d]) => b + MARK_GAP <= c || a >= d + MARK_GAP));
+  const out = inView.map((m): Mark => {
+    const mx = x(Date.parse(m.date));
+    return { m, href: milestonePath(m), x: mx, p: pct(mx), cx: mx, row: null, w: 0, lines: [] };
+  });
+  for (const mk of [...out].reverse()) {
+    const { label, sub } = mk.m;
+    const split = wrap(label);
+    const options: { rows: number[]; lines: string[]; w: number }[] = sub
+      ? [{ rows: [0, 1], lines: [label, sub], w: Math.max(label.length * LABEL_CHAR, sub.length * SUB_CHAR) }]
+      : [
+          { rows: [0], lines: [label], w: label.length * LABEL_CHAR },
+          { rows: [1], lines: [label], w: label.length * LABEL_CHAR },
+          ...(split ? [{ rows: [0, 1], lines: split, w: Math.max(...split.map((t) => t.length)) * LABEL_CHAR }] : []),
+        ];
+    for (const o of options) {
+      const cx = Math.min(Math.max(mk.x, minX + o.w / 2), maxX - o.w / 2);
+      const span: [number, number] = [cx - o.w / 2, cx + o.w / 2];
+      if (!free(o.rows, ...span)) continue;
+      Object.assign(mk, { cx, w: o.w, lines: o.lines, row: Math.max(...o.rows) as 0 | 1 });
+      for (const r of o.rows) taken[r]!.push(span);
+      break;
+    }
+  }
+  return out;
+}
+
+export function layout(games: Entry[], view: TimelineView, milestones: Milestone[] = [], now = Date.now()): Layout {
   const plotL = NAME_X + NAME_W;
   const plotR = W - PAD_R;
   const x = (t: number) => plotL + ((t - view.start) / (view.end - view.start)) * (plotR - plotL);
@@ -270,13 +340,17 @@ export function layout(games: Entry[], view: TimelineView, now = Date.now()): La
     items: l.items.map((it) => ({ id: it.row.id, ranks: it.row.ranks, children: it.children?.map((c) => ({ id: c.id, ranks: c.ranks })) })),
   }));
   const ticks = ticksFor(view, x);
+  const ms = marks(milestones, view, x, pct, NAME_X, plotR);
+  const top = ms.length ? BAND_H : 0;
   return {
     view,
+    top,
+    marks: ms,
     lanes,
     plan,
-    initial: place(plan, "first", () => false),
+    initial: place(plan, "first", () => false, top),
     ticks,
     nowX: x(now),
-    mobile: { ticks: ticks.map((t) => ({ ...t, p: pct(t.x) })), now: pct(x(now)) },
+    mobile: { ticks: ticks.map((t) => ({ ...t, p: pct(t.x) })), now: pct(x(now)), miles: spread(ms.map((mk) => mk.p), 7) },
   };
 }

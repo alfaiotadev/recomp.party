@@ -7,6 +7,8 @@ export const ROW_H = 18;
 export const LANE_PAD = 6;
 export const MIN_LANE_H = 58; // room for the platform logo + project count
 export const AXIS_H = 30; // also hosts the sort control above the name column
+/** Band above the axis for milestone labels; only ranges that have milestones get one. */
+export const BAND_H = 56;
 
 export type Ranks = Record<string, number>;
 export type PlaceItem = { id: string; ranks: Ranks; children?: { id: string; ranks: Ranks }[] };
@@ -24,9 +26,10 @@ export type Placement = {
 
 const byRank = (sort: string) => (a: { ranks: Ranks }, b: { ranks: Ranks }) => a.ranks[sort]! - b.ranks[sort]!;
 
-export function place(lanes: PlaceLane[], sort: string, open: (id: string) => boolean): Placement {
+/** `top`: the milestone band's height, 0 when the range has none. */
+export function place(lanes: PlaceLane[], sort: string, open: (id: string) => boolean, top = 0): Placement {
   const out: Placement = { y: {}, hidden: new Set(), lanes: [], height: 0 };
-  let y = AXIS_H;
+  let y = top + AXIS_H;
   for (const lane of lanes) {
     const laneY = y;
     y += LANE_PAD;

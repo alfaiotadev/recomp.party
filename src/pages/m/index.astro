@@ -1,0 +1,62 @@
+---
+import Base from "../../layouts/Base.astro";
+import { MILESTONE_KINDS, milestonePath, milestones, shortDate } from "../../lib/data.ts";
+
+const newest = [...milestones].reverse();
+---
+
+<Base title="Milestones" description="Model releases and policy changes marked on the recomp.party release timeline.">
+  <p class="eyebrow crumbs"><a href="/">Timeline</a> / Milestones</p>
+  <h1>Milestones</h1>
+  <p class="lede">
+    Outside events drawn on the release timeline as dashed lines. Many recomps and ports are now written with AI coding
+    agents, so model releases and policy changes that touch game work are marked for context. A line marks a date, not
+    a cause.
+  </p>
+  <ol class="list">
+    {
+      newest.map((m) => (
+        <li class={`v-${m.vendor}`}>
+          <span class="date mono">{shortDate(m.date)}</span>
+          <a href={milestonePath(m)}>{m.title}</a>
+          <span class="kind mono">{MILESTONE_KINDS[m.kind]}</span>
+        </li>
+      ))
+    }
+  </ol>
+</Base>
+
+<style>
+  .crumbs {
+    margin: 2.5rem 0 0;
+  }
+  .crumbs a {
+    text-decoration: none;
+  }
+  .list {
+    list-style: none;
+    padding: 0;
+  }
+  .list li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr auto;
+    gap: 0 1rem;
+    align-items: baseline;
+    padding: 0.55rem 0 0.55rem 0.8rem;
+    border-left: 2px dashed var(--mc);
+    border-bottom: 1px solid var(--line);
+  }
+  .date,
+  .kind {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .kind {
+    color: var(--mc);
+  }
+  @media (max-width: 640px) {
+    .list li {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
