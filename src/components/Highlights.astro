@@ -7,13 +7,14 @@ import { CREDIT_ICONS } from "../lib/vendor-icons.ts";
 import CoverStack from "./CoverStack.astro";
 import StarTrend from "./StarTrend.astro";
 
-const { risers, starTrend, fresh, platform, most } = highlights;
+const { risers, starTrend, fresh, platform, most, fastest } = highlights;
 const models = recentCredits(7);
 const slides = [
   risers.items.length && { id: "rising", label: risers.title },
   fresh.items.length && { id: "fresh", label: fresh.title },
   platform && { id: "platform", label: "Platform of the week" },
   most.length && { id: "most", label: "Most recompiled" },
+  fastest.length && { id: "fastest", label: "Fastest recomps" },
   models.ranking.length && { id: "models", label: "Top models" },
 ].filter(Boolean) as { id: string; label: string }[];
 /** GitHub's star (Primer Octicons star-16 / star-fill-16, MIT). */
@@ -182,6 +183,35 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                   </a>
                 </li>
               ))}
+            </ol>
+          </article>
+        )}
+        {fastest.length > 0 && (
+          <article class="slide" id="hl-fastest" aria-label="Fastest recomps">
+            <header>
+              <p class="eyebrow">game release → first playable recomp</p>
+              <h2>Fastest recomps</h2>
+              <p class="most-note mono">Shortest time from the original game's release to the first GitHub release of a playable recomp.</p>
+            </header>
+            <ol class="items">
+              {fastest.map((f, i) => {
+                const logo = mini(f.entry.platform);
+                return (
+                  <li>
+                    <a href={entryPath(f.entry)} class={`item ${f.entry.kind}${f.entry.cover ? " has-art" : " no-art"}`} title={`Game out ${f.released}; first recomp build ${f.days.toLocaleString("en")} days later`}>
+                      {f.entry.cover ? <img class="art" src={f.entry.cover.src} width={f.entry.cover.width} height={f.entry.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={f.entry.platform} />}
+                      <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
+                      <span class="big mono">{f.value}</span>
+                      <span class="growth mono">out {new Date(f.released).toLocaleDateString("en", { month: "short", year: "numeric", timeZone: "UTC" })}</span>
+                      <strong>{f.entry.game}</strong>
+                      <span class="meta mono">
+                        {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[f.entry.platform]} /> : PLATFORMS[f.entry.platform]}
+                        <span>{f.entry.tool}</span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
             </ol>
           </article>
         )}

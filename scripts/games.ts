@@ -29,7 +29,7 @@ const rows = await sparql(`
     OPTIONAL { ?item rdfs:label ?mul. FILTER(LANG(?mul) = "mul") }
     BIND(COALESCE(?en, ?mul) AS ?title)
     OPTIONAL { ?item wdt:P577 ?date }
-    OPTIONAL { ?item p:P577/psv:P577 [ wikibase:timeValue ?dateValue; wikibase:timePrecision ?precision ] }
+    OPTIONAL { ?item p:P577 ?pubStatement. ?pubStatement wikibase:rank ?pubRank; psv:P577 [ wikibase:timeValue ?dateValue; wikibase:timePrecision ?precision ]. FILTER(?pubRank != wikibase:DeprecatedRank) }
     OPTIONAL { ?wp schema:about ?item; schema:isPartOf <https://en.wikipedia.org/>; schema:name ?wikipedia }
     OPTIONAL { ?item wdt:P5794 ?igdb }
     OPTIONAL { ?item wdt:P1933 ?moby }
@@ -44,10 +44,11 @@ function released(dates: string | undefined): string | undefined {
     .split("|")
     .map((d) => d.split("@"))
     .filter(([date, prec]) => date && Number(prec) >= 9 && !date.startsWith("-"))
-    .map(([date, prec]) => ({ at: date!.slice(0, 10), cut: date!.slice(0, Number(prec) >= 11 ? 10 : Number(prec) === 10 ? 7 : 4) }))
-    // earliest first; on the same day prefer the most precise value
-    .sort((a, b) => a.at.localeCompare(b.at) || b.cut.length - a.cut.length);
-  return known[0]?.cut;
+    .map(([date, prec]) => ({ at: date!.slice(0, 10), cut: date!.slice(0, Number(prec) >= 11 ? 10 : Number(prec) === 10 ? 7 : 4) }));
+  // A year or month stands in for 1 January / the 1st: drop it when a more precise date falls inside it.
+  const refined = known.filter((k) => !known.some((o) => o.cut.length > k.cut.length && o.cut.startsWith(k.cut)));
+  // earliest first; on the same day prefer the most precise value
+  return refined.sort((a, b) => a.at.localeCompare(b.at) || b.cut.length - a.cut.length)[0]?.cut;
 }
 
 const games: Record<string, GameMeta> = {};
