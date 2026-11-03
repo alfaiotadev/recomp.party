@@ -503,6 +503,17 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   }
   /* phones: one tile per row, so each gets the full width */
   @media (max-width: 520px) {
+    /* a full-width tile has room for the cover to be as tall as the text beside it (3 : 4) */
+    .nw-cover {
+      align-self: stretch;
+    }
+    .nw-cover img,
+    .nw-cover .ph {
+      width: auto;
+      height: 100%;
+      max-height: 9.5rem;
+      aspect-ratio: 3 / 4;
+    }
     .stats {
       grid-template-columns: minmax(0, 1fr);
     }
