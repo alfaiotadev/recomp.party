@@ -75,7 +75,7 @@ const here = Astro.url.pathname;
         data-fresh={generatedAt}
         title={`GitHub data last fetched ${generatedAt.slice(0, 16).replace("T", " ")} UTC; it refreshes every six hours. Click for the fetch runs.`}
       >
-        <span class="fresh-label">data</span>
+        <span class="fresh-label">updated</span>
         <span class="fresh-t">··:·· ago</span>
       </a>
       <a class="review" href={CANDIDATE_PRS} data-review hidden>
