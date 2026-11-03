@@ -288,6 +288,10 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     };
     const mark = () => {
       tabs.forEach((t, k) => t.setAttribute("aria-selected", String(k === i)));
+      // where the tab row scrolls (phones), bring the current tab to its middle
+      const t = tabs[i];
+      if (tabsEl.scrollWidth > tabsEl.clientWidth)
+        tabsEl.scrollTo({ left: t.offsetLeft - (tabsEl.clientWidth - t.offsetWidth) / 2, behavior: reduce ? "auto" : "smooth" });
       draw();
     };
     const go = (n) => {
@@ -808,6 +812,27 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   @media (max-width: 520px) {
     .tab-label {
       font-size: 0.6rem;
+    }
+  }
+  /* phones: the tabs don't fit side by side; one row that scrolls sideways, inset from the edges and
+     fading out where more tabs wait */
+  @media (max-width: 760px) {
+    .hl-tabs {
+      justify-content: flex-start;
+      gap: 0.8rem;
+      margin: 0 1rem;
+      padding-inline: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
+    }
+    .hl-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .tab {
+      flex: none;
+      width: auto;
+      min-width: 6.5rem;
     }
   }
 </style>
