@@ -819,13 +819,6 @@
   based_on: [BelmanteGu/SuperMarioWonderRecomp]
   wikidata: Q63385672
   added: 2026-10-31
-- repo: drakolordx7/pokopia-recomp
-  game: Pokémon Pokopia
-  platform: switch
-  kind: recomp
-  tool: nxrecomp
-  wikidata: Q136231470
-  added: 2026-11-03
 - repo: raulzrrs/letsgo-recomp
   game: "Pokémon: Let's Go, Eevee!"
   platform: switch
@@ -920,6 +913,15 @@
   kind: recomp
   wikidata: Q130729158
   added: 2026-11-01
+
+# --- Switch 2 --------------------------------------------------------------------
+- repo: drakolordx7/pokopia-recomp
+  game: Pokémon Pokopia
+  platform: switch2
+  kind: recomp
+  tool: nxrecomp
+  wikidata: Q136231470
+  added: 2026-11-03
 
 # --- Game Boy --------------------------------------------------------------------
 - repo: bryanthaboi/gen1recomp
