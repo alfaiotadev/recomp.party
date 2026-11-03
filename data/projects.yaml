@@ -171,6 +171,14 @@
   tool: N64Recomp
   wikidata: Q2909714
   added: 2026-10-28
+- repo: bdragoncore/pommy-recomp
+  game: "Bomberman 64: The Second Attack!"
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [Bomberhackers/TSA]
+  wikidata: Q2705639
+  added: 2026-11-03
 - repo: fliperama86/cvlod_recomp
   game: "Castlevania: Legacy of Darkness"
   platform: n64
@@ -421,6 +429,13 @@
   based_on: [VetriTheRetri/ssb-decomp-re]
   wikidata: Q870981
   added: 2026-10-28
+- repo: djultra64/Blocksphere
+  game: Tetrisphere
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  wikidata: Q3519194
+  added: 2026-11-03
 - repo: 2ship2harkinian/2ship2harkinian
   game: "The Legend of Zelda: Majora's Mask"
   platform: n64
@@ -448,6 +463,13 @@
   platform: n64
   kind: recomp
   added: 2026-11-03
+- repo: jessetbh/VPW64Recomp
+  game: Virtual Pro Wrestling 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  wikidata: Q3560853
+  added: 2026-11-03
 - repo: jessetbh/WCWvsNWOWorldTourRecomp
   game: WCW vs. nWo World Tour
   platform: n64
@@ -463,6 +485,13 @@
   tool: N64Recomp
   wikidata: Q3564638
   added: 2026-11-02
+- repo: RetroPulse03/WinBackRecomp
+  game: "WinBack: Covert Operations"
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  wikidata: Q3354082
+  added: 2026-11-03
 - repo: jessetbh/WWFNoMercyRecomp
   game: WWF No Mercy
   platform: n64
@@ -676,6 +705,13 @@
   kind: recomp
   wikidata: Q1506526
   added: 2026-10-31
+- repo: PC-PORTERS/SplatPC-Splatoon-Native-PC-Port
+  game: Splatoon
+  platform: wiiu
+  kind: recomp
+  based_on: [ApfelTeeSaft/RebrewU]
+  wikidata: Q17490239
+  added: 2026-11-03
 - repo: josiahg2502-glitch/Smash4PC
   game: Super Smash Bros. for Wii U
   platform: wiiu
@@ -733,6 +769,13 @@
   based_on: [Denkishi/ssbu-recomp]
   wikidata: Q44997696
   added: 2026-10-30
+- repo: darkuni/cruisn-blast-recomp
+  game: Cruis'n Blast
+  platform: switch
+  kind: recomp
+  tool: Kirikae
+  wikidata: Q93359403
+  added: 2026-11-03
 - repo: veneito/engage-pc-recomp
   game: Fire Emblem Engage
   platform: switch
@@ -776,6 +819,13 @@
   based_on: [BelmanteGu/SuperMarioWonderRecomp]
   wikidata: Q63385672
   added: 2026-10-31
+- repo: drakolordx7/pokopia-recomp
+  game: Pokémon Pokopia
+  platform: switch
+  kind: recomp
+  tool: nxrecomp
+  wikidata: Q136231470
+  added: 2026-11-03
 - repo: raulzrrs/letsgo-recomp
   game: "Pokémon: Let's Go, Eevee!"
   platform: switch
@@ -790,6 +840,14 @@
   kind: recomp
   wikidata: Q61831178
   added: 2026-10-30
+- repo: Deez-coder/SMO-android-port
+  game: Super Mario Odyssey
+  platform: switch
+  kind: port
+  tool: smo-recomp
+  based_on: [Coz-0/smo-recomp]
+  wikidata: Q28234671
+  added: 2026-11-03
 - repo: OpenSmash-Ultimate/ssbu-recomp
   game: Super Smash Bros. Ultimate
   platform: switch
@@ -988,6 +1046,21 @@
   tool: segagenesisrecomp
   wikidata: Q35627
   added: 2026-11-01
+- repo: OriginalSwayze/Streets-Of-Rage-Recomp
+  game: Streets of Rage 1–3
+  platform: genesis
+  kind: recomp
+  tool: Beyond Oasis Recomp
+  wikidata: Q1143285
+  added: 2026-11-03
+
+# --- Saturn ----------------------------------------------------------------------
+- repo: mattkuhnQAAI/sfiii-native
+  game: Shining Force III
+  platform: saturn
+  kind: recomp
+  wikidata: Q3281068
+  added: 2026-11-03
 
 # --- PlayStation -----------------------------------------------------------------
 - repo: DiegoDeDios/AlienReRecomp
@@ -1054,6 +1127,14 @@
   tool: psxrecomp
   wikidata: Q1069537
   added: 2026-11-01
+- repo: FractalEngineer/Medal-Of-Honor-Underground-PSX-Recomp
+  game: Medal of Honor Underground
+  platform: ps1
+  kind: recomp
+  tool: psxrecomp
+  based_on: [mstan/psxrecomp]
+  wikidata: Q1064176
+  added: 2026-11-03
 - repo: BlackLabelHQ/MediEvilRecomp
   game: MediEvil
   platform: ps1
@@ -1076,6 +1157,13 @@
   based_on: [mstan/psxrecomp]
   wikidata: Q2733462
   added: 2026-10-31
+- repo: TekRantGaming/muppet-racemania-recompiled
+  game: Muppet RaceMania
+  platform: ps1
+  kind: recomp
+  tool: psxrecomp
+  wikidata: Q3327961
+  added: 2026-11-03
 - repo: khasinski/parasite-eve-pc
   game: Parasite Eve
   platform: ps1
@@ -1201,6 +1289,14 @@
   based_on: [Smartkin/twinsanity-reversed]
   wikidata: Q1257775
   added: 2026-11-01
+- repo: jcsix694/def-jam-vendetta-recomp
+  game: Def Jam Vendetta
+  platform: ps2
+  kind: recomp
+  tool: PS2Recomp
+  based_on: [ran-j/PS2Recomp]
+  wikidata: Q953855
+  added: 2026-11-03
 - repo: skuza-oss/downhill-revived
   game: Downhill Domination
   platform: ps2
@@ -1305,6 +1401,12 @@
   based_on: [ran-j/PS2Recomp]
   wikidata: Q2441816
   added: 2026-10-30
+- repo: menaman123/Sly-2-Recomp
+  game: "Sly 2: Band of Thieves"
+  platform: ps2
+  kind: recomp
+  wikidata: Q1584849
+  added: 2026-11-03
 - repo: theclub654/ProjectCane
   game: Sly Cooper and the Thievius Raccoonus
   platform: ps2
@@ -1587,6 +1689,13 @@
   kind: port
   wikidata: Q378928
   added: 2026-10-30
+- repo: PateeerQ/FreedomUniteRecomp
+  game: Monster Hunter Freedom Unite
+  platform: psp
+  kind: recomp
+  tool: psprecomp
+  wikidata: Q378928
+  added: 2026-11-03
 - repo: TeamGDB/Yakumo
   game: Monster Hunter Portable 3rd HD Ver.
   platform: psp
@@ -1899,6 +2008,14 @@
   based_on: [MatiasRiveraC/SSX-Tricky-PC]
   wikidata: Q2377020
   added: 2026-10-31
+- repo: lookingcoding/hulk-ultimate-destruction-recomp-xbox-ver-
+  game: "The Incredible Hulk: Ultimate Destruction"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  based_on: [TGP482/XboxXBE-Recomp]
+  wikidata: Q153423
+  added: 2026-11-03
 - repo: Shagg88/Athelas
   game: "The Lord of the Rings: The Return of the King (and related LOTR games)"
   platform: xbox
@@ -1957,8 +2074,22 @@
   kind: recomp
   wikidata: Q21772565
   added: 2026-11-02
+- repo: linkssy2/UrbanChaosRiotResponseBurnerEdition
+  game: "Urban Chaos: Riot Response"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBERecomp
+  wikidata: Q2057596
+  added: 2026-11-03
 
 # --- Xbox 360 --------------------------------------------------------------------
+- repo: Wndwsqrrl/3on3NHL-recomp
+  game: 3 on 3 NHL Arcade
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q4636575
+  added: 2026-11-03
 - repo: sal063/AC6_recomp
   game: "Ace Combat 6: Fires of Liberation"
   platform: x360
@@ -2087,6 +2218,13 @@
   kind: recomp
   wikidata: Q4384921
   added: 2026-11-02
+- repo: birabittoh/EternalSonataReprise
+  game: Eternal Sonata
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q1338867
+  added: 2026-11-03
 - repo: Juansolo457/fear360-recomp
   game: F.E.A.R.
   platform: x360
@@ -2151,6 +2289,14 @@
   tool: ShiftGlue
   wikidata: Q31560
   added: 2026-10-31
+- repo: nikolaygorb/FuseRecomp
+  game: FUSE
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [rexglue/rexglue-sdk]
+  wikidata: Q3358933
+  added: 2026-11-03
 - repo: santiquiroz/gears-of-war-2-pc-port
   game: Gears of War 2
   platform: x360
@@ -2204,6 +2350,13 @@
   tool: ReXGlue
   wikidata: Q3772920
   added: 2026-11-01
+- repo: andrewnakas/gtav-recomp
+  game: Grand Theft Auto V
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q17452
+  added: 2026-11-03
 - repo: jillsandwich1998/reGH2
   game: Guitar Hero II
   platform: x360
@@ -2232,6 +2385,13 @@
   tool: ReXGlue
   wikidata: Q12252310
   added: 2026-11-02
+- repo: anishchandra24/Juiced2-Recompiled
+  game: "Juiced 2: Hot Import Nights"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q2620589
+  added: 2026-11-03
 - repo: freefrank/LostOdysseyRecomp
   game: Lost Odyssey
   platform: x360
@@ -2252,6 +2412,13 @@
   tool: ReXGlue
   wikidata: Q2337304
   added: 2026-10-31
+- repo: dfdx047/Zandatsu
+  game: "Metal Gear Rising: Revengeance"
+  platform: x360
+  kind: port
+  tool: ReXGlue
+  wikidata: Q930345
+  added: 2026-11-03
 - repo: holdmysocks/mcla-recomp
   game: "Midnight Club: Los Angeles"
   platform: x360
@@ -2274,6 +2441,13 @@
   based_on: [holdmysocks/mcla-recomp]
   wikidata: Q1514674
   added: 2026-11-01
+- repo: josiahg2502-glitch/MonopolyRecompiled
+  game: Monopoly
+  platform: x360
+  kind: recomp
+  tool: ReXGlue SDK
+  based_on: [rexglue/rexglue-sdk]
+  added: 2026-11-03
 - repo: Thorhax/mk9-nx
   game: Mortal Kombat Komplete Edition
   platform: x360
@@ -2328,12 +2502,34 @@
   kind: recomp
   wikidata: Q220365
   added: 2026-10-31
+- repo: tools81/nfl-head-coach-09-static-recomp
+  game: NFL Head Coach 09
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  wikidata: Q16267184
+  added: 2026-11-03
 - repo: anishchandra24/NHL2K8-Recompiled
   game: NHL 2K8
   platform: x360
   kind: recomp
   tool: ReXGlue
   wikidata: Q11883844
+  added: 2026-11-03
+- repo: KamiTK2/openNG2
+  game: Ninja Gaiden II
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q2557356
+  added: 2026-11-03
+- repo: YaibaKamikaze/IzunaRecomp
+  game: Ninja Gaiden II
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [FermataRest/Ninja-s-Dawn-A-Ninja-Gaiden-2-Recompilation-Project]
+  wikidata: Q2557356
   added: 2026-11-03
 - repo: CaiusCodes/Perfect-Dark-XBLA-PC-Recomp
   game: Perfect Dark
@@ -2443,12 +2639,27 @@
   tool: ReXGlue
   wikidata: Q1575181
   added: 2026-10-31
+- repo: 5C8/skate3recomp
+  game: Skate 3
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [mchughalex/skate3recomp]
+  wikidata: Q1653694
+  added: 2026-11-03
 - repo: mchughalex/skate3recomp
   game: Skate 3
   platform: x360
   kind: recomp
   wikidata: Q1653694
   added: 2026-10-28
+- repo: BTr-RJ/RedBaron_Recomp
+  game: Snoopy Flying Ace
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q7548020
+  added: 2026-11-03
 - repo: YuutaTsubasa/Free-Riders-Recompiled
   game: Sonic Free Riders
   platform: x360
@@ -2464,6 +2675,19 @@
   tool: XenonRecomp
   wikidata: Q1150928
   added: 2026-10-28
+- repo: TekRantGaming/south-park-tower-defense-recompiled
+  game: "South Park: Let's Go Tower Defense Play!"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-11-03
+- repo: TekRantGaming/south-park-tenormans-revenge-recompiled
+  game: "South Park: Tenorman's Revenge"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q3965579
+  added: 2026-11-03
 - repo: goliathret/EdgeOfTimeRecomp
   game: "Spider-Man: Edge of Time"
   platform: x360
@@ -2559,6 +2783,14 @@
   tool: ReXGlue
   wikidata: Q5156776
   added: 2026-11-02
+- repo: mikeflare007/wwe2k14-recomp
+  game: WWE 2K14
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [PromethenDev/wwe13-recomp]
+  wikidata: Q5156776
+  added: 2026-11-03
 - repo: PromethenDev/wwe2k14-recomp
   game: WWE 2K14
   platform: x360
@@ -2589,6 +2821,13 @@
   added: 2026-10-31
 
 # --- PC (DOS/Windows) ------------------------------------------------------------
+- repo: nayo186/AloneInTheDarkClassicReborn
+  game: Alone in the Dark
+  platform: pc
+  kind: port
+  based_on: [yaz0r/FITD]
+  wikidata: Q5075219
+  added: 2026-11-03
 - repo: kerokline/BreathOfFire3PCPort
   game: Breath of Fire III
   platform: pc
@@ -2708,6 +2947,13 @@
   kind: recomp
   wikidata: Q936968
   added: 2026-10-30
+- repo: sp00nznet/themepark-recomp
+  game: Theme Park
+  platform: pc
+  kind: recomp
+  tool: pcrecomp
+  wikidata: Q1543280
+  added: 2026-11-03
 - repo: abedegno/underworld-exhumed
   game: Ultima Underworld
   platform: pc
@@ -2765,6 +3011,11 @@
   kind: port
   wikidata: Q6113095
   added: 2026-11-02
+- repo: spita90/konami-viper-recomp
+  game: Thrill Drive 2 & GTI Club 2
+  platform: arcade
+  kind: recomp
+  added: 2026-11-03
 - repo: mr-finster/vf1-recomp
   game: Virtua Fighter
   platform: arcade
