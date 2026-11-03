@@ -47,13 +47,13 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     {
       newest && (
         <div class="cmp newest">
+          <span class="nw-line">
+            newest: <a href={entryPath(newest)}>{newest.game}</a>
+          </span>
           <a class="nw-cover" href={entryPath(newest)} tabindex="-1" aria-hidden="true">
             {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" /> : <span class="ph cover-ph" title="No cover yet" />}
           </a>
           <span class="nw-text">
-            <span>
-              newest: <a href={entryPath(newest)}>{newest.game}</a>
-            </span>
             <span class="rel">
               <span class="nw-row">
                 <abbr title="original">OG</abbr>
@@ -78,9 +78,9 @@ const laneStyle = (ids: PlatformId[], k: number) => {
                 {newest.firstReleaseAt!.slice(0, 10)}
               </b>
             </span>
-            <span>
-              {newest.tool && <>{newest.tool} · </>}by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
-            </span>
+          </span>
+          <span class="nw-line nw-by">
+            {newest.tool && <>{newest.tool} · </>}by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
           </span>
         </div>
       )
@@ -272,9 +272,11 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   /* fills the rest of the tile and centres in it, so the row's taller tiles leave no hole */
   .newest {
     flex: 1;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: center;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0 0.85rem;
     white-space: normal;
     line-height: 1.6;
   }
@@ -296,10 +298,18 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     flex-direction: column;
     min-width: 0;
   }
+  /* the title and credit lines span the full tile, under and over the cover */
+  .nw-line {
+    grid-column: 1 / -1;
+  }
+  .nw-line,
   .nw-text > span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .nw-by {
+    text-align: center;
   }
   .newest a {
     color: var(--muted);
