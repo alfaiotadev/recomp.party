@@ -323,3 +323,7 @@
 - repo: Barthes-Recompiled/Barthes-Launcher
   reason: Launcher repository; launchers are excluded per guidelines.
   date: 2026-11-03
+- repo: centollOS/SwitchWaker
+  reason: The Wind Waker ported to the Switch (homebrew); its releases are Switch
+    builds and a source archive, so a console target, not a native PC/phone build.
+  date: 2026-11-03

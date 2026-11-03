@@ -120,7 +120,7 @@
 - repo: Frostie77/Tooie-Recompiled
   game: Banjo-Tooie
   platform: n64
-  kind: port
+  kind: recomp
   tool: N64Recomp
   based_on: [N64Recomp/N64Recomp]
   wikidata: Q806598
@@ -144,7 +144,7 @@
 - repo: TheGh0stShip/BattleTanx-Global-Assault-PC-Port
   game: "BattleTanx: Global Assault"
   platform: n64
-  kind: port
+  kind: recomp
   tool: N64Recomp
   based_on: [TheGh0stShip/BattleTanx-Global-Assault]
   wikidata: Q2891772
@@ -567,13 +567,6 @@
   kind: recomp
   wikidata: Q1052131
   added: 2026-10-31
-- repo: centollOS/SwitchWaker
-  game: "The Legend of Zelda: The Wind Waker"
-  platform: gc
-  kind: port
-  based_on: [zeldaret/tww, elliotttate/Wind-Waker-Recomp]
-  wikidata: Q852563
-  added: 2026-11-03
 - repo: chrissotraidis/bluewake
   game: "The Legend of Zelda: The Wind Waker"
   platform: gc
@@ -743,7 +736,7 @@
 - repo: veneito/engage-pc-recomp
   game: Fire Emblem Engage
   platform: switch
-  kind: port
+  kind: recomp
   tool: TotK Recomp
   based_on: [valentderah/totk-pc-recomp]
   wikidata: Q113956929
@@ -1418,7 +1411,7 @@
 - repo: Re-TeRo17/ratchet-tod-recomp
   game: "Ratchet & Clank: Tools of Destruction"
   platform: ps3
-  kind: port
+  kind: recomp
   tool: ps3recomp
   based_on: [sp00nznet/ps3recomp]
   added: 2026-11-03
@@ -1830,6 +1823,12 @@
   kind: recomp
   wikidata: Q3175831
   added: 2026-11-03
+- repo: Jstackzz/MK-3D-rollback
+  game: "Mortal Kombat: Deadly Alliance, Deception & Armageddon"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBERecomp
+  added: 2026-11-03
 - repo: OAleex/OpenShao
   game: "Mortal Kombat: Shaolin Monks"
   platform: xbox
@@ -1845,7 +1844,7 @@
 - repo: SeveerJ/Orta_PC_Recomp
   game: Panzer Dragoon Orta
   platform: xbox
-  kind: port
+  kind: recomp
   tool: xboxrecomp
   based_on: [sp00nznet/xboxrecomp]
   wikidata: Q335056
@@ -2242,7 +2241,7 @@
 - repo: anishchandra24/MaddenNFL08-Recompiled
   game: Madden NFL 08
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q2296575
   added: 2026-11-03
@@ -2611,7 +2610,7 @@
 - repo: Awis13/liberty-pro-max
   game: Grand Theft Auto IV
   platform: pc
-  kind: port
+  kind: recomp
   tool: x86recomp
   wikidata: Q94797
   added: 2026-11-03
@@ -2796,12 +2795,6 @@
   platform: gba
   kind: tool
   added: 2026-10-31
-- repo: Jstackzz/MK-3D-rollback
-  game: MK-3D-rollback
-  platform: xbox
-  kind: tool
-  tool: XboxXBERecomp
-  added: 2026-11-03
 - repo: N64Recomp/N64Recomp
   game: "N64: Recompiled"
   platform: n64
