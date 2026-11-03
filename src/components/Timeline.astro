@@ -117,6 +117,11 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
               </g>
             ))}
             <line class="now to-bottom" x1={l.nowX} x2={l.nowX} y1={l.top + AXIS_H - 4} y2={l.initial.height} />
+            {l.top > 0 && (
+              <a class="mile-head" href="/m/">
+                <text x="12" y={l.top - 7}>Notable events</text>
+              </a>
+            )}
             {l.marks.map((mk) => {
               const ly = l.top - 11; // logo centre, on the line just above the axis
               const ty = mk.row === 1 ? 14 : 30; // first line's baseline: row 0 sits on the logo; a second line goes below
@@ -201,6 +206,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
             </div>
             {l.marks.length > 0 && (
               <div class="m-miles">
+                <a class="m-miles-head" href="/m/">Notable events</a>
                 <div class="m-mile-track">
                   {l.marks.map((mk, k) => (
                     <button type="button" class={`m-mile-btn v-${mk.m.vendor}`} style={`left:${l.mobile.miles[k]}%`} aria-expanded="false" aria-label={`${dayMonth(mk.m.date)}: ${mk.m.title}`} data-href={mk.href} data-date={dayMonth(mk.m.date)} data-label={mk.m.sub ? `${mk.m.label} · ${mk.m.sub}` : mk.m.label}>
@@ -1464,6 +1470,27 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     opacity: 0.7;
   }
   /* phone: the range's milestones as vendor logos along the time axis; a tap names one */
+  .mile-head text {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    fill: var(--faint);
+  }
+  .mile-head:hover text,
+  .mile-head:focus-visible text {
+    fill: var(--recomp);
+  }
+  .m-miles-head {
+    display: block;
+    margin: 0 0 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    text-decoration: none;
+  }
   .m-miles {
     margin: 0 0 0.8rem;
   }
