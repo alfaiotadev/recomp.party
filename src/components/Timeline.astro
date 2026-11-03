@@ -1,8 +1,8 @@
 ---
 import { ago, entryPath, fitLogoArea, MILESTONE_KINDS, milestones, VENDORS, platformLogo, shortDate, type Entry, type PlatformId } from "../lib/data.ts";
-import { aiFilterGroups, aiTokens, shortModel, topCredit, type Credit } from "../lib/ai.ts";
+import { aiFilterGroups, aiTokens } from "../lib/ai.ts";
 import { CREDIT_ICONS, VENDOR_ICONS } from "../lib/vendor-icons.ts";
-import { AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, PAD_R, SORTS, views, W } from "../lib/timeline.ts";
+import { AI_LOGO_W, AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, PAD_R, SORTS, views, W } from "../lib/timeline.ts";
 
 interface Props {
   games: Entry[];
@@ -10,14 +10,6 @@ interface Props {
 const { games } = Astro.props;
 const layouts = views().map((v) => layout(games, v, milestones));
 // AI co-author filter: each game's credited models and vendors (data/ai.json), for the browser
-/** The model credited most in a row's projects, if its vendor has a logo; drawn before the row's name. */
-const rowAi = (entries: Entry[]): Credit | undefined =>
-  entries
-    .map((e) => topCredit(e))
-    .filter((c): c is Credit => !!c && !!CREDIT_ICONS[c.vendor])
-    .sort((a, b) => b.commits - a.commits)[0];
-const aiName = (c: Credit | undefined) => (c ? (c.versioned ? shortModel(c.model) : (c.tool ?? c.model)) : "");
-const AI_X = NAME_X - 25; // logo column, left of a group's chevron
 const aiMap = Object.fromEntries(games.map((g) => [g.repo, aiTokens(g)]).filter(([, t]) => t));
 const dayMonth = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const defaultView = "1y";
@@ -166,9 +158,11 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
               lane.items.flatMap((it) => {
                 const r = it.row;
                 const odd = i % 2 ? " odd" : "";
-                const marks = (row: typeof r, x0: number, who: Credit | undefined) => (
+                const marks = (row: typeof r, x0: number) => (
                   <>
-                    {who && <path class={`row-ai v-${who.vendor}`} d={CREDIT_ICONS[who.vendor]} transform={`translate(${x0 > NAME_X ? NAME_X : AI_X} -4.5) scale(0.375)`} />}
+                    {row.ai.map((a, k) => (
+                      <path class={`row-ai v-${a.vendor}`} d={CREDIT_ICONS[a.vendor]} transform={`translate(${row.aiX + k * AI_LOGO_W} -4.5) scale(0.375)`} />
+                    ))}
                     <rect class="hit" x="0" y="-9" width={W} height="18" />
                     {row.guide && <line class="guide" x1={row.guide.x1} x2={row.guide.x2} y1="0" y2="0" />}
                     <line class="bar" x1={row.x1} x2={row.x2} y1="0" y2="0" />
@@ -183,8 +177,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                 );
                 if (!it.children) {
                   return [
-                    <a href={r.href} class={`row ${r.entry.kind}${odd}`} data-id={r.id} style={`transform:translateY(${l.initial.y[r.id]}px)`} aria-label={`${r.entry.game} (${r.entry.repo})`} data-game={r.entry.game} data-repo={r.entry.repo} data-kind={r.entry.kind} data-first={shortDate(r.entry.firstReleaseAt!)} data-latest={shortDate(r.entry.latestReleaseAt!)} data-count={r.entry.snap?.releaseCount ?? 0} data-stars={(r.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={r.entry.tool ?? ""} data-cover={r.entry.cover?.src ?? ""} data-ai={aiName(rowAi([r.entry]))}>
-                      {marks(r, NAME_X, rowAi([r.entry]))}
+                    <a href={r.href} class={`row ${r.entry.kind}${odd}`} data-id={r.id} style={`transform:translateY(${l.initial.y[r.id]}px)`} aria-label={`${r.entry.game} (${r.entry.repo})`} data-game={r.entry.game} data-repo={r.entry.repo} data-kind={r.entry.kind} data-first={shortDate(r.entry.firstReleaseAt!)} data-latest={shortDate(r.entry.latestReleaseAt!)} data-count={r.entry.snap?.releaseCount ?? 0} data-stars={(r.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={r.entry.tool ?? ""} data-cover={r.entry.cover?.src ?? ""} data-ai={r.ai.map((a) => a.label).join(", ")}>
+                      {marks(r, NAME_X)}
                     </a>,
                   ];
                 }
@@ -192,12 +186,12 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                 const badgeX = NAME_X + r.name.length * 6.1 + 7;
                 return [
                   ...it.children.map((c) => (
-                    <a href={c.href} class={`row child shut ${c.entry.kind}${odd}`} data-id={c.id} data-parent={r.id} tabindex="-1" aria-hidden="true" style={`transform:translateY(${l.initial.y[c.id]}px)`} aria-label={`${c.entry.game} (${c.entry.repo})`} data-game={c.entry.game} data-repo={c.entry.repo} data-kind={c.entry.kind} data-first={shortDate(c.entry.firstReleaseAt!)} data-latest={shortDate(c.entry.latestReleaseAt!)} data-count={c.entry.snap?.releaseCount ?? 0} data-stars={(c.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={c.entry.tool ?? ""} data-cover={c.entry.cover?.src ?? ""} data-ai={aiName(rowAi([c.entry]))}>
-                      {marks(c, NAME_X + CHILD_INDENT, rowAi([c.entry]))}
+                    <a href={c.href} class={`row child shut ${c.entry.kind}${odd}`} data-id={c.id} data-parent={r.id} tabindex="-1" aria-hidden="true" style={`transform:translateY(${l.initial.y[c.id]}px)`} aria-label={`${c.entry.game} (${c.entry.repo})`} data-game={c.entry.game} data-repo={c.entry.repo} data-kind={c.entry.kind} data-first={shortDate(c.entry.firstReleaseAt!)} data-latest={shortDate(c.entry.latestReleaseAt!)} data-count={c.entry.snap?.releaseCount ?? 0} data-stars={(c.entry.snap?.stars ?? 0).toLocaleString("en")} data-tool={c.entry.tool ?? ""} data-cover={c.entry.cover?.src ?? ""} data-ai={c.ai.map((a) => a.label).join(", ")}>
+                      {marks(c, NAME_X + CHILD_INDENT)}
                     </a>
                   )),
-                  <g class={`row group ${g.kind}${odd}`} data-id={r.id} role="button" tabindex="0" aria-expanded="false" aria-label={`${r.name}: ${g.count} projects, show them`} style={`transform:translateY(${l.initial.y[r.id]}px)`} data-group={g.count} data-game={r.name} data-kind={g.kind} data-kinds={it.children.map((c) => c.entry.kind).join(" ")} data-first={shortDate(g.first)} data-latest={shortDate(g.latest)} data-count={g.releases} data-stars={g.stars.toLocaleString("en")} data-cover={g.cover ?? ""} data-ai={aiName(rowAi(it.children.map((c) => c.entry)))}>
-                    {marks(r, NAME_X, rowAi(it.children.map((c) => c.entry)))}
+                  <g class={`row group ${g.kind}${odd}`} data-id={r.id} role="button" tabindex="0" aria-expanded="false" aria-label={`${r.name}: ${g.count} projects, show them`} style={`transform:translateY(${l.initial.y[r.id]}px)`} data-group={g.count} data-game={r.name} data-kind={g.kind} data-kinds={it.children.map((c) => c.entry.kind).join(" ")} data-first={shortDate(g.first)} data-latest={shortDate(g.latest)} data-count={g.releases} data-stars={g.stars.toLocaleString("en")} data-cover={g.cover ?? ""} data-ai={r.ai.map((a) => a.label).join(", ")}>
+                    {marks(r, NAME_X)}
                     <path class="chev" d={`M${NAME_X - 13} -3 L${NAME_X - 9} 1 L${NAME_X - 5} -3`} />
                     <rect class="badge-bg" x={badgeX} y="-6.5" width={g.count > 9 ? 22 : 17} height="13" rx="6.5" />
                     <text class="badge-n" x={badgeX + (g.count > 9 ? 11 : 8.5)} y="3.5">
@@ -274,8 +268,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                         <li class={`m-row ${r.entry.kind}`} style={`order:${r.ranks.first! + 1}`} data-ranks={JSON.stringify(r.ranks)} data-repo={r.entry.repo}>
                           <a href={entryPath(r.entry)}>
                             <span class="m-name">
-                              {(() => { const w = rowAi([r.entry]); return w && <svg class={`m-ai v-${w.vendor}`} viewBox="0 0 24 24" aria-label={aiName(w)}><path d={CREDIT_ICONS[w.vendor]} /></svg>; })()}
                               {r.entry.game}
+                              {r.ai.map((a) => <svg class={`m-ai v-${a.vendor}`} viewBox="0 0 24 24" aria-label={a.label}><path d={CREDIT_ICONS[a.vendor]} /></svg>)}
                             </span>
                             <span class="m-when">{ago(r.entry.latestReleaseAt)}</span>
                             {mtrack(r)}
@@ -289,8 +283,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                         <button type="button" class="m-toggle" aria-expanded="false">
                           <span class="m-name">
                             <span class="m-chev" aria-hidden="true" />
-                            {(() => { const w = rowAi(it.children.map((c) => c.entry)); return w && <svg class={`m-ai v-${w.vendor}`} viewBox="0 0 24 24" aria-label={aiName(w)}><path d={CREDIT_ICONS[w.vendor]} /></svg>; })()}
                             {r.name} <span class="m-badge">×{g.count}</span>
+                            {r.ai.map((a) => <svg class={`m-ai v-${a.vendor}`} viewBox="0 0 24 24" aria-label={a.label}><path d={CREDIT_ICONS[a.vendor]} /></svg>)}
                           </span>
                           <span class="m-when">{ago(g.latest)}</span>
                           {mtrack(r)}
@@ -300,8 +294,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                             <li class={`m-row m-child ${c.entry.kind}`} style={`order:${c.ranks.first! + 1}`} data-ranks={JSON.stringify(c.ranks)} data-repo={c.entry.repo}>
                               <a href={entryPath(c.entry)}>
                                 <span class="m-name m-repo">
-                                  {(() => { const w = rowAi([c.entry]); return w && <svg class={`m-ai v-${w.vendor}`} viewBox="0 0 24 24" aria-label={aiName(w)}><path d={CREDIT_ICONS[w.vendor]} /></svg>; })()}
                                   {c.entry.repo}
+                                  {c.ai.map((a) => <svg class={`m-ai v-${a.vendor}`} viewBox="0 0 24 24" aria-label={a.label}><path d={CREDIT_ICONS[a.vendor]} /></svg>)}
                                 </span>
                                 <span class="m-when">{ago(c.entry.latestReleaseAt)}</span>
                                 {mtrack(c)}
@@ -726,7 +720,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
           line("t-meta", `${d.count} releases · ★ ${d.stars}`),
         );
       }
-      if (d.ai) text.append(line("t-meta", `AI co-author: ${d.ai}`));
+      if (d.ai) text.append(line("t-meta", `AI co-authors: ${d.ai}`));
       if (d.cover) {
         const img = document.createElement("img");
         img.className = "t-cover";
@@ -1227,7 +1221,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     width: 0.8em;
     min-width: 0;
     height: 0.8em;
-    margin-right: 0.35em;
+    margin-left: 0.35em;
     vertical-align: -0.05em;
     fill: var(--mc);
     opacity: 0.8;

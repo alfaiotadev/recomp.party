@@ -1,4 +1,5 @@
 import { entryPath, fitLogo, milestonePath, PLATFORMS, platformLogo, platformsInUse, type Entry, type Milestone } from "./data.ts";
+import { aiLogos } from "./ai.ts";
 import { AXIS_H, BAND_H, place, type PlaceLane, type Placement, type Ranks } from "./timeline-place.ts";
 
 export { AXIS_H, BAND_H };
@@ -81,7 +82,13 @@ export type Row = {
   /** Faint leader from the end of the name to the start of the bar, if there's a gap. */
   guide: { x1: number; x2: number } | null;
   ranks: Ranks;
+  /** Logos of the AI vendors credited in the row's projects, drawn after the name from `aiX`. */
+  ai: { vendor: string; label: string }[];
+  aiX: number;
 };
+
+/** Width of one AI vendor logo after a row's name, gap included. */
+export const AI_LOGO_W = 12;
 
 /** A lane line: one project, or a game with its projects (`children`) behind a toggle. */
 export type Item = {
@@ -248,12 +255,13 @@ export function layout(games: Entry[], view: TimelineView, milestones: Milestone
   const pct = (px: number) => +(((px - plotL) / (plotR - plotL)) * 100).toFixed(2);
 
   /** Bar, dots and name for a span of releases. `nameX` is where the label starts, `nameLen` its length. */
-  const track = (firstIso: string, latestIso: string, releases: { date: string; prerelease: boolean; kind: Entry["kind"] }[], nameX: number, nameLen: number) => {
+  /** `extra`: pixels drawn after the name (a group's badge, AI logos) that the leader must clear. */
+  const track = (firstIso: string, latestIso: string, releases: { date: string; prerelease: boolean; kind: Entry["kind"] }[], nameX: number, nameLen: number, extra = 0) => {
     const first = Date.parse(firstIso);
     const x1 = x(Math.max(first, view.start));
     const x2 = x(Date.parse(latestIso));
     const inView = releases.filter((r) => Date.parse(r.date) >= view.start);
-    const nameEnd = nameX + nameLen * CHAR_W + 8;
+    const nameEnd = nameX + nameLen * CHAR_W + 8 + extra;
     return {
       x1,
       x2,
@@ -276,6 +284,7 @@ export function layout(games: Entry[], view: TimelineView, milestones: Milestone
     const projectRow = (entry: Entry, child: boolean): Row => {
       const label = child ? entry.repo : entry.game.replace(/^The Legend of Zelda: /, "Zelda: ");
       const name = clip(label, MAX_CHARS - (child ? 2 : 0));
+      const ai = aiLogos([entry]);
       return {
         id: entry.repo,
         entry,
@@ -283,7 +292,9 @@ export function layout(games: Entry[], view: TimelineView, milestones: Milestone
         name,
         truncated: name !== label,
         ranks: {},
-        ...track(entry.firstReleaseAt!, entry.latestReleaseAt!, releasesOf(entry), NAME_X + (child ? CHILD_INDENT : 0), name.length),
+        ai,
+        aiX: NAME_X + (child ? CHILD_INDENT : 0) + name.length * CHAR_W + 5,
+        ...track(entry.firstReleaseAt!, entry.latestReleaseAt!, releasesOf(entry), NAME_X + (child ? CHILD_INDENT : 0), name.length, ai.length * AI_LOGO_W),
       };
     };
 
@@ -304,6 +315,9 @@ export function layout(games: Entry[], view: TimelineView, milestones: Milestone
       const children = list.map((e) => projectRow(e, true));
       const childRanks = ranks(list, stats);
       children.forEach((c, k) => (c.ranks = childRanks.get(list[k]!)!));
+      // the "×N" badge after the name, then every vendor credited across the game's projects
+      const badgeW = list.length > 9 ? 22 : 17;
+      const groupAi = aiLogos(list);
       const item: Item = {
         row: {
           id: `g:${id}:${key}`,
@@ -312,7 +326,9 @@ export function layout(games: Entry[], view: TimelineView, milestones: Milestone
           name,
           truncated: name !== title,
           ranks: {},
-          ...track(first, latest, list.flatMap(releasesOf).sort((a, b) => a.date.localeCompare(b.date)), NAME_X, name.length + 4),
+          ai: groupAi,
+          aiX: NAME_X + name.length * CHAR_W + 7 + badgeW + 5,
+          ...track(first, latest, list.flatMap(releasesOf).sort((a, b) => a.date.localeCompare(b.date)), NAME_X, name.length, 7 + badgeW + groupAi.length * AI_LOGO_W),
         },
         children,
         group: {

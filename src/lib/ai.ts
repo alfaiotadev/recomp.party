@@ -1,6 +1,7 @@
 import { loadAi } from "../../data/load.ts";
 import type { AiCredit, AiRepo } from "../../data/schema.ts";
 import { games, milestones, type Entry } from "./data.ts";
+import { CREDIT_ICONS } from "./vendor-icons.ts";
 
 /**
  * What the games' commits say about the models and agents that co-wrote them (data/ai.json).
@@ -203,3 +204,22 @@ export const aiFilterGroups = [...new Set(modelStats.map((s) => s.vendor))]
     return { vendor, value: `v:${vendor}`, title: `Any ${VENDOR_NAMES[vendor] ?? vendor} (${n} projects)`, whole: models.length > 1, models };
   })
   .filter((g) => g.models.length);
+
+/**
+ * One logo per vendor credited in these projects' commits, most commits first, each named by that
+ * vendor's most credited model ("Opus 5.5", "Copilot"). Vendors without a logo are left out.
+ */
+export function aiLogos(entries: Pick<Entry, "repo">[]): { vendor: string; label: string }[] {
+  const byVendor = new Map<string, { commits: number; models: Map<string, number>; label: Map<string, string> }>();
+  for (const e of entries)
+    for (const c of aiOf(e)?.credits ?? []) {
+      if (!CREDIT_ICONS[c.vendor]) continue;
+      const v = byVendor.get(c.vendor) ?? byVendor.set(c.vendor, { commits: 0, models: new Map(), label: new Map() }).get(c.vendor)!;
+      v.commits += c.commits;
+      v.models.set(c.model, (v.models.get(c.model) ?? 0) + c.commits);
+      v.label.set(c.model, c.versioned ? shortModel(c.model) : (c.tool ?? c.model).replace(/^GitHub /, ""));
+    }
+  return [...byVendor]
+    .sort((a, b) => b[1].commits - a[1].commits)
+    .map(([vendor, v]) => ({ vendor, label: v.label.get([...v.models].sort((a, b) => b[1] - a[1])[0]![0])! }));
+}
