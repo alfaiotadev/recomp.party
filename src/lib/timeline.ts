@@ -1,8 +1,8 @@
 import { entryPath, fitLogo, milestonePath, PLATFORMS, platformLogo, platformsInUse, type Entry, type Milestone } from "./data.ts";
 import { aiLogos } from "./ai.ts";
-import { AXIS_H, BAND_H, place, type PlaceLane, type Placement, type Ranks } from "./timeline-place.ts";
+import { AI_LOGO_W, AXIS_H, BAND_H, place, type PlaceLane, type Placement, type Ranks } from "./timeline-place.ts";
 
-export { AXIS_H, BAND_H };
+export { AI_LOGO_W, AXIS_H, BAND_H };
 
 /**
  * Layout for the swimlane timeline: one lane per source platform, one row per project.
@@ -87,8 +87,6 @@ export type Row = {
   aiX: number;
 };
 
-/** Width of one AI vendor logo after a row's name, gap included. */
-export const AI_LOGO_W = 12;
 
 /** A lane line: one project, or a game with its projects (`children`) behind a toggle. */
 export type Item = {
