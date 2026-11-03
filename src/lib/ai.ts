@@ -189,3 +189,17 @@ export function recentCredits(days = 7, now = Date.now()) {
     total: top.reduce((n, t) => n + t.commits, 0),
   };
 }
+
+/**
+ * The timeline's AI co-author chips, one group per vendor (most credited first): a logo-only chip for the
+ * whole vendor where it has several models, then its models credited in at least two projects.
+ */
+export const aiFilterGroups = [...new Set(modelStats.map((s) => s.vendor))]
+  .map((vendor) => {
+    const models = modelStats
+      .filter((s) => s.vendor === vendor && s.repos.length > 1)
+      .map((s) => ({ value: modelKey(s.model), label: s.versioned ? shortModel(s.model) : (s.tool ?? s.model).replace(/^GitHub /, ""), title: s.versioned ? s.model : `${s.tool ?? s.model} (version not stated)`, n: s.repos.length }));
+    const n = games.filter((g) => aiTokens(g).split(" ").includes(`v:${vendor}`)).length;
+    return { vendor, value: `v:${vendor}`, title: `Any ${VENDOR_NAMES[vendor] ?? vendor} (${n} projects)`, whole: models.length > 1, models };
+  })
+  .filter((g) => g.models.length);

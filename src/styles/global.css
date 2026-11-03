@@ -361,3 +361,11 @@ section {
 .v-google {
   --mc: #8e75b2;
 }
+/* GitHub Copilot and Cursor marks are monochrome too; "other" agents have no logo */
+.v-github,
+.v-cursor {
+  --mc: #c9d1e0;
+}
+.v-other {
+  --mc: var(--muted);
+}
