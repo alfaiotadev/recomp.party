@@ -286,12 +286,31 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
       }
       if (auto) requestAnimationFrame(tick);
     };
+    // The tabs sit on a wheel: the current one in the middle, the rest around it in a ring, so the
+    // first page's left neighbour is the last. A page change turns the wheel the short way round; a tab
+    // that wraps from one end to the other jumps there without sliding (it is faded out at the edges).
+    const n = tabs.length;
+    const half = Math.floor(n / 2);
+    const ring = (x) => ((x % n) + n) % n;
+    let turn = 0; // counts whole turns too, so the wheel keeps one direction across the wrap
+    let shown = 0;
+    const spin = () => {
+      let d = ring(i - shown);
+      if (d > n / 2) d -= n;
+      turn += d;
+      shown = i;
+      tabs.forEach((t, k) => {
+        const o = ring(k - turn + half) - half;
+        t.classList.toggle("jump", t.dataset.o !== undefined && Math.abs(o - Number(t.dataset.o)) > 1);
+        t.dataset.o = String(o);
+        t.style.setProperty("--o", String(o));
+        t.classList.toggle("far", Math.abs(o) > 1);
+      });
+    };
+    spin();
     const mark = () => {
       tabs.forEach((t, k) => t.setAttribute("aria-selected", String(k === i)));
-      // where the tab row scrolls (phones), bring the current tab to its middle
-      const t = tabs[i];
-      if (tabsEl.scrollWidth > tabsEl.clientWidth)
-        tabsEl.scrollTo({ left: t.offsetLeft - (tabsEl.clientWidth - t.offsetWidth) / 2, behavior: reduce ? "auto" : "smooth" });
+      spin();
       draw();
     };
     const go = (n) => {
@@ -758,25 +777,51 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     }
   }
 
-  /* page tabs: centred, each with a bar that fills while the page is shown */
+  /* page tabs on a wheel: the current one in the middle (see spin()), each with a bar that fills
+     while its page is shown; the ends fade out */
   .hl-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 0.4rem;
+    --tw: clamp(7rem, 20vw, 11rem);
+    --tg: 0.5rem;
+    position: relative;
     height: var(--tabs-h);
-    padding-top: 0.55rem;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
   }
   .tab {
+    position: absolute;
+    top: 0.55rem;
+    left: 50%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 0.35rem;
-    width: clamp(6.5rem, 22vw, 11rem);
+    width: var(--tw);
     padding: 0.15rem 0.2rem;
     border: 0;
     background: none;
     cursor: pointer;
     font: inherit;
+    transform: translateX(calc(-50% + var(--o, 0) * (var(--tw) + var(--tg))));
+    transition:
+      transform 0.5s cubic-bezier(0.3, 0.7, 0.2, 1),
+      opacity 0.5s;
+  }
+  .tab.far {
+    opacity: 0.55;
+  }
+  .tab.jump {
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tab {
+      transition: none;
+    }
+  }
+  @media (max-width: 760px) {
+    .hl-tabs {
+      --tw: 8rem;
+      mask-image: linear-gradient(to right, transparent, #000 25%, #000 75%, transparent);
+    }
   }
   .tab-label {
     font-family: var(--mono);
@@ -812,27 +857,6 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   @media (max-width: 520px) {
     .tab-label {
       font-size: 0.6rem;
-    }
-  }
-  /* phones: the tabs don't fit side by side; one row that scrolls sideways, inset from the edges and
-     fading out where more tabs wait */
-  @media (max-width: 760px) {
-    .hl-tabs {
-      justify-content: flex-start;
-      gap: 0.8rem;
-      margin: 0 1rem;
-      padding-inline: 0.5rem;
-      overflow-x: auto;
-      scrollbar-width: none;
-      mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
-    }
-    .hl-tabs::-webkit-scrollbar {
-      display: none;
-    }
-    .tab {
-      flex: none;
-      width: auto;
-      min-width: 6.5rem;
     }
   }
 </style>
