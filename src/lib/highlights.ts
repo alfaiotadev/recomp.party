@@ -205,4 +205,26 @@ function mostRecompiled(): MostRecompiled[] {
     });
 }
 
-export const highlights = { risers: risers(), starTrend: starTrend(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled() };
+export type Fastest = { entry: Entry; days: number; value: string; released: string };
+
+/**
+ * Recomps whose first playable release came soonest after the original game's release. Only day-precise
+ * release dates count (a bare year would read as 1 January); each game appears once, with its fastest project.
+ */
+function fastest(): Fastest[] {
+  const best = new Map<string, Fastest>();
+  for (const entry of games) {
+    const released = entry.meta?.released;
+    if (entry.kind !== "recomp" || !entry.firstReleaseAt || !released || released.length !== 10) continue;
+    const days = Math.floor((Date.parse(entry.firstReleaseAt) - Date.parse(released)) / DAY);
+    if (days < 0) continue; // the dates must be for a different edition
+    const key = entry.wikidata ?? entry.game.toLowerCase();
+    if ((best.get(key)?.days ?? Infinity) <= days) continue;
+    const months = Math.round(days / 30.44);
+    const value = days < 60 ? `${days} days` : months < 24 ? `${months} mo` : `${(days / 365.25).toFixed(1)} yr`;
+    best.set(key, { entry, days, value, released });
+  }
+  return [...best.values()].sort((a, b) => a.days - b.days).slice(0, CARDS);
+}
+
+export const highlights = { risers: risers(), starTrend: starTrend(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
