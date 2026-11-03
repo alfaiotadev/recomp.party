@@ -1,4 +1,5 @@
 ---
+import Odometer from "./Odometer.astro";
 import { ago, entryPath, fitLogoArea, MILESTONE_KINDS, milestones, VENDORS, platformLogo, shortDate, type Entry, type PlatformId } from "../lib/data.ts";
 import { aiFilterGroups, aiTokens } from "../lib/ai.ts";
 import { CREDIT_ICONS, VENDOR_ICONS } from "../lib/vendor-icons.ts";
@@ -11,8 +12,6 @@ const { games } = Astro.props;
 const layouts = views().map((v) => layout(games, v, milestones));
 // AI co-author filter: each game's credited models and vendors (data/ai.json), for the browser
 const aiMap = Object.fromEntries(games.map((g) => [g.repo, aiTokens(g)]).filter(([, t]) => t));
-/** One column of a rolling counter: the digits stacked, shown one at a time. */
-const DIGITS = [..."0123456789"];
 const dayMonth = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const defaultView = "1y";
 // Platform filter (logo buttons; a scrolling row on phones): every platform with a lane in the widest range.
@@ -94,21 +93,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
               <span class="fold-text">expand all</span>
             </button>
           </div>
-          {l.top > 0 && (() => {
-            const n = l.lanes.reduce((sum, lane) => sum + lane.count, 0);
-            return (
-              <p class="tl-count" style={`left:${(12 / W) * 100}%;top:${(4 / l.initial.height) * 100}%`} aria-live="polite">
-                <span class="odo" aria-label={String(n)}>
-                  {[...String(n)].map((d) => (
-                    <span class="od" aria-hidden="true">
-                      <span class="strip" style={`transform:translateY(-${+d * 10}%)`}>{DIGITS.map((x) => <span>{x}</span>)}</span>
-                    </span>
-                  ))}
-                </span>
-                <span class="unit">{n === 1 ? "project" : "projects"}</span>
-              </p>
-            );
-          })()}
+          {l.top > 0 && <Odometer class="tl-count" n={l.lanes.reduce((sum, lane) => sum + lane.count, 0)} style={`left:${(12 / W) * 100}%;top:${(4 / l.initial.height) * 100}%`} />}
           <label class="tl-sort" hidden style={`left:${(NAME_X / W) * 100}%;width:${(NAME_W / W) * 100}%;top:${(l.top / l.initial.height) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
             <span>sort</span>
             <select aria-label="Sort projects within each platform">
@@ -218,6 +203,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
           </Desktop>
           <template class="part" data-part="mobile">
           <div class="tl-m">
+            <Odometer class="m-total" n={l.lanes.reduce((sum, lane) => sum + lane.count, 0)} />
             <div class="m-bar-top">
               <div class="tl-fold m-fold" hidden>
                 <button type="button" class="fold-all" aria-label="Expand every game with several projects">
@@ -588,6 +574,11 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         lane.querySelector(".m-count")!.textContent = `${n} ${n === 1 ? "project" : "projects"}`;
       }
       for (const lane of root.querySelectorAll<HTMLElement>(".m-lane")) lane.hidden = plats.size > 0 && !plats.has(lane.dataset.platform!);
+      // each phone list's counter: the projects left in its shown lanes
+      for (const list of root.querySelectorAll<HTMLElement>(".tl-m")) {
+        const total = [...list.querySelectorAll<HTMLElement>(".m-lane:not([hidden])")].reduce((n, lane) => n + lane.querySelectorAll(".m-row:not(.m-group):not(.not-today):not(.not-ai)").length, 0);
+        roll(list.querySelector(".m-total")!, total);
+      }
       const lanes = JSON.parse(current().dataset.plan!) as PlaceLane[];
       empty.hidden = !plats.size || lanes.some((l) => plats.has(l.id!));
     };
@@ -1681,48 +1672,14 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     opacity: 0.7;
   }
   /* phone: the range's milestones as vendor logos along the time axis; a tap names one */
-  /* rolling project counter in the chart's top-left corner */
-  .tl-count {
+  /* rolling project counters (Odometer.astro): in the chart's top-left corner, and on phones a row
+     of its own above the list */
+  .tl-inner > :global(.tl-count) {
     position: absolute;
-    display: flex;
-    align-items: baseline;
-    gap: 0.4rem;
-    margin: 0;
-    font-family: var(--mono);
-    pointer-events: none;
   }
-  .odo {
-    display: inline-flex;
-    font-size: 1.15rem;
-    font-weight: 600;
-    line-height: 1;
-    color: var(--fg);
-    font-variant-numeric: tabular-nums;
-  }
-  .od {
-    display: inline-block;
-    height: 1em;
-    overflow: hidden;
-  }
-  .strip {
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .strip span {
-    height: 1em;
-  }
-  .no-anim .strip {
-    transition-duration: 0.7s; /* the counter still rolls while rows jump into place */
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .strip {
-      transition: none;
-    }
-  }
-  .unit {
-    font-size: 0.7rem;
-    color: var(--faint);
+  .tl-m > :global(.m-total) {
+    justify-content: center;
+    margin: 0 0 0.7rem;
   }
   .mile-head text {
     font-family: var(--mono);

@@ -503,7 +503,11 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   }
   /* phones: one tile per row, so each gets the full width */
   @media (max-width: 520px) {
-    /* a full-width tile has room for the cover to be as tall as the text beside it (3 : 4) */
+    /* a full-width tile has room for the cover to be as tall as the text beside it (3 : 4); the pair
+       sits in the middle of the row */
+    .newest {
+      justify-content: center;
+    }
     .nw-cover {
       align-self: stretch;
     }
