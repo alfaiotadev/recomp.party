@@ -283,20 +283,47 @@
     policy.
   date: 2026-11-02
 - repo: ChaosTheory1075/mp3-ps5
-  reason: Max Payne 3 recompiled for the PS5; a console target, not a native PC/phone build.
+  reason: Max Payne 3 recompiled for the PS5; a console target, not a native
+    PC/phone build.
   date: 2026-11-02
 - repo: beckerd/psp_jgr_portable
-  reason: Jet Grind Radio ported to the PSP; a console target, not a native PC/phone build.
+  reason: Jet Grind Radio ported to the PSP; a console target, not a native
+    PC/phone build.
   date: 2026-11-02
 - repo: vallfrr/sh4vita
-  reason: Silent Hill 4 ported to the PS Vita; a console target, not a native PC/phone build.
+  reason: Silent Hill 4 ported to the PS Vita; a console target, not a native
+    PC/phone build.
   date: 2026-11-02
 - repo: bloodborne-native/bloodborne-recomp
-  reason: A Bloodborne-only recompiler with no playable build (its release is an LLVM toolchain); not a generic toolchain either.
+  reason: A Bloodborne-only recompiler with no playable build (its release is an
+    LLVM toolchain); not a generic toolchain either.
   date: 2026-11-02
 - repo: MaryNCRT/Ultimate-Mortal-Kombat-3-iOS-Decompiled
-  reason: PC port of the iOS edition of UMK3, not of the arcade game; iOS is not a source platform here.
+  reason: PC port of the iOS edition of UMK3, not of the arcade game; iOS is not a
+    source platform here.
   date: 2026-11-02
 - repo: WINDROID-EMU/RECOMP-ZELDA-3DS-ANDROID
   reason: Android repackage of coccofresco/TriAevum, which is listed instead.
   date: 2026-11-02
+- repo: Gezine/CivSwitch
+  reason: This is a Nintendo Switch console exploit and userland code execution
+    toolchain, not a game recompilation or source port.
+  date: 2026-11-03
+- repo: gminustwo/msr2ds
+  reason: It is a fork of the Azahar 3DS emulator running the game via JIT CPU
+    emulation rather than a static recompilation or native source port.
+  date: 2026-11-03
+- repo: taviso/123elf
+  reason: Lotus 1-2-3 is a spreadsheet application, not a game.
+  date: 2026-11-03
+- repo: UNDERdecoded/Gen2Recomped
+  reason: Engine recreation using original game assets extracted from a ROM rather
+    than a static recompilation or decompilation-based source port.
+  date: 2026-11-03
+- repo: Barthes-Recompiled/Barthes-Launcher
+  reason: Launcher repository; launchers are excluded per guidelines.
+  date: 2026-11-03
+- repo: centollOS/SwitchWaker
+  reason: The Wind Waker ported to the Switch (homebrew); its releases are Switch
+    builds and a source archive, so a console target, not a native PC/phone build.
+  date: 2026-11-03
