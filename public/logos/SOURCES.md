@@ -13,6 +13,7 @@ They were sanitised (no scripts, no external references), background-stripped wh
 | `wii.svg` | File:Wii.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Wii.svg |
 | `wiiu.svg` | File:WiiU.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:WiiU.svg |
 | `switch.svg` | File:Nintendo Switch logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Nintendo_Switch_logo.svg |
+| `switch2.svg` | File:Nintendo Switch 2 logo transparent.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Nintendo_Switch_2_logo_transparent.svg |
 | `gb.svg` | File:Nintendo Game Boy Logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Nintendo_Game_Boy_Logo.svg |
 | `gbc.svg` | File:Game Boy Color logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Game_Boy_Color_logo.svg |
 | `gba.svg` | File:Game Boy Advance logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg |

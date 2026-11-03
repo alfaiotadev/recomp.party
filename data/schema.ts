@@ -8,6 +8,7 @@ export const PLATFORMS = {
   wii: "Wii",
   wiiu: "Wii U",
   switch: "Switch",
+  switch2: "Switch 2",
   gb: "Game Boy",
   gbc: "Game Boy Color",
   gba: "Game Boy Advance",
