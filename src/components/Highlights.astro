@@ -452,6 +452,9 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     object-fit: cover;
     scale: 1.06;
     transition: scale 0.5s ease-out;
+    /* stay on a GPU layer, or the last frame of the zoom snaps when the browser re-rasterises */
+    will-change: transform;
+    backface-visibility: hidden;
   }
   .item:hover .art {
     scale: 1;
