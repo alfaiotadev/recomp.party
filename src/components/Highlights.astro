@@ -1,4 +1,5 @@
 ---
+import PlatformGhost from "./PlatformGhost.astro";
 import { ago, entryPath, fitLogo, PLATFORMS, platformLogo } from "../lib/data.ts";
 import { recentCredits, shortModel } from "../lib/ai.ts";
 import { highlights } from "../lib/highlights.ts";
@@ -52,8 +53,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                 const logo = mini(r.entry.platform);
                 return (
                   <li>
-                    <a href={entryPath(r.entry)} class={`item ${r.entry.kind}${r.entry.cover ? " has-art" : ""}`}>
-                      {r.entry.cover && <img class="art" src={r.entry.cover.src} width={r.entry.cover.width} height={r.entry.cover.height} alt="" loading="lazy" decoding="async" />}
+                    <a href={entryPath(r.entry)} class={`item ${r.entry.kind}${r.entry.cover ? " has-art" : " no-art"}`}>
+                      {r.entry.cover ? <img class="art" src={r.entry.cover.src} width={r.entry.cover.width} height={r.entry.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={r.entry.platform} />}
                       <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
                       <span class="big mono">
                         {r.value}
@@ -99,8 +100,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                 const logo = mini(g.platform);
                 return (
                   <li>
-                    <a href={entryPath(g)} class={`item ${g.kind}${g.cover ? " has-art" : ""}`}>
-                      {g.cover && <img class="art" src={g.cover.src} width={g.cover.width} height={g.cover.height} alt="" loading="lazy" decoding="async" />}
+                    <a href={entryPath(g)} class={`item ${g.kind}${g.cover ? " has-art" : " no-art"}`}>
+                      {g.cover ? <img class="art" src={g.cover.src} width={g.cover.width} height={g.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={g.platform} />}
                       <span class={`badge ${g.kind}`}>{g.kind}</span>
                       <strong>{g.game}</strong>
                       <span class="meta mono">
@@ -143,8 +144,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <ol class="items">
               {platform.top.map((t) => (
                 <li>
-                  <a href={entryPath(t.entry)} class={`item ${t.entry.kind}${t.entry.cover ? " has-art" : ""}`}>
-                    {t.entry.cover && <img class="art" src={t.entry.cover.src} width={t.entry.cover.width} height={t.entry.cover.height} alt="" loading="lazy" decoding="async" />}
+                  <a href={entryPath(t.entry)} class={`item ${t.entry.kind}${t.entry.cover ? " has-art" : " no-art"}`}>
+                    {t.entry.cover ? <img class="art" src={t.entry.cover.src} width={t.entry.cover.width} height={t.entry.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={t.entry.platform} />}
                     <span class="big mono">{t.releases}×</span>
                     <strong>{t.entry.game}</strong>
                     <span class="meta mono">
@@ -166,8 +167,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <ol class="items">
               {most.map((m, i) => (
                 <li>
-                  <a href={m.href} class={`item ${m.kind}${m.cover ? " has-art" : ""}`} title={`${m.title}: show all ${m.count} projects`}>
-                    {m.cover && <img class="art" src={m.cover.src} width={m.cover.width} height={m.cover.height} alt="" loading="lazy" decoding="async" />}
+                  <a href={m.href} class={`item ${m.kind}${m.cover ? " has-art" : " no-art"}`} title={`${m.title}: show all ${m.count} projects`}>
+                    {m.cover ? <img class="art" src={m.cover.src} width={m.cover.width} height={m.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={m.platforms[0]!.id} />}
                     <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
                     <span class="big mono">×{m.count}</span>
                     <span class="growth mono">{[m.recomps && `${m.recomps} recomp${m.recomps > 1 ? "s" : ""}`, m.ports && `${m.ports} port${m.ports > 1 ? "s" : ""}`].filter(Boolean).join(" · ")}</span>
@@ -212,8 +213,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <ol class="items">
               {models.top.map((t) => (
                 <li>
-                  <a href={entryPath(t.entry)} class={`item ${t.entry.kind}${t.entry.cover ? " has-art" : ""}`}>
-                    {t.entry.cover && <img class="art" src={t.entry.cover.src} width={t.entry.cover.width} height={t.entry.cover.height} alt="" loading="lazy" decoding="async" />}
+                  <a href={entryPath(t.entry)} class={`item ${t.entry.kind}${t.entry.cover ? " has-art" : " no-art"}`}>
+                    {t.entry.cover ? <img class="art" src={t.entry.cover.src} width={t.entry.cover.width} height={t.entry.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={t.entry.platform} />}
                     <span class="big mono">{t.commits.toLocaleString("en")}</span>
                     <span class="growth mono">commits · mostly {shortModel(t.model)}</span>
                     <strong>{t.entry.game}</strong>
@@ -437,7 +438,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     color: var(--fg);
   }
   /* cover as the card's backdrop, shaded where the text sits */
-  .item.has-art {
+  .item.has-art,
+  .item.no-art {
     isolation: isolate;
     overflow: hidden;
   }
@@ -453,6 +455,13 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   }
   .item:hover .art {
     scale: 1;
+  }
+  /* no cover: kind-coloured glow over the faint platform mark, as on the game cards */
+  .item.no-art {
+    background: radial-gradient(120% 70% at 50% 0%, rgb(124 240 197 / 0.1), transparent 70%), rgb(11 13 20 / 0.55);
+  }
+  .item.no-art.port {
+    background: radial-gradient(120% 70% at 50% 0%, rgb(255 179 92 / 0.1), transparent 70%), rgb(11 13 20 / 0.55);
   }
   .item.has-art::before {
     content: "";
