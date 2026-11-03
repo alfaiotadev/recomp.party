@@ -350,3 +350,14 @@ section {
   background-image: url("../assets/no-cover-icon.svg");
   background-size: 72% auto;
 }
+
+/* Milestone vendors in their brand colours (OpenAI's mark is monochrome: white on the dark theme). */
+.v-anthropic {
+  --mc: #d97757;
+}
+.v-openai {
+  --mc: #e8ecf6;
+}
+.v-google {
+  --mc: #8e75b2;
+}

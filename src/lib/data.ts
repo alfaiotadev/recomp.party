@@ -1,7 +1,7 @@
-import { loadGames, loadProjects, loadSnapshot } from "../../data/load.ts";
-import { KINDS, PLATFORMS, type GameMeta, type Project, type Release, type RepoSnapshot } from "../../data/schema.ts";
+import { loadGames, loadMilestones, loadProjects, loadSnapshot } from "../../data/load.ts";
+import { KINDS, MILESTONE_KINDS, PLATFORMS, VENDORS, type Milestone, type GameMeta, type Project, type Release, type RepoSnapshot } from "../../data/schema.ts";
 
-export { KINDS, PLATFORMS };
+export { KINDS, MILESTONE_KINDS, PLATFORMS, VENDORS, type Milestone };
 export type PlatformId = keyof typeof PLATFORMS;
 
 export type Entry = Project & {
@@ -52,6 +52,13 @@ export const tools = all.filter((e) => e.kind === "tool").sort((a, b) => (b.snap
 
 /** Platforms that have at least one game, in the canonical order of PLATFORMS. */
 export const platformsInUse = (Object.keys(PLATFORMS) as PlatformId[]).filter((id) => games.some((g) => g.platform === id));
+
+/** Outside events on the timeline (model releases, policy changes), oldest first. */
+export const milestones = loadMilestones();
+
+export function milestonePath(m: Pick<Milestone, "id">): string {
+  return `/m/${m.id}/`;
+}
 
 export function entryPath(e: Pick<Entry, "slug">): string {
   return `/p/${e.slug}/`;

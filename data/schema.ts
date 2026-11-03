@@ -143,3 +143,42 @@ export type Rejected = z.infer<typeof Rejected>;
 /** data/stars.json — daily star counts (UTC date → repo → stars), last ~35 days. GitHub hides stargazer lists. */
 export const StarHistory = z.record(z.iso.date(), z.record(z.string(), z.number()));
 export type StarHistory = z.infer<typeof StarHistory>;
+
+export const MILESTONE_KINDS = {
+  model: "Model release",
+  policy: "Policy change",
+} as const;
+
+/** Whose model or policy it is; drawn as the vendor's logo on the timeline. */
+export const VENDORS = {
+  anthropic: "Anthropic",
+  openai: "OpenAI",
+  google: "Google",
+} as const;
+
+/** data/milestones.yaml — outside events drawn on the release timeline as dashed lines. */
+export const Milestone = z.strictObject({
+  /** URL slug: /m/<id>/ */
+  id: z.string().regex(/^[a-z0-9-]+$/, "expected a lowercase slug"),
+  date: z.iso.date(),
+  kind: z.enum(Object.keys(MILESTONE_KINDS) as [keyof typeof MILESTONE_KINDS, ...(keyof typeof MILESTONE_KINDS)[]]),
+  vendor: z.enum(Object.keys(VENDORS) as [keyof typeof VENDORS, ...(keyof typeof VENDORS)[]]),
+  /** Short name above the timeline, after the vendor's logo: "Opus 4.6", not "Claude Opus 4.6". */
+  label: z.string().min(1).max(20),
+  /** Optional second line, for what the name doesn't say ("Claude Code GA"); never just the vendor. */
+  sub: z.string().min(1).max(22).optional(),
+  /** Heading of the milestone's own page. */
+  title: z.string().min(1),
+  /** A neutral statement of what happened, one or more paragraphs (blank line between). */
+  summary: z.string().min(1),
+  sources: z.array(z.strictObject({ label: z.string().min(1), url: z.url() })).min(1),
+});
+export type Milestone = z.infer<typeof Milestone>;
+
+export const Milestones = z.array(Milestone).superRefine((list, ctx) => {
+  const seen = new Set<string>();
+  for (const [i, m] of list.entries()) {
+    if (seen.has(m.id)) ctx.addIssue({ code: "custom", path: [i, "id"], message: `duplicate id ${m.id}` });
+    seen.add(m.id);
+  }
+});

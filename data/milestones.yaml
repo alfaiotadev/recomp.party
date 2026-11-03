@@ -1,0 +1,186 @@
+# recomp.party — outside events drawn on the release timeline as dashed lines.
+#
+# Many recomps and ports are now written with AI coding agents, so model releases and policy
+# changes that touch game work are marked for context. A line marks a date, not a cause:
+# keep `summary` to what happened, with a source for every claim.
+#
+# Fields: see Milestone in data/schema.ts. Above the timeline: the vendor's logo, `label`
+# (the short name, without "Claude") and, if it says something the name doesn't, `sub`.
+
+- id: claude-code-game-recreation-rule
+  date: 2026-10-27
+  kind: policy
+  vendor: anthropic
+  label: Recomp nerf
+  title: Claude Code steers away from recreating existing games
+  summary: |
+    Anthropic added two sentences to Claude Code's system prompt for Opus 5.5: build original games,
+    games in a genre and games from the user's own designs and assets, but not a recreation of a
+    specific existing game, even if it is renamed or called original. The rule is served from
+    Anthropic's side and can't be switched off. It was first reported on 27 October; Anthropic
+    confirmed the rule, though not the date, on 30 October.
+
+    Anthropic said the change is meant to keep Claude from being used to infringe IP, that original
+    and genre games should keep working, and that it plans to refine the rule. Developers reported
+    that modding, debugging and similar work was caught by it too.
+  sources:
+    - label: Game Developer
+      url: https://www.gamedeveloper.com/programming/anthropic-appears-to-have-ordered-ai-tool-claude-to-stop-remaking-video-games
+    - label: VideoCardz
+      url: https://videocardz.com/newz/anthropic-restricts-claude-code-from-recreating-existing-games-developers-report-blocked-projects
+
+- id: claude-3-7-sonnet
+  date: 2025-02-24
+  kind: model
+  vendor: anthropic
+  label: 3.7 Sonnet
+  sub: Claude Code preview
+  title: Claude 3.7 Sonnet and the Claude Code preview
+  summary: |
+    Anthropic released Claude 3.7 Sonnet and, alongside it, a limited research preview of Claude
+    Code, its agentic coding tool for the terminal.
+  sources:
+    - label: Anthropic
+      url: https://www.anthropic.com/news/claude-3-7-sonnet
+
+- id: claude-4
+  date: 2025-05-22
+  kind: model
+  vendor: anthropic
+  label: Opus 4 · Sonnet 4
+  sub: Claude Code GA
+  title: Claude 4 and Claude Code general availability
+  summary: |
+    Anthropic released Claude Opus 4 and Claude Sonnet 4, presented as its best coding models so
+    far. Claude Code became generally available the same day.
+  sources:
+    - label: Anthropic
+      url: https://www.anthropic.com/news/claude-4
+
+- id: gpt-5
+  date: 2025-08-07
+  kind: model
+  vendor: openai
+  label: GPT-5
+  title: OpenAI releases GPT-5
+  summary: |
+    OpenAI released GPT-5, its unified flagship model, which also became the basis of the Codex
+    coding agents that followed.
+  sources:
+    - label: OpenAI
+      url: https://openai.com/index/introducing-gpt-5/
+
+- id: gemini-3-pro
+  date: 2025-11-18
+  kind: model
+  vendor: google
+  label: Gemini 3 Pro
+  title: Google releases Gemini 3 Pro
+  summary: |
+    Google released Gemini 3 Pro together with Antigravity, its agentic development environment, and
+    Gemini CLI support.
+  sources:
+    - label: Google
+      url: https://blog.google/products-and-platforms/products/gemini/gemini-3/
+
+- id: claude-opus-4-5
+  date: 2025-11-24
+  kind: model
+  vendor: anthropic
+  label: Opus 4.5
+  title: Anthropic releases Claude Opus 4.5
+  summary: |
+    Anthropic released Claude Opus 4.5, aimed at coding, agents and computer use, at a lower price
+    than earlier Opus models.
+  sources:
+    - label: Anthropic
+      url: https://www.anthropic.com/news/claude-opus-4-5
+
+- id: claude-opus-4-6
+  date: 2026-02-05
+  kind: model
+  vendor: anthropic
+  label: Opus 4.6
+  title: Anthropic releases Claude Opus 4.6
+  summary: |
+    Anthropic released Claude Opus 4.6, adding agent teams to Claude Code and a 1M-token context
+    window in beta.
+  sources:
+    - label: Anthropic
+      url: https://www.anthropic.com/news/claude-opus-4-6
+
+- id: gpt-5-5
+  date: 2026-04-23
+  kind: model
+  vendor: openai
+  label: GPT-5.5
+  title: OpenAI releases GPT-5.5
+  summary: |
+    OpenAI released GPT-5.5, which it described as its strongest agentic coding model so far, and
+    made it the default model in Codex.
+  sources:
+    - label: OpenAI
+      url: https://openai.com/index/introducing-gpt-5-5/
+
+- id: claude-fable-5
+  date: 2026-06-09
+  kind: model
+  vendor: anthropic
+  label: Fable 5
+  title: Anthropic releases Claude Fable 5
+  summary: |
+    Anthropic released Claude Fable 5, the first Mythos-class model on general release.
+  sources:
+    - label: Anthropic
+      url: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
+
+- id: claude-opus-5
+  date: 2026-07-24
+  kind: model
+  vendor: anthropic
+  label: Opus 5
+  title: Anthropic releases Claude Opus 5
+  summary: |
+    Anthropic released Claude Opus 5, an Opus model for agentic coding.
+  sources:
+    - label: Anthropic
+      url: https://www.anthropic.com/news/claude-opus-5
+
+- id: gpt-6-astra
+  date: 2026-09-03
+  kind: model
+  vendor: openai
+  label: GPT-6 Astra
+  title: OpenAI releases GPT-6 Astra
+  summary: |
+    OpenAI released GPT-6 Astra, its new-generation flagship model, first to selected organisations;
+    paid users followed a day later.
+  sources:
+    - label: OpenAI
+      url: https://openai.com/index/gpt-6-astra/
+
+- id: claude-opus-5-5
+  date: 2026-09-22
+  kind: model
+  vendor: anthropic
+  label: Opus 5.5
+  title: Anthropic releases Claude Opus 5.5
+  summary: |
+    Anthropic released Claude Opus 5.5. It is the model the Claude Code game-recreation rule of late
+    October was added for.
+  sources:
+    - label: Anthropic
+      url: https://www.anthropic.com/claude-opus-5-5
+
+- id: gemini-4-argon
+  date: 2026-10-13
+  kind: model
+  vendor: google
+  label: Gemini 4 Argon
+  title: Google releases Gemini 4 Argon
+  summary: |
+    Google made Gemini 4 Argon, its frontier model for software engineering, generally available in
+    the API and Antigravity.
+  sources:
+    - label: Google
+      url: https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/
