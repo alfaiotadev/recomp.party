@@ -4,6 +4,7 @@ import Highlights from "../components/Highlights.astro";
 import StatTiles from "../components/StatTiles.astro";
 import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
+import { aiFilterOptions } from "../lib/ai.ts";
 import { fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolGames, tools } from "../lib/data.ts";
 
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
@@ -75,6 +76,11 @@ const toolStrip = tools.slice(0, 8);
           <option value="recomp">{KINDS.recomp}</option>
           <option value="port">{KINDS.port}</option>
         </select>
+        <label class="visually-hidden" for="f-ai">AI co-author</label>
+        <select id="f-ai" name="ai" title="Model or agent credited in the project's commits">
+          <option value="">Any AI co-author</option>
+          {aiFilterOptions.map((o) => <option value={o.value}>{o.label}</option>)}
+        </select>
         <label class="visually-hidden" for="f-os">Runs on</label>
         <select id="f-os" name="os">
           <option value="">Any OS</option>
@@ -117,6 +123,7 @@ const toolStrip = tools.slice(0, 8);
           (!f.platform || d.platform === f.platform) &&
           (!f.kind || d.kind === f.kind) &&
           (!f.os || d.os.split(" ").includes(f.os)) &&
+          (!f.ai || d.ai.split(" ").includes(f.ai)) &&
           (!q || d.search.includes(q));
         c.hidden = !ok;
         if (ok) shown++;
@@ -144,11 +151,13 @@ const toolStrip = tools.slice(0, 8);
       if (saved === "list" || saved === "one") setLayout(saved);
     } catch {}
     // ?q=… (e.g. from "Most recompiled games") pre-fills the search
-    const q = new URLSearchParams(location.search).get("q");
-    if (q) {
-      form.elements.namedItem("q").value = q;
-      apply();
-    }
+    const params = new URLSearchParams(location.search);
+    const q = params.get("q");
+    if (q) form.elements.namedItem("q").value = q;
+    // ?ai=… (from the Models page) picks a model or vendor
+    const ai = params.get("ai");
+    if (ai && form.elements.namedItem("ai").querySelector(`option[value="${CSS.escape(ai)}"]`)) form.elements.namedItem("ai").value = ai;
+    if (q || ai) apply();
   })();
 </script>
 

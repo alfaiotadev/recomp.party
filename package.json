@@ -9,6 +9,7 @@
     "fetch": "tsx scripts/fetch.ts",
     "games": "tsx scripts/games.ts",
     "discover": "tsx scripts/discover.ts",
+    "ai": "tsx scripts/ai.ts",
     "validate": "tsx scripts/validate.ts && tsx scripts/format.ts --check",
     "check": "tsc --noEmit",
     "format": "tsx scripts/format.ts",

@@ -1,5 +1,6 @@
 ---
 import { ago, entryPath, fitLogoArea, MILESTONE_KINDS, milestones, VENDORS, platformLogo, shortDate, type Entry, type PlatformId } from "../lib/data.ts";
+import { aiFilterOptions, aiTokens } from "../lib/ai.ts";
 import { VENDOR_ICONS } from "../lib/vendor-icons.ts";
 import { AXIS_H, CHILD_INDENT, LABEL_W, layout, NAME_W, NAME_X, PAD_R, SORTS, views, W } from "../lib/timeline.ts";
 
@@ -8,6 +9,8 @@ interface Props {
 }
 const { games } = Astro.props;
 const layouts = views().map((v) => layout(games, v, milestones));
+// AI co-author filter: each game's credited models and vendors (data/ai.json), for the browser
+const aiMap = Object.fromEntries(games.map((g) => [g.repo, aiTokens(g)]).filter(([, t]) => t));
 const dayMonth = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const defaultView = "1y";
 // Platform filter (logo buttons on desktop, a select on phones): every platform with a lane in the widest range.
@@ -55,6 +58,13 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       <option value="">All platforms</option>
       <option value="*" hidden disabled>Several platforms</option>
       {lanePlatforms.map((p) => <option value={p.id}>{p.name}</option>)}
+    </select>
+  </label>
+  <label class="tl-ai">
+    <span>AI co-author</span>
+    <select aria-label="Show only projects whose commits credit this model or agent" data-map={JSON.stringify(aiMap)}>
+      <option value="">Any</option>
+      {aiFilterOptions.map((o) => <option value={o.value}>{o.label}</option>)}
     </select>
   </label>
   <p class="m-empty" hidden>No releases for this platform in this range.</p>
@@ -233,7 +243,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                     );
                     if (!it.children) {
                       return (
-                        <li class={`m-row ${r.entry.kind}`} style={`order:${r.ranks.first! + 1}`} data-ranks={JSON.stringify(r.ranks)}>
+                        <li class={`m-row ${r.entry.kind}`} style={`order:${r.ranks.first! + 1}`} data-ranks={JSON.stringify(r.ranks)} data-repo={r.entry.repo}>
                           <a href={entryPath(r.entry)}>
                             <span class="m-name">{r.entry.game}</span>
                             <span class="m-when">{ago(r.entry.latestReleaseAt)}</span>
@@ -255,7 +265,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                         </button>
                         <ol class="m-children" hidden>
                           {it.children.map((c) => (
-                            <li class={`m-row m-child ${c.entry.kind}`} style={`order:${c.ranks.first! + 1}`} data-ranks={JSON.stringify(c.ranks)}>
+                            <li class={`m-row m-child ${c.entry.kind}`} style={`order:${c.ranks.first! + 1}`} data-ranks={JSON.stringify(c.ranks)} data-repo={c.entry.repo}>
                               <a href={entryPath(c.entry)}>
                                 <span class="m-name m-repo">{c.entry.repo}</span>
                                 <span class="m-when">{ago(c.entry.latestReleaseAt)}</span>
@@ -427,11 +437,17 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       if (!svg) return;
       const plan = JSON.parse(view.dataset.plan!) as PlaceLane[];
       const off = todayHidden.get(view);
-      const today = (lanes: PlaceLane[]) =>
-        lanes
-          .map((l) => ({ ...l, items: l.items.filter((it) => !off!.has(it.id)).map((it) => (it.children ? { ...it, children: it.children.filter((c) => !off!.has(c.id)) } : it)) }))
-          .filter((l) => l.items.length);
-      const visible = off ? today(plan) : plan;
+      // rows out of the view: nothing today, or not matching the AI co-author filter (a group goes with its last project)
+      const drop = (id: string) => !!off?.has(id) || !aiOk(id);
+      const visible = plan
+        .map((l) => ({
+          ...l,
+          items: l.items
+            .filter((it) => (it.children ? !off?.has(it.id) : !drop(it.id)))
+            .map((it) => (it.children ? { ...it, children: it.children.filter((c) => !drop(c.id)) } : it))
+            .filter((it) => !it.children || it.children.length),
+        }))
+        .filter((l) => l.items.length);
       const shown = visible.filter((l) => !plats.size || plats.has(l.id!));
       const top = +(view.dataset.top ?? 0);
       const p = place(shown, sort, (id) => open.has(id), top);
@@ -441,6 +457,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         g.style.display = k < 0 ? "none" : "";
         if (k < 0) return;
         g.style.transform = `translateY(${p.lanes[k]!.y}px)`;
+        const n = shown[k]!.items.reduce((sum, it) => sum + (it.children?.length ?? 1), 0);
+        g.querySelector(".lane-count")!.textContent = `${n} ${n === 1 ? "project" : "projects"}`;
         g.querySelector("rect")!.setAttribute("height", String(p.lanes[k]!.height));
       });
       for (const line of view.querySelectorAll(".to-bottom")) line.setAttribute("y2", String(p.height));
@@ -496,10 +514,30 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     const empty = root.querySelector<HTMLElement>(".m-empty")!;
     let plats = new Set<string>();
     const filterLanes = () => {
+      // phones: the AI co-author filter hides rows, then groups and lanes left empty
+      for (const li of root.querySelectorAll<HTMLElement>(".m-row[data-repo]")) li.classList.toggle("not-ai", !aiOk(li.dataset.repo!));
+      for (const li of root.querySelectorAll<HTMLElement>(".m-group")) li.classList.toggle("not-ai", !li.querySelector(".m-child:not(.not-ai):not(.not-today)"));
+      for (const lane of root.querySelectorAll<HTMLElement>(".m-lane")) {
+        const n = lane.querySelectorAll(".m-row:not(.m-group):not(.not-today):not(.not-ai)").length;
+        lane.classList.toggle("not-ai", n === 0 && !lane.classList.contains("not-today"));
+        lane.querySelector(".m-count")!.textContent = `${n} ${n === 1 ? "project" : "projects"}`;
+      }
       for (const lane of root.querySelectorAll<HTMLElement>(".m-lane")) lane.hidden = plats.size > 0 && !plats.has(lane.dataset.platform!);
       const lanes = JSON.parse(current().dataset.plan!) as PlaceLane[];
       empty.hidden = !plats.size || lanes.some((l) => plats.has(l.id!));
     };
+    const aiSelect = root.querySelector<HTMLSelectElement>(".tl-ai select")!;
+    const aiMap = JSON.parse(aiSelect.dataset.map!) as Record<string, string>;
+    let aiSel = "";
+    /** Project row ids are repos; group rows ("g:…") are kept or dropped with their projects. */
+    const aiOk = (id: string) => !aiSel || id.startsWith("g:") || (aiMap[id] ?? "").split(" ").includes(aiSel);
+    aiSelect.addEventListener("change", () => {
+      aiSel = aiSelect.value;
+      root.classList.add("no-anim");
+      for (const v of views) layoutDesktop(v);
+      filterLanes();
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("no-anim")));
+    });
     const setPlats = (next: Set<string>) => {
       plats = next;
       platSelect.value = plats.size === 0 ? "" : plats.size === 1 ? [...plats][0]! : "*";
@@ -778,6 +816,29 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   .d-plat-filter button:focus-visible {
     outline: 2px solid var(--recomp);
   }
+  .tl-ai {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: -0.4rem 0 0.9rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+  }
+  .tl-ai select {
+    font: inherit;
+    color: var(--fg);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.2rem 0.4rem;
+  }
+  .tl-ai select:focus {
+    border-color: rgb(124 240 197 / 0.5);
+    outline: none;
+  }
+  .not-ai,
   .not-today {
     display: none !important;
   }

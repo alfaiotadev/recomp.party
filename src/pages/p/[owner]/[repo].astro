@@ -1,6 +1,8 @@
 ---
 import Base from "../../../layouts/Base.astro";
+import { aiOf, aiSince, shortModel } from "../../../lib/ai.ts";
 import { LINK_ICONS } from "../../../lib/link-icons.ts";
+import { CREDIT_ICONS } from "../../../lib/vendor-icons.ts";
 import { ago, creditLink, entryPath, fitLogo, gameLinks, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
 
 export function getStaticPaths() {
@@ -23,6 +25,8 @@ const m = e.meta;
 const makers = m && (m.developers.length ? m.developers : m.publishers);
 const links = gameLinks(e);
 const tool = e.tool ? tools.find((t) => toolUsers(t).includes(e)) : undefined;
+const ai = aiOf(e);
+const aiIcon = (vendor: string) => CREDIT_ICONS[vendor];
 
 // Release strip: every release as a dot across the project's lifetime.
 const dates = (s?.releaseDates ?? []).map((r) => ({ t: Date.parse(r.date), pre: r.prerelease })).reverse();
@@ -191,6 +195,38 @@ const jsonLd = {
       </ol>
     </section>
   </div>
+
+  {
+    ai?.level && (
+      <section class="ai">
+        <h2>AI co-authors</h2>
+        {ai.credits.length > 0 && (
+          <ul class="ai-credits">
+            {ai.credits.map((c) => (
+              <li class={`v-${c.vendor}${c.versioned ? "" : " unsure"}`} title={`${c.commits} commits, ${shortDate(c.first)} – ${shortDate(c.last)}`}>
+                {aiIcon(c.vendor) ? (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d={aiIcon(c.vendor)} />
+                  </svg>
+                ) : (
+                  <span class="ai-dot" />
+                )}
+                <b>{c.versioned ? shortModel(c.model) : (c.tool ?? c.model)}</b>
+                <span class="ai-n">{c.commits.toLocaleString("en")}</span>
+                {!c.versioned && <span class="ai-q">{c.likely ? `version not stated · likely ${c.likely}` : "version not stated"}</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+        <p class="ai-note">
+          {ai.credits.length > 0
+            ? `${ai.credited.toLocaleString("en")} credits in ${ai.total.toLocaleString("en")} commits since ${shortDate(aiSince)}, read from Co-authored-by lines and agent commits.`
+            : `No commit names a model, but the repo keeps instructions for a coding agent: ${ai.files.join(", ")}.`}{" "}
+          <a href="/models/">All models</a>
+        </p>
+      </section>
+    )
+  }
 
   {
     sameGame.length > 0 && (
@@ -410,6 +446,48 @@ const jsonLd = {
   }
   .releases li {
     margin-bottom: 0.3rem;
+  }
+  .ai-credits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .ai-credits li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--mc, var(--line));
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 0.82rem;
+  }
+  .ai-credits li.unsure {
+    border-style: dashed;
+  }
+  .ai-credits svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    fill: var(--mc);
+  }
+  .ai-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .ai-n,
+  .ai-q {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .ai-note {
+    font-size: 0.8rem;
+    color: var(--muted);
   }
   .releases .badge {
     margin-left: 0.35rem;
