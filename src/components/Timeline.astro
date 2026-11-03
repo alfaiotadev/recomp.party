@@ -15,7 +15,7 @@ const aiMap = Object.fromEntries(games.map((g) => [g.repo, aiTokens(g)]).filter(
 const DIGITS = [..."0123456789"];
 const dayMonth = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const defaultView = "1y";
-// Platform filter (logo buttons on desktop, a select on phones): every platform with a lane in the widest range.
+// Platform filter (logo buttons; a scrolling row on phones): every platform with a lane in the widest range.
 const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   const logo = platformLogo(l.id as PlatformId);
   // same visual weight for wordmarks and square marks
@@ -56,14 +56,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       </button>
     ))}
   </div>
-  <label class="m-plat-filter">
-    <span class="visually-hidden">Platform</span>
-    <select aria-label="Platforms to show">
-      <option value="">All platforms</option>
-      <option value="*" hidden disabled>Several platforms</option>
-      {lanePlatforms.map((p) => <option value={p.id}>{p.name}</option>)}
-    </select>
-  </label>
   <div class="fbox tl-ai" role="group" aria-label="Show projects whose commits credit these models or agents" data-map={JSON.stringify(aiMap)}>
     <span class="fbox-h">AI co-author</span>
     <button type="button" class="all" data-ai="" aria-pressed="true">All</button>
@@ -582,8 +574,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       }
     };
     // Platforms to show (none picked = all) in every range, including ones materialized later: toggling
-    // logo buttons on desktop, a one-platform select on phones, one shared choice.
-    const platSelect = root.querySelector<HTMLSelectElement>(".m-plat-filter select")!;
+    // logo buttons, on desktop and phones alike.
     const platButtons = [...root.querySelectorAll<HTMLButtonElement>(".d-plat-filter button")];
     const empty = root.querySelector<HTMLElement>(".m-empty")!;
     let plats = new Set<string>();
@@ -621,7 +612,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       });
     const setPlats = (next: Set<string>) => {
       plats = next;
-      platSelect.value = plats.size === 0 ? "" : plats.size === 1 ? [...plats][0]! : "*";
       for (const b of platButtons) b.setAttribute("aria-pressed", String(b.dataset.plat ? plats.has(b.dataset.plat) : plats.size === 0));
       root.classList.add("no-anim");
       for (const v of views) layoutDesktop(v);
@@ -631,7 +621,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         localStorage.setItem("tl-plat", JSON.stringify([...plats]));
       } catch {}
     };
-    platSelect.addEventListener("change", () => setPlats(new Set(platSelect.value ? [platSelect.value] : [])));
     for (const b of platButtons)
       b.addEventListener("click", () => {
         const id = b.dataset.plat;
@@ -877,7 +866,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     color: var(--fg);
   }
   .tab-short,
-  .m-plat-filter,
   .m-empty {
     display: none;
   }
@@ -1586,31 +1574,19 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     .tab-short {
       display: inline;
     }
-    .m-plat-filter {
-      display: block;
-      margin: 0 0 0.8rem;
-    }
-    .m-plat-filter select {
-      width: 100%;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--fg);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 0.45rem 0.6rem;
-    }
-    .d-plat-filter {
-      display: none;
-    }
-    /* one scrolling row of chips */
+    /* one scrolling row of logos or chips */
+    .d-plat-filter,
     .tl-ai {
       flex-wrap: nowrap;
       justify-content: flex-start;
       overflow-x: auto;
       scrollbar-width: none;
     }
+    :is(.d-plat-filter, .tl-ai) > * {
+      flex: none;
+    }
     /* a scrolling box would clip a label sitting on its border */
+    .d-plat-filter .fbox-h,
     .tl-ai .fbox-h {
       position: static;
       flex: none;
