@@ -6,16 +6,32 @@
  * Providers whose key is not set are skipped. Requests are paced per provider; a per-minute 429 moves
  * the provider to the back of the queue (the next one answers right away), a daily-quota 429 or repeated
  * 429s drop it for the rest of the run.
- * Order matters: earlier providers gave better classifications in testing (2026-10-28). With no keys at all, `chatJSON` returns null and callers fall back to heuristics.
+ * Order matters: earlier providers gave better classifications in testing (2026-10-28). Command Code's
+ * free Beam leads since 2026-11-03: on 25 listed + 25 rejected repos it answered all, rejected 84 %
+ * (Groq 68 %), got every platform and 92 % of kinds right, in 2.3 s per repo.
+ * With no keys at all, `chatJSON` returns null and callers fall back to heuristics.
  */
 import type { z } from "zod";
 
-/** `minGapMs` paces requests to stay under the free tier's per-minute limit. */
-type Provider = { name: string; url: string; model: string; key: string | undefined; minGapMs: number };
+/**
+ * `minGapMs` paces requests to stay under the free tier's per-minute limit; `extra` is merged into the
+ * request body (e.g. JSON mode where the model supports it).
+ */
+type Provider = { name: string; url: string; model: string; key: string | undefined; minGapMs: number; extra?: Record<string, unknown> };
 
 function providers(): Provider[] {
   const env = process.env;
   const list: Provider[] = [
+    {
+      name: "commandcode",
+      minGapMs: 500,
+      url: "https://api.commandcode.ai/provider/v1/chat/completions",
+      // Pro plan's free models: Beam has no daily cap ("free while capacity lasts"); Glyph Cluster
+      // (1000 requests a day) is the alternative but doesn't take JSON mode. Paid models draw on plan credits.
+      model: env.COMMAND_CODE_MODEL ?? "reflection/beam:free",
+      key: env.COMMAND_CODE_API_KEY,
+      extra: (env.COMMAND_CODE_MODEL ?? "reflection/beam:free").startsWith("reflection/") ? { response_format: { type: "json_object" } } : undefined,
+    },
     {
       name: "gemini",
       minGapMs: 4500,
@@ -125,6 +141,7 @@ export async function chatJSON<T>(
             { role: "system", content: system },
             { role: "user", content: user },
           ],
+          ...p.extra,
         }),
         signal: AbortSignal.timeout(90_000),
       });
@@ -147,7 +164,9 @@ export async function chatJSON<T>(
       }
       if (res.status >= 500) throw new Error(`HTTP ${res.status}`); // overloaded: try the next provider
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
-      const body = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+      // Some gateways pass raw control characters through inside strings, which JSON.parse rejects.
+      const raw = (await res.text()).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, " ");
+      const body = JSON.parse(raw) as { choices?: { message?: { content?: string } }[] };
       const parsed = schema.safeParse(extractJSON(body.choices?.[0]?.message?.content ?? ""));
       if (!parsed.success) throw new Error(`reply failed validation: ${parsed.error.issues[0]?.message}`);
       return { data: parsed.data, provider: `${p.name}/${p.model}` };
