@@ -1,0 +1,73 @@
+---
+/**
+ * A rolling project counter: one column of stacked digits per place, each shifted to show its digit.
+ * The timeline's script rolls it to new values (roll() in Timeline.astro); this is the first paint.
+ */
+interface Props {
+  n: number;
+  class: string;
+  style?: string;
+}
+const { n, class: cls, style } = Astro.props;
+const DIGITS = [..."0123456789"];
+---
+
+<p class={cls} style={style} aria-live="polite">
+  <span class="odo" aria-label={String(n)}>
+    {
+      [...String(n)].map((d) => (
+        <span class="od" aria-hidden="true">
+          <span class="strip" style={`transform:translateY(-${+d * 10}%)`}>
+            {DIGITS.map((x) => <span>{x}</span>)}
+          </span>
+        </span>
+      ))
+    }
+  </span>
+  <span class="unit">{n === 1 ? "project" : "projects"}</span>
+</p>
+
+<style>
+  p {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0;
+    font-family: var(--mono);
+    pointer-events: none;
+  }
+  .odo {
+    display: inline-flex;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+  .od {
+    display: inline-block;
+    height: 1em;
+    overflow: hidden;
+  }
+  .strip {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .strip span {
+    height: 1em;
+  }
+  /* the timeline's "no-anim" moments make rows jump into place; the counter still rolls */
+  :global(.no-anim) .strip {
+    transition-duration: 0.7s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .strip {
+      transition: none !important;
+    }
+  }
+  .unit {
+    font-size: 0.7rem;
+    color: var(--faint);
+  }
+</style>
