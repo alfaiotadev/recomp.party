@@ -30,7 +30,7 @@ const last = days.at(-1);
       {points.length > 1 && (
         <div class="plot">
         {/* stretched to the height CSS gives it (taller on desktop); strokes keep their width */}
-        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`Stars gained per day: ${days.map(fmt).join(", ")}`}>
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`GitHub stars gained per day across all projects: ${days.map(fmt).join(", ")}`}>
           <path class="area" d={area} />
           <path class="line" d={line} />
           <line class="cross" x1="0" x2="0" y1="0" y2={H} hidden />
@@ -50,7 +50,7 @@ const last = days.at(-1);
         </div>
       )}
       <figcaption class="mono">
-        <b>+{last.gained.toLocaleString("en")}</b> stars since yesterday
+        <b>+{last.gained.toLocaleString("en")}</b> stars across all projects since yesterday
       </figcaption>
     </figure>
   )

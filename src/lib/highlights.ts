@@ -60,7 +60,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
         stars: entry.snap!.stars,
         growth: `▲ ${pct(delta, before!)}% in ${span}`,
       }));
-    if (items.length) return { title: "Rising stars", note: `stars gained in the last ${span}`, items };
+    if (items.length) return { title: "Rising stars", note: `GitHub stars gained in ${span}`, items };
   }
 
   const items = all
@@ -76,7 +76,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
       value: `${Math.round(perDay).toLocaleString("en")}/day`,
       stars: entry.snap!.stars,
     }));
-  return { title: "Rising stars", note: "stars per day since the repo was created", items };
+  return { title: "Rising stars", note: "GitHub stars per day since the repo was created", items };
 }
 
 function newReleases(): { title: string; note: string; items: Entry[]; rest: Entry[] } {
