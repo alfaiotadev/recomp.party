@@ -466,7 +466,7 @@
 - repo: jessetbh/VPW64Recomp
   game: Virtual Pro Wrestling 64
   platform: n64
-  kind: port
+  kind: recomp
   tool: N64Recomp
   wikidata: Q3560853
   added: 2026-11-03
@@ -490,6 +490,7 @@
   platform: n64
   kind: recomp
   tool: N64Recomp
+  wikidata: Q3354082
   added: 2026-11-03
 - repo: jessetbh/WWFNoMercyRecomp
   game: WWF No Mercy
@@ -707,7 +708,7 @@
 - repo: PC-PORTERS/SplatPC-Splatoon-Native-PC-Port
   game: Splatoon
   platform: wiiu
-  kind: port
+  kind: recomp
   based_on: [ApfelTeeSaft/RebrewU]
   wikidata: Q17490239
   added: 2026-11-03
@@ -818,6 +819,13 @@
   based_on: [BelmanteGu/SuperMarioWonderRecomp]
   wikidata: Q63385672
   added: 2026-10-31
+- repo: drakolordx7/pokopia-recomp
+  game: Pokémon Pokopia
+  platform: switch
+  kind: recomp
+  tool: nxrecomp
+  wikidata: Q136231470
+  added: 2026-11-03
 - repo: raulzrrs/letsgo-recomp
   game: "Pokémon: Let's Go, Eevee!"
   platform: switch
@@ -1039,10 +1047,11 @@
   wikidata: Q35627
   added: 2026-11-01
 - repo: OriginalSwayze/Streets-Of-Rage-Recomp
-  game: Streets of Rage
+  game: Streets of Rage 1–3
   platform: genesis
   kind: recomp
   tool: Beyond Oasis Recomp
+  wikidata: Q1143285
   added: 2026-11-03
 
 # --- Saturn ----------------------------------------------------------------------
@@ -1050,6 +1059,7 @@
   game: Shining Force III
   platform: saturn
   kind: recomp
+  wikidata: Q3281068
   added: 2026-11-03
 
 # --- PlayStation -----------------------------------------------------------------
@@ -1150,7 +1160,7 @@
 - repo: TekRantGaming/muppet-racemania-recompiled
   game: Muppet RaceMania
   platform: ps1
-  kind: port
+  kind: recomp
   tool: psxrecomp
   wikidata: Q3327961
   added: 2026-11-03
@@ -2378,7 +2388,7 @@
 - repo: anishchandra24/Juiced2-Recompiled
   game: "Juiced 2: Hot Import Nights"
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q2620589
   added: 2026-11-03
@@ -2434,7 +2444,7 @@
 - repo: josiahg2502-glitch/MonopolyRecompiled
   game: Monopoly
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue SDK
   based_on: [rexglue/rexglue-sdk]
   added: 2026-11-03
@@ -2776,7 +2786,7 @@
 - repo: mikeflare007/wwe2k14-recomp
   game: WWE 2K14
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   based_on: [PromethenDev/wwe13-recomp]
   wikidata: Q5156776
@@ -2816,6 +2826,7 @@
   platform: pc
   kind: port
   based_on: [yaz0r/FITD]
+  wikidata: Q5075219
   added: 2026-11-03
 - repo: kerokline/BreathOfFire3PCPort
   game: Breath of Fire III
@@ -2941,6 +2952,7 @@
   platform: pc
   kind: recomp
   tool: pcrecomp
+  wikidata: Q1543280
   added: 2026-11-03
 - repo: abedegno/underworld-exhumed
   game: Ultima Underworld
@@ -3000,7 +3012,7 @@
   wikidata: Q6113095
   added: 2026-11-02
 - repo: spita90/konami-viper-recomp
-  game: Thrill Drive 2
+  game: Thrill Drive 2 & GTI Club 2
   platform: arcade
   kind: recomp
   added: 2026-11-03

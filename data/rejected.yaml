@@ -328,10 +328,6 @@
     builds and a source archive, so a console target, not a native PC/phone
     build.
   date: 2026-11-03
-- repo: drakolordx7/pokopia-recomp
-  reason: Claims to be a recompilation for a non-existent game and platform
-    (Pokémon Pokopia on Switch 2).
-  date: 2026-11-03
 - repo: akoaysigod/pocket_psx_core
   reason: FPGA cores and emulators are out of scope.
   date: 2026-11-03
