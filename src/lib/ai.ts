@@ -201,7 +201,7 @@ export const aiFilterGroups = [...new Set(modelStats.map((s) => s.vendor))]
       .filter((s) => s.vendor === vendor && s.repos.length > 1)
       .map((s) => ({ value: modelKey(s.model), label: s.versioned ? shortModel(s.model) : (s.tool ?? s.model).replace(/^GitHub /, ""), title: s.versioned ? s.model : `${s.tool ?? s.model} (version not stated)`, n: s.repos.length }));
     const n = games.filter((g) => aiTokens(g).split(" ").includes(`v:${vendor}`)).length;
-    return { vendor, value: `v:${vendor}`, title: `Any ${VENDOR_NAMES[vendor] ?? vendor} (${n} projects)`, whole: models.length > 1, models };
+    return { vendor, value: `v:${vendor}`, title: `Any ${VENDOR_NAMES[vendor] ?? vendor} (${n} projects)`, n, whole: models.length > 1, models };
   })
   .filter((g) => g.models.length);
 

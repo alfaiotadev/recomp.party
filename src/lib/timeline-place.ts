@@ -9,6 +9,8 @@ export const MIN_LANE_H = 58; // room for the platform logo + project count
 export const AXIS_H = 30; // also hosts the sort control above the name column
 /** Band above the axis for milestone labels; only ranges that have milestones get one. */
 export const BAND_H = 56;
+/** Width of one AI vendor logo after a row's name, gap included. */
+export const AI_LOGO_W = 12;
 
 export type Ranks = Record<string, number>;
 export type PlaceItem = { id: string; ranks: Ranks; children?: { id: string; ranks: Ranks }[] };
