@@ -1,5 +1,7 @@
 /** This site's own GitHub repo and its star count, read once per build (undefined if GitHub can't be reached). */
-export const SITE_REPO = "alfaiotadev/recomp.party";
+import { SITE_REPO } from "../../data/load.ts";
+
+export { SITE_REPO };
 
 async function stars(): Promise<number | undefined> {
   const token = process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN;

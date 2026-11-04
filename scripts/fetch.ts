@@ -1,6 +1,6 @@
 /** Refresh data/snapshot.json from GitHub for every repo in data/projects.yaml. */
 import { writeFileSync } from "node:fs";
-import { loadProjects, loadStarHistory, SNAPSHOT_PATH, STARS_PATH } from "../data/load.ts";
+import { loadProjects, loadStarHistory, SITE_REPO, SNAPSHOT_PATH, STARS_PATH } from "../data/load.ts";
 import type { Snapshot } from "../data/schema.ts";
 import { fetchRepos } from "./lib/github.ts";
 
@@ -16,7 +16,9 @@ writeFileSync(SNAPSHOT_PATH, `${JSON.stringify(snapshot, null, 2)}\n`);
 
 // Daily star counts: GitHub no longer lists stargazers, so weekly growth is tracked here.
 const history = loadStarHistory();
-history[snapshot.generatedAt.slice(0, 10)] = Object.fromEntries(found.map((r) => [r.repo, r.stars]));
+// The site's own repo too, for the carousel's vitals page (only its owner may list when stars were given).
+const site = (await fetchRepos([SITE_REPO])).found[0];
+history[snapshot.generatedAt.slice(0, 10)] = Object.fromEntries([...found, ...(site ? [site] : [])].map((r) => [r.repo, r.stars]));
 const keep = Object.keys(history).sort().slice(-35);
 writeFileSync(STARS_PATH, `${JSON.stringify(Object.fromEntries(keep.map((d) => [d, history[d]])), null, 1)}\n`);
 
