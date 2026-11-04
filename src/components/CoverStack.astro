@@ -11,8 +11,8 @@ interface Props {
   max?: number;
   /** How much each cover tucks under the previous one, as a share of its width. */
   overlap?: number;
-  /** Phones: wrap onto more rows with this many covers and this overlap. */
-  wrap?: { max: number; overlap: number };
+  /** Phones: wrap onto more rows with this many covers and this overlap (`always`: on every screen width). */
+  wrap?: { max: number; overlap: number; always?: boolean };
 }
 const { entries, size = 34, label, max = Infinity, overlap = 0.45, wrap } = Astro.props;
 const total = wrap ? Math.max(max, wrap.max) : max;
@@ -23,7 +23,7 @@ const hiddenWrapped = wrap ? entries.length - shown.length : 0;
 
 {
   entries.length > 0 && (
-    <ul class={wrap ? "stack wrap" : "stack"} style={`--w:${size}px;--o:${overlap}${wrap ? `;--ow:${wrap.overlap}` : ""}`} aria-label={label}>
+    <ul class={wrap ? `stack wrap${wrap.always ? " always" : ""}` : "stack"} style={`--w:${size}px;--o:${overlap}${wrap ? `;--ow:${wrap.overlap}` : ""}`} aria-label={label}>
       {shown.map((e, i) => (
         <li class={i >= max ? "extra" : undefined} style={`--i:${i};--r:${i % 2 ? 3 : -3}deg`}>
           <a href={entryPath(e)} class={e.kind} title={e.game}>
@@ -110,6 +110,20 @@ const hiddenWrapped = wrap ? entries.length - shown.length : 0;
   }
   .stack li.extra,
   .stack li.more.narrow {
+    display: none;
+  }
+  /* wrapped rows on every width: the same rules as the phone layout below */
+  .stack.wrap.always {
+    --o: var(--ow) !important;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    padding-right: calc(var(--w) * var(--o));
+  }
+  .stack.wrap.always li.extra,
+  .stack.wrap.always li.more.narrow {
+    display: block;
+  }
+  .stack.wrap.always li.more.wide {
     display: none;
   }
   @media (max-width: 520px) {

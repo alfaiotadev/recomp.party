@@ -170,7 +170,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
               <h2>{fresh.title}</h2>
               {fresh.rest.length > 0 && (
                 <div class="more-new">
-                  <CoverStack entries={fresh.rest} size={40} max={8} wrap={{ max: 14, overlap: 0.15 }} label="Earlier new releases" />
+                  <CoverStack entries={fresh.rest} size={40} max={8} wrap={{ max: 15, overlap: 0.15, always: true }} label="Earlier new releases" />
                   <a class="mono" href="/#all-games">
                     +{fresh.rest.length} earlier <span class="decode" data-words={JSON.stringify(ADJECTIVES)}>awesome</span>{" "}
                     {fresh.rest.length === 1 ? "release" : "releases"}
