@@ -426,32 +426,33 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
       spin();
       draw();
     };
-    // Endless: stepping past either end slides on to the page at the other end instead of rewinding the
-    // whole track. That page is moved next to the current one for the slide (flex order), and put back
-    // when the scroll settles.
+    // Endless: going past either end (n below 0 or above the last page) slides on round the ring
+    // instead of rewinding the whole track. The pages beyond the end are moved next to the current one for
+    // the slide (flex order), and put back when the scroll settles.
     let unwrap = null;
     const go = (n) => {
       const lastI = slides.length - 1;
       const w = track.clientWidth;
-      const wrap = !reduce && ((n > lastI && i === lastI) || (n < 0 && i === 0));
+      const from = i;
+      const wrap = !reduce && (n > lastI || n < 0);
       i = (n + slides.length) % slides.length;
       progress = 0;
       programmatic = true;
+      unwrap?.();
       if (wrap) {
-        unwrap?.();
-        const moved = slides[i];
-        const forward = i === 0;
-        moved.style.order = forward ? "1" : "-1";
-        // the current page moved one place, so keep it in view before sliding
-        track.scrollLeft = forward ? (lastI - 1) * w : w;
+        const forward = n > lastI;
+        // forward: pages 0..i follow the last one; backward: pages i..last come before the first
+        const moved = slides.filter((_, k) => (forward ? k <= i : k >= i));
+        for (const s of moved) s.style.order = forward ? "1" : "-1";
+        const start = forward ? from - (i + 1) : slides.length - i + from;
+        track.scrollLeft = start * w; // the current page as it now sits, so nothing moves yet
         track.scrollTo({ left: forward ? lastI * w : 0, behavior: "smooth" });
         unwrap = () => {
           unwrap = null;
-          moved.style.order = "";
+          for (const s of moved) s.style.order = "";
           track.scrollLeft = i * track.clientWidth;
         };
       } else {
-        unwrap?.();
         track.scrollTo({ left: i * w, behavior: reduce ? "auto" : "smooth" });
       }
       mark();
@@ -466,7 +467,11 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
       const b = e.target.closest(".arrow, .tab");
       if (!b) return;
       stopAuto();
-      go(b.dataset.dir ? i + Number(b.dataset.dir) : Number(b.dataset.i));
+      if (b.dataset.dir) return go(i + Number(b.dataset.dir));
+      // a tab: the short way round the wheel, as the tabs show it
+      let d = ring(Number(b.dataset.i) - i);
+      if (d > n / 2) d -= n;
+      go(i + d);
     });
 
     // Swiping or scrolling the track by hand also counts as taking control.
