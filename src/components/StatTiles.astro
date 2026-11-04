@@ -518,9 +518,19 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     .newest {
       justify-content: center;
     }
-    /* the cover and the release boxes fill the row, so the title and credit line up with the cover's edge */
+    /* the tall cover on the left; the title, the release boxes and the credit stacked beside it */
     .nw-c {
-      text-align: left;
+      grid-column: 2;
+    }
+    .nw-cover {
+      grid-row: 1 / span 3;
+    }
+    .nw-text {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .nw-by {
+      grid-row: 3;
     }
     .nw-cover {
       align-self: stretch;
