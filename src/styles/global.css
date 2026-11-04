@@ -132,7 +132,8 @@ main,
 }
 .scan,
 .fresh,
-.review {
+.review,
+.gh-star-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -157,7 +158,8 @@ main,
 }
 .scan:hover,
 .fresh:hover,
-.review:hover {
+.review:hover,
+.gh-star-btn:hover {
   color: var(--muted);
   border-color: rgb(124 240 197 / 0.35);
 }
@@ -210,6 +212,28 @@ main,
 }
 .fresh {
   padding: 0.2rem 0.6rem;
+}
+/* GitHub star button for this site's repo: a gold star, the count once there are enough */
+.gh-star-btn {
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem 0.2rem 0.5rem;
+  color: var(--muted);
+}
+.gh-star-btn svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: #e3b341;
+  transition: rotate 0.4s ease-out, scale 0.4s ease-out;
+}
+.gh-star-btn:hover svg {
+  rotate: 72deg;
+  scale: 1.2;
+}
+.star-n {
+  padding-left: 0.4rem;
+  border-left: 1px solid var(--line);
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
 }
 .fresh-t {
   color: var(--muted);
