@@ -186,7 +186,7 @@ export function recentCredits(days = 7, now = Date.now()) {
   }
   return {
     ranking: [...models.values()].sort((a, b) => b.commits - a.commits).slice(0, 5),
-    top: top.sort((a, b) => b.commits - a.commits).slice(0, 5),
+    top: top.sort((a, b) => b.commits - a.commits).slice(0, 6), // desktop shows five, phones all six in rows of two
     total: top.reduce((n, t) => n + t.commits, 0),
   };
 }
