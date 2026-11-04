@@ -2,7 +2,7 @@
  * This site's own GitHub repo, for the carousel's "vitals" page: commits, merged pull requests and stars per
  * day. Read once per build; undefined when GitHub can't be reached (the page is then left out).
  */
-import { SITE_REPO } from "./repo-stars.ts";
+import { loadStarHistory, SITE_REPO } from "../../data/load.ts";
 
 const DAY = 86_400_000;
 /** Days of history for the chart; the repo is younger than this, so it starts at the first commit. */
@@ -51,30 +51,33 @@ async function load(): Promise<SiteRepo> {
     all.push(...batch);
     if (batch.length < 100) break;
   }
-  // When each star was given: only the repo's own token can list these, so it may be missing.
-  let starredAt: string[] | undefined = [];
-  try {
-    for (let page = 1; page <= 10; page++) {
-      const batch = await api<{ starred_at: string }[]>(`repos/${SITE_REPO}/stargazers?per_page=100&page=${page}`, "application/vnd.github.star+json");
-      starredAt.push(...batch.map((s) => s.starred_at.slice(0, 10)));
-      if (batch.length < 100) break;
-    }
-  } catch {
-    starredAt = undefined;
-  }
+  // The star total per day from the daily counts in data/stars.json (GitHub only tells the repo's owner
+  // when each star was given); today's comes live.
+  const history = loadStarHistory();
+  const recorded = Object.keys(history)
+    .filter((d) => history[d]![SITE_REPO] !== undefined)
+    .sort();
+  const starsOn = (date: string, isToday: boolean) => {
+    if (isToday) return repo.stargazers_count;
+    const at = recorded.filter((d) => d <= date).at(-1);
+    return at ? history[at]![SITE_REPO] : recorded.length ? 0 : undefined;
+  };
 
   const day = (c: ApiCommit) => c.commit.author.date.slice(0, 10);
   const first = all.map(day).sort()[0] ?? since;
   const days: SiteDay[] = [];
+  const todayDate = new Date(now).toISOString().slice(0, 10);
   for (let t = Date.parse(first); t <= now; t += DAY) {
     const date = new Date(t).toISOString().slice(0, 10);
+    const stars = starsOn(date, date === todayDate);
+    const before = days.at(-1)?.stars;
     const today = all.filter((c) => day(c) === date);
     days.push({
       date,
       commits: today.filter((c) => !isMerge(c) && !isData(c)).map((c) => ({ sha: c.sha.slice(0, 7), title: c.commit.message.split("\n")[0]!, url: c.html_url })),
       merged: today.filter(isMerge).length,
-      starsGained: starredAt?.filter((d) => d === date).length,
-      stars: starredAt?.filter((d) => d <= date).length,
+      starsGained: stars !== undefined ? Math.max(0, stars - (before ?? 0)) : undefined,
+      stars,
     });
   }
   return { repo: SITE_REPO, stars: repo.stargazers_count, days };

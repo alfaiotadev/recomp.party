@@ -6,6 +6,8 @@ import { AiData, Games, Milestones, Projects, Rejected, Snapshot, StarHistory, t
 // Resolved from the repo root rather than import.meta.url: Astro bundles this module into dist/.
 export const PROJECTS_PATH = resolve(process.cwd(), "data/projects.yaml");
 export const SNAPSHOT_PATH = resolve(process.cwd(), "data/snapshot.json");
+/** This site's own repo: its daily star count is kept in stars.json next to the games'. */
+export const SITE_REPO = "alfaiotadev/recomp.party";
 export const STARS_PATH = resolve(process.cwd(), "data/stars.json");
 export const REJECTED_PATH = resolve(process.cwd(), "data/rejected.yaml");
 export const GAMES_PATH = resolve(process.cwd(), "data/games.json");
