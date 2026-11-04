@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { generatedAt, tools } from "../lib/data.ts";
+import { SHOW_STARS_FROM, SITE_REPO, siteStars } from "../lib/repo-stars.ts";
 import { CANDIDATE_PRS, DISCOVERY_PRS, DISCOVERY_UTC } from "../lib/discovery.ts";
 
 interface Props {
@@ -81,6 +82,11 @@ const here = Astro.url.pathname;
       <a class="review" href={CANDIDATE_PRS} data-review hidden>
         <span class="review-n"></span>
         <span class="review-label">in review</span>
+      </a>
+      <a class="gh-star-btn" href={`https://github.com/${SITE_REPO}`} title="Like the list? Star it on GitHub, it helps others find it.">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z" /></svg>
+        <span class="star-label">Star</span>
+        {siteStars !== undefined && siteStars >= SHOW_STARS_FROM && <span class="star-n">{siteStars.toLocaleString("en")}</span>}
       </a>
       </div>
       <nav>
