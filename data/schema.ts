@@ -28,6 +28,8 @@ export const PLATFORMS = {
   amiga: "Amiga",
   pc: "PC (DOS/Windows)",
   arcade: "Arcade",
+  /** Toolchains only: a recompiler for several consoles. */
+  multi: "Multi-platform",
 } as const;
 
 export const KINDS = {
@@ -63,6 +65,8 @@ export const Projects = z.array(Project).superRefine((list, ctx) => {
     const key = p.repo.toLowerCase();
     if (seen.has(key)) ctx.addIssue({ code: "custom", path: [i, "repo"], message: `duplicate repo ${p.repo}` });
     seen.add(key);
+    if (p.platform === "multi" && p.kind !== "tool")
+      ctx.addIssue({ code: "custom", path: [i, "platform"], message: `${p.repo}: "multi" is only for toolchains` });
   }
 });
 

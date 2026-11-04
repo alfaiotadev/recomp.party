@@ -335,3 +335,23 @@
   reason: General-purpose Nintendo Switch emulator (yuzu/suyu fork), not a
     game-specific recompilation or port.
   date: 2026-11-03
+- repo: Ag3497120/VeRantyx
+  reason: VeRantyx is a generic Windows runtime for PC VR games, not a
+    game‑specific static recompilation or source port.
+  date: 2026-11-04
+- repo: MadeinTaly/gen1recomp-gen3-boxes
+  reason: It is a mod for Gen1Recomp rather than a recompilation or source port itself.
+  date: 2026-11-04
+- repo: MadeinTaly/gen1recomp-running-shoes
+  reason: It is a mod for Gen1Recomp, not a standalone static recompilation or
+    source port.
+  date: 2026-11-04
+- repo: SantiBros/SpiderMan2-2004-NX
+  reason: Nintendo Switch homebrew (releases are Switch .nro builds only), a console target, not a native PC/phone build.
+  date: 2026-11-04
+- repo: markaurel13/tekken3-nx
+  reason: Nintendo Switch homebrew (releases are Switch builds only), a console target, not a native PC/phone build.
+  date: 2026-11-04
+- repo: TekRantGaming/whopping-recompilation-collection
+  reason: Left out by curation (a launcher bundling three small Xbox 360 games).
+  date: 2026-11-04
