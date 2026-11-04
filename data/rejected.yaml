@@ -346,3 +346,12 @@
   reason: It is a mod for Gen1Recomp, not a standalone static recompilation or
     source port.
   date: 2026-11-04
+- repo: SantiBros/SpiderMan2-2004-NX
+  reason: Nintendo Switch homebrew (releases are Switch .nro builds only), a console target, not a native PC/phone build.
+  date: 2026-11-04
+- repo: markaurel13/tekken3-nx
+  reason: Nintendo Switch homebrew (releases are Switch builds only), a console target, not a native PC/phone build.
+  date: 2026-11-04
+- repo: TekRantGaming/whopping-recompilation-collection
+  reason: Left out by curation (a launcher bundling three small Xbox 360 games).
+  date: 2026-11-04

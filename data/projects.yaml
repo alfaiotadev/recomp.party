@@ -1276,12 +1276,6 @@
   kind: port
   tool: RecompOne
   added: 2026-11-01
-- repo: markaurel13/tekken3-nx
-  game: Tekken 3
-  platform: ps1
-  kind: recomp
-  wikidata: Q1062106
-  added: 2026-11-04
 - repo: TekRantGaming/simpsons-wrestling-recompiled
   game: The Simpsons Wrestling
   platform: ps1
@@ -1794,7 +1788,7 @@
 - repo: theweathervane/sfa3max-decomp
   game: Street Fighter Alpha 3 MAX
   platform: psp
-  kind: recomp
+  kind: port
   wikidata: Q127865294
   added: 2026-11-04
 - repo: BasedYuki/the-3rd-birthday-recomp
@@ -2101,11 +2095,6 @@
   kind: recomp
   wikidata: Q2067832
   added: 2026-11-03
-- repo: SantiBros/SpiderMan2-2004-NX
-  game: Spider-Man 2
-  platform: xbox
-  kind: port
-  added: 2026-11-04
 - repo: TGP482/SCDA-XBERecomp
   game: "Splinter Cell: Double Agent"
   platform: xbox
@@ -2119,6 +2108,7 @@
   platform: xbox
   kind: recomp
   tool: xboxrecomp
+  wikidata: Q3460038
   added: 2026-11-04
 - repo: GiZcesi/OpenTricky
   game: SSX Tricky
@@ -3072,7 +3062,8 @@
 - repo: ecruells/resident-evil-pc-decomp
   game: Resident Evil
   platform: pc
-  kind: recomp
+  kind: port
+  wikidata: Q1248594
   added: 2026-11-04
 - repo: RSDKModding/RSDKv4-Decompilation
   game: Sonic 1 & 2 (2013)
@@ -3174,6 +3165,7 @@
   platform: arcade
   kind: port
   based_on: [gibletto/sfIII3-cps3-decomp]
+  wikidata: Q5230754
   added: 2026-11-04
 - repo: TawhidI-602/The-House-of-the-Dead-ReWrithe
   game: The House of the Dead
