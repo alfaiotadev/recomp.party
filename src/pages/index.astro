@@ -9,6 +9,11 @@ import { fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInU
 
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
 const toolStrip = tools.slice(0, 8);
+/** Rotated by the decode animation in "New ones ship every …": short spans of time, the sillier the better. */
+const EVERY = [
+  "week", "day", "hour", "minute", "moment", "heartbeat", "blink of an eye", "coffee break", "sneeze",
+  "frame", "vblank", "loading screen", "respawn", "compile", "commit", "save point", "cutscene", "lag spike",
+];
 ---
 
 <Base jsonLd={{ "@type": "WebSite", name: "recomp.party", url: "https://recomp.party/" }}>
@@ -16,7 +21,7 @@ const toolStrip = tools.slice(0, 8);
     <p class="eyebrow">Static recompilations &amp; source ports</p>
     <h1>Classic games, <span class="glow">recompiled</span> to run natively.</h1>
     <p class="lede">
-      Console games turned into native PC (and phone) programs. New ones ship every week — recomp.party keeps track of
+      Console games turned into native PC (and phone) programs. New ones ship every <span class="decode" data-words={JSON.stringify(EVERY)}>week</span> — recomp.party keeps track of
       the ones you can actually play.
     </p>
   </div>
@@ -176,6 +181,11 @@ const toolStrip = tools.slice(0, 8);
   .hero .lede {
     max-width: 62rem;
     text-wrap: pretty;
+  }
+  .hero .decode {
+    color: var(--recomp);
+    text-shadow: 0 0 10px rgb(124 240 197 / 0.45);
+    white-space: nowrap;
   }
   .sec-head {
     display: flex;
