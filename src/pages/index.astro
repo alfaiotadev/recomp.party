@@ -9,7 +9,7 @@ import { fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInU
 
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
 const toolStrip = tools.slice(0, 8);
-/** Rotated by the decode animation in "New ones ship every …": units of time, ever shorter (a jiffy and a frame are 1/60 s). */
+/** Rotated by the decode animation in "New commits and releases are made every …": units of time, ever shorter (a jiffy and a frame are 1/60 s). */
 const EVERY = [
   "week", "day", "hour", "minute", "second", "millisecond", "microsecond", "nanosecond",
   "moment", "jiffy", "tick", "frame", "blink of an eye",
@@ -21,7 +21,7 @@ const EVERY = [
     <p class="eyebrow">Static recompilations &amp; source ports</p>
     <h1>Classic games, <span class="glow">recompiled</span> to run natively.</h1>
     <p class="lede">
-      Console games turned into native PC (and phone) programs. New ones ship every <span class="decode" data-words={JSON.stringify(EVERY)}>week</span> — recomp.party keeps track of
+      Console games turned into native PC (and phone) programs. New commits and releases are made every <span class="decode" data-words={JSON.stringify(EVERY)}>week</span> — recomp.party keeps track of
       the ones you can actually play.
     </p>
   </div>
