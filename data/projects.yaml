@@ -3266,6 +3266,11 @@
   platform: ps1
   kind: tool
   added: 2026-10-28
+- repo: ArthurReboulSalze/RetroRecomp
+  game: RetroRecomp
+  platform: multi
+  kind: tool
+  added: 2026-11-04
 - repo: rexglue/rexglue-sdk
   game: ReXGlue SDK
   platform: x360
