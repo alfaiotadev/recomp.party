@@ -9,10 +9,10 @@ import { fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInU
 
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
 const toolStrip = tools.slice(0, 8);
-/** Rotated by the decode animation in "New ones ship every …": short spans of time, the sillier the better. */
+/** Rotated by the decode animation in "New ones ship every …": units of time, ever shorter (a jiffy and a frame are 1/60 s). */
 const EVERY = [
-  "week", "day", "hour", "minute", "moment", "heartbeat", "blink of an eye", "coffee break", "sneeze",
-  "frame", "vblank", "loading screen", "respawn", "compile", "commit", "save point", "cutscene", "lag spike",
+  "week", "day", "hour", "minute", "second", "millisecond", "microsecond", "nanosecond",
+  "moment", "jiffy", "tick", "frame", "blink of an eye",
 ];
 ---
 
