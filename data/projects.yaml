@@ -220,6 +220,14 @@
   tool: N64Recomp
   wikidata: Q774773
   added: 2026-10-28
+- repo: n64hub/f-zero-x-recomp
+  game: F-Zero X
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [inspectredc/fzerox]
+  wikidata: Q2609497
+  added: 2026-11-04
 - repo: Zorkats/G-Diffuser
   game: F-Zero X
   platform: n64
@@ -409,6 +417,14 @@
   based_on: [n64decomp/sm64]
   wikidata: Q216995
   added: 2026-10-28
+- repo: n64hub/super-mario-64-recomp
+  game: Super Mario 64
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [n64decomp/sm64]
+  wikidata: Q216995
+  added: 2026-11-04
 - repo: coop-deluxe/sm64coopdx
   game: Super Mario 64 (online co-op)
   platform: n64
@@ -568,6 +584,14 @@
   kind: recomp
   wikidata: Q2292272
   added: 2026-10-28
+- repo: teclilla18/sonic-riders-recomp
+  game: Sonic Riders
+  platform: gc
+  kind: recomp
+  tool: ZeldaWWHDRecomp
+  based_on: [ZeldaWWHDRecomp/ZeldaWWHDRecomp]
+  wikidata: Q683373
+  added: 2026-11-04
 - repo: chasem-dev/sms-pc-port
   game: Super Mario Sunshine
   platform: gc
@@ -699,6 +723,12 @@
   added: 2026-10-28
 
 # --- Wii U -----------------------------------------------------------------------
+- repo: BoyClinton/Cha-Cha
+  game: Monster Hunter 3 Ultimate
+  platform: wiiu
+  kind: recomp
+  wikidata: Q3861000
+  added: 2026-11-04
 - repo: nsmbu-recomp/nsmbu-recomp
   game: New Super Mario Bros. U
   platform: wiiu
@@ -755,6 +785,12 @@
   based_on: [BelmanteGu/SuperMarioWonderRecomp]
   wikidata: Q64566657
   added: 2026-10-30
+- repo: Puddz/AstralChain-PC
+  game: Astral Chain
+  platform: switch
+  kind: recomp
+  wikidata: Q61727129
+  added: 2026-11-04
 - repo: K0NL/B2recomp
   game: Bayonetta 2
   platform: switch
@@ -841,6 +877,13 @@
   based_on: [Coz-0/smo-recomp]
   wikidata: Q28234671
   added: 2026-11-03
+- repo: OpenSmash-Ultimate/OpenSmash-Ultimate
+  game: Super Smash Bros. Ultimate
+  platform: switch
+  kind: recomp
+  based_on: [OpenSmash-Ultimate/WindowSmash, OpenSmash-Ultimate/ssbu-recomp]
+  wikidata: Q54093632
+  added: 2026-11-04
 - repo: OpenSmash-Ultimate/ssbu-recomp
   game: Super Smash Bros. Ultimate
   platform: switch
@@ -907,6 +950,19 @@
   kind: recomp
   wikidata: Q133567959
   added: 2026-11-02
+- repo: AksharDP/xc2-recomp
+  game: Xenoblade Chronicles 2
+  platform: switch
+  kind: recomp
+  based_on: [valentderah/totk-pc-recomp]
+  wikidata: Q28312052
+  added: 2026-11-04
+- repo: jmars125/xc2-recomp
+  game: Xenoblade Chronicles 2
+  platform: switch
+  kind: recomp
+  wikidata: Q28312052
+  added: 2026-11-04
 - repo: jmars125/xcx-recomp
   game: "Xenoblade Chronicles X: Definitive Edition"
   platform: switch
@@ -1220,6 +1276,12 @@
   kind: port
   tool: RecompOne
   added: 2026-11-01
+- repo: markaurel13/tekken3-nx
+  game: Tekken 3
+  platform: ps1
+  kind: recomp
+  wikidata: Q1062106
+  added: 2026-11-04
 - repo: TekRantGaming/simpsons-wrestling-recompiled
   game: The Simpsons Wrestling
   platform: ps1
@@ -1242,6 +1304,13 @@
   based_on: [ser-pounce/rood-reverse, noprompt/rood-reverse]
   wikidata: Q1536626
   added: 2026-10-31
+- repo: riotashley81-jpg/vagrantstory_recomp
+  game: Vagrant Story
+  platform: ps1
+  kind: recomp
+  tool: PSXRecomp
+  wikidata: Q1536626
+  added: 2026-11-04
 - repo: plinkr/Wild9Recomp
   game: Wild 9
   platform: ps1
@@ -1460,6 +1529,11 @@
   added: 2026-10-30
 
 # --- PlayStation 3 ---------------------------------------------------------------
+- repo: SulphurS16/ACFA-Port
+  game: Armored Core for Answer
+  platform: ps3
+  kind: recomp
+  added: 2026-11-04
 - repo: JonathanDC64/DemonsSoulsRecomp
   game: Demon's Souls
   platform: ps3
@@ -1468,6 +1542,13 @@
   based_on: [sp00nznet/ps3recomp]
   wikidata: Q1153708
   added: 2026-10-31
+- repo: timboat/demons-souls-recomp
+  game: Demon's Souls
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  wikidata: Q1153708
+  added: 2026-11-04
 - repo: soyjxck/dod3-recomp
   game: Drakengard 3
   platform: ps3
@@ -1579,6 +1660,12 @@
   kind: port
   wikidata: Q6028768
   added: 2026-10-31
+- repo: AbdelmoumenDeghbouche/knack_pc
+  game: Knack
+  platform: ps4
+  kind: recomp
+  wikidata: Q5102494
+  added: 2026-11-04
 - repo: Hyant4/Knack-II-pc-port
   game: Knack 2
   platform: ps4
@@ -1704,6 +1791,12 @@
   kind: recomp
   wikidata: Q3321551
   added: 2026-10-28
+- repo: theweathervane/sfa3max-decomp
+  game: Street Fighter Alpha 3 MAX
+  platform: psp
+  kind: recomp
+  wikidata: Q127865294
+  added: 2026-11-04
 - repo: BasedYuki/the-3rd-birthday-recomp
   game: The 3rd Birthday
   platform: psp
@@ -1773,6 +1866,12 @@
   tool: xboxrecomp
   wikidata: Q2403747
   added: 2026-11-02
+- repo: minimalice92/bloodwake-recomp
+  game: Blood Wake
+  platform: xbox
+  kind: recomp
+  wikidata: Q2906967
+  added: 2026-11-04
 - repo: bromurok/BloodyRoarExtremeRecomp
   game: Bloody Roar Extreme
   platform: xbox
@@ -1798,6 +1897,14 @@
   kind: port
   wikidata: Q1982333
   added: 2026-10-31
+- repo: Neguchads/Castlevania-COD-Recomp
+  game: "Castlevania: Curse of Darkness"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBERecomp
+  based_on: [TGP482/XboxXBERecomp]
+  wikidata: Q2735354
+  added: 2026-11-04
 - repo: projectedan/McRae05-XBE-Recomp
   game: Colin McRae Rally 2005
   platform: xbox
@@ -1994,6 +2101,11 @@
   kind: recomp
   wikidata: Q2067832
   added: 2026-11-03
+- repo: SantiBros/SpiderMan2-2004-NX
+  game: Spider-Man 2
+  platform: xbox
+  kind: port
+  added: 2026-11-04
 - repo: TGP482/SCDA-XBERecomp
   game: "Splinter Cell: Double Agent"
   platform: xbox
@@ -2002,6 +2114,12 @@
   based_on: [TGP482/XboxXBE-Recomp]
   wikidata: Q878492
   added: 2026-10-28
+- repo: koenhendriks/SSX3-recomp
+  game: SSX 3
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  added: 2026-11-04
 - repo: GiZcesi/OpenTricky
   game: SSX Tricky
   platform: xbox
@@ -2010,6 +2128,11 @@
   based_on: [MatiasRiveraC/SSX-Tricky-PC]
   wikidata: Q2377020
   added: 2026-10-31
+- repo: Llamapixels/TenchuRFDRecomp
+  game: "Tenchu: Return from Darkness"
+  platform: xbox
+  kind: recomp
+  added: 2026-11-04
 - repo: lookingcoding/hulk-ultimate-destruction-recomp-xbox-ver-
   game: "The Incredible Hulk: Ultimate Destruction"
   platform: xbox
@@ -2126,6 +2249,12 @@
   tool: ReXGlue
   wikidata: Q308961
   added: 2026-11-01
+- repo: AlvaroEPena/bo2-360-nx
+  game: "Call of Duty: Black Ops II"
+  platform: x360
+  kind: recomp
+  wikidata: Q380918
+  added: 2026-11-04
 - repo: PaulCombal/mw2-recompiled
   game: "Call of Duty: Modern Warfare 2"
   platform: x360
@@ -2166,6 +2295,13 @@
   tool: ReXGlue
   wikidata: Q1138424
   added: 2026-10-31
+- repo: Maxilure/MindOver-Recomp
+  game: "Crash: Mind over Mutant"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q507396
+  added: 2026-11-04
 - repo: florinp93/hells-gate-recomp
   game: Dante's Inferno
   platform: x360
@@ -2173,6 +2309,13 @@
   tool: ReXGlue
   wikidata: Q2299857
   added: 2026-10-28
+- repo: hibikifukui22/Dead-or-Alive-Xtreme-2-Recompilation
+  game: Dead or Alive Xtreme 2
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q2400491
+  added: 2026-11-04
 - repo: wivi514/Dead_Rising_2_Case_West_Xenon_Recomp
   game: "Dead Rising 2: Case West"
   platform: x360
@@ -2621,6 +2764,13 @@
   tool: ReXGlue
   wikidata: Q2020055
   added: 2026-11-02
+- repo: Matt-code-d/Saw2Recomp
+  game: "Saw II: Flesh & Blood"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q392689
+  added: 2026-11-04
 - repo: LittleBitUA/DownpourRecomp
   game: "Silent Hill: Downpour"
   platform: x360
@@ -2750,6 +2900,13 @@
   tool: ReXGlue
   wikidata: Q1276932
   added: 2026-11-03
+- repo: monscriser/UFC3MONS
+  game: UFC Undisputed 3
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q595474
+  added: 2026-11-04
 - repo: sp00nznet/vig8
   game: Vigilante 8 Arcade
   platform: x360
@@ -2912,6 +3069,11 @@
   kind: port
   wikidata: Q473852
   added: 2026-11-02
+- repo: ecruells/resident-evil-pc-decomp
+  game: Resident Evil
+  platform: pc
+  kind: recomp
+  added: 2026-11-04
 - repo: RSDKModding/RSDKv4-Decompilation
   game: Sonic 1 & 2 (2013)
   platform: pc
@@ -3007,6 +3169,12 @@
   based_on: [cheviman/segasonic-decomp]
   wikidata: Q2016642
   added: 2026-10-30
+- repo: gibletto/sfiii3-cps3-port
+  game: "Street Fighter III: Third Strike"
+  platform: arcade
+  kind: port
+  based_on: [gibletto/sfIII3-cps3-decomp]
+  added: 2026-11-04
 - repo: TawhidI-602/The-House-of-the-Dead-ReWrithe
   game: The House of the Dead
   platform: arcade
