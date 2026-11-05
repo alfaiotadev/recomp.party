@@ -381,3 +381,15 @@
   reason: It is an in-progress recompilation whose only release is build
     dependencies, not a playable game build.
   date: 2026-11-05
+- repo: zortos293/Lichii
+  reason: It is a Nintendo Switch/Switch 2 emulator, not a game-specific static
+    recompilation or source port.
+  date: 2026-11-05
+- repo: thibautbus/gen1recomp-translation-mod-generator
+  reason: This is a translation-mod generator for Gen1Recomp, not a playable
+    native port or recompiler toolchain.
+  date: 2026-11-05
+- repo: b4ttycre4se/Spider-Man-3-Recomp
+  reason: The repository claims a full Xbox 360 recompilation but has only a few
+    kilobytes of C/C++ source, so its README is not backed by the code.
+  date: 2026-11-05
