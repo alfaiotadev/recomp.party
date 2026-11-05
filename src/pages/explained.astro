@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import Routes from "../components/Routes.astro";
 import "../styles/explain.css";
 
 /** ✓ yes, ~ partly / it depends, ✗ no; every row is phrased so that ✓ is the good answer. Each cell also carries a short note. */
@@ -105,6 +106,10 @@ const SYMBOL: Record<Mark, string> = { yes: "✓", some: "~", no: "✗" };
       </div>
     </div>
 
+    <h2>How the routes connect</h2>
+    <p class="sub">The same game file feeds all three. Pick a route, or click a box.</p>
+    <Routes />
+
     <h2>Side by side</h2>
     <p class="sub">✓ yes &nbsp; ~ partly &nbsp; ✗ no</p>
     <div class="table-wrap">
@@ -148,11 +153,6 @@ const SYMBOL: Record<Mark, string> = { yes: "✓", some: "~", no: "✗" };
     <section id="emulation" class="emu">
       <h2><span class="tint">Emulation</span>: pretend to be the console</h2>
       <p class="sub">The original game runs unchanged. A program imitates the console's chips well enough to fool it.</p>
-      <ol class="steps">
-        <li><span class="ico">💾</span><b>The game file</b>Machine code for the console's processor.</li>
-        <li class="hi"><span class="ico">🔁</span><b>The emulator</b>Reads each instruction while you play and does what the console would have done.</li>
-        <li><span class="ico">🖥️</span><b>Your screen</b>The game, as long as the emulator keeps up.</li>
-      </ol>
     </section>
 
     <section id="static-recompilation" class="recomp">
@@ -161,13 +161,6 @@ const SYMBOL: Record<Mark, string> = { yes: "✓", some: "~", no: "✗" };
         A tool translates the game's machine code into C ahead of time, and a normal compiler turns that into a program for
         your computer.
       </p>
-      <ol class="steps">
-        <li><span class="ico">💾</span><b>The game file</b>Machine code for the console (MIPS on N64, PowerPC on Xbox 360…).</li>
-        <li class="hi"><span class="ico">🤖</span><b>The recompiler</b>Turns every function into equivalent C code, automatically.</li>
-        <li><span class="ico">⚙️</span><b>A PC compiler</b>Builds that C for x86 or ARM, like any other program.</li>
-        <li class="hi"><span class="ico">🧩</span><b>The runtime</b>Stands in for the console's graphics, sound, controller and saves.</li>
-        <li><span class="ico">🎮</span><b>A native game</b>A real app. Your copy of the game supplies the rest.</li>
-      </ol>
       <div class="xlate" aria-label="One function, before and after recompilation">
         <div class="code">
           <span class="code-head">console machine code (MIPS)</span>
@@ -191,12 +184,6 @@ const SYMBOL: Record<Mark, string> = { yes: "✓", some: "~", no: "✗" };
         Start from the game's source code, keep the game itself, and swap out the parts that only made sense on the
         console.
       </p>
-      <ol class="steps">
-        <li><span class="ico">📜</span><b>Source code</b>Released by the developer (Doom, Quake) or rebuilt by fans in a decompilation.</li>
-        <li class="hi"><span class="ico">🔧</span><b>Swap the console parts</b>Graphics, sound, controls and files move to PC equivalents.</li>
-        <li><span class="ico">⚙️</span><b>A PC compiler</b>Builds it for Windows, Mac, Linux, phones…</li>
-        <li><span class="ico">🎮</span><b>A native game</b>With room for new options, fixes and mods.</li>
-      </ol>
       <h3>Where the source code comes from</h3>
       <div class="origins">
         <div class="origin">

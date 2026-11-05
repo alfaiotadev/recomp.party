@@ -1,0 +1,517 @@
+---
+/**
+ * One interactive map of the three routes from a console game to playing it on a PC: emulation, static
+ * recompilation and source ports (via decompilation or released source). Shared boxes belong to several routes.
+ * Nodes are HTML placed by percentage; edges are an SVG underneath in the same 0–100 coordinate space. Desktop
+ * runs left to right, phones top to bottom (--mx/--my and the second SVG).
+ */
+type Path = "emu" | "recomp" | "port";
+type Node = {
+  id: string;
+  ico: string;
+  title: string;
+  sub: string;
+  detail: string;
+  paths: Path[];
+  d: [number, number, number]; // desktop x%, y%, width%
+  m: [number, number, number]; // phone x%, y%, width%
+  chips?: string[];
+};
+const NODES: Node[] = [
+  {
+    id: "game",
+    ico: "💿",
+    title: "Your copy of the game",
+    sub: "as it shipped",
+    chips: [".z64", ".iso", ".bin", ".xex", ".elf", ".exe", ".dll"],
+    detail:
+      "The game as it shipped: a cartridge dump, a disc image or the console's executables. Every route starts from your own copy, even a source port, which reads the art, music and levels from it.",
+    paths: ["emu", "recomp", "port"],
+    d: [8, 40, 15],
+    m: [36, 9, 66],
+  },
+  {
+    id: "source",
+    ico: "📂",
+    title: "Released source",
+    sub: "rare",
+    detail:
+      "Sometimes the developer publishes the code (Doom in 1997, Quake, a few later games). Then nobody has to decompile anything: porting can start right away.",
+    paths: ["port"],
+    d: [8, 90, 15],
+    m: [85, 9, 26],
+  },
+  {
+    id: "emulator",
+    ico: "🗣️",
+    title: "Emulator",
+    sub: "translates while you play",
+    detail:
+      "Imitates the console's processor and chips, reading the game's instructions one by one as it runs. One emulator plays a whole library, but the translating never stops, so newer consoles need a strong PC.",
+    paths: ["emu"],
+    d: [26, 12, 15],
+    m: [17, 30, 30],
+  },
+  {
+    id: "recompiler",
+    ico: "🤖",
+    title: "Recompiler",
+    sub: "translates once, automatically",
+    detail:
+      "Reads every function of the game's machine code once and writes equivalent C. Each game still needs setup and fixes by hand, typically weeks to months. Tools: N64: Recompiled, XenonRecomp, ReXGlue and more.",
+    paths: ["recomp"],
+    d: [26, 40, 15],
+    m: [50, 30, 30],
+  },
+  {
+    id: "decomp",
+    ico: "🔍",
+    title: "Decompilation",
+    sub: "people rewrite it in C",
+    detail:
+      "Fans rewrite the game in C by hand, function by function, until compiling it gives back the identical original (\"matching\"). It often takes years, and is the usual way a console game gets source code at all.",
+    paths: ["port"],
+    d: [26, 68, 15],
+    m: [83, 30, 30],
+  },
+  {
+    id: "genc",
+    ico: "🧾",
+    title: "Generated C",
+    sub: "correct, not readable",
+    detail:
+      "Thousands of machine-written functions: faithful to the original, but full of registers and memory addresses instead of names. Modding hooks into it, but nobody edits it like normal code.",
+    paths: ["recomp"],
+    d: [43, 40, 14],
+    m: [50, 47, 30],
+  },
+  {
+    id: "src",
+    ico: "📜",
+    title: "Readable source",
+    sub: "named, commented",
+    detail:
+      "Source code people can read and change: named functions, comments, structure. Big changes like new renderers, mods and features become ordinary programming.",
+    paths: ["port"],
+    d: [43, 74, 14],
+    m: [83, 47, 30],
+  },
+  {
+    id: "build",
+    ico: "⚙️",
+    title: "Compiler + runtime",
+    sub: "PC graphics, sound, input",
+    detail:
+      "A normal compiler builds the C for x86 or ARM. A runtime (for recomps) or platform layer (for ports) stands in for the console's graphics, sound, controller and saves, using things like Vulkan, Metal and SDL.",
+    paths: ["recomp", "port"],
+    d: [60, 57, 14],
+    m: [66, 63, 56],
+  },
+  {
+    id: "native",
+    ico: "🖥️",
+    title: "Native game",
+    sub: "a real .exe or app",
+    detail:
+      "A real Windows, Mac, Linux or phone program. Widescreen, high frame rates and mods are now changes to that program, not hacks on top of an emulator.",
+    paths: ["recomp", "port"],
+    d: [76, 57, 14],
+    m: [66, 77, 56],
+  },
+  {
+    id: "play",
+    ico: "🎮",
+    title: "You play",
+    sub: "on your PC",
+    detail:
+      "Every route ends here. Emulation gets there first for almost any game; recomps and ports take work per game but run lighter and can go further.",
+    paths: ["emu", "recomp", "port"],
+    d: [92, 35, 14],
+    m: [50, 92, 70],
+  },
+];
+type Edge = { from: string; to: string; paths: Path[]; m?: string };
+const EDGES: Edge[] = [
+  { from: "game", to: "emulator", paths: ["emu"] },
+  { from: "game", to: "recompiler", paths: ["recomp"] },
+  { from: "game", to: "decomp", paths: ["port"] },
+  // on phones the released-source box sits above the decompilation box, so its edge goes round the right side
+  { from: "source", to: "src", paths: ["port"], m: "M 97 13 C 100 24, 100 38, 97 46" },
+  // on phones the emulator line runs down the left edge, clear of the compiler and native boxes
+  { from: "emulator", to: "play", paths: ["emu"], m: "M 17 30 C 17 75, 17 88, 30 92" },
+  { from: "recompiler", to: "genc", paths: ["recomp"] },
+  { from: "decomp", to: "src", paths: ["port"] },
+  { from: "genc", to: "build", paths: ["recomp"] },
+  { from: "src", to: "build", paths: ["port"] },
+  { from: "build", to: "native", paths: ["recomp", "port"] },
+  { from: "native", to: "play", paths: ["recomp", "port"] },
+];
+const byId = Object.fromEntries(NODES.map((n) => [n.id, n]));
+const curveX = ([x1, y1]: number[], [x2, y2]: number[]) => {
+  const xm = (x1! + x2!) / 2;
+  return `M ${x1} ${y1} C ${xm} ${y1}, ${xm} ${y2}, ${x2} ${y2}`;
+};
+const curveY = ([x1, y1]: number[], [x2, y2]: number[]) => {
+  const ym = (y1! + y2!) / 2;
+  return `M ${x1} ${y1} C ${x1} ${ym}, ${x2} ${ym}, ${x2} ${y2}`;
+};
+const edgeClass = (e: Edge) => `edge ${e.paths.length > 1 ? "shared" : e.paths[0]}`;
+const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
+  { key: "all", label: "All routes", text: "Pick a route to follow it, or click any box to see what happens there." },
+  {
+    key: "emu",
+    label: "Emulation",
+    text: "Your game goes straight into an emulator, which translates it while you play. No work per game, but it costs computing power forever.",
+  },
+  {
+    key: "recomp",
+    label: "Static recompilation",
+    text: "A recompiler turns your game into C once. A compiler and a runtime make that into a native program, which loads everything else from your copy.",
+  },
+  {
+    key: "port",
+    label: "Source port",
+    text: "Start from readable source code (rebuilt by fans in a decompilation, or rarely released) and build the game natively, with room to change anything.",
+  },
+];
+---
+
+<figure class="routes-fig" data-path="all">
+  <div class="route-tabs" role="group" aria-label="Show a route">
+    {
+      ROUTES.map((r) => (
+        <button type="button" class={`route-tab ${r.key}`} data-route={r.key} aria-pressed={r.key === "all" ? "true" : "false"}>
+          {r.label}
+        </button>
+      ))
+    }
+  </div>
+  <div class="routes">
+    <svg class="edges desk" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      {EDGES.map((e) => <path class={edgeClass(e)} data-paths={e.paths.join(" ")} d={curveX(byId[e.from]!.d, byId[e.to]!.d)} />)}
+    </svg>
+    <svg class="edges phone" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      {EDGES.map((e) => <path class={edgeClass(e)} data-paths={e.paths.join(" ")} d={e.m ?? curveY(byId[e.from]!.m, byId[e.to]!.m)} />)}
+    </svg>
+    {
+      NODES.map((n) => (
+        <button
+          type="button"
+          class={`node ${n.paths.length === 1 ? n.paths[0] : "shared"}`}
+          data-node={n.id}
+          data-paths={n.paths.join(" ")}
+          data-detail={n.detail}
+          style={`--x:${n.d[0]};--y:${n.d[1]};--w:${n.d[2]};--mx:${n.m[0]};--my:${n.m[1]};--mw:${n.m[2]}`}
+        >
+          <span class="n-ico" aria-hidden="true">{n.ico}</span>
+          <span class="n-title">{n.title}</span>
+          <span class="n-sub">{n.sub}</span>
+          {n.chips && (
+            <span class="n-chips">
+              {n.chips.map((c) => (
+                <span>{c}</span>
+              ))}
+            </span>
+          )}
+        </button>
+      ))
+    }
+  </div>
+  <figcaption class="route-info" aria-live="polite">
+    <b data-info-title>All routes</b>
+    <span data-info-text>{ROUTES[0]!.text}</span>
+  </figcaption>
+  <script type="application/json" data-routes set:html={JSON.stringify(Object.fromEntries(ROUTES.map((r) => [r.key, r])))} />
+</figure>
+
+<script>
+  for (const fig of document.querySelectorAll<HTMLElement>(".routes-fig")) {
+    const routes = JSON.parse(fig.querySelector("[data-routes]")!.textContent!) as Record<string, { label: string; text: string }>;
+    const title = fig.querySelector<HTMLElement>("[data-info-title]")!;
+    const text = fig.querySelector<HTMLElement>("[data-info-text]")!;
+    const tabs = [...fig.querySelectorAll<HTMLButtonElement>("[data-route]")];
+    const nodes = [...fig.querySelectorAll<HTMLButtonElement>("[data-node]")];
+    const show = (key: string) => {
+      fig.dataset.path = key;
+      for (const t of tabs) t.setAttribute("aria-pressed", String(t.dataset.route === key));
+      for (const n of nodes) n.removeAttribute("aria-current");
+      title.textContent = routes[key]!.label;
+      text.textContent = routes[key]!.text;
+    };
+    for (const t of tabs) t.addEventListener("click", () => show(t.dataset.route!));
+    for (const n of nodes) {
+      n.addEventListener("click", () => {
+        const paths = n.dataset.paths!.split(" ");
+        // keep the chosen route if this box is on it, otherwise follow the box's own route
+        if (fig.dataset.path !== "all" && !paths.includes(fig.dataset.path!)) show(paths.length === 1 ? paths[0]! : "all");
+        for (const o of nodes) o.toggleAttribute("aria-current", o === n);
+        title.textContent = n.querySelector(".n-title")!.textContent;
+        text.textContent = n.dataset.detail!;
+      });
+    }
+  }
+</script>
+
+<style>
+  .routes-fig {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+  .route-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+  .route-tab {
+    --tint: var(--muted);
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--lane);
+    color: var(--muted);
+    font: 0.8rem var(--mono);
+    cursor: pointer;
+  }
+  .route-tab.emu {
+    --tint: var(--emu);
+  }
+  .route-tab.recomp {
+    --tint: var(--recomp);
+  }
+  .route-tab.port {
+    --tint: var(--port);
+  }
+  .route-tab:hover {
+    color: var(--fg);
+  }
+  .route-tab[aria-pressed="true"] {
+    border-color: var(--tint);
+    color: var(--tint);
+    background: color-mix(in srgb, var(--tint) 10%, var(--lane));
+  }
+  .route-tab.all[aria-pressed="true"] {
+    color: var(--fg);
+    border-color: var(--faint);
+  }
+
+  .routes {
+    position: relative;
+    aspect-ratio: 1100 / 560;
+  }
+  .edges {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .edges.phone {
+    display: none;
+  }
+  .edge {
+    fill: none;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.55;
+    transition: opacity 0.25s;
+  }
+  .edge.emu {
+    stroke: var(--emu);
+  }
+  .edge.recomp {
+    stroke: var(--recomp);
+  }
+  .edge.port {
+    stroke: var(--port);
+  }
+  .edge.shared {
+    stroke: var(--faint);
+  }
+
+  .node {
+    --tint: var(--muted);
+    position: absolute;
+    left: calc(var(--x) * 1%);
+    top: calc(var(--y) * 1%);
+    width: calc(var(--w) * 1%);
+    translate: -50% -50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.05rem;
+    padding: 0.5rem 0.4rem;
+    border: 1px solid color-mix(in srgb, var(--tint) 40%, var(--line));
+    border-radius: 12px;
+    background: var(--surface-2);
+    color: var(--muted);
+    font: inherit;
+    text-align: center;
+    line-height: 1.25;
+    cursor: pointer;
+    transition:
+      opacity 0.25s,
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .node.emu {
+    --tint: var(--emu);
+  }
+  .node.recomp {
+    --tint: var(--recomp);
+  }
+  .node.port {
+    --tint: var(--port);
+  }
+  .node.shared {
+    --tint: var(--fg);
+  }
+  .node:hover,
+  .node[aria-current] {
+    border-color: var(--tint);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tint) 18%, transparent);
+  }
+  .n-ico {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .n-title {
+    color: var(--fg);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .node:not(.shared) .n-title {
+    color: var(--tint);
+  }
+  .n-sub {
+    font-size: 0.72rem;
+  }
+  .n-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2rem;
+    margin-top: 0.3rem;
+  }
+  .n-chips span {
+    padding: 0 0.3rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font: 0.66rem/1.5 var(--mono);
+    color: var(--fg);
+  }
+
+  /* a chosen route: everything else fades, its edges flow */
+  /* faded boxes keep their opaque background so faded edges don't show through them */
+  .routes-fig:not([data-path="all"]) .edge {
+    opacity: 0.12;
+  }
+  .routes-fig:not([data-path="all"]) .node {
+    border-color: var(--line);
+  }
+  .routes-fig:not([data-path="all"]) .node > * {
+    opacity: 0.2;
+    transition: opacity 0.25s;
+  }
+  .routes-fig[data-path="emu"] .edge[data-paths~="emu"],
+  .routes-fig[data-path="recomp"] .edge[data-paths~="recomp"],
+  .routes-fig[data-path="port"] .edge[data-paths~="port"],
+  .routes-fig[data-path="emu"] .node[data-paths~="emu"] > *,
+  .routes-fig[data-path="recomp"] .node[data-paths~="recomp"] > *,
+  .routes-fig[data-path="port"] .node[data-paths~="port"] > * {
+    opacity: 1;
+  }
+  .routes-fig[data-path="emu"] .node[data-paths~="emu"],
+  .routes-fig[data-path="recomp"] .node[data-paths~="recomp"],
+  .routes-fig[data-path="port"] .node[data-paths~="port"] {
+    border-color: color-mix(in srgb, var(--tint) 55%, var(--line));
+  }
+  .routes-fig[data-path="emu"] .edge[data-paths~="emu"] {
+    stroke: var(--emu);
+  }
+  .routes-fig[data-path="recomp"] .edge[data-paths~="recomp"] {
+    stroke: var(--recomp);
+  }
+  .routes-fig[data-path="port"] .edge[data-paths~="port"] {
+    stroke: var(--port);
+  }
+  .routes-fig:not([data-path="all"]) .edge {
+    stroke-dasharray: 6 5;
+    animation: flow 0.9s linear infinite;
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -11;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .routes-fig .edge {
+      animation: none !important;
+    }
+  }
+
+  .route-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.6rem;
+    align-items: baseline;
+    min-height: 3.6rem;
+    margin-top: 0.8rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--lane);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .route-info b {
+    color: var(--fg);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 900px) {
+    .routes {
+      aspect-ratio: 360 / 1000;
+    }
+    .edges.desk {
+      display: none;
+    }
+    .edges.phone {
+      display: block;
+    }
+    .node {
+      left: calc(var(--mx) * 1%);
+      top: calc(var(--my) * 1%);
+      width: calc(var(--mw) * 1%);
+    }
+  }
+  @media (max-width: 900px) and (min-width: 561px) {
+    .routes {
+      aspect-ratio: 700 / 1100;
+    }
+  }
+  @media (max-width: 560px) {
+    .routes-fig {
+      padding: 0.7rem;
+    }
+    .node {
+      padding: 0.4rem 0.2rem;
+      border-radius: 10px;
+    }
+    .n-ico {
+      font-size: 1.25rem;
+    }
+    .n-title {
+      font-size: 0.74rem;
+    }
+    .n-sub {
+      font-size: 0.64rem;
+    }
+  }
+</style>
