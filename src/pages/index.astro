@@ -13,7 +13,7 @@ const toolStrip = tools.slice(0, 8);
 
 <Base jsonLd={{ "@type": "WebSite", name: "recomp.party", url: "https://recomp.party/" }}>
   <div class="hero">
-    <p class="eyebrow">Static recompilations &amp; source ports</p>
+    <p class="eyebrow"><a href="/explained/#static-recompilation">Static recompilations</a> &amp; <a href="/explained/#source-port">source ports</a></p>
     <h1>Classic games, <span class="glow">recompiled</span> to run natively.</h1>
     <p class="lede">
       Console games turned into native PC (and phone) programs. New ones ship every week — recomp.party keeps track of
@@ -173,8 +173,15 @@ const toolStrip = tools.slice(0, 8);
     margin-top: 0.6rem;
     text-wrap: balance;
   }
+  .hero .eyebrow a {
+    color: inherit;
+    text-decoration: underline dotted rgb(124 240 197 / 0.5);
+    text-underline-offset: 4px;
+  }
+  .hero .eyebrow a:hover {
+    text-decoration-style: solid;
+  }
   .hero .lede {
-    max-width: 62rem;
     text-wrap: pretty;
   }
   .sec-head {

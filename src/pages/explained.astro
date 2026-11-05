@@ -1,0 +1,51 @@
+---
+import Routes from "../components/Routes.astro";
+import Base from "../layouts/Base.astro";
+import "../styles/explain.css";
+---
+
+<Base
+  title="Emulation vs static recompilation vs source ports, explained"
+  description="Three ways to play a classic console game on a modern machine, walked through step by step: emulation, static recompilation and source ports."
+>
+  <article class="ex">
+    <p class="eyebrow">Explained</p>
+    <h1>Three ways to play an old game on a <em>new machine</em>.</h1>
+    <p class="lede">Every route starts from your own copy of the game. Pick one and walk it step by step.</p>
+
+    <Routes />
+
+    <h2>What recomp.party lists</h2>
+    <div class="facts">
+      <div class="fact recomp"><b><span class="ico">🤖</span>Static recompilations</b>with a release you can download.</div>
+      <div class="fact port"><b><span class="ico">✍️</span>Source ports</b>with a release you can download.</div>
+      <div class="fact"><b><span class="ico">🚫</span>Not emulators</b>They're great, and well covered elsewhere.</div>
+      <div class="fact"><b><span class="ico">💿</span>No game files</b>Every project needs your own copy of the game.</div>
+    </div>
+
+    <h2>Read and watch more</h2>
+    <ul class="more">
+      <li>
+        <a href="https://www.youtube.com/watch?v=ywWwUuWRgsM"
+          ><span class="kind">video</span>Recompilation: An Incredible New Way to Keep N64 Games Alive<span class="src">YouTube</span></a
+        >
+      </li>
+      <li>
+        <a href="https://github.com/N64Recomp/N64Recomp"
+          ><span class="kind">readme</span>How N64: Recompiled works, from its author<span class="src">GitHub</span></a
+        >
+      </li>
+      <li>
+        <a href="https://www.jamesfmackenzie.com/2026/10/03/disassembly-vs-decomp-vs-recomp-vs-port/"
+          ><span class="kind">article</span>Disassembly vs decomp vs recomp vs port<span class="src">jamesfmackenzie.com</span></a
+        >
+      </li>
+      <li>
+        <a href="https://doomwiki.org/wiki/Source_port"
+          ><span class="kind">wiki</span>Source ports, where the term comes from<span class="src">Doom Wiki</span></a
+        >
+      </li>
+    </ul>
+    <p class="next">Ready to play? <a href="/">Browse the games</a> or see the <a href="/tools/">toolchains</a> behind them.</p>
+  </article>
+</Base>

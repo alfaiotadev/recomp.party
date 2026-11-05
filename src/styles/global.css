@@ -275,6 +275,24 @@ main,
   color: var(--faint);
   margin-left: 0.25rem;
 }
+/* phones: six links share the row edge to edge, and wrap rather than run off the screen */
+@media (max-width: 560px) {
+  .site-header nav {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  .nav-long {
+    display: none;
+  }
+}
+@media (min-width: 561px) {
+  .nav-short {
+    display: none;
+  }
+}
 .site-footer {
   margin-top: 5rem;
   padding-top: 1.5rem;
@@ -314,7 +332,6 @@ h2 {
 }
 .lede {
   color: var(--muted);
-  max-width: 44rem;
   font-size: 1.1rem;
 }
 section {

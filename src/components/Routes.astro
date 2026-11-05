@@ -1,0 +1,1141 @@
+---
+/**
+ * One interactive map of the three routes from a console game to playing it on a PC: emulation, static
+ * recompilation and source ports (via decompilation or released source). Shared boxes belong to several routes.
+ * The boxes sit in an ordinary grid, so an open box simply makes its row taller and everything below moves down
+ * (on phones the open box drops to a full-width row of its own under its neighbours). The lines are drawn by the
+ * script from where the boxes actually are, and redrawn whenever the map changes size.
+ */
+type Path = "emu" | "recomp" | "port";
+type Node = {
+  id: string;
+  ico: string;
+  title: string;
+  sub: string;
+  /** opens with a **bold lead** sentence, shown as the description's heading; keep it short, the pros and cons carry the rest */
+  detail: string;
+  pros?: string[];
+  cons?: string[];
+  /** toolchains to link, by their anchor on /tools/ */
+  tools?: { name: string; anchor: string }[];
+  paths: Path[];
+  /** row, first column, columns spanned: wide screens on a 20-column grid, phones (mat) on 6 */
+  at: [number, number, number];
+  mat: [number, number, number];
+  chips?: string[];
+  /** the icon's four-frame loop while the box is the active step */
+  anim: "spin" | "bob" | "scan" | "gear" | "talk" | "flicker" | "wiggle";
+};
+const NODES: Node[] = [
+  {
+    id: "game",
+    anim: "spin",
+    ico: "💿",
+    title: "Your copy of the game",
+    sub: "as it shipped",
+    chips: [".z64", ".iso", ".bin", ".xex", ".elf", ".exe", ".dll"],
+    detail:
+      "**Where every route starts.** A cartridge dump, a disc image or the console's own executables.",
+    paths: ["emu", "recomp", "port"],
+    at: [1, 6, 7],
+    mat: [1, 1, 4],
+  },
+  {
+    id: "source",
+    anim: "bob",
+    ico: "📂",
+    title: "Released source",
+    sub: "rare",
+    detail:
+      "**The developer published the code.** Doom (1997), Quake and a few others.",
+    pros: ["No decompiling: porting starts right away"],
+    cons: ["Most console games never get this"],
+    paths: ["port"],
+    at: [1, 15, 4],
+    mat: [1, 5, 2],
+  },
+  {
+    id: "emulator",
+    anim: "talk",
+    ico: "🗣️",
+    title: "Emulator",
+    sub: "translates while you play",
+    detail:
+      "**Pretends to be the console.**",
+    pros: ["Works with almost any game on day one", "One program plays a whole library"],
+    cons: ["Newer consoles need a strong PC", "Widescreen and mods need hacks"],
+    paths: ["emu"],
+    at: [2, 3, 4],
+    mat: [2, 1, 2],
+  },
+  {
+    id: "recompiler",
+    anim: "bob",
+    ico: "🤖",
+    title: "Recompiler",
+    sub: "translates once, automatically",
+    detail:
+      "**Machine code becomes C before you ever press start.**",
+    tools: [
+      { name: "N64: Recompiled", anchor: "n64recomp" },
+      { name: "XenonRecomp", anchor: "xenonrecomp" },
+      { name: "ReXGlue", anchor: "rexglue-sdk" },
+    ],
+    pros: ["Nothing to translate while you play", "Much faster to make than a decompilation"],
+    cons: ["Each game still needs weeks to months of fixes", "Only for consoles that have a recompiler"],
+    paths: ["recomp"],
+    at: [2, 9, 4],
+    mat: [2, 3, 2],
+  },
+  {
+    id: "decomp",
+    anim: "scan",
+    ico: "🔍",
+    title: "Decompilation",
+    sub: "people rewrite it in C",
+    detail:
+      "**Function by function, until it compiles back to the identical game.**",
+    pros: ["Ends in source code anyone can read", "Then anything about the game can change"],
+    cons: ["Often takes years", "Needs a large, patient community"],
+    paths: ["port"],
+    at: [2, 15, 4],
+    mat: [2, 5, 2],
+  },
+  {
+    id: "genc",
+    anim: "wiggle",
+    ico: "🧾",
+    title: "Generated C",
+    sub: "correct, not readable",
+    detail:
+      "**Registers and memory addresses instead of names.**",
+    pros: ["Faithful to the original, bug for bug", "Mods can hook into it"],
+    cons: ["Hard to change by hand"],
+    paths: ["recomp"],
+    at: [3, 9, 4],
+    mat: [3, 3, 2],
+  },
+  {
+    id: "src",
+    anim: "wiggle",
+    ico: "📜",
+    title: "Readable source",
+    sub: "named, commented",
+    detail:
+      "**Code people can read and change.**",
+    pros: ["New renderers, features and fixes are ordinary programming", "Can be ported to almost any platform"],
+    cons: ["Someone has to keep maintaining it"],
+    paths: ["port"],
+    at: [3, 15, 4],
+    mat: [3, 5, 2],
+  },
+  {
+    id: "build",
+    anim: "gear",
+    ico: "⚙️",
+    title: "Compiler + runtime",
+    sub: "PC graphics, sound, input",
+    detail:
+      "**A compiler builds the C; a runtime stands in for the console's hardware.**",
+    pros: ["Modern graphics: Vulkan, Metal, DirectX", "Any controller, saves as plain files"],
+    cons: ["Console graphics tricks have to be recreated by hand"],
+    paths: ["recomp", "port"],
+    at: [4, 10, 7],
+    mat: [4, 3, 4],
+  },
+  {
+    id: "native",
+    anim: "flicker",
+    ico: "🖥️",
+    title: "Native game",
+    sub: "a real .exe or app",
+    detail:
+      "**For Windows, Mac, Linux, sometimes phones.**",
+    pros: ["Runs light, at native speed", "Widescreen, high frame rates and mods built in"],
+    cons: ["Each game is its own project"],
+    paths: ["recomp", "port"],
+    at: [5, 10, 7],
+    mat: [5, 3, 4],
+  },
+  {
+    id: "play",
+    anim: "wiggle",
+    ico: "🎮",
+    title: "You play",
+    sub: "on your PC",
+    detail:
+      "**Every route ends here.** Emulation gets there first; recomps and ports run lighter and go further.",
+    paths: ["emu", "recomp", "port"],
+    at: [6, 6, 10],
+    mat: [6, 2, 4],
+  },
+];
+/** side: route the line round the left or right of the map where a straight curve would run behind another box. */
+type Edge = { from: string; to: string; paths: Path[]; side?: "left" | "right" };
+const EDGES: Edge[] = [
+  { from: "game", to: "emulator", paths: ["emu"] },
+  { from: "game", to: "recompiler", paths: ["recomp"] },
+  { from: "game", to: "decomp", paths: ["port"] },
+  // the released-source box sits above the decompilation box, so its edge goes round the right side
+  { from: "source", to: "src", paths: ["port"], side: "right" },
+  // the emulator line runs down the left edge, clear of the compiler and native boxes
+  { from: "emulator", to: "play", paths: ["emu"], side: "left" },
+  { from: "recompiler", to: "genc", paths: ["recomp"] },
+  { from: "decomp", to: "src", paths: ["port"] },
+  { from: "genc", to: "build", paths: ["recomp"] },
+  { from: "src", to: "build", paths: ["port"] },
+  { from: "build", to: "native", paths: ["recomp", "port"] },
+  { from: "native", to: "play", paths: ["recomp", "port"] },
+];
+/** Wide screens: an open box takes the two free columns on each side (neighbours always leave them free) so its text isn't squeezed. */
+const openCols = (n: Node) => {
+  const start = Math.max(1, n.at[1] - 2);
+  const end = Math.min(21, n.at[1] + n.at[2] + 2);
+  return `${start} / ${end}`;
+};
+/** The description as HTML: escaped, with **bold** as the lead. */
+const detailHtml = (t: string) =>
+  t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\*\*(.+?)\*\*/g, '<strong class="n-lead">$1</strong>');
+const byId = Object.fromEntries(NODES.map((n) => [n.id, n]));
+/** A source port has two ways in; until one is picked the map alternates between them (a: decompile your copy, b: released source). */
+const BRANCH: Record<string, "a" | "b"> = { game: "a", decomp: "a", "game>decomp": "a", "decomp>src": "a", source: "b", "source>src": "b" };
+const edgeClass = (e: Edge) => `edge ${e.paths.length > 1 ? "shared" : e.paths[0]}`;
+const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
+  { key: "all", label: "All routes", text: "Pick a route to walk through it step by step, or click any box." },
+  {
+    key: "emu",
+    label: "Emulation",
+    text: "Your game goes straight into an emulator, which translates it while you play. No work per game, but it costs computing power forever.",
+  },
+  {
+    key: "recomp",
+    label: "Static recompilation",
+    text: "A recompiler turns your game into C once. A compiler and a runtime make that into a native program, which loads everything else from your copy.",
+  },
+  {
+    key: "port",
+    label: "Source port",
+    text: "Start from readable source code (rebuilt by fans in a decompilation, or rarely released) and build the game natively, with room to change anything.",
+  },
+];
+---
+
+
+<figure class="routes-fig" data-path="all">
+  {/* old section anchors, linked from the front page: each opens its route on the map */}
+  <span id="emulation" class="route-anchor" data-for="emu"></span>
+  <span id="static-recompilation" class="route-anchor" data-for="recomp"></span>
+  <span id="source-port" class="route-anchor" data-for="port"></span>
+  <div class="route-tabs" role="group" aria-label="Show a route">
+    {
+      ROUTES.map((r) => (
+        <button type="button" class={`route-tab ${r.key}`} data-route={r.key} aria-pressed={r.key === "all" ? "true" : "false"}>
+          {r.label}
+        </button>
+      ))
+    }
+  </div>
+  <div class="routes">
+    <svg class="edges" aria-hidden="true">
+      {
+        EDGES.map((e) => (
+          <path
+            class={edgeClass(e)}
+            data-paths={e.paths.join(" ")}
+            data-branch={BRANCH[`${e.from}>${e.to}`]}
+            data-from={e.from}
+            data-to={e.to}
+            data-side={e.side}
+          />
+        ))
+      }
+    </svg>
+    {
+      NODES.map((n) => (
+        <div
+          class={`node ${n.paths.length === 1 ? n.paths[0] : "shared"} a-${n.anim}`}
+          data-node={n.id}
+          data-paths={n.paths.join(" ")}
+          data-branch={BRANCH[n.id]}
+          style={`--row:${n.at[0] * 2 - 1};--drow:${n.at[0] * 2};--col:${n.at[1]} / span ${n.at[2]};--ocol:${openCols(n)};--mcol:${n.mat[1]} / span ${n.mat[2]}`}
+        >
+          <svg class="n-ring" aria-hidden="true"><rect /></svg>
+          <button type="button" class="n-head" aria-expanded="false" aria-controls={`rd-${n.id}`}>
+            <span class="n-ico" aria-hidden="true">{n.ico}</span>
+            <span class="n-title">{n.title}</span>
+            <span class="n-sub">{n.sub}</span>
+            {n.chips && (
+              <span class="n-chips">
+                {n.chips.map((c, i) => (
+                  <span style={`--i:${i};--n:${n.chips!.length}`}>{c}</span>
+                ))}
+              </span>
+            )}
+          </button>
+          <div class="n-more" id={`rd-${n.id}`}>
+            <div>
+              <div class="n-detail">
+                <p set:html={detailHtml(n.detail)} />
+                {n.tools && (
+                  <p class="n-tools">
+                    Tools:{" "}
+                    {n.tools.map((t, i) => (
+                      <>
+                        {i > 0 && ", "}
+                        <a href={`/tools/#${t.anchor}`} target="_blank" rel="noopener">
+                          {t.name}
+                        </a>
+                      </>
+                    ))}{" "}
+                    and{" "}
+                    <a href="/tools/" target="_blank" rel="noopener">
+                      more
+                    </a>
+                    .
+                  </p>
+                )}
+                {(n.pros || n.cons) && (
+                  <ul class="n-pc">
+                    {n.pros?.map((t) => (
+                      <li class="pro">
+                        <span aria-label="Pro">+</span>
+                        {t}
+                      </li>
+                    ))}
+                    {n.cons?.map((t) => (
+                      <li class="con">
+                        <span aria-label="Con">−</span>
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  <figcaption class="route-info" aria-live="polite">
+    <b data-info-title>All routes</b>
+    <span data-info-text>{ROUTES[0]!.text}</span>
+  </figcaption>
+  <script type="application/json" data-routes set:html={JSON.stringify(Object.fromEntries(ROUTES.map((r) => [r.key, r])))} />
+  <script type="application/json" data-edges set:html={JSON.stringify(EDGES.map(({ from, to, paths }) => ({ from, to, paths })))} />
+</figure>
+
+<script>
+  type EdgeData = { from: string; to: string; paths: string[] };
+  for (const fig of document.querySelectorAll<HTMLElement>(".routes-fig")) {
+    const routes = JSON.parse(fig.querySelector("[data-routes]")!.textContent!) as Record<string, { label: string; text: string }>;
+    const edges = JSON.parse(fig.querySelector("[data-edges]")!.textContent!) as EdgeData[];
+    const title = fig.querySelector<HTMLElement>("[data-info-title]")!;
+    const text = fig.querySelector<HTMLElement>("[data-info-text]")!;
+    const map = fig.querySelector<HTMLElement>(".routes")!;
+    const svg = fig.querySelector<SVGSVGElement>(".edges")!;
+    const lines = [...svg.querySelectorAll<SVGPathElement>("path")];
+    const tabs = [...fig.querySelectorAll<HTMLButtonElement>("[data-route]")];
+    const nodes = new Map([...fig.querySelectorAll<HTMLElement>("[data-node]")].map((n) => [n.dataset.node!, n]));
+    let active: string | null = null;
+
+    /** Draw every line from where its boxes are right now. */
+    const draw = () => {
+      const m = map.getBoundingClientRect();
+      svg.setAttribute("viewBox", `0 0 ${m.width} ${m.height}`);
+      const box = (id: string) => {
+        const r = nodes.get(id)!.getBoundingClientRect();
+        const x = r.left - m.left;
+        const y = r.top - m.top;
+        return { x, y, w: r.width, cx: x + r.width / 2, cy: y + r.height / 2, b: y + r.height, r: x + r.width };
+      };
+      for (const l of lines) {
+        const f = box(l.dataset.from!);
+        const t = box(l.dataset.to!);
+        let d: string;
+        if (l.dataset.side === "right") {
+          const k = Math.max(16, m.width * 0.03);
+          d = `M ${f.r} ${f.cy} C ${f.r + k * 2} ${f.cy}, ${t.r + k * 2} ${t.cy}, ${t.r} ${t.cy}`;
+        } else if (l.dataset.side === "left") {
+          // stay left of the target even when the source box is a full-width open card (phones)
+          const x1 = Math.min(f.cx, t.x - 12);
+          d = `M ${x1} ${f.b} C ${x1} ${t.cy}, ${x1} ${t.cy}, ${t.x} ${t.cy}`;
+        } else {
+          // fan out from wide boxes: leave from the part of the bottom edge that faces the target
+          const x1 = f.cx + Math.max(-f.w / 3, Math.min(f.w / 3, (t.cx - f.cx) * 0.3));
+          const ym = (f.b + t.y) / 2;
+          d = `M ${x1} ${f.b} C ${x1} ${ym}, ${t.cx} ${ym}, ${t.cx} ${t.y}`;
+        }
+        l.setAttribute("d", d);
+      }
+    };
+    // boxes open, close and move rows: redraw on every size change, and through the opening transition
+    new ResizeObserver(draw).observe(map);
+    let drawing = 0;
+    const follow = (ms = 900) => {
+      const until = performance.now() + ms;
+      cancelAnimationFrame(drawing);
+      const tick = () => {
+        draw();
+        if (performance.now() < until) drawing = requestAnimationFrame(tick);
+      };
+      tick();
+    };
+    draw();
+
+    const route = () => fig.dataset.path!;
+    const onRoute = (paths: string[]) => route() === "all" || paths.includes(route());
+
+    let picking = 0;
+    const stopPick = () => {
+      clearInterval(picking);
+      delete fig.dataset.pick;
+    };
+    /** Source port: light up its two ways in by turns until the reader picks one. */
+    const startPick = () => {
+      stopPick();
+      fig.dataset.pick = "a";
+      picking = window.setInterval(() => (fig.dataset.pick = fig.dataset.pick === "a" ? "b" : "a"), 1600);
+    };
+
+    /** Open one step (or none). The line it was reached by flows, and so does the open box's border. */
+    const open = (id: string | null, from: string | null = null) => {
+      active = id;
+      const branch = id ? nodes.get(id)!.dataset.branch : undefined;
+      if (id) clearInterval(picking);
+      // a way into the port has been picked: keep the other way faded
+      if (branch && route() === "port") {
+        fig.dataset.pick = branch;
+        text.textContent = `${routes.port!.text} Click the next box to take the next step.`;
+      }
+      for (const [nid, n] of nodes) {
+        const on = nid === id;
+        n.classList.toggle("open", on);
+        n.querySelector(".n-head")!.setAttribute("aria-expanded", String(on));
+      }
+      for (const l of lines) l.classList.toggle("live", !!id && l.dataset.from === from && l.dataset.to === id);
+      follow();
+    };
+
+    /** Scroll so the clicked step, at its opened size, sits in the middle of the screen (or its top, if it's taller).
+     *  Own easing rather than the browser's smooth scroll, which is too brisk here; any wheel or touch takes over. */
+    let gliding = 0;
+    const stopGlide = () => cancelAnimationFrame(gliding);
+    for (const ev of ["wheel", "touchstart", "keydown"]) addEventListener(ev, stopGlide, { passive: true });
+    const centre = (n: HTMLElement) => {
+      const inner = n.querySelector<HTMLElement>(".n-more > div")!;
+      const full = n.querySelector<HTMLElement>(".n-head")!.offsetHeight + (n.classList.contains("open") ? inner.scrollHeight : 0) + 2;
+      const top = n.getBoundingClientRect().top + scrollY;
+      const y = Math.max(0, full < innerHeight - 40 ? top + full / 2 - innerHeight / 2 : top - 20);
+      stopGlide();
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return scrollTo(0, y);
+      const y0 = scrollY;
+      const ms = Math.min(1600, 700 + Math.abs(y - y0) * 0.9);
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const k = Math.min(1, (now - t0) / ms);
+        const e = k < 0.5 ? 4 * k * k * k : 1 - (-2 * k + 2) ** 3 / 2;
+        scrollTo(0, y0 + (y - y0) * e);
+        if (k < 1) gliding = requestAnimationFrame(step);
+      };
+      gliding = requestAnimationFrame(step);
+    };
+
+    /** Light a route up from the top down: each box and line waits by its distance from the start. */
+    const stagger = () => {
+      const depth = new Map<string, number>([["game", 0], ["source", 0]]);
+      const live = edges.filter((e) => onRoute(e.paths));
+      for (let changed = true; changed; ) {
+        changed = false;
+        for (const e of live) {
+          const d = depth.get(e.from);
+          if (d !== undefined && (depth.get(e.to) ?? Infinity) > d + 1) {
+            depth.set(e.to, d + 1);
+            changed = true;
+          }
+        }
+      }
+      for (const [id, n] of nodes) n.style.setProperty("--d", `${(depth.get(id) ?? 0) * 90}ms`);
+      for (const l of lines) l.style.setProperty("--d", `${((depth.get(l.dataset.from!) ?? 0) + 0.5) * 90}ms`);
+    };
+
+    const setRoute = (key: string) => {
+      fig.dataset.path = key;
+      for (const t of tabs) t.setAttribute("aria-pressed", String(t.dataset.route === key));
+      title.textContent = routes[key]!.label;
+      text.textContent = routes[key]!.text + (key === "all" ? "" : " Click the next box to take the next step.");
+    };
+    const show = (key: string) => {
+      stopPick();
+      setRoute(key);
+      stagger();
+      // every route starts from the game file; a port can also start from released source, so let the reader choose
+      if (key === "port") {
+        open(null);
+        text.textContent = `${routes[key]!.text} Two ways in: click your game file or the released source.`;
+        startPick();
+      } else open(key === "all" ? null : "game");
+    };
+    for (const t of tabs) t.addEventListener("click", () => show(t.dataset.route!));
+    const fromHash = () => {
+      const key = fig.querySelector<HTMLElement>(`.route-anchor[id="${CSS.escape(location.hash.slice(1))}"]`)?.dataset.for;
+      if (key) show(key);
+    };
+    fromHash();
+    addEventListener("hashchange", fromHash);
+
+    for (const [id, n] of nodes) {
+      n.querySelector(".n-head")!.addEventListener("click", () => {
+        if (id === active) return open(null);
+        const paths = n.dataset.paths!.split(" ");
+        // a box off the chosen route, or one that belongs to a single route while all are shown, switches to its route
+        if (!onRoute(paths) || (route() === "all" && paths.length === 1)) {
+          stopPick();
+          setRoute(paths.length === 1 ? paths[0]! : "all");
+          stagger();
+        }
+        const from = active && edges.some((e) => e.from === active && e.to === id) ? active : null;
+        open(id, from);
+        centre(n);
+        if (from) {
+          n.classList.remove("land");
+          void n.offsetWidth;
+          n.classList.add("land");
+        }
+      });
+      n.addEventListener("animationend", (e) => e.animationName.endsWith("land") && n.classList.remove("land"));
+    }
+  }
+</script>
+
+<style>
+  .route-anchor {
+    position: absolute;
+    margin-top: -1rem;
+  }
+  .routes-fig {
+    position: relative;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+  .route-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+  .route-tab {
+    --tint: var(--muted);
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--lane);
+    color: var(--muted);
+    font: 0.8rem var(--mono);
+    cursor: pointer;
+  }
+  .route-tab.emu {
+    --tint: var(--emu);
+  }
+  .route-tab.recomp {
+    --tint: var(--recomp);
+  }
+  .route-tab.port {
+    --tint: var(--port);
+  }
+  .route-tab:hover {
+    color: var(--fg);
+  }
+  .route-tab[aria-pressed="true"] {
+    border-color: var(--tint);
+    color: var(--tint);
+    background: color-mix(in srgb, var(--tint) 10%, var(--lane));
+  }
+  .route-tab.all[aria-pressed="true"] {
+    color: var(--fg);
+    border-color: var(--faint);
+  }
+
+  /* an ordinary grid: odd rows hold the boxes, even rows stay empty unless an open box drops into one (phones) */
+  .routes {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(20, minmax(0, 1fr));
+    align-items: start;
+    padding: 1rem 0 0.4rem;
+  }
+  .edges {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .edge {
+    fill: none;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.55;
+    transition: opacity 0.25s;
+  }
+  .edge.emu {
+    stroke: var(--emu);
+  }
+  .edge.recomp {
+    stroke: var(--recomp);
+  }
+  .edge.port {
+    stroke: var(--port);
+  }
+  .edge.shared {
+    stroke: var(--faint);
+  }
+
+  .node {
+    --tint: var(--muted);
+    position: relative;
+    z-index: 1;
+    grid-row: var(--row);
+    grid-column: var(--col);
+    margin-bottom: 3.2rem;
+    border: 1px solid color-mix(in srgb, var(--tint) 40%, var(--line));
+    border-radius: 12px;
+    background: var(--surface-2);
+    color: var(--muted);
+    line-height: 1.25;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .routes > .node:last-of-type {
+    margin-bottom: 0;
+  }
+  .n-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.05rem;
+    width: 100%;
+    padding: 0.5rem 0.4rem;
+    border: 0;
+    border-radius: inherit;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+  }
+  .n-more {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.75s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  /* the description fades and settles in after the box has started to open, and fades first when it closes */
+  .n-detail {
+    opacity: 0;
+    translate: 0 -6px;
+    transition:
+      opacity 0.3s ease,
+      translate 0.3s ease;
+  }
+  .node.open .n-detail {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity 0.7s ease 0.25s,
+      translate 0.7s ease 0.25s;
+  }
+  .n-more > div {
+    overflow: hidden;
+  }
+  .node.open {
+    z-index: 3;
+    grid-column: var(--ocol);
+    border-color: transparent;
+    animation: breathe 3.2s ease-in-out infinite;
+  }
+  /* the open step's border flows like the line into it: a dashed ring drifting slowly round the box */
+  .n-ring {
+    position: absolute;
+    inset: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .n-ring rect {
+    x: 0.75px;
+    y: 0.75px;
+    width: calc(100% - 1.5px);
+    height: calc(100% - 1.5px);
+    rx: 12px;
+    fill: none;
+    stroke: var(--tint);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 5;
+  }
+  .node.open .n-ring {
+    opacity: 1;
+  }
+  .node.open .n-ring rect {
+    animation: flow 1.6s linear infinite;
+  }
+  @keyframes breathe {
+    0%,
+    100% {
+      box-shadow:
+        0 0 10px color-mix(in srgb, var(--tint) 14%, transparent),
+        0 12px 30px rgb(0 0 0 / 0.45);
+    }
+    50% {
+      box-shadow:
+        0 0 22px color-mix(in srgb, var(--tint) 30%, transparent),
+        0 12px 30px rgb(0 0 0 / 0.45);
+    }
+  }
+  .node.open .n-more {
+    grid-template-rows: 1fr;
+  }
+  /* readable descriptions: near-white text on a darker inset, a coloured lead line, generous size and spacing */
+  .n-detail {
+    margin: 0 0.4rem 0.4rem;
+    padding: 0.7rem 0.8rem 0.8rem;
+    border-radius: 8px;
+    background: rgb(5 7 12 / 0.55);
+    color: color-mix(in srgb, var(--fg) 90%, var(--muted));
+    font-size: 0.92rem;
+    line-height: 1.6;
+    text-align: left;
+    text-wrap: pretty;
+  }
+  .n-detail p {
+    margin: 0;
+  }
+  .n-detail .n-tools {
+    margin-top: 0.5rem;
+    font-size: 0.86rem;
+    color: var(--muted);
+  }
+  .n-tools a {
+    color: var(--tint);
+    text-decoration-color: color-mix(in srgb, var(--tint) 45%, transparent);
+  }
+  .n-tools a:hover {
+    text-decoration-color: var(--tint);
+  }
+  /* pros in green, cons in red, after the short description */
+  .n-pc {
+    list-style: none;
+    display: grid;
+    gap: 0.3rem;
+    margin: 0.6rem 0 0;
+    padding: 0.55rem 0 0;
+    border-top: 1px solid rgb(255 255 255 / 0.07);
+    font-size: 0.86rem;
+    line-height: 1.4;
+  }
+  .n-pc li {
+    display: grid;
+    grid-template-columns: 1.1rem 1fr;
+    gap: 0.4rem;
+    align-items: baseline;
+  }
+  .n-pc span {
+    display: grid;
+    place-items: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 4px;
+    font: 700 0.85rem/1 var(--mono);
+    translate: 0 0.12rem;
+  }
+  .n-pc .pro span {
+    color: #4ade80;
+    background: rgb(74 222 128 / 0.14);
+  }
+  .n-pc .con span {
+    color: #ff6b6b;
+    background: rgb(255 107 107 / 0.14);
+  }
+  .n-detail :global(.n-lead) {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--tint);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .routes-fig[data-path="all"] .node.shared .n-detail :global(.n-lead) {
+    color: var(--fg);
+  }
+  /* boxes shared by several routes take the colour of the route being walked */
+  .routes-fig[data-path="emu"] .node.shared {
+    --tint: var(--emu);
+  }
+  .routes-fig[data-path="recomp"] .node.shared {
+    --tint: var(--recomp);
+  }
+  .routes-fig[data-path="port"] .node.shared {
+    --tint: var(--port);
+  }
+
+  /* the active step's icon: four-frame loops */
+  .node.open .n-ico {
+    display: inline-block;
+    animation: 1.6s steps(4) infinite;
+  }
+  .node.open.a-spin .n-ico {
+    animation-name: a-spin;
+    animation-duration: 2s;
+  }
+  .node.open.a-gear .n-ico {
+    animation-name: a-gear;
+  }
+  .node.open.a-bob .n-ico {
+    animation-name: a-bob;
+  }
+  .node.open.a-scan .n-ico {
+    animation-name: a-scan;
+    animation-duration: 2s;
+  }
+  .node.open.a-talk .n-ico {
+    animation-name: a-talk;
+  }
+  .node.open.a-flicker .n-ico {
+    animation-name: a-flicker;
+  }
+  .node.open.a-wiggle .n-ico {
+    animation-name: a-wiggle;
+  }
+  @keyframes a-spin {
+    to {
+      rotate: 360deg;
+    }
+  }
+  @keyframes a-gear {
+    to {
+      rotate: 45deg;
+    }
+  }
+  @keyframes a-bob {
+    0% {
+      translate: 0 0;
+    }
+    25% {
+      translate: 0 -3px;
+    }
+    50% {
+      translate: 0 -5px;
+    }
+    75% {
+      translate: 0 -3px;
+    }
+    100% {
+      translate: 0 0;
+    }
+  }
+  @keyframes a-scan {
+    0%,
+    100% {
+      translate: -4px -3px;
+    }
+    25% {
+      translate: 4px -3px;
+    }
+    50% {
+      translate: 4px 3px;
+    }
+    75% {
+      translate: -4px 3px;
+    }
+  }
+  @keyframes a-talk {
+    0%,
+    100% {
+      scale: 1;
+    }
+    25% {
+      scale: 1.08;
+    }
+    50% {
+      scale: 1.15;
+    }
+    75% {
+      scale: 1.08;
+    }
+  }
+  @keyframes a-flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 0.8;
+    }
+  }
+  @keyframes a-wiggle {
+    0%,
+    100% {
+      rotate: 0deg;
+    }
+    25% {
+      rotate: -8deg;
+    }
+    50% {
+      rotate: 0deg;
+    }
+    75% {
+      rotate: 8deg;
+    }
+  }
+  /* the game file's formats light up one after another */
+  .node.open .n-chips span {
+    animation: chip-glow calc(var(--n) * 1.2s) ease-in-out infinite;
+    animation-delay: calc(var(--i) * 1.2s);
+  }
+  @keyframes chip-glow {
+    0%,
+    16%,
+    100% {
+      color: var(--fg);
+      text-shadow: none;
+    }
+    5%,
+    11% {
+      color: var(--tint);
+      text-shadow:
+        0 0 6px var(--tint),
+        0 0 14px color-mix(in srgb, var(--tint) 60%, transparent);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .node.open .n-ico,
+    .node.open .n-chips span {
+      animation: none;
+    }
+  }
+  .node.emu {
+    --tint: var(--emu);
+  }
+  .node.recomp {
+    --tint: var(--recomp);
+  }
+  .node.port {
+    --tint: var(--port);
+  }
+  .node.shared {
+    --tint: var(--fg);
+  }
+  .node:hover {
+    border-color: var(--tint);
+  }
+  .n-ico {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .n-title {
+    color: var(--fg);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .node:not(.shared) .n-title {
+    color: var(--tint);
+  }
+  .n-sub {
+    font-size: 0.72rem;
+  }
+  .n-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.2rem;
+    margin-top: 0.3rem;
+  }
+  .n-chips span {
+    padding: 0 0.3rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font: 0.66rem/1.5 var(--mono);
+    color: var(--fg);
+  }
+
+  /* a chosen route: everything else fades, its edges flow */
+  /* faded boxes keep their opaque background so faded edges don't show through them */
+  .routes-fig:not([data-path="all"]) .edge {
+    opacity: 0.07;
+  }
+  /* off the chosen route a whole box fades and loses its colour */
+  .routes-fig:not([data-path="all"]) .node {
+    opacity: 0.22;
+    filter: saturate(0.3);
+  }
+  .routes-fig[data-path="emu"] .edge[data-paths~="emu"],
+  .routes-fig[data-path="recomp"] .edge[data-paths~="recomp"],
+  .routes-fig[data-path="port"] .edge[data-paths~="port"],
+  .routes-fig[data-path="emu"] .node[data-paths~="emu"],
+  .routes-fig[data-path="recomp"] .node[data-paths~="recomp"],
+  .routes-fig[data-path="port"] .node[data-paths~="port"] {
+    opacity: 1;
+    filter: none;
+  }
+  .routes-fig[data-path="emu"] .node[data-paths~="emu"],
+  .routes-fig[data-path="recomp"] .node[data-paths~="recomp"],
+  .routes-fig[data-path="port"] .node[data-paths~="port"] {
+    border-color: color-mix(in srgb, var(--tint) 55%, var(--line));
+  }
+  .routes-fig[data-path="emu"] .edge[data-paths~="emu"] {
+    stroke: var(--emu);
+  }
+  .routes-fig[data-path="recomp"] .edge[data-paths~="recomp"] {
+    stroke: var(--recomp);
+  }
+  .routes-fig[data-path="port"] .edge[data-paths~="port"] {
+    stroke: var(--port);
+  }
+  /* on a route the lines are solid; only the one into the open step flows */
+  .routes-fig .routes .edge.live {
+    stroke-dasharray: 6 5;
+    stroke-width: 3;
+    opacity: 1;
+    animation: flow 0.9s linear infinite;
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -11;
+    }
+  }
+  /* source port, before a way in is picked: the other way fades */
+  .routes-fig[data-path="port"][data-pick="a"] .node[data-branch="b"],
+  .routes-fig[data-path="port"][data-pick="b"] .node[data-branch="a"] {
+    opacity: 0.22;
+    filter: saturate(0.3);
+  }
+  .routes-fig[data-path="port"][data-pick="a"] .edge[data-branch="b"],
+  .routes-fig[data-path="port"][data-pick="b"] .edge[data-branch="a"] {
+    opacity: 0.07;
+  }
+  .routes-fig[data-path="port"][data-pick="a"]:not(:has(.node.open)) .node[data-node="game"],
+  .routes-fig[data-path="port"][data-pick="b"]:not(:has(.node.open)) .node[data-node="source"] {
+    border-color: var(--port);
+    box-shadow: 0 0 14px rgb(255 179 92 / 0.3);
+  }
+  /* a route lights up from the top down: each box and line waits by its distance from the start (--d) */
+  .routes-fig .edge {
+    transition: opacity 0.4s ease var(--d, 0ms);
+  }
+  .routes-fig .node {
+    transition:
+      opacity 0.4s ease var(--d, 0ms),
+      filter 0.4s ease var(--d, 0ms),
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  /* all routes: a slow drift down every line so the map never sits still */
+  .routes-fig[data-path="all"] .edge {
+    stroke-dasharray: 6 5;
+    animation: flow 2.6s linear infinite;
+  }
+  /* a box hops when the walk reaches it */
+  .node.land {
+    animation: land 0.4s steps(4);
+  }
+  @keyframes land {
+    0%,
+    100% {
+      scale: 1;
+    }
+    25% {
+      scale: 1.05;
+    }
+    50% {
+      scale: 0.98;
+    }
+    75% {
+      scale: 1.02;
+    }
+  }
+  .n-ico {
+    transition: translate 0.15s steps(2);
+  }
+  .n-head:hover .n-ico {
+    translate: 0 -3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .node.land,
+    .node.open,
+    .node.open .n-ring rect,
+    .routes-fig[data-path="all"] .edge {
+      animation: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .routes-fig .edge {
+      animation: none !important;
+    }
+  }
+
+  .route-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.6rem;
+    align-items: baseline;
+    min-height: 3.6rem;
+    margin-top: 0.8rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--lane);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .route-info b {
+    color: var(--fg);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 900px) {
+    .routes {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      column-gap: 0.5rem;
+    }
+    .node {
+      grid-column: var(--mcol);
+      margin-bottom: 2.6rem;
+    }
+    /* narrow boxes can't hold a paragraph: the open one drops under its row, full width */
+    .node.open {
+      grid-row: var(--drow);
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 560px) {
+    .routes-fig {
+      padding: 0.7rem;
+    }
+    .n-head {
+      padding: 0.4rem 0.2rem;
+    }
+    .n-ico {
+      font-size: 1.25rem;
+    }
+    .n-title {
+      font-size: 0.74rem;
+    }
+    .n-sub {
+      font-size: 0.64rem;
+    }
+  }
+</style>

@@ -1,0 +1,102 @@
+/* The /explained/ page: emulation (periwinkle), static recompilation (phosphor green), source port (amber); blocks set --tint via .emu/.recomp/.port, the page default is green. */
+.ex {
+  --emu: #9aa6ff;
+  --tint: var(--recomp);
+}
+.ex .emu {
+  --tint: var(--emu);
+}
+.ex .recomp {
+  --tint: var(--recomp);
+}
+.ex .port {
+  --tint: var(--port);
+}
+.ex .eyebrow a {
+  color: inherit;
+}
+.ex h1 {
+  margin: 0.2rem 0 0.4rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+.ex h1 em {
+  font-style: normal;
+  color: var(--tint);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--tint) 45%, transparent);
+}
+.ex .lede {
+  font-size: 1.15rem;
+}
+.ex h2 {
+  margin: 2.6rem 0 0.3rem;
+  font-size: 1.35rem;
+}
+.ex .lede + .routes-fig {
+  margin-top: 1.4rem;
+}
+
+/* small fact cards */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.6rem;
+}
+.fact {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.fact b {
+  display: block;
+  color: var(--fg);
+  margin-bottom: 0.2rem;
+}
+.fact .ico {
+  font-size: 1.4rem;
+  margin-right: 0.3rem;
+}
+
+/* further reading */
+.more {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.more a {
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  text-decoration: none;
+}
+.more a:hover {
+  border-color: color-mix(in srgb, var(--tint) 50%, var(--line));
+}
+.more .kind {
+  flex: 0 0 4.2rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tint);
+}
+.more .src {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.next {
+  margin-top: 2.5rem;
+  color: var(--muted);
+}
