@@ -220,6 +220,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
           data-branch={BRANCH[n.id]}
           style={`--row:${n.at[0] * 2 - 1};--drow:${n.at[0] * 2};--col:${n.at[1]} / span ${n.at[2]};--mcol:${n.mat[1]} / span ${n.mat[2]}`}
         >
+          <svg class="n-ring" aria-hidden="true"><rect /></svg>
           <button type="button" class="n-head" aria-expanded="false" aria-controls={`rd-${n.id}`}>
             <span class="n-ico" aria-hidden="true">{n.ico}</span>
             <span class="n-title">{n.title}</span>
@@ -296,7 +297,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     // boxes open, close and move rows: redraw on every size change, and through the opening transition
     new ResizeObserver(draw).observe(map);
     let drawing = 0;
-    const follow = (ms = 450) => {
+    const follow = (ms = 900) => {
       const until = performance.now() + ms;
       cancelAnimationFrame(drawing);
       const tick = () => {
@@ -322,7 +323,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       picking = window.setInterval(() => (fig.dataset.pick = fig.dataset.pick === "a" ? "b" : "a"), 1600);
     };
 
-    /** Open one step (or none). The line it was reached by flows; the boxes it leads to glow to be clicked next. */
+    /** Open one step (or none). The line it was reached by flows, and so does the open box's border. */
     const open = (id: string | null, from: string | null = null) => {
       active = id;
       const branch = id ? nodes.get(id)!.dataset.branch : undefined;
@@ -330,16 +331,24 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       // a way into the port has been picked: keep the other way faded
       if (branch && route() === "port") {
         fig.dataset.pick = branch;
-        text.textContent = `${routes.port!.text} Click the glowing box to take the next step.`;
+        text.textContent = `${routes.port!.text} Click the next box to take the next step.`;
       }
       for (const [nid, n] of nodes) {
         const on = nid === id;
         n.classList.toggle("open", on);
         n.querySelector(".n-head")!.setAttribute("aria-expanded", String(on));
-        n.classList.toggle("next", !!id && route() !== "all" && edges.some((e) => e.from === id && e.to === nid && onRoute(e.paths)));
       }
       for (const l of lines) l.classList.toggle("live", !!id && l.dataset.from === from && l.dataset.to === id);
       follow();
+    };
+
+    /** Scroll so the clicked step, at its opened size, sits in the middle of the screen (or its top, if it's taller). */
+    const centre = (n: HTMLElement) => {
+      const inner = n.querySelector<HTMLElement>(".n-more > div")!;
+      const full = n.querySelector<HTMLElement>(".n-head")!.offsetHeight + (n.classList.contains("open") ? inner.scrollHeight : 0) + 2;
+      const top = n.getBoundingClientRect().top + scrollY;
+      const y = full < innerHeight - 40 ? top + full / 2 - innerHeight / 2 : top - 20;
+      scrollTo({ top: Math.max(0, y), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     };
 
     /** Light a route up from the top down: each box and line waits by its distance from the start. */
@@ -364,7 +373,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       fig.dataset.path = key;
       for (const t of tabs) t.setAttribute("aria-pressed", String(t.dataset.route === key));
       title.textContent = routes[key]!.label;
-      text.textContent = routes[key]!.text + (key === "all" ? "" : " Click the glowing box to take the next step.");
+      text.textContent = routes[key]!.text + (key === "all" ? "" : " Click the next box to take the next step.");
     };
     const show = (key: string) => {
       stopPick();
@@ -390,6 +399,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
         }
         const from = active && edges.some((e) => e.from === active && e.to === id) ? active : null;
         open(id, from);
+        centre(n);
         if (from) {
           n.classList.remove("land");
           void n.offsetWidth;
@@ -519,17 +529,71 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   .n-more {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 0.35s ease;
+    transition: grid-template-rows 0.75s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+  /* the description fades and settles in after the box has started to open, and fades first when it closes */
+  .n-detail {
+    opacity: 0;
+    translate: 0 -6px;
+    transition:
+      opacity 0.3s ease,
+      translate 0.3s ease;
+  }
+  .node.open .n-detail {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity 0.7s ease 0.25s,
+      translate 0.7s ease 0.25s;
   }
   .n-more > div {
     overflow: hidden;
   }
   .node.open {
     z-index: 3;
-    border-color: var(--tint);
-    box-shadow:
-      0 0 0 3px color-mix(in srgb, var(--tint) 18%, transparent),
-      0 12px 30px rgb(0 0 0 / 0.5);
+    border-color: transparent;
+    animation: breathe 3.2s ease-in-out infinite;
+  }
+  /* the open step's border flows like the line into it: a dashed ring drifting slowly round the box */
+  .n-ring {
+    position: absolute;
+    inset: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .n-ring rect {
+    x: 0.75px;
+    y: 0.75px;
+    width: calc(100% - 1.5px);
+    height: calc(100% - 1.5px);
+    rx: 12px;
+    fill: none;
+    stroke: var(--tint);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 5;
+  }
+  .node.open .n-ring {
+    opacity: 1;
+  }
+  .node.open .n-ring rect {
+    animation: flow 1.6s linear infinite;
+  }
+  @keyframes breathe {
+    0%,
+    100% {
+      box-shadow:
+        0 0 10px color-mix(in srgb, var(--tint) 14%, transparent),
+        0 12px 30px rgb(0 0 0 / 0.45);
+    }
+    50% {
+      box-shadow:
+        0 0 22px color-mix(in srgb, var(--tint) 30%, transparent),
+        0 12px 30px rgb(0 0 0 / 0.45);
+    }
   }
   .node.open .n-more {
     grid-template-rows: 1fr;
@@ -812,21 +876,6 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     stroke-dasharray: 6 5;
     animation: flow 2.6s linear infinite;
   }
-  /* the boxes this step leads to ask to be clicked */
-  .node.next {
-    animation: nudge 1.8s steps(4) infinite;
-  }
-  @keyframes nudge {
-    0%,
-    100% {
-      border-color: color-mix(in srgb, var(--tint) 40%, var(--line));
-      box-shadow: 0 0 0 0 transparent;
-    }
-    50% {
-      border-color: var(--tint);
-      box-shadow: 0 0 14px color-mix(in srgb, var(--tint) 30%, transparent);
-    }
-  }
   /* a box hops when the walk reaches it */
   .node.land {
     animation: land 0.4s steps(4);
@@ -854,7 +903,8 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   }
   @media (prefers-reduced-motion: reduce) {
     .node.land,
-    .node.next,
+    .node.open,
+    .node.open .n-ring rect,
     .routes-fig[data-path="all"] .edge {
       animation: none;
     }
