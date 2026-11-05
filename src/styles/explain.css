@@ -1,0 +1,297 @@
+/* The /explained/ page: emulation (periwinkle), static recompilation (phosphor green), source port (amber); blocks set --tint via .emu/.recomp/.port. */
+.ex {
+  --emu: #9aa6ff;
+}
+.ex .emu {
+  --tint: var(--emu);
+}
+.ex .recomp {
+  --tint: var(--recomp);
+}
+.ex .port {
+  --tint: var(--port);
+}
+.ex .eyebrow a {
+  color: inherit;
+}
+.ex h1 {
+  margin: 0.2rem 0 0.4rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+.ex h1 em {
+  font-style: normal;
+  color: var(--tint);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--tint) 45%, transparent);
+}
+.ex .lede {
+  font-size: 1.15rem;
+}
+.ex h2 {
+  margin: 2.6rem 0 0.3rem;
+  font-size: 1.35rem;
+}
+.ex .sub {
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+.ex .tint {
+  color: var(--tint);
+}
+
+/* analogy: two lanes of emoji tiles joined by arrows */
+.lanes {
+  display: grid;
+  gap: 0.8rem;
+}
+.lane {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) 13rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+}
+@media (max-width: 760px) {
+  .lane {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 0.3rem;
+    padding: 0.8rem 0.6rem;
+  }
+  .lane .verdict {
+    grid-column: 1 / -1;
+    max-width: none;
+    margin: 0.3rem 0.3rem 0;
+  }
+  .tile {
+    min-width: 0;
+    padding: 0.3rem 0.1rem;
+    font-size: 0.75rem;
+  }
+  .tile .ico {
+    font-size: 1.6rem;
+  }
+  .arrow {
+    font-size: 1rem;
+  }
+}
+.lane.good {
+  border-color: color-mix(in srgb, var(--tint) 45%, var(--line));
+  background: radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--tint) 9%, transparent), transparent 60%), var(--surface);
+}
+.lane-label {
+  grid-column: 1 / -1;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.lane.good .lane-label {
+  color: var(--tint);
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.5rem 0.6rem;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  color: var(--muted);
+}
+.tile .ico {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+.tile b {
+  color: var(--fg);
+  font-weight: 600;
+}
+.arrow {
+  color: var(--faint);
+  font-size: 1.3rem;
+}
+.lane .verdict {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.lane.good .verdict {
+  color: var(--tint);
+}
+
+/* pipeline: numbered steps */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.6rem;
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 0.9rem 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0.7rem;
+  right: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--faint);
+}
+.steps li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -0.55rem;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 1;
+  color: var(--tint);
+  font-size: 0.9rem;
+}
+.steps .ico {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.2rem;
+}
+.steps b {
+  display: block;
+  color: var(--fg);
+  margin-bottom: 0.2rem;
+}
+.steps li.hi {
+  border-color: color-mix(in srgb, var(--tint) 55%, var(--line));
+  background: radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--tint) 10%, transparent), transparent 70%), var(--surface);
+}
+.steps li.hi b {
+  color: var(--tint);
+}
+@media (max-width: 560px) {
+  .steps li:not(:last-child)::after {
+    content: "↓";
+    right: 50%;
+    top: auto;
+    bottom: -0.85rem;
+    translate: 50% 0;
+  }
+}
+
+/* compare table */
+.vs {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.vs th,
+.vs td {
+  padding: 0.6rem 0.7rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.vs thead th {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 500;
+}
+.vs tbody th {
+  color: var(--muted);
+  font-weight: 500;
+  width: 28%;
+}
+.vs .us {
+  color: var(--fg);
+}
+.vs thead .us {
+  color: var(--tint);
+}
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+/* small fact cards */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.6rem;
+}
+.fact {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.fact b {
+  display: block;
+  color: var(--fg);
+  margin-bottom: 0.2rem;
+}
+.fact .ico {
+  font-size: 1.4rem;
+  margin-right: 0.3rem;
+}
+
+/* further reading */
+.more {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.more a {
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  text-decoration: none;
+}
+.more a:hover {
+  border-color: color-mix(in srgb, var(--tint) 50%, var(--line));
+}
+.more .kind {
+  flex: 0 0 4.2rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tint);
+}
+.more .src {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.next {
+  margin-top: 2.5rem;
+  color: var(--muted);
+}

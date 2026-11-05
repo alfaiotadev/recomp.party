@@ -1,0 +1,433 @@
+---
+import Base from "../layouts/Base.astro";
+import "../styles/explain.css";
+
+/** ✓ yes, ~ partly / it depends, ✗ no; every row is phrased so that ✓ is the good answer. Each cell also carries a short note. */
+type Mark = "yes" | "some" | "no";
+type Row = { feature: string; emu: [Mark, string]; recomp: [Mark, string]; port: [Mark, string] };
+const ROWS: Row[] = [
+  {
+    feature: "Plays with your own copy of the game",
+    emu: ["yes", "the game file itself"],
+    recomp: ["yes", "the game file supplies art, sound and code"],
+    port: ["yes", "usually the art and sound come from it"],
+  },
+  {
+    feature: "Works for any game on day one",
+    emu: ["yes", "one emulator runs the whole library"],
+    recomp: ["some", "the tool is shared, but each game needs setup and fixes"],
+    port: ["no", "only games whose source exists or was rebuilt"],
+  },
+  {
+    feature: "No translating while you play",
+    emu: ["no", "every instruction, all the time"],
+    recomp: ["yes", "done once, before you ever press start"],
+    port: ["yes", "nothing to translate, it's compiled for your machine"],
+  },
+  {
+    feature: "Runs light on weak hardware",
+    emu: ["some", "newer consoles need a strong PC"],
+    recomp: ["yes", "native speed"],
+    port: ["yes", "native speed"],
+  },
+  {
+    feature: "High frame rates and widescreen",
+    emu: ["some", "possible with hacks and patches"],
+    recomp: ["yes", "a common headline feature"],
+    port: ["yes", "built in, often with extra options"],
+  },
+  {
+    feature: "Mods and new features",
+    emu: ["some", "texture packs and patches"],
+    recomp: ["some", "mod hooks into the generated code"],
+    port: ["yes", "edit the game itself like any program"],
+  },
+  {
+    feature: "Code a human can read",
+    emu: ["no", "the original machine code"],
+    recomp: ["no", "C written by a machine, not meant for reading"],
+    port: ["yes", "named, commented source"],
+  },
+  {
+    feature: "Little work per game",
+    emu: ["yes", "none, once the emulator exists"],
+    recomp: ["some", "weeks to months"],
+    port: ["no", "often years of decompilation first"],
+  },
+];
+const COLS = [
+  { key: "emu", id: "emulation", name: "Emulation", ico: "🗣️" },
+  { key: "recomp", id: "static-recompilation", name: "Static recompilation", ico: "🤖" },
+  { key: "port", id: "source-port", name: "Source port", ico: "✍️" },
+] as const;
+const SYMBOL: Record<Mark, string> = { yes: "✓", some: "~", no: "✗" };
+---
+
+<Base
+  title="Emulation vs static recompilation vs source ports, explained"
+  description="Three ways to play a classic console game on a modern machine, explained with a book analogy and a side-by-side comparison table."
+>
+  <article class="ex">
+    <p class="eyebrow">Explained</p>
+    <h1>Three ways to play an old game on a <em>new machine</em>.</h1>
+    <p class="lede">
+      A console game is a book written in a language your computer doesn't speak. There are three ways to get it read.
+    </p>
+
+    <h2>The book analogy</h2>
+    <div class="lanes">
+      <div class="lane emu">
+        <span class="lane-label"><a href="#emulation">Emulation</a></span>
+        <div class="tile"><span class="ico">📕</span><b>The book</b>in console language</div>
+        <span class="arrow">→</span>
+        <div class="tile"><span class="ico">🗣️</span><b>An interpreter</b>translates aloud, line by line, every time you read</div>
+        <span class="arrow">→</span>
+        <div class="tile"><span class="ico">👂</span><b>You listen</b></div>
+        <p class="verdict">Works with any book, but the interpreter has to keep up forever.</p>
+      </div>
+      <div class="lane recomp good">
+        <span class="lane-label"><a href="#static-recompilation">Static recompilation</a></span>
+        <div class="tile"><span class="ico">📕</span><b>The book</b>in console language</div>
+        <span class="arrow">→</span>
+        <div class="tile"><span class="ico">🤖</span><b>A translating machine</b>converts the whole book once</div>
+        <span class="arrow">→</span>
+        <div class="tile"><span class="ico">📗</span><b>Your own copy</b>in your language</div>
+        <p class="verdict">Fast to read. The wording is stiff and a few pages need fixing by hand.</p>
+      </div>
+      <div class="lane port good">
+        <span class="lane-label"><a href="#source-port">Source port</a></span>
+        <div class="tile"><span class="ico">📜</span><b>The manuscript</b>released by the author, or rewritten by fans</div>
+        <span class="arrow">→</span>
+        <div class="tile"><span class="ico">✍️</span><b>An editor</b>adapts it for a new publisher</div>
+        <span class="arrow">→</span>
+        <div class="tile"><span class="ico">📘</span><b>A new edition</b>free to add chapters</div>
+        <p class="verdict">The most flexible, but you need the manuscript first.</p>
+      </div>
+    </div>
+
+    <h2>Side by side</h2>
+    <p class="sub">✓ yes &nbsp; ~ partly &nbsp; ✗ no</p>
+    <div class="table-wrap">
+      <table class="vs">
+        <thead>
+          <tr>
+            <th scope="col"><span class="visually-hidden">Feature</span></th>
+            {
+              COLS.map((c) => (
+                <th scope="col" class={c.key}>
+                  <a href={`#${c.id}`}>
+                    <span class="col-ico" aria-hidden="true">{c.ico}</span>
+                    {c.name}
+                  </a>
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          {
+            ROWS.map((r) => (
+              <tr>
+                <th scope="row">{r.feature}</th>
+                {COLS.map((c) => {
+                  const [mark, note] = r[c.key];
+                  return (
+                    <td class={`${c.key} m-${mark}`}>
+                      <span class="mark" aria-label={mark === "some" ? "partly" : mark}>{SYMBOL[mark]}</span>
+                      <span class="note">{note}</span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <section id="emulation" class="emu">
+      <h2><span class="tint">Emulation</span>: pretend to be the console</h2>
+      <p class="sub">The original game runs unchanged. A program imitates the console's chips well enough to fool it.</p>
+      <ol class="steps">
+        <li><span class="ico">💾</span><b>The game file</b>Machine code for the console's processor.</li>
+        <li class="hi"><span class="ico">🔁</span><b>The emulator</b>Reads each instruction while you play and does what the console would have done.</li>
+        <li><span class="ico">🖥️</span><b>Your screen</b>The game, as long as the emulator keeps up.</li>
+      </ol>
+    </section>
+
+    <section id="static-recompilation" class="recomp">
+      <h2><span class="tint">Static recompilation</span>: translate it once</h2>
+      <p class="sub">
+        A tool translates the game's machine code into C ahead of time, and a normal compiler turns that into a program for
+        your computer.
+      </p>
+      <ol class="steps">
+        <li><span class="ico">💾</span><b>The game file</b>Machine code for the console (MIPS on N64, PowerPC on Xbox 360…).</li>
+        <li class="hi"><span class="ico">🤖</span><b>The recompiler</b>Turns every function into equivalent C code, automatically.</li>
+        <li><span class="ico">⚙️</span><b>A PC compiler</b>Builds that C for x86 or ARM, like any other program.</li>
+        <li class="hi"><span class="ico">🧩</span><b>The runtime</b>Stands in for the console's graphics, sound, controller and saves.</li>
+        <li><span class="ico">🎮</span><b>A native game</b>A real app. Your copy of the game supplies the rest.</li>
+      </ol>
+      <div class="xlate" aria-label="One function, before and after recompilation">
+        <div class="code">
+          <span class="code-head">console machine code (MIPS)</span>
+          <pre><code><span>addiu $sp, $sp, -0x18</span><span>sw    $ra, 0x14($sp)</span><span>lw    $t6, 0x0($a0)</span><span>jal   func_80012345</span></code></pre>
+        </div>
+        <span class="arrow">→</span>
+        <div class="code">
+          <span class="code-head">generated C</span>
+          <pre><code><span>ctx-&gt;r29 = ctx-&gt;r29 + -0x18;</span><span>MEM_W(0x14, ctx-&gt;r29) = ctx-&gt;r31;</span><span>ctx-&gt;r14 = MEM_W(0x0, ctx-&gt;r4);</span><span>func_80012345(rdram, ctx);</span></code></pre>
+        </div>
+      </div>
+      <p class="sub">
+        Faithful, line for line, and not meant for people to read. Tools: N64: Recompiled, XenonRecomp, ReXGlue and{" "}
+        <a href="/tools/">more</a>.
+      </p>
+    </section>
+
+    <section id="source-port" class="port">
+      <h2><span class="tint">Source port</span>: rebuild it from the source</h2>
+      <p class="sub">
+        Start from the game's source code, keep the game itself, and swap out the parts that only made sense on the
+        console.
+      </p>
+      <ol class="steps">
+        <li><span class="ico">📜</span><b>Source code</b>Released by the developer (Doom, Quake) or rebuilt by fans in a decompilation.</li>
+        <li class="hi"><span class="ico">🔧</span><b>Swap the console parts</b>Graphics, sound, controls and files move to PC equivalents.</li>
+        <li><span class="ico">⚙️</span><b>A PC compiler</b>Builds it for Windows, Mac, Linux, phones…</li>
+        <li><span class="ico">🎮</span><b>A native game</b>With room for new options, fixes and mods.</li>
+      </ol>
+      <div class="layers" aria-label="What a port keeps and what it replaces">
+        <div class="stack">
+          <span class="code-head">on the console</span>
+          <div class="layer keep">game logic, levels, physics</div>
+          <div class="layer">console graphics chip</div>
+          <div class="layer">console sound chip</div>
+          <div class="layer">controller, memory card</div>
+        </div>
+        <span class="arrow">→</span>
+        <div class="stack">
+          <span class="code-head">in the port</span>
+          <div class="layer keep">game logic, levels, physics <small>kept</small></div>
+          <div class="layer new">Vulkan · Metal · OpenGL</div>
+          <div class="layer new">your sound card</div>
+          <div class="layer new">any controller, save files</div>
+        </div>
+      </div>
+    </section>
+
+    <h2>What recomp.party lists</h2>
+    <div class="facts">
+      <div class="fact recomp"><b><span class="ico">🤖</span>Static recompilations</b>with a release you can download.</div>
+      <div class="fact port"><b><span class="ico">✍️</span>Source ports</b>with a release you can download.</div>
+      <div class="fact"><b><span class="ico">🚫</span>Not emulators</b>They're great, and well covered elsewhere.</div>
+      <div class="fact"><b><span class="ico">💿</span>No game files</b>Every project needs your own copy of the game.</div>
+    </div>
+
+    <h2>Read and watch more</h2>
+    <ul class="more">
+      <li>
+        <a href="https://www.youtube.com/watch?v=ywWwUuWRgsM"
+          ><span class="kind">video</span>Recompilation: An Incredible New Way to Keep N64 Games Alive<span class="src">YouTube</span></a
+        >
+      </li>
+      <li>
+        <a href="https://github.com/N64Recomp/N64Recomp"
+          ><span class="kind">readme</span>How N64: Recompiled works, from its author<span class="src">GitHub</span></a
+        >
+      </li>
+      <li>
+        <a href="https://www.jamesfmackenzie.com/2026/10/03/disassembly-vs-decomp-vs-recomp-vs-port/"
+          ><span class="kind">article</span>Disassembly vs decomp vs recomp vs port<span class="src">jamesfmackenzie.com</span></a
+        >
+      </li>
+      <li>
+        <a href="https://doomwiki.org/wiki/Source_port"
+          ><span class="kind">wiki</span>Source ports, where the term comes from<span class="src">Doom Wiki</span></a
+        >
+      </li>
+    </ul>
+    <p class="next">Ready to play? <a href="/">Browse the games</a> or see the <a href="/tools/">toolchains</a> behind them.</p>
+  </article>
+</Base>
+
+<style>
+  .ex section {
+    scroll-margin-top: 1rem;
+  }
+  .lane-label a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  /* table */
+  .vs thead th a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    color: var(--tint);
+    text-decoration: none;
+  }
+  .col-ico {
+    font-size: 1.5rem;
+  }
+  .vs td {
+    width: 24%;
+  }
+  .vs td.recomp,
+  .vs thead th.recomp {
+    background: rgb(124 240 197 / 0.04);
+  }
+  .mark {
+    display: block;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .m-yes .mark {
+    color: var(--tint);
+  }
+  .m-some .mark {
+    color: var(--muted);
+  }
+  .m-no .mark {
+    color: var(--faint);
+  }
+  .note {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: var(--muted);
+  }
+  .vs tbody tr:hover {
+    background: var(--hover);
+  }
+  @media (max-width: 640px) {
+    .vs {
+      table-layout: fixed;
+      font-size: 0.85rem;
+    }
+    .vs thead th:first-child {
+      width: 34%;
+    }
+    .vs th,
+    .vs td {
+      padding: 0.5rem 0.45rem;
+    }
+    .note {
+      display: none;
+    }
+    .vs td {
+      text-align: center;
+    }
+    .vs thead th a {
+      align-items: center;
+      text-align: center;
+      font-size: 0.68rem;
+    }
+  }
+  /* recomp: before/after code */
+  .xlate,
+  .layers {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1rem 0 0.6rem;
+  }
+  .xlate .arrow,
+  .layers .arrow {
+    color: var(--tint);
+  }
+  .code,
+  .stack {
+    flex: 1 1 18rem;
+    min-width: 0;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--lane);
+  }
+  .code-head {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+  }
+  .code pre {
+    margin: 0;
+    overflow-x: auto;
+    font: 0.8rem/1.7 var(--mono);
+  }
+  /* the matching lines light up together, one pair at a time */
+  .code pre span {
+    display: block;
+    padding: 0 0.3rem;
+    border-radius: 4px;
+    animation: line-hi 6s infinite;
+  }
+  .code pre span:nth-child(2) {
+    animation-delay: 1.5s;
+  }
+  .code pre span:nth-child(3) {
+    animation-delay: 3s;
+  }
+  .code pre span:nth-child(4) {
+    animation-delay: 4.5s;
+  }
+  @keyframes line-hi {
+    0%,
+    24% {
+      background: rgb(124 240 197 / 0.14);
+      color: var(--fg);
+    }
+    25%,
+    100% {
+      background: transparent;
+      color: var(--muted);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .code pre span {
+      animation: none;
+      color: var(--fg);
+    }
+  }
+  /* port: layer stacks */
+  .stack {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .layer {
+    padding: 0.45rem 0.7rem;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .layer.keep {
+    border-style: solid;
+    color: var(--fg);
+    background: var(--surface-2);
+  }
+  .layer.keep small {
+    float: right;
+    font-family: var(--mono);
+    color: var(--faint);
+  }
+  .layer.new {
+    border-style: solid;
+    border-color: rgb(255 179 92 / 0.45);
+    color: var(--port);
+    background: rgb(255 179 92 / 0.06);
+  }
+</style>
