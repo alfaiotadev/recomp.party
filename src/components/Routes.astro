@@ -2,8 +2,9 @@
 /**
  * One interactive map of the three routes from a console game to playing it on a PC: emulation, static
  * recompilation and source ports (via decompilation or released source). Shared boxes belong to several routes.
- * Nodes are HTML placed by percentage (wide screens --x/--y, phones --mx/--my); the lines are drawn by the script
- * from where the boxes actually are, so an opening box can push the ones below it down and the lines follow.
+ * The boxes sit in an ordinary grid, so an open box simply makes its row taller and everything below moves down
+ * (on phones the open box drops to a full-width row of its own under its neighbours). The lines are drawn by the
+ * script from where the boxes actually are, and redrawn whenever the map changes size.
  */
 type Path = "emu" | "recomp" | "port";
 type Node = {
@@ -13,18 +14,16 @@ type Node = {
   sub: string;
   detail: string;
   paths: Path[];
-  d: [number, number, number]; // wide screens x%, y%, width%
-  m: [number, number, number]; // phone x%, y%, width%
+  /** row, first column, columns spanned: wide screens on a 20-column grid, phones (mat) on 6 */
+  at: [number, number, number];
+  mat: [number, number, number];
   chips?: string[];
-  /** what travels down this box's outgoing lines (the step's product) */
-  out: string;
   /** the icon's four-frame loop while the box is the active step */
   anim: "spin" | "bob" | "scan" | "gear" | "talk" | "flicker" | "wiggle";
 };
 const NODES: Node[] = [
   {
     id: "game",
-    out: "💿",
     anim: "spin",
     ico: "💿",
     title: "Your copy of the game",
@@ -33,12 +32,11 @@ const NODES: Node[] = [
     detail:
       "The game as it shipped: a cartridge dump, a disc image or the console's executables. Every route starts from your own copy, even a source port, which reads the art, music and levels from it.",
     paths: ["emu", "recomp", "port"],
-    d: [40, 9, 34],
-    m: [36, 9, 66],
+    at: [1, 6, 7],
+    mat: [1, 1, 4],
   },
   {
     id: "source",
-    out: "📜",
     anim: "bob",
     ico: "📂",
     title: "Released source",
@@ -46,12 +44,11 @@ const NODES: Node[] = [
     detail:
       "Sometimes the developer publishes the code (Doom in 1997, Quake, a few later games). Then nobody has to decompile anything: porting can start right away.",
     paths: ["port"],
-    d: [80, 9, 20],
-    m: [85, 9, 26],
+    at: [1, 15, 4],
+    mat: [1, 5, 2],
   },
   {
     id: "emulator",
-    out: "🎮",
     anim: "talk",
     ico: "🗣️",
     title: "Emulator",
@@ -59,12 +56,11 @@ const NODES: Node[] = [
     detail:
       "Imitates the console's processor and chips, reading the game's instructions one by one as it runs. One emulator plays a whole library, but the translating never stops, so newer consoles need a strong PC.",
     paths: ["emu"],
-    d: [20, 31, 22],
-    m: [17, 30, 30],
+    at: [2, 3, 4],
+    mat: [2, 1, 2],
   },
   {
     id: "recompiler",
-    out: "🧾",
     anim: "bob",
     ico: "🤖",
     title: "Recompiler",
@@ -72,12 +68,11 @@ const NODES: Node[] = [
     detail:
       "Reads every function of the game's machine code once and writes equivalent C. Each game still needs setup and fixes by hand, typically weeks to months. Tools: N64: Recompiled, XenonRecomp, ReXGlue and more.",
     paths: ["recomp"],
-    d: [50, 31, 22],
-    m: [50, 30, 30],
+    at: [2, 9, 4],
+    mat: [2, 3, 2],
   },
   {
     id: "decomp",
-    out: "📜",
     anim: "scan",
     ico: "🔍",
     title: "Decompilation",
@@ -85,12 +80,11 @@ const NODES: Node[] = [
     detail:
       "Fans rewrite the game in C by hand, function by function, until compiling it gives back the identical original (\"matching\"). It often takes years, and is the usual way a console game gets source code at all.",
     paths: ["port"],
-    d: [80, 31, 22],
-    m: [83, 30, 30],
+    at: [2, 15, 4],
+    mat: [2, 5, 2],
   },
   {
     id: "genc",
-    out: "🧾",
     anim: "wiggle",
     ico: "🧾",
     title: "Generated C",
@@ -98,12 +92,11 @@ const NODES: Node[] = [
     detail:
       "Thousands of machine-written functions: faithful to the original, but full of registers and memory addresses instead of names. Modding hooks into it, but nobody edits it like normal code.",
     paths: ["recomp"],
-    d: [50, 51, 22],
-    m: [50, 47, 30],
+    at: [3, 9, 4],
+    mat: [3, 3, 2],
   },
   {
     id: "src",
-    out: "📜",
     anim: "wiggle",
     ico: "📜",
     title: "Readable source",
@@ -111,12 +104,11 @@ const NODES: Node[] = [
     detail:
       "Source code people can read and change: named functions, comments, structure. Big changes like new renderers, mods and features become ordinary programming.",
     paths: ["port"],
-    d: [80, 51, 22],
-    m: [83, 47, 30],
+    at: [3, 15, 4],
+    mat: [3, 5, 2],
   },
   {
     id: "build",
-    out: "🖥️",
     anim: "gear",
     ico: "⚙️",
     title: "Compiler + runtime",
@@ -124,12 +116,11 @@ const NODES: Node[] = [
     detail:
       "A normal compiler builds the C for x86 or ARM. A runtime (for recomps) or platform layer (for ports) stands in for the console's graphics, sound, controller and saves, using things like Vulkan, Metal and SDL.",
     paths: ["recomp", "port"],
-    d: [65, 68, 36],
-    m: [66, 63, 56],
+    at: [4, 10, 7],
+    mat: [4, 3, 4],
   },
   {
     id: "native",
-    out: "🎮",
     anim: "flicker",
     ico: "🖥️",
     title: "Native game",
@@ -137,12 +128,11 @@ const NODES: Node[] = [
     detail:
       "A real Windows, Mac, Linux or phone program. Widescreen, high frame rates and mods are now changes to that program, not hacks on top of an emulator.",
     paths: ["recomp", "port"],
-    d: [65, 81, 36],
-    m: [66, 77, 56],
+    at: [5, 10, 7],
+    mat: [5, 3, 4],
   },
   {
     id: "play",
-    out: "🎮",
     anim: "wiggle",
     ico: "🎮",
     title: "You play",
@@ -150,8 +140,8 @@ const NODES: Node[] = [
     detail:
       "Every route ends here. Emulation gets there first for almost any game; recomps and ports take work per game but run lighter and can go further.",
     paths: ["emu", "recomp", "port"],
-    d: [50, 94, 50],
-    m: [50, 92, 70],
+    at: [6, 6, 10],
+    mat: [6, 2, 4],
   },
 ];
 /** side: route the line round the left or right of the map where a straight curve would run behind another box. */
@@ -195,6 +185,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
 ];
 ---
 
+
 <figure class="routes-fig" data-path="all">
   <div class="route-tabs" role="group" aria-label="Show a route">
     {
@@ -226,9 +217,8 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
           class={`node ${n.paths.length === 1 ? n.paths[0] : "shared"} a-${n.anim}`}
           data-node={n.id}
           data-paths={n.paths.join(" ")}
-          data-out={n.out}
           data-branch={BRANCH[n.id]}
-          style={`--x:${n.d[0]};--y:${n.d[1]};--w:${n.d[2]};--mx:${n.m[0]};--my:${n.m[1]};--mw:${n.m[2]}`}
+          style={`--row:${n.at[0] * 2 - 1};--drow:${n.at[0] * 2};--col:${n.at[1]} / span ${n.at[2]};--mcol:${n.mat[1]} / span ${n.mat[2]}`}
         >
           <button type="button" class="n-head" aria-expanded="false" aria-controls={`rd-${n.id}`}>
             <span class="n-ico" aria-hidden="true">{n.ico}</span>
@@ -245,13 +235,11 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
           <div class="n-more" id={`rd-${n.id}`}>
             <div>
               <p class="n-detail">{n.detail}</p>
-              <div class="n-next" data-next />
             </div>
           </div>
         </div>
       ))
     }
-    <span class="token" aria-hidden="true" hidden></span>
   </div>
   <figcaption class="route-info" aria-live="polite">
     <b data-info-title>All routes</b>
@@ -263,19 +251,65 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
 
 <script>
   type EdgeData = { from: string; to: string; paths: string[] };
-  const still = matchMedia("(prefers-reduced-motion: reduce)");
   for (const fig of document.querySelectorAll<HTMLElement>(".routes-fig")) {
     const routes = JSON.parse(fig.querySelector("[data-routes]")!.textContent!) as Record<string, { label: string; text: string }>;
     const edges = JSON.parse(fig.querySelector("[data-edges]")!.textContent!) as EdgeData[];
     const title = fig.querySelector<HTMLElement>("[data-info-title]")!;
     const text = fig.querySelector<HTMLElement>("[data-info-text]")!;
     const map = fig.querySelector<HTMLElement>(".routes")!;
-    const token = fig.querySelector<HTMLElement>(".token")!;
+    const svg = fig.querySelector<SVGSVGElement>(".edges")!;
+    const lines = [...svg.querySelectorAll<SVGPathElement>("path")];
     const tabs = [...fig.querySelectorAll<HTMLButtonElement>("[data-route]")];
     const nodes = new Map([...fig.querySelectorAll<HTMLElement>("[data-node]")].map((n) => [n.dataset.node!, n]));
-    const label = (id: string) => nodes.get(id)!.querySelector(".n-title")!.textContent!;
     let active: string | null = null;
-    let moving = 0;
+
+    /** Draw every line from where its boxes are right now. */
+    const draw = () => {
+      const m = map.getBoundingClientRect();
+      svg.setAttribute("viewBox", `0 0 ${m.width} ${m.height}`);
+      const box = (id: string) => {
+        const r = nodes.get(id)!.getBoundingClientRect();
+        const x = r.left - m.left;
+        const y = r.top - m.top;
+        return { x, y, w: r.width, cx: x + r.width / 2, cy: y + r.height / 2, b: y + r.height, r: x + r.width };
+      };
+      for (const l of lines) {
+        const f = box(l.dataset.from!);
+        const t = box(l.dataset.to!);
+        let d: string;
+        if (l.dataset.side === "right") {
+          const k = Math.max(16, m.width * 0.03);
+          d = `M ${f.r} ${f.cy} C ${f.r + k * 2} ${f.cy}, ${t.r + k * 2} ${t.cy}, ${t.r} ${t.cy}`;
+        } else if (l.dataset.side === "left") {
+          // stay left of the target even when the source box is a full-width open card (phones)
+          const x1 = Math.min(f.cx, t.x - 12);
+          d = `M ${x1} ${f.b} C ${x1} ${t.cy}, ${x1} ${t.cy}, ${t.x} ${t.cy}`;
+        } else {
+          // fan out from wide boxes: leave from the part of the bottom edge that faces the target
+          const x1 = f.cx + Math.max(-f.w / 3, Math.min(f.w / 3, (t.cx - f.cx) * 0.3));
+          const ym = (f.b + t.y) / 2;
+          d = `M ${x1} ${f.b} C ${x1} ${ym}, ${t.cx} ${ym}, ${t.cx} ${t.y}`;
+        }
+        l.setAttribute("d", d);
+      }
+    };
+    // boxes open, close and move rows: redraw on every size change, and through the opening transition
+    new ResizeObserver(draw).observe(map);
+    let drawing = 0;
+    const follow = (ms = 450) => {
+      const until = performance.now() + ms;
+      cancelAnimationFrame(drawing);
+      const tick = () => {
+        draw();
+        if (performance.now() < until) drawing = requestAnimationFrame(tick);
+      };
+      tick();
+    };
+    draw();
+
+    const route = () => fig.dataset.path!;
+    const onRoute = (paths: string[]) => route() === "all" || paths.includes(route());
+
     let picking = 0;
     const stopPick = () => {
       clearInterval(picking);
@@ -288,154 +322,24 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       picking = window.setInterval(() => (fig.dataset.pick = fig.dataset.pick === "a" ? "b" : "a"), 1600);
     };
 
-    const svg = fig.querySelector<SVGSVGElement>(".edges")!;
-    const lines = [...svg.querySelectorAll<SVGPathElement>("path")];
-    const phone = matchMedia("(max-width: 900px)");
-
-    /** Draw every line from where its boxes are right now. */
-    const draw = () => {
-      const m = map.getBoundingClientRect();
-      svg.setAttribute("viewBox", `0 0 ${m.width} ${m.height}`);
-      const box = (id: string) => {
-        const r = nodes.get(id)!.getBoundingClientRect();
-        const x = r.left - m.left;
-        const y = r.top - m.top;
-        return { x, y, w: r.width, h: r.height, cx: x + r.width / 2, cy: y + r.height / 2, b: y + r.height, r: x + r.width };
-      };
-      for (const l of lines) {
-        const f = box(l.dataset.from!);
-        const t = box(l.dataset.to!);
-        let d: string;
-        if (l.dataset.side === "right") {
-          const k = Math.max(16, m.width * 0.03);
-          d = `M ${f.r} ${f.cy} C ${f.r + k * 2} ${f.cy}, ${t.r + k * 2} ${t.cy}, ${t.r} ${t.cy}`;
-        } else if (l.dataset.side === "left") {
-          // stay left of the target even when the source box has widened across the map (open, on phones)
-          const x1 = Math.min(f.cx, t.x - 12);
-          d = `M ${x1} ${f.b} C ${x1} ${t.cy}, ${x1} ${t.cy}, ${t.x} ${t.cy}`;
-        } else {
-          // fan out from wide boxes: leave from the part of the bottom edge that faces the target
-          const x1 = f.cx + Math.max(-f.w / 3, Math.min(f.w / 3, (t.cx - f.cx) * 0.3));
-          const ym = (f.b + t.y) / 2;
-          d = `M ${x1} ${f.b} C ${x1} ${ym}, ${t.cx} ${ym}, ${t.cx} ${t.y}`;
-        }
-        l.setAttribute("d", d);
-      }
-    };
-    /** Keep redrawing while boxes open, close and slide. */
-    let drawing = 0;
-    const follow = (ms = 500) => {
-      const until = performance.now() + ms;
-      cancelAnimationFrame(drawing);
-      const tick = () => {
-        draw();
-        if (performance.now() < until) drawing = requestAnimationFrame(tick);
-      };
-      tick();
-    };
-
-    /** Boxes grow downwards when they open, so anchor each one by half its closed height. */
-    const measure = () => {
-      for (const n of nodes.values()) if (!n.classList.contains("open")) n.style.setProperty("--half", `${n.offsetHeight / 2}px`);
-    };
-    measure();
-    draw();
-    addEventListener("resize", () => {
-      measure();
-      push();
-      follow(400);
-    });
-
-    /** Push every box below the open one down by however much it grew, and grow the map with it. */
-    const push = () => {
-      const n = active ? nodes.get(active)! : null;
-      const extra = n ? n.querySelector<HTMLElement>(".n-more > div")!.scrollHeight : 0;
-      const yOf = (el: HTMLElement) => parseFloat(el.style.getPropertyValue(phone.matches ? "--my" : "--y"));
-      const y0 = n ? yOf(n) : Infinity;
-      for (const o of nodes.values()) o.style.setProperty("--shift", `${yOf(o) > y0 + 0.5 ? extra : 0}px`);
-      map.style.setProperty("--grow", `${extra}px`);
-    };
-
-    const route = () => fig.dataset.path!;
-    const onRoute = (paths: string[]) => route() === "all" || paths.includes(route());
-
-    const open = (id: string | null) => {
+    /** Open one step (or none). The line it was reached by flows; the boxes it leads to glow to be clicked next. */
+    const open = (id: string | null, from: string | null = null) => {
       active = id;
-      // a way into the port has been picked: stop alternating and keep the other way faded
       const branch = id ? nodes.get(id)!.dataset.branch : undefined;
       if (id) clearInterval(picking);
-      if (branch && route() === "port") fig.dataset.pick = branch;
+      // a way into the port has been picked: keep the other way faded
+      if (branch && route() === "port") {
+        fig.dataset.pick = branch;
+        text.textContent = `${routes.port!.text} Click the glowing box to take the next step.`;
+      }
       for (const [nid, n] of nodes) {
         const on = nid === id;
         n.classList.toggle("open", on);
         n.querySelector(".n-head")!.setAttribute("aria-expanded", String(on));
+        n.classList.toggle("next", !!id && route() !== "all" && edges.some((e) => e.from === id && e.to === nid && onRoute(e.paths)));
       }
-      push();
+      for (const l of lines) l.classList.toggle("live", !!id && l.dataset.from === from && l.dataset.to === id);
       follow();
-      if (!id) return;
-      // the way on from here: every line out of this box that belongs to the chosen route
-      const next = fig.querySelector<HTMLElement>(`[data-node="${id}"] [data-next]`)!;
-      const outs = edges.filter((e) => e.from === id && onRoute(e.paths));
-      if (!outs.length && route() !== "all") {
-        const again = document.createElement("button");
-        again.type = "button";
-        again.textContent = "↺ Walk it again";
-        again.className = route();
-        again.addEventListener("click", (ev) => {
-          ev.stopPropagation();
-          show(route());
-        });
-        next.replaceChildren(again);
-        return;
-      }
-      next.replaceChildren(
-        ...edges
-          .filter((e) => e.from === id && onRoute(e.paths))
-          .map((e) => {
-            const b = document.createElement("button");
-            b.type = "button";
-            b.textContent = `${label(e.to)} →`;
-            b.className = nodes.get(e.to)!.classList[1]!;
-            b.addEventListener("click", (ev) => {
-              ev.stopPropagation();
-              go(e.to);
-            });
-            return b;
-          }),
-      );
-    };
-
-    /** Send the active box's product down the line to `to`, then open `to`. */
-    const go = (to: string) => {
-      const run = ++moving;
-      const from = active;
-      const path = from ? svg.querySelector<SVGPathElement>(`path[data-from="${from}"][data-to="${to}"]`) : null;
-      if (!path || still.matches) return open(to);
-      open(null);
-      token.textContent = nodes.get(from!)!.dataset.out!;
-      token.hidden = false;
-      const len = path.getTotalLength();
-      // lengths are in pixels now: about half a second plus a little per 100 px, never dragging past 1.4 s
-      const ms = Math.min(1400, 450 + len * 2.2);
-      const t0 = performance.now();
-      const step = (now: number) => {
-        if (run !== moving) return;
-        const k = Math.min(1, (now - t0) / ms);
-        const e = k < 0.5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
-        const p = path.getPointAtLength(e * len);
-        token.style.left = `${p.x}px`;
-        token.style.top = `${p.y}px`;
-        if (k < 1) return requestAnimationFrame(step);
-        token.hidden = true;
-        // the line just travelled stays lit, so the walk so far reads as one solid path
-        for (const l of lines) if (l.dataset.from === from && l.dataset.to === to) l.classList.add("walked");
-        open(to);
-        const n = nodes.get(to)!;
-        n.classList.remove("land");
-        void n.offsetWidth;
-        n.classList.add("land");
-      };
-      requestAnimationFrame(step);
     };
 
     /** Light a route up from the top down: each box and line waits by its distance from the start. */
@@ -456,18 +360,17 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       for (const l of lines) l.style.setProperty("--d", `${((depth.get(l.dataset.from!) ?? 0) + 0.5) * 90}ms`);
     };
 
-    const show = (key: string) => {
-      moving++;
-      stopPick();
-      for (const l of lines) l.classList.remove("walked");
-      token.hidden = true;
+    const setRoute = (key: string) => {
       fig.dataset.path = key;
-      stagger();
       for (const t of tabs) t.setAttribute("aria-pressed", String(t.dataset.route === key));
       title.textContent = routes[key]!.label;
-      text.textContent = routes[key]!.text;
-      // every route starts from the game file; a port can also start from released source, so let the reader choose
+      text.textContent = routes[key]!.text + (key === "all" ? "" : " Click the glowing box to take the next step.");
+    };
+    const show = (key: string) => {
       stopPick();
+      setRoute(key);
+      stagger();
+      // every route starts from the game file; a port can also start from released source, so let the reader choose
       if (key === "port") {
         open(null);
         text.textContent = `${routes[key]!.text} Two ways in: click your game file or the released source.`;
@@ -475,7 +378,6 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       } else open(key === "all" ? null : "game");
     };
     for (const t of tabs) t.addEventListener("click", () => show(t.dataset.route!));
-    for (const n of nodes.values()) n.addEventListener("animationend", (e) => e.animationName.endsWith("land") && n.classList.remove("land"));
 
     for (const [id, n] of nodes) {
       n.querySelector(".n-head")!.addEventListener("click", () => {
@@ -483,19 +385,18 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
         const paths = n.dataset.paths!.split(" ");
         if (!onRoute(paths)) {
           stopPick();
-          fig.dataset.path = paths.length === 1 ? paths[0]! : "all";
-          for (const t of tabs) t.setAttribute("aria-pressed", String(t.dataset.route === fig.dataset.path));
-          title.textContent = routes[fig.dataset.path]!.label;
-          text.textContent = routes[fig.dataset.path]!.text;
+          setRoute(paths.length === 1 ? paths[0]! : "all");
+          stagger();
         }
-        const linked = active && edges.some((e) => e.from === active && e.to === id);
-        if (linked) go(id);
-        else {
-          moving++;
-          token.hidden = true;
-          open(id);
+        const from = active && edges.some((e) => e.from === active && e.to === id) ? active : null;
+        open(id, from);
+        if (from) {
+          n.classList.remove("land");
+          void n.offsetWidth;
+          n.classList.add("land");
         }
       });
+      n.addEventListener("animationend", (e) => e.animationName.endsWith("land") && n.classList.remove("land"));
     }
   }
 </script>
@@ -546,12 +447,13 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     border-color: var(--faint);
   }
 
+  /* an ordinary grid: odd rows hold the boxes, even rows stay empty unless an open box drops into one (phones) */
   .routes {
     position: relative;
-    /* room for the boxes an open step pushed down */
-    margin-bottom: var(--grow, 0px);
-    transition: margin-bottom 0.35s ease;
-    aspect-ratio: 1100 / 820;
+    display: grid;
+    grid-template-columns: repeat(20, minmax(0, 1fr));
+    align-items: start;
+    padding: 1rem 0 0.4rem;
   }
   .edges {
     position: absolute;
@@ -582,14 +484,11 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
 
   .node {
     --tint: var(--muted);
-    --half: 2.6rem;
-    position: absolute;
+    position: relative;
     z-index: 1;
-    left: calc(var(--x) * 1%);
-    /* anchored at the top so an opening box grows downwards only */
-    top: calc(var(--y) * 1% - var(--half));
-    width: calc(var(--w) * 1%);
-    translate: -50% var(--shift, 0px);
+    grid-row: var(--row);
+    grid-column: var(--col);
+    margin-bottom: 3.2rem;
     border: 1px solid color-mix(in srgb, var(--tint) 40%, var(--line));
     border-radius: 12px;
     background: var(--surface-2);
@@ -597,10 +496,10 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     line-height: 1.25;
     transition:
       border-color 0.2s,
-      box-shadow 0.2s,
-      width 0.3s,
-      left 0.3s,
-      translate 0.35s ease;
+      box-shadow 0.2s;
+  }
+  .routes > .node:last-of-type {
+    margin-bottom: 0;
   }
   .n-head {
     display: flex;
@@ -644,119 +543,6 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     line-height: 1.45;
     text-align: left;
   }
-  /* the buttons are made by the script, so they carry no scope attribute: hence :global() */
-  .n-next {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    padding: 0 0.8rem 0.7rem;
-  }
-  .n-next:empty {
-    display: none;
-  }
-  .n-next :global(button) {
-    padding: 0.25rem 0.6rem;
-    border: 1px solid color-mix(in srgb, var(--tint) 55%, var(--line));
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--tint) 10%, var(--lane));
-    color: var(--tint);
-    font: 0.72rem var(--mono);
-    cursor: pointer;
-  }
-  .n-next :global(button):hover {
-    background: color-mix(in srgb, var(--tint) 20%, var(--lane));
-  }
-  .n-next :global(button).emu {
-    --tint: var(--emu);
-  }
-  .n-next :global(button).recomp {
-    --tint: var(--recomp);
-  }
-  .n-next :global(button).port {
-    --tint: var(--port);
-  }
-  .routes-fig[data-path="all"] .n-next :global(button).shared {
-    --tint: var(--fg);
-  }
-
-  /* source port, before a way in is picked: the other way fades */
-  .routes-fig[data-path="port"][data-pick="a"] .node[data-branch="b"] .n-head > *,
-  .routes-fig[data-path="port"][data-pick="b"] .node[data-branch="a"] .n-head > * {
-    opacity: 0.3;
-  }
-  .routes-fig[data-path="port"][data-pick="a"] .edge[data-branch="b"],
-  .routes-fig[data-path="port"][data-pick="b"] .edge[data-branch="a"] {
-    opacity: 0.18;
-    animation-play-state: paused;
-  }
-  .routes-fig[data-path="port"][data-pick="a"] .node[data-branch="a"]:is([data-node="game"]),
-  .routes-fig[data-path="port"][data-pick="b"] .node[data-branch="b"] {
-    border-color: var(--port);
-    box-shadow: 0 0 0 3px rgb(255 179 92 / 0.18);
-  }
-  .routes-fig .node .n-head > *,
-  .routes-fig .node .n-more,
-  .routes-fig .edge {
-    transition: opacity 0.4s ease var(--d, 0ms);
-  }
-  /* all routes: a slow drift down every line so the map never sits still */
-  .routes-fig[data-path="all"] .edge {
-    stroke-dasharray: 6 5;
-    animation: flow 2.6s linear infinite;
-  }
-  /* lines already walked turn solid */
-  .routes-fig .routes .edge.walked {
-    stroke-dasharray: none;
-    stroke-width: 3;
-    opacity: 1;
-  }
-  /* a box hops when something arrives in it */
-  .node.land {
-    animation: land 0.4s steps(4);
-  }
-  @keyframes land {
-    0% {
-      scale: 1;
-    }
-    25% {
-      scale: 1.06;
-    }
-    50% {
-      scale: 0.98;
-    }
-    75% {
-      scale: 1.02;
-    }
-    100% {
-      scale: 1;
-    }
-  }
-  .n-head:hover .n-ico {
-    translate: 0 -3px;
-  }
-  .n-ico {
-    transition: translate 0.15s steps(2);
-  }
-  /* the way on gently asks to be clicked */
-  .node.open .n-next :global(button) {
-    animation: nudge 1.6s steps(4) infinite;
-  }
-  @keyframes nudge {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 color-mix(in srgb, var(--tint) 0%, transparent);
-    }
-    50% {
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--tint) 25%, transparent);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .node.land,
-    .node.open .n-next :global(button),
-    .routes-fig[data-path="all"] .edge {
-      animation: none;
-    }
-  }
   /* boxes shared by several routes take the colour of the route being walked */
   .routes-fig[data-path="emu"] .node.shared {
     --tint: var(--emu);
@@ -767,24 +553,15 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   .routes-fig[data-path="port"] .node.shared {
     --tint: var(--port);
   }
-  /* what travels down a line between two steps */
-  .token {
-    position: absolute;
-    z-index: 4;
-    translate: -50% -50%;
-    font-size: 1.7rem;
-    line-height: 1;
-    pointer-events: none;
-    filter: drop-shadow(0 0 8px rgb(255 255 255 / 0.35));
-  }
 
   /* the active step's icon: four-frame loops */
   .node.open .n-ico {
     display: inline-block;
-    animation: 0.8s steps(4) infinite;
+    animation: 1.6s steps(4) infinite;
   }
   .node.open.a-spin .n-ico {
     animation-name: a-spin;
+    animation-duration: 2s;
   }
   .node.open.a-gear .n-ico {
     animation-name: a-gear;
@@ -794,7 +571,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   }
   .node.open.a-scan .n-ico {
     animation-name: a-scan;
-    animation-duration: 1.2s;
+    animation-duration: 2s;
   }
   .node.open.a-talk .n-ico {
     animation-name: a-talk;
@@ -894,19 +671,22 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   }
   /* the game file's formats light up one after another */
   .node.open .n-chips span {
-    animation: chip-hi calc(var(--n) * 0.55s) steps(1) infinite;
-    animation-delay: calc(var(--i) * 0.55s);
+    animation: chip-glow calc(var(--n) * 1.2s) ease-in-out infinite;
+    animation-delay: calc(var(--i) * 1.2s);
   }
-  @keyframes chip-hi {
-    0% {
-      border-color: var(--tint);
-      color: var(--bg);
-      background: var(--tint);
-    }
-    14% {
-      border-color: var(--line);
+  @keyframes chip-glow {
+    0%,
+    16%,
+    100% {
       color: var(--fg);
-      background: transparent;
+      text-shadow: none;
+    }
+    5%,
+    11% {
+      color: var(--tint);
+      text-shadow:
+        0 0 6px var(--tint),
+        0 0 14px color-mix(in srgb, var(--tint) 60%, transparent);
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -995,13 +775,88 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   .routes-fig[data-path="port"] .edge[data-paths~="port"] {
     stroke: var(--port);
   }
-  .routes-fig:not([data-path="all"]) .edge {
+  /* on a route the lines are solid; only the one into the open step flows */
+  .routes-fig .routes .edge.live {
     stroke-dasharray: 6 5;
+    stroke-width: 3;
+    opacity: 1;
     animation: flow 0.9s linear infinite;
   }
   @keyframes flow {
     to {
       stroke-dashoffset: -11;
+    }
+  }
+  /* source port, before a way in is picked: the other way fades */
+  .routes-fig[data-path="port"][data-pick="a"] .node[data-branch="b"] .n-head > *,
+  .routes-fig[data-path="port"][data-pick="b"] .node[data-branch="a"] .n-head > * {
+    opacity: 0.3;
+  }
+  .routes-fig[data-path="port"][data-pick="a"] .edge[data-branch="b"],
+  .routes-fig[data-path="port"][data-pick="b"] .edge[data-branch="a"] {
+    opacity: 0.18;
+  }
+  .routes-fig[data-path="port"][data-pick="a"]:not(:has(.node.open)) .node[data-node="game"],
+  .routes-fig[data-path="port"][data-pick="b"]:not(:has(.node.open)) .node[data-node="source"] {
+    border-color: var(--port);
+    box-shadow: 0 0 14px rgb(255 179 92 / 0.3);
+  }
+  /* a route lights up from the top down: each box and line waits by its distance from the start (--d) */
+  .routes-fig .node .n-head > *,
+  .routes-fig .node .n-more,
+  .routes-fig .edge {
+    transition: opacity 0.4s ease var(--d, 0ms);
+  }
+  /* all routes: a slow drift down every line so the map never sits still */
+  .routes-fig[data-path="all"] .edge {
+    stroke-dasharray: 6 5;
+    animation: flow 2.6s linear infinite;
+  }
+  /* the boxes this step leads to ask to be clicked */
+  .node.next {
+    animation: nudge 1.8s steps(4) infinite;
+  }
+  @keyframes nudge {
+    0%,
+    100% {
+      border-color: color-mix(in srgb, var(--tint) 40%, var(--line));
+      box-shadow: 0 0 0 0 transparent;
+    }
+    50% {
+      border-color: var(--tint);
+      box-shadow: 0 0 14px color-mix(in srgb, var(--tint) 30%, transparent);
+    }
+  }
+  /* a box hops when the walk reaches it */
+  .node.land {
+    animation: land 0.4s steps(4);
+  }
+  @keyframes land {
+    0%,
+    100% {
+      scale: 1;
+    }
+    25% {
+      scale: 1.05;
+    }
+    50% {
+      scale: 0.98;
+    }
+    75% {
+      scale: 1.02;
+    }
+  }
+  .n-ico {
+    transition: translate 0.15s steps(2);
+  }
+  .n-head:hover .n-ico {
+    translate: 0 -3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .node.land,
+    .node.next,
+    .routes-fig[data-path="all"] .edge {
+      animation: none;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1032,30 +887,19 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     letter-spacing: 0.08em;
   }
 
-  /* narrower desktops: same map, a little taller so the bottom boxes keep their gaps */
-  @media (max-width: 1150px) {
-    .routes {
-      aspect-ratio: 1100 / 960;
-    }
-  }
   @media (max-width: 900px) {
     .routes {
-      aspect-ratio: 360 / 1000;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      column-gap: 0.5rem;
     }
     .node {
-      left: calc(var(--mx) * 1%);
-      top: calc(var(--my) * 1% - var(--half));
-      width: calc(var(--mw) * 1%);
+      grid-column: var(--mcol);
+      margin-bottom: 2.6rem;
     }
-    /* narrow boxes can't hold a paragraph: the open one widens across the map */
+    /* narrow boxes can't hold a paragraph: the open one drops under its row, full width */
     .node.open {
-      left: 50%;
-      width: 94%;
-    }
-  }
-  @media (max-width: 900px) and (min-width: 561px) {
-    .routes {
-      aspect-ratio: 700 / 1100;
+      grid-row: var(--drow);
+      grid-column: 1 / -1;
     }
   }
   @media (max-width: 560px) {
