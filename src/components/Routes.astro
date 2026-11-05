@@ -2,8 +2,8 @@
 /**
  * One interactive map of the three routes from a console game to playing it on a PC: emulation, static
  * recompilation and source ports (via decompilation or released source). Shared boxes belong to several routes.
- * Nodes are HTML placed by percentage; edges are an SVG underneath in the same 0–100 coordinate space. Desktop
- * runs left to right, phones top to bottom (--mx/--my and the second SVG).
+ * Nodes are HTML placed by percentage; edges are an SVG underneath in the same 0–100 coordinate space. Everything
+ * flows top to bottom; wide screens and phones have their own coordinates (--x/--y vs --mx/--my, two SVGs).
  */
 type Path = "emu" | "recomp" | "port";
 type Node = {
@@ -13,7 +13,7 @@ type Node = {
   sub: string;
   detail: string;
   paths: Path[];
-  d: [number, number, number]; // desktop x%, y%, width%
+  d: [number, number, number]; // wide screens x%, y%, width%
   m: [number, number, number]; // phone x%, y%, width%
   chips?: string[];
 };
@@ -27,7 +27,7 @@ const NODES: Node[] = [
     detail:
       "The game as it shipped: a cartridge dump, a disc image or the console's executables. Every route starts from your own copy, even a source port, which reads the art, music and levels from it.",
     paths: ["emu", "recomp", "port"],
-    d: [8, 40, 15],
+    d: [40, 9, 34],
     m: [36, 9, 66],
   },
   {
@@ -38,7 +38,7 @@ const NODES: Node[] = [
     detail:
       "Sometimes the developer publishes the code (Doom in 1997, Quake, a few later games). Then nobody has to decompile anything: porting can start right away.",
     paths: ["port"],
-    d: [8, 90, 15],
+    d: [80, 9, 20],
     m: [85, 9, 26],
   },
   {
@@ -49,7 +49,7 @@ const NODES: Node[] = [
     detail:
       "Imitates the console's processor and chips, reading the game's instructions one by one as it runs. One emulator plays a whole library, but the translating never stops, so newer consoles need a strong PC.",
     paths: ["emu"],
-    d: [26, 12, 15],
+    d: [20, 31, 22],
     m: [17, 30, 30],
   },
   {
@@ -60,7 +60,7 @@ const NODES: Node[] = [
     detail:
       "Reads every function of the game's machine code once and writes equivalent C. Each game still needs setup and fixes by hand, typically weeks to months. Tools: N64: Recompiled, XenonRecomp, ReXGlue and more.",
     paths: ["recomp"],
-    d: [26, 40, 15],
+    d: [50, 31, 22],
     m: [50, 30, 30],
   },
   {
@@ -71,7 +71,7 @@ const NODES: Node[] = [
     detail:
       "Fans rewrite the game in C by hand, function by function, until compiling it gives back the identical original (\"matching\"). It often takes years, and is the usual way a console game gets source code at all.",
     paths: ["port"],
-    d: [26, 68, 15],
+    d: [80, 31, 22],
     m: [83, 30, 30],
   },
   {
@@ -82,7 +82,7 @@ const NODES: Node[] = [
     detail:
       "Thousands of machine-written functions: faithful to the original, but full of registers and memory addresses instead of names. Modding hooks into it, but nobody edits it like normal code.",
     paths: ["recomp"],
-    d: [43, 40, 14],
+    d: [50, 51, 22],
     m: [50, 47, 30],
   },
   {
@@ -93,7 +93,7 @@ const NODES: Node[] = [
     detail:
       "Source code people can read and change: named functions, comments, structure. Big changes like new renderers, mods and features become ordinary programming.",
     paths: ["port"],
-    d: [43, 74, 14],
+    d: [80, 51, 22],
     m: [83, 47, 30],
   },
   {
@@ -104,7 +104,7 @@ const NODES: Node[] = [
     detail:
       "A normal compiler builds the C for x86 or ARM. A runtime (for recomps) or platform layer (for ports) stands in for the console's graphics, sound, controller and saves, using things like Vulkan, Metal and SDL.",
     paths: ["recomp", "port"],
-    d: [60, 57, 14],
+    d: [65, 68, 36],
     m: [66, 63, 56],
   },
   {
@@ -115,7 +115,7 @@ const NODES: Node[] = [
     detail:
       "A real Windows, Mac, Linux or phone program. Widescreen, high frame rates and mods are now changes to that program, not hacks on top of an emulator.",
     paths: ["recomp", "port"],
-    d: [76, 57, 14],
+    d: [65, 81, 36],
     m: [66, 77, 56],
   },
   {
@@ -126,19 +126,20 @@ const NODES: Node[] = [
     detail:
       "Every route ends here. Emulation gets there first for almost any game; recomps and ports take work per game but run lighter and can go further.",
     paths: ["emu", "recomp", "port"],
-    d: [92, 35, 14],
+    d: [50, 94, 50],
     m: [50, 92, 70],
   },
 ];
-type Edge = { from: string; to: string; paths: Path[]; m?: string };
+/** d/m: hand-drawn paths for wide screens/phones where the default curve would run behind another box. */
+type Edge = { from: string; to: string; paths: Path[]; d?: string; m?: string };
 const EDGES: Edge[] = [
   { from: "game", to: "emulator", paths: ["emu"] },
   { from: "game", to: "recompiler", paths: ["recomp"] },
   { from: "game", to: "decomp", paths: ["port"] },
-  // on phones the released-source box sits above the decompilation box, so its edge goes round the right side
-  { from: "source", to: "src", paths: ["port"], m: "M 97 13 C 100 24, 100 38, 97 46" },
-  // on phones the emulator line runs down the left edge, clear of the compiler and native boxes
-  { from: "emulator", to: "play", paths: ["emu"], m: "M 17 30 C 17 75, 17 88, 30 92" },
+  // the released-source box sits above the decompilation box, so its edge goes round the right side
+  { from: "source", to: "src", paths: ["port"], d: "M 89 13 C 96 24, 96 42, 90 49", m: "M 97 13 C 100 24, 100 38, 97 46" },
+  // the emulator line runs down the left edge, clear of the compiler and native boxes
+  { from: "emulator", to: "play", paths: ["emu"], d: "M 20 31 C 20 78, 20 90, 28 94", m: "M 17 30 C 17 75, 17 88, 30 92" },
   { from: "recompiler", to: "genc", paths: ["recomp"] },
   { from: "decomp", to: "src", paths: ["port"] },
   { from: "genc", to: "build", paths: ["recomp"] },
@@ -147,10 +148,6 @@ const EDGES: Edge[] = [
   { from: "native", to: "play", paths: ["recomp", "port"] },
 ];
 const byId = Object.fromEntries(NODES.map((n) => [n.id, n]));
-const curveX = ([x1, y1]: number[], [x2, y2]: number[]) => {
-  const xm = (x1! + x2!) / 2;
-  return `M ${x1} ${y1} C ${xm} ${y1}, ${xm} ${y2}, ${x2} ${y2}`;
-};
 const curveY = ([x1, y1]: number[], [x2, y2]: number[]) => {
   const ym = (y1! + y2!) / 2;
   return `M ${x1} ${y1} C ${x1} ${ym}, ${x2} ${ym}, ${x2} ${y2}`;
@@ -188,7 +185,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   </div>
   <div class="routes">
     <svg class="edges desk" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-      {EDGES.map((e) => <path class={edgeClass(e)} data-paths={e.paths.join(" ")} d={curveX(byId[e.from]!.d, byId[e.to]!.d)} />)}
+      {EDGES.map((e) => <path class={edgeClass(e)} data-paths={e.paths.join(" ")} d={e.d ?? curveY(byId[e.from]!.d, byId[e.to]!.d)} />)}
     </svg>
     <svg class="edges phone" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
       {EDGES.map((e) => <path class={edgeClass(e)} data-paths={e.paths.join(" ")} d={e.m ?? curveY(byId[e.from]!.m, byId[e.to]!.m)} />)}
@@ -300,7 +297,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
 
   .routes {
     position: relative;
-    aspect-ratio: 1100 / 560;
+    aspect-ratio: 1100 / 820;
   }
   .edges {
     position: absolute;
@@ -475,6 +472,12 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     letter-spacing: 0.08em;
   }
 
+  /* narrower desktops: same map, a little taller so the bottom boxes keep their gaps */
+  @media (max-width: 1150px) {
+    .routes {
+      aspect-ratio: 1100 / 960;
+    }
+  }
   @media (max-width: 900px) {
     .routes {
       aspect-ratio: 360 / 1000;
