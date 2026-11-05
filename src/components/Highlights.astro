@@ -1187,7 +1187,8 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
       grid-column: 1;
       grid-row: 1 / span 2;
     }
-    .items.days li:nth-child(n + 6) {
+    /* all seven days, whatever the generic one-row card limits above hide */
+    .items.days li:nth-child(n) {
       display: block;
     }
   }
