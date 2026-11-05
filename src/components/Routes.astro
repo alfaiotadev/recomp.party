@@ -958,21 +958,19 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   .routes-fig:not([data-path="all"]) .edge {
     opacity: 0.07;
   }
+  /* off the chosen route a whole box fades and loses its colour */
   .routes-fig:not([data-path="all"]) .node {
-    border-color: var(--line);
-  }
-  .routes-fig:not([data-path="all"]) .node .n-head > *,
-  .routes-fig:not([data-path="all"]) .node .n-more {
-    opacity: 0.16;
-    transition: opacity 0.25s;
+    opacity: 0.22;
+    filter: saturate(0.3);
   }
   .routes-fig[data-path="emu"] .edge[data-paths~="emu"],
   .routes-fig[data-path="recomp"] .edge[data-paths~="recomp"],
   .routes-fig[data-path="port"] .edge[data-paths~="port"],
-  .routes-fig[data-path="emu"] .node[data-paths~="emu"] :is(.n-head > *, .n-more),
-  .routes-fig[data-path="recomp"] .node[data-paths~="recomp"] :is(.n-head > *, .n-more),
-  .routes-fig[data-path="port"] .node[data-paths~="port"] :is(.n-head > *, .n-more) {
+  .routes-fig[data-path="emu"] .node[data-paths~="emu"],
+  .routes-fig[data-path="recomp"] .node[data-paths~="recomp"],
+  .routes-fig[data-path="port"] .node[data-paths~="port"] {
     opacity: 1;
+    filter: none;
   }
   .routes-fig[data-path="emu"] .node[data-paths~="emu"],
   .routes-fig[data-path="recomp"] .node[data-paths~="recomp"],
@@ -1001,13 +999,10 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     }
   }
   /* source port, before a way in is picked: the other way fades */
-  .routes-fig[data-path="port"][data-pick="a"] .node[data-branch="b"] .n-head > *,
-  .routes-fig[data-path="port"][data-pick="b"] .node[data-branch="a"] .n-head > * {
-    opacity: 0.16;
-  }
   .routes-fig[data-path="port"][data-pick="a"] .node[data-branch="b"],
   .routes-fig[data-path="port"][data-pick="b"] .node[data-branch="a"] {
-    border-color: var(--line);
+    opacity: 0.22;
+    filter: saturate(0.3);
   }
   .routes-fig[data-path="port"][data-pick="a"] .edge[data-branch="b"],
   .routes-fig[data-path="port"][data-pick="b"] .edge[data-branch="a"] {
@@ -1019,10 +1014,15 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     box-shadow: 0 0 14px rgb(255 179 92 / 0.3);
   }
   /* a route lights up from the top down: each box and line waits by its distance from the start (--d) */
-  .routes-fig .node .n-head > *,
-  .routes-fig .node .n-more,
   .routes-fig .edge {
     transition: opacity 0.4s ease var(--d, 0ms);
+  }
+  .routes-fig .node {
+    transition:
+      opacity 0.4s ease var(--d, 0ms),
+      filter 0.4s ease var(--d, 0ms),
+      border-color 0.2s,
+      box-shadow 0.2s;
   }
   /* all routes: a slow drift down every line so the map never sits still */
   .routes-fig[data-path="all"] .edge {
