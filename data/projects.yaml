@@ -90,12 +90,26 @@
   added: 2026-11-03
 
 # --- Nintendo 64 -----------------------------------------------------------------
+- repo: thebradshaw/1080-Snowboarding-decomp
+  game: 1080° Snowboarding
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  wikidata: Q168615
+  added: 2026-11-05
 - repo: alondero/aerogauge-recomp
   game: AeroGauge
   platform: n64
   kind: recomp
   wikidata: Q668397
   added: 2026-11-01
+- repo: spitzdano/AidynReChronicled
+  game: "Aidyn Chronicles: The First Mage"
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  wikidata: Q1118490
+  added: 2026-11-05
 - repo: alondero/automobililamborghini-recomp
   game: Automobili Lamborghini
   platform: n64
@@ -359,6 +373,12 @@
   tool: N64Recomp
   wikidata: Q1478513
   added: 2026-10-28
+- repo: sp00nznet/Rampage
+  game: "Rampage: World Tour and Rampage 2: Universal Tour"
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  added: 2026-11-05
 - repo: linkssy2/RoadRash64Recompiled
   game: Road Rash 64
   platform: n64
@@ -592,6 +612,13 @@
   based_on: [ZeldaWWHDRecomp/ZeldaWWHDRecomp]
   wikidata: Q683373
   added: 2026-11-04
+- repo: tchisholm20/starfox-adventures-vita
+  game: Star Fox Adventures
+  platform: gc
+  kind: port
+  based_on: [zcanann/SFA-Decomp, Cassieandstuff/SFA-Decomp]
+  wikidata: Q2578717
+  added: 2026-11-05
 - repo: chasem-dev/sms-pc-port
   game: Super Mario Sunshine
   platform: gc
@@ -606,6 +633,12 @@
   tool: DolRecomp
   wikidata: Q639955
   added: 2026-11-01
+- repo: ikevik/sms-3ds
+  game: Super Mario Sunshine
+  platform: gc
+  kind: port
+  wikidata: Q639955
+  added: 2026-11-05
 - repo: chrissotraidis/meleepad
   game: Super Smash Bros. Melee
   platform: gc
@@ -762,6 +795,14 @@
   kind: recomp
   wikidata: Q17185964
   added: 2026-10-28
+- repo: vasist15-source/BOTWRecomp
+  game: "The Legend of Zelda: Breath of the Wild"
+  platform: wiiu
+  kind: recomp
+  tool: ZeldaWWHDRecomp
+  based_on: [ZeldaWWHDRecomp/ZeldaWWHDRecomp]
+  wikidata: Q17185964
+  added: 2026-11-05
 - repo: centollOS/SwitchWakerHD
   game: "The Legend of Zelda: The Wind Waker HD"
   platform: wiiu
@@ -820,6 +861,12 @@
   based_on: [valentderah/totk-pc-recomp]
   wikidata: Q113956929
   added: 2026-11-03
+- repo: galarianpikachu2021-hue/Racing-8-DX-Recomp
+  game: Mario Kart 8 Deluxe
+  platform: switch
+  kind: recomp
+  wikidata: Q28321447
+  added: 2026-11-05
 - repo: yozander2009-stack/Metroid-Dread-Recomp
   game: Metroid Dread
   platform: switch
@@ -1032,6 +1079,11 @@
   kind: recomp
   wikidata: Q761815
   added: 2026-10-31
+- repo: matheus2x/ie3ogre-nds-recomp
+  game: "Inazuma Eleven 3: Sekai heno Chousen!! The Ogre"
+  platform: nds
+  kind: recomp
+  added: 2026-11-05
 - repo: AlonsoTlol/DS-Kart-Recompiled
   game: Mario Kart DS
   platform: nds
@@ -1513,6 +1565,13 @@
   kind: recomp
   wikidata: Q1605942
   added: 2026-11-02
+- repo: BigDaddyJRich/hctp-recomp
+  game: WWE SmackDown! Here Comes the Pain
+  platform: ps2
+  kind: recomp
+  tool: PS2Recomp
+  wikidata: Q2024612
+  added: 2026-11-05
 - repo: Yaz-Myst/ZOE-Recompiled
   game: Zone of the Enders
   platform: ps2
@@ -2022,6 +2081,12 @@
   tool: XboxRecomp
   wikidata: Q1063810
   added: 2026-11-02
+- repo: boodyandmustafa-create/MOH-EuropeanAssault-PC-Port
+  game: "Medal of Honor: European Assault"
+  platform: xbox
+  kind: recomp
+  wikidata: Q2201608
+  added: 2026-11-05
 - repo: KraftMacAndChee/Mercenaries-Recompiled
   game: "Mercenaries: Playground of Destruction"
   platform: xbox
@@ -2081,6 +2146,13 @@
   tool: Xbox XBE Recomp
   wikidata: Q3175136
   added: 2026-10-31
+- repo: dennisabalo18-bot/red-dead-revolver-pc
+  game: Red Dead Revolver
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  wikidata: Q641697
+  added: 2026-11-05
 - repo: gymzatan/smt-nine-recomp
   game: Shin Megami Tensei NINE
   platform: xbox
@@ -2226,6 +2298,13 @@
   tool: ReXGlue
   wikidata: Q689877
   added: 2026-10-31
+- repo: BrewSparrow/ArmyOfTwoTDC-Recomp
+  game: "Army of Two: The Devil's Cartel"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q4794331
+  added: 2026-11-05
 - repo: FrankHUN88453/CoD3Recomp
   game: Call of Duty 3
   platform: x360
@@ -2299,6 +2378,13 @@
   tool: ReXGlue
   wikidata: Q2299857
   added: 2026-10-28
+- repo: XDASCATX/DS2_switch
+  game: "DARK SOULS II: Scholar of the First Sin"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q22344575
+  added: 2026-11-05
 - repo: hibikifukui22/Dead-or-Alive-Xtreme-2-Recompilation
   game: Dead or Alive Xtreme 2
   platform: x360
@@ -2333,6 +2419,13 @@
   kind: recomp
   wikidata: Q735926
   added: 2026-11-01
+- repo: mabencs/Dragon-Age-Origins-Recomp-Android-Duo
+  game: "Dragon Age: Origins"
+  platform: x360
+  kind: recomp
+  based_on: [96dot/Dragon-Age-Origins-Recomp]
+  wikidata: Q735926
+  added: 2026-11-05
 - repo: iExplosiveRage/DBZ-Burst-Limit-Recompiled
   game: "Dragon Ball Z: Burst Limit"
   platform: x360
@@ -2802,6 +2895,13 @@
   tool: ReXGlue
   wikidata: Q7548020
   added: 2026-11-03
+- repo: ChanseyIsTheBest/sa2-nx
+  game: Sonic Adventure 2
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q1070984
+  added: 2026-11-05
 - repo: YuutaTsubasa/Free-Riders-Recompiled
   game: Sonic Free Riders
   platform: x360
@@ -2856,12 +2956,26 @@
   tool: ReXGlue
   wikidata: Q3179278
   added: 2026-10-31
+- repo: MrPowerUp82/superman_returns_recomp
+  game: Superman Returns
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q655031
+  added: 2026-11-05
 - repo: shihabal3amri/tekken-tag-tournament-2-pc
   game: Tekken Tag Tournament 2
   platform: x360
   kind: recomp
   wikidata: Q672049
   added: 2026-10-31
+- repo: mdomangue26/The-Bigs-2-Recompiled
+  game: The Bigs 2
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q7717942
+  added: 2026-11-05
 - repo: invinceble55-wq/Estacado-The-Darkness-Recomp
   game: The Darkness
   platform: x360
@@ -2983,6 +3097,19 @@
   kind: recomp
   wikidata: Q2302461
   added: 2026-11-02
+- repo: adrbn/bo2-mac
+  game: "Call of Duty: Black Ops II"
+  platform: pc
+  kind: recomp
+  tool: Remill
+  wikidata: Q380918
+  added: 2026-11-05
+- repo: BLSNCVS/Castlevania-Grimoire-of-Souls-Recomp
+  game: "Castlevania: Grimoire of Souls"
+  platform: pc
+  kind: recomp
+  wikidata: Q76856840
+  added: 2026-11-05
 - repo: maxevans60/cm0102-bosman-edition
   game: Championship Manager 01/02
   platform: pc
@@ -3065,6 +3192,12 @@
   kind: port
   wikidata: Q1248594
   added: 2026-11-04
+- repo: bbelgg/rs-rearmed
+  game: Rocksmith 2014
+  platform: pc
+  kind: recomp
+  wikidata: Q15093798
+  added: 2026-11-05
 - repo: RSDKModding/RSDKv4-Decompilation
   game: Sonic 1 & 2 (2013)
   platform: pc
