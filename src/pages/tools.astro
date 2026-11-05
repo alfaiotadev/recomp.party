@@ -3,6 +3,8 @@ import Base from "../layouts/Base.astro";
 import { entryPath, fitLogo, PLATFORMS, platformLogo, toolGames, tools, type Entry } from "../lib/data.ts";
 
 /** Game cards shown before the rest fold away behind "Show all". */
+/** Each toolchain's anchor on this page: its repo name, e.g. /tools/#xenonrecomp. */
+const toolAnchor = (repo: string) => repo.split("/")[1]!.toLowerCase();
 const SHOWN = 8;
 
 ---
@@ -37,7 +39,7 @@ const SHOWN = 8;
           </ul>
         );
         return (
-          <li>
+          <li id={toolAnchor(t.repo)}>
             {logo && box && <img class="logo-img tlogo" src={logo.src} width={box.w} height={box.h} alt={PLATFORMS[t.platform]} />}
             <h2>
               <a href={t.url}>{t.game}</a>
@@ -71,6 +73,10 @@ const SHOWN = 8;
 </Base>
 
 <style>
+  /* linked from /explained/ as /tools/#<repo name> */
+  .tools > li {
+    scroll-margin-top: 1rem;
+  }
   .tl-eyebrow {
     margin: 2.5rem 0 0;
     color: var(--recomp);

@@ -12,8 +12,12 @@ type Node = {
   ico: string;
   title: string;
   sub: string;
-  /** opens with a **bold lead** sentence, shown as the description's heading */
+  /** opens with a **bold lead** sentence, shown as the description's heading; keep it short, the pros and cons carry the rest */
   detail: string;
+  pros?: string[];
+  cons?: string[];
+  /** toolchains to link, by their anchor on /tools/ */
+  tools?: { name: string; anchor: string }[];
   paths: Path[];
   /** row, first column, columns spanned: wide screens on a 20-column grid, phones (mat) on 6 */
   at: [number, number, number];
@@ -31,7 +35,7 @@ const NODES: Node[] = [
     sub: "as it shipped",
     chips: [".z64", ".iso", ".bin", ".xex", ".elf", ".exe", ".dll"],
     detail:
-      "**Where every route starts.** A cartridge dump, a disc image or the console's own executables. Even a source port reads the art, music and levels from it.",
+      "**Where every route starts.** A cartridge dump, a disc image or the console's own executables.",
     paths: ["emu", "recomp", "port"],
     at: [1, 6, 7],
     mat: [1, 1, 4],
@@ -43,7 +47,9 @@ const NODES: Node[] = [
     title: "Released source",
     sub: "rare",
     detail:
-      "**Rare, but the easy way in.** Some developers publish their code (Doom in 1997, Quake). Then nobody has to decompile anything.",
+      "**The developer published the code.** Doom (1997), Quake and a few others.",
+    pros: ["No decompiling: porting starts right away"],
+    cons: ["Most console games never get this"],
     paths: ["port"],
     at: [1, 15, 4],
     mat: [1, 5, 2],
@@ -55,7 +61,9 @@ const NODES: Node[] = [
     title: "Emulator",
     sub: "translates while you play",
     detail:
-      "**Pretends to be the console.** It translates the game's instructions one by one, the whole time you play. One emulator runs a whole library, but newer consoles need a strong PC.",
+      "**Pretends to be the console.**",
+    pros: ["Works with almost any game on day one", "One program plays a whole library"],
+    cons: ["Newer consoles need a strong PC", "Widescreen and mods need hacks"],
     paths: ["emu"],
     at: [2, 3, 4],
     mat: [2, 1, 2],
@@ -67,7 +75,14 @@ const NODES: Node[] = [
     title: "Recompiler",
     sub: "translates once, automatically",
     detail:
-      "**Translates the whole game once.** Every function of machine code becomes equivalent C, automatically. Each game still needs weeks to months of fixes by hand. Tools: N64: Recompiled, XenonRecomp, ReXGlue.",
+      "**Machine code becomes C before you ever press start.**",
+    tools: [
+      { name: "N64: Recompiled", anchor: "n64recomp" },
+      { name: "XenonRecomp", anchor: "xenonrecomp" },
+      { name: "ReXGlue", anchor: "rexglue-sdk" },
+    ],
+    pros: ["Nothing to translate while you play", "Much faster to make than a decompilation"],
+    cons: ["Each game still needs weeks to months of fixes", "Only for consoles that have a recompiler"],
     paths: ["recomp"],
     at: [2, 9, 4],
     mat: [2, 3, 2],
@@ -79,7 +94,9 @@ const NODES: Node[] = [
     title: "Decompilation",
     sub: "people rewrite it in C",
     detail:
-      "**People rewrite the game in C by hand.** Function by function, until compiling it gives back the identical original (\"matching\"). Often years of work.",
+      "**Function by function, until it compiles back to the identical game.**",
+    pros: ["Ends in source code anyone can read", "Then anything about the game can change"],
+    cons: ["Often takes years", "Needs a large, patient community"],
     paths: ["port"],
     at: [2, 15, 4],
     mat: [2, 5, 2],
@@ -91,7 +108,9 @@ const NODES: Node[] = [
     title: "Generated C",
     sub: "correct, not readable",
     detail:
-      "**Correct, but not for reading.** Thousands of machine-written functions with registers and addresses instead of names. Mods hook into it; nobody edits it like normal code.",
+      "**Registers and memory addresses instead of names.**",
+    pros: ["Faithful to the original, bug for bug", "Mods can hook into it"],
+    cons: ["Hard to change by hand"],
     paths: ["recomp"],
     at: [3, 9, 4],
     mat: [3, 3, 2],
@@ -103,7 +122,9 @@ const NODES: Node[] = [
     title: "Readable source",
     sub: "named, commented",
     detail:
-      "**Code people can read and change.** Named functions, comments, structure. New renderers, mods and features become ordinary programming.",
+      "**Code people can read and change.**",
+    pros: ["New renderers, features and fixes are ordinary programming", "Can be ported to almost any platform"],
+    cons: ["Someone has to keep maintaining it"],
     paths: ["port"],
     at: [3, 15, 4],
     mat: [3, 5, 2],
@@ -115,7 +136,9 @@ const NODES: Node[] = [
     title: "Compiler + runtime",
     sub: "PC graphics, sound, input",
     detail:
-      "**Turns the C into a PC program.** A normal compiler builds it for x86 or ARM. A runtime or platform layer replaces the console's graphics, sound, controller and saves (Vulkan, Metal, SDL…).",
+      "**A compiler builds the C; a runtime stands in for the console's hardware.**",
+    pros: ["Modern graphics: Vulkan, Metal, DirectX", "Any controller, saves as plain files"],
+    cons: ["Console graphics tricks have to be recreated by hand"],
     paths: ["recomp", "port"],
     at: [4, 10, 7],
     mat: [4, 3, 4],
@@ -127,7 +150,9 @@ const NODES: Node[] = [
     title: "Native game",
     sub: "a real .exe or app",
     detail:
-      "**A real .exe or app.** For Windows, Mac, Linux, sometimes phones. Widescreen, high frame rates and mods are part of the program now, not hacks on an emulator.",
+      "**For Windows, Mac, Linux, sometimes phones.**",
+    pros: ["Runs light, at native speed", "Widescreen, high frame rates and mods built in"],
+    cons: ["Each game is its own project"],
     paths: ["recomp", "port"],
     at: [5, 10, 7],
     mat: [5, 3, 4],
@@ -139,7 +164,7 @@ const NODES: Node[] = [
     title: "You play",
     sub: "on your PC",
     detail:
-      "**Every route ends here.** Emulation gets there first for almost any game. Recomps and ports take work per game, but run lighter and go further.",
+      "**Every route ends here.** Emulation gets there first; recomps and ports run lighter and go further.",
     paths: ["emu", "recomp", "port"],
     at: [6, 6, 10],
     mat: [6, 2, 4],
@@ -245,7 +270,43 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
           </button>
           <div class="n-more" id={`rd-${n.id}`}>
             <div>
-              <p class="n-detail" set:html={detailHtml(n.detail)} />
+              <div class="n-detail">
+                <p set:html={detailHtml(n.detail)} />
+                {n.tools && (
+                  <p class="n-tools">
+                    Tools:{" "}
+                    {n.tools.map((t, i) => (
+                      <>
+                        {i > 0 && ", "}
+                        <a href={`/tools/#${t.anchor}`} target="_blank" rel="noopener">
+                          {t.name}
+                        </a>
+                      </>
+                    ))}{" "}
+                    and{" "}
+                    <a href="/tools/" target="_blank" rel="noopener">
+                      more
+                    </a>
+                    .
+                  </p>
+                )}
+                {(n.pros || n.cons) && (
+                  <ul class="n-pc">
+                    {n.pros?.map((t) => (
+                      <li class="pro">
+                        <span aria-label="Pro">+</span>
+                        {t}
+                      </li>
+                    ))}
+                    {n.cons?.map((t) => (
+                      <li class="con">
+                        <span aria-label="Con">−</span>
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -635,6 +696,55 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
     line-height: 1.6;
     text-align: left;
     text-wrap: pretty;
+  }
+  .n-detail p {
+    margin: 0;
+  }
+  .n-detail .n-tools {
+    margin-top: 0.5rem;
+    font-size: 0.86rem;
+    color: var(--muted);
+  }
+  .n-tools a {
+    color: var(--tint);
+    text-decoration-color: color-mix(in srgb, var(--tint) 45%, transparent);
+  }
+  .n-tools a:hover {
+    text-decoration-color: var(--tint);
+  }
+  /* pros in green, cons in red, after the short description */
+  .n-pc {
+    list-style: none;
+    display: grid;
+    gap: 0.3rem;
+    margin: 0.6rem 0 0;
+    padding: 0.55rem 0 0;
+    border-top: 1px solid rgb(255 255 255 / 0.07);
+    font-size: 0.86rem;
+    line-height: 1.4;
+  }
+  .n-pc li {
+    display: grid;
+    grid-template-columns: 1.1rem 1fr;
+    gap: 0.4rem;
+    align-items: baseline;
+  }
+  .n-pc span {
+    display: grid;
+    place-items: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 4px;
+    font: 700 0.85rem/1 var(--mono);
+    translate: 0 0.12rem;
+  }
+  .n-pc .pro span {
+    color: #4ade80;
+    background: rgb(74 222 128 / 0.14);
+  }
+  .n-pc .con span {
+    color: #ff6b6b;
+    background: rgb(255 107 107 / 0.14);
   }
   .n-detail :global(.n-lead) {
     display: block;
