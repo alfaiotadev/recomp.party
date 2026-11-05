@@ -222,6 +222,10 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
 
 
 <figure class="routes-fig" data-path="all">
+  {/* old section anchors, linked from the front page: each opens its route on the map */}
+  <span id="emulation" class="route-anchor" data-for="emu"></span>
+  <span id="static-recompilation" class="route-anchor" data-for="recomp"></span>
+  <span id="source-port" class="route-anchor" data-for="port"></span>
   <div class="route-tabs" role="group" aria-label="Show a route">
     {
       ROUTES.map((r) => (
@@ -473,6 +477,12 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       } else open(key === "all" ? null : "game");
     };
     for (const t of tabs) t.addEventListener("click", () => show(t.dataset.route!));
+    const fromHash = () => {
+      const key = fig.querySelector<HTMLElement>(`.route-anchor[id="${CSS.escape(location.hash.slice(1))}"]`)?.dataset.for;
+      if (key) show(key);
+    };
+    fromHash();
+    addEventListener("hashchange", fromHash);
 
     for (const [id, n] of nodes) {
       n.querySelector(".n-head")!.addEventListener("click", () => {
@@ -498,7 +508,12 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
 </script>
 
 <style>
+  .route-anchor {
+    position: absolute;
+    margin-top: -1rem;
+  }
   .routes-fig {
+    position: relative;
     margin: 0;
     padding: 1rem;
     border: 1px solid var(--line);
