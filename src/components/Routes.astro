@@ -488,7 +488,8 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       n.querySelector(".n-head")!.addEventListener("click", () => {
         if (id === active) return open(null);
         const paths = n.dataset.paths!.split(" ");
-        if (!onRoute(paths)) {
+        // a box off the chosen route, or one that belongs to a single route while all are shown, switches to its route
+        if (!onRoute(paths) || (route() === "all" && paths.length === 1)) {
           stopPick();
           setRoute(paths.length === 1 ? paths[0]! : "all");
           stagger();
