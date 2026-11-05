@@ -14,10 +14,12 @@ interface Props {
 }
 const { title, description = "A tracker for playable static recompilations and source ports of classic games.", image, jsonLd } = Astro.props;
 const fullTitle = title ? `${title} · recomp.party` : "recomp.party — playable recomps & ports";
-const nav = [
+/** short: the label on phones, where all the links share one row */
+const nav: { href: string; label: string; short?: string; count?: number }[] = [
   { href: "/", label: "Games" },
-  { href: "/tools/", label: "Toolchains", count: tools.length },
+  { href: "/tools/", label: "Toolchains", short: "Tools", count: tools.length },
   { href: "/models/", label: "Models" },
+  { href: "/explained/", label: "Explain" },
   { href: "/about/", label: "About" },
 ];
 const here = Astro.url.pathname;
@@ -93,7 +95,14 @@ const here = Astro.url.pathname;
         {
           nav.map((n) => (
             <a href={n.href} aria-current={(n.href === "/" ? here === "/" : here.startsWith(n.href)) ? "page" : undefined}>
-              {n.label}
+              {n.short ? (
+                <>
+                  <span class="nav-long">{n.label}</span>
+                  <span class="nav-short">{n.short}</span>
+                </>
+              ) : (
+                n.label
+              )}
               {n.count !== undefined && <span class="nav-count">{n.count}</span>}
             </a>
           ))
