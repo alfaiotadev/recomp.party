@@ -197,6 +197,39 @@ const SYMBOL: Record<Mark, string> = { yes: "✓", some: "~", no: "✗" };
         <li><span class="ico">⚙️</span><b>A PC compiler</b>Builds it for Windows, Mac, Linux, phones…</li>
         <li><span class="ico">🎮</span><b>A native game</b>With room for new options, fixes and mods.</li>
       </ol>
+      <h3>Where the source code comes from</h3>
+      <div class="origins">
+        <div class="origin">
+          <span class="ico">📂</span>
+          <b>Released by the developer</b>
+          <p>
+            Sometimes the studio publishes it. id Software released Doom's source in 1997, and the term "source port" was
+            born from the projects that followed. Most console games never get this.
+          </p>
+        </div>
+        <div class="origin decomp">
+          <span class="ico">🔍</span>
+          <b>Rebuilt by fans: decompilation</b>
+          <p>
+            Fans read the game's machine code and write C by hand that does the same thing, function by function. Like
+            retyping a book from scratch in your own words, then checking that it prints out identical to the original.
+          </p>
+          <ol class="loop" aria-label="The matching loop">
+            <li><span>💾</span>machine code</li>
+            <li><span>⌨️</span>write C by hand</li>
+            <li><span>⚙️</span>compile with the original tools</li>
+            <li class="check"><span>🟰</span>byte-for-byte identical?</li>
+          </ol>
+          <p class="loop-note">
+            Not yet: back to the keyboard. Yes: that function is "matching". When every function matches, the whole game
+            can be rebuilt from readable source, and porting can begin. It often takes years of community work.
+          </p>
+        </div>
+      </div>
+      <p class="sub vs-note">
+        Decompilation vs static recompilation: both end in C code, but a decompilation is written and named by people, so
+        it can be read and changed freely. A recompiler writes its C automatically in weeks, but nobody is meant to read it.
+      </p>
       <div class="layers" aria-label="What a port keeps and what it replaces">
         <div class="stack">
           <span class="code-head">on the console</span>
@@ -401,6 +434,109 @@ const SYMBOL: Record<Mark, string> = { yes: "✓", some: "~", no: "✗" };
       animation: none;
       color: var(--fg);
     }
+  }
+  /* port: where the source comes from */
+  .ex h3 {
+    margin: 1.4rem 0 0.6rem;
+    font-size: 1.05rem;
+  }
+  .origins {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 0.6rem;
+  }
+  @media (max-width: 760px) {
+    .origins {
+      grid-template-columns: 1fr;
+    }
+  }
+  .origin {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .origin .ico {
+    font-size: 1.6rem;
+  }
+  .origin b {
+    display: block;
+    margin: 0.2rem 0 0.3rem;
+    color: var(--fg);
+  }
+  .origin p {
+    margin: 0 0 0.6rem;
+  }
+  .origin.decomp {
+    border-color: rgb(255 179 92 / 0.45);
+    background: radial-gradient(120% 80% at 0% 0%, rgb(255 179 92 / 0.08), transparent 60%), var(--surface);
+  }
+  .origin.decomp b {
+    color: var(--port);
+  }
+  .loop {
+    list-style: none;
+    margin: 0.4rem 0 0.6rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.9rem;
+    position: relative;
+  }
+  .loop li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.5rem 0.3rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--lane);
+    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+  .loop li span {
+    font-size: 1.3rem;
+  }
+  .loop li:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -0.8rem;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--port);
+  }
+  .loop li.check {
+    border-color: rgb(255 179 92 / 0.45);
+    color: var(--port);
+  }
+  /* the "not yet" arrow back to the start */
+  .loop::after {
+    content: "↺ not yet, try again";
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-top: -0.4rem;
+    padding: 0 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+  }
+  .vs-note {
+    margin-top: 0.8rem;
+  }
+  @media (max-width: 760px) {
+    .layers .arrow {
+      flex: 0 0 100%;
+      text-align: center;
+      rotate: 90deg;
+    }
+  }
+  .loop-note {
+    font-size: 0.85rem;
   }
   /* port: layer stacks */
   .stack {
