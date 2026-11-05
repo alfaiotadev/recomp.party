@@ -17,7 +17,7 @@ const toolStrip = tools.slice(0, 8);
     <h1>Classic games, <span class="glow">recompiled</span> to run natively.</h1>
     <p class="lede">
       Console games turned into native PC (and phone) programs. New ones ship every week — recomp.party keeps track of
-      the ones you can actually play.
+      the ones you can actually play. The different methods are <a href="/explained/">explained here</a>.
     </p>
   </div>
 
@@ -180,6 +180,13 @@ const toolStrip = tools.slice(0, 8);
   }
   .hero .eyebrow a:hover {
     text-decoration-style: solid;
+  }
+  .hero .lede a {
+    color: var(--recomp);
+    text-decoration-color: rgb(124 240 197 / 0.4);
+  }
+  .hero .lede a:hover {
+    text-decoration-color: var(--recomp);
   }
   .hero .lede {
     text-wrap: pretty;
