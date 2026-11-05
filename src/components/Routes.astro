@@ -12,6 +12,7 @@ type Node = {
   ico: string;
   title: string;
   sub: string;
+  /** opens with a **bold lead** sentence, shown as the description's heading */
   detail: string;
   paths: Path[];
   /** row, first column, columns spanned: wide screens on a 20-column grid, phones (mat) on 6 */
@@ -30,7 +31,7 @@ const NODES: Node[] = [
     sub: "as it shipped",
     chips: [".z64", ".iso", ".bin", ".xex", ".elf", ".exe", ".dll"],
     detail:
-      "The game as it shipped: a cartridge dump, a disc image or the console's executables. Every route starts from your own copy, even a source port, which reads the art, music and levels from it.",
+      "**Where every route starts.** A cartridge dump, a disc image or the console's own executables. Even a source port reads the art, music and levels from it.",
     paths: ["emu", "recomp", "port"],
     at: [1, 6, 7],
     mat: [1, 1, 4],
@@ -42,7 +43,7 @@ const NODES: Node[] = [
     title: "Released source",
     sub: "rare",
     detail:
-      "Sometimes the developer publishes the code (Doom in 1997, Quake, a few later games). Then nobody has to decompile anything: porting can start right away.",
+      "**Rare, but the easy way in.** Some developers publish their code (Doom in 1997, Quake). Then nobody has to decompile anything.",
     paths: ["port"],
     at: [1, 15, 4],
     mat: [1, 5, 2],
@@ -54,7 +55,7 @@ const NODES: Node[] = [
     title: "Emulator",
     sub: "translates while you play",
     detail:
-      "Imitates the console's processor and chips, reading the game's instructions one by one as it runs. One emulator plays a whole library, but the translating never stops, so newer consoles need a strong PC.",
+      "**Pretends to be the console.** It translates the game's instructions one by one, the whole time you play. One emulator runs a whole library, but newer consoles need a strong PC.",
     paths: ["emu"],
     at: [2, 3, 4],
     mat: [2, 1, 2],
@@ -66,7 +67,7 @@ const NODES: Node[] = [
     title: "Recompiler",
     sub: "translates once, automatically",
     detail:
-      "Reads every function of the game's machine code once and writes equivalent C. Each game still needs setup and fixes by hand, typically weeks to months. Tools: N64: Recompiled, XenonRecomp, ReXGlue and more.",
+      "**Translates the whole game once.** Every function of machine code becomes equivalent C, automatically. Each game still needs weeks to months of fixes by hand. Tools: N64: Recompiled, XenonRecomp, ReXGlue.",
     paths: ["recomp"],
     at: [2, 9, 4],
     mat: [2, 3, 2],
@@ -78,7 +79,7 @@ const NODES: Node[] = [
     title: "Decompilation",
     sub: "people rewrite it in C",
     detail:
-      "Fans rewrite the game in C by hand, function by function, until compiling it gives back the identical original (\"matching\"). It often takes years, and is the usual way a console game gets source code at all.",
+      "**People rewrite the game in C by hand.** Function by function, until compiling it gives back the identical original (\"matching\"). Often years of work.",
     paths: ["port"],
     at: [2, 15, 4],
     mat: [2, 5, 2],
@@ -90,7 +91,7 @@ const NODES: Node[] = [
     title: "Generated C",
     sub: "correct, not readable",
     detail:
-      "Thousands of machine-written functions: faithful to the original, but full of registers and memory addresses instead of names. Modding hooks into it, but nobody edits it like normal code.",
+      "**Correct, but not for reading.** Thousands of machine-written functions with registers and addresses instead of names. Mods hook into it; nobody edits it like normal code.",
     paths: ["recomp"],
     at: [3, 9, 4],
     mat: [3, 3, 2],
@@ -102,7 +103,7 @@ const NODES: Node[] = [
     title: "Readable source",
     sub: "named, commented",
     detail:
-      "Source code people can read and change: named functions, comments, structure. Big changes like new renderers, mods and features become ordinary programming.",
+      "**Code people can read and change.** Named functions, comments, structure. New renderers, mods and features become ordinary programming.",
     paths: ["port"],
     at: [3, 15, 4],
     mat: [3, 5, 2],
@@ -114,7 +115,7 @@ const NODES: Node[] = [
     title: "Compiler + runtime",
     sub: "PC graphics, sound, input",
     detail:
-      "A normal compiler builds the C for x86 or ARM. A runtime (for recomps) or platform layer (for ports) stands in for the console's graphics, sound, controller and saves, using things like Vulkan, Metal and SDL.",
+      "**Turns the C into a PC program.** A normal compiler builds it for x86 or ARM. A runtime or platform layer replaces the console's graphics, sound, controller and saves (Vulkan, Metal, SDL…).",
     paths: ["recomp", "port"],
     at: [4, 10, 7],
     mat: [4, 3, 4],
@@ -126,7 +127,7 @@ const NODES: Node[] = [
     title: "Native game",
     sub: "a real .exe or app",
     detail:
-      "A real Windows, Mac, Linux or phone program. Widescreen, high frame rates and mods are now changes to that program, not hacks on top of an emulator.",
+      "**A real .exe or app.** For Windows, Mac, Linux, sometimes phones. Widescreen, high frame rates and mods are part of the program now, not hacks on an emulator.",
     paths: ["recomp", "port"],
     at: [5, 10, 7],
     mat: [5, 3, 4],
@@ -138,7 +139,7 @@ const NODES: Node[] = [
     title: "You play",
     sub: "on your PC",
     detail:
-      "Every route ends here. Emulation gets there first for almost any game; recomps and ports take work per game but run lighter and can go further.",
+      "**Every route ends here.** Emulation gets there first for almost any game. Recomps and ports take work per game, but run lighter and go further.",
     paths: ["emu", "recomp", "port"],
     at: [6, 6, 10],
     mat: [6, 2, 4],
@@ -161,6 +162,15 @@ const EDGES: Edge[] = [
   { from: "build", to: "native", paths: ["recomp", "port"] },
   { from: "native", to: "play", paths: ["recomp", "port"] },
 ];
+/** Wide screens: an open box takes the two free columns on each side (neighbours always leave them free) so its text isn't squeezed. */
+const openCols = (n: Node) => {
+  const start = Math.max(1, n.at[1] - 2);
+  const end = Math.min(21, n.at[1] + n.at[2] + 2);
+  return `${start} / ${end}`;
+};
+/** The description as HTML: escaped, with **bold** as the lead. */
+const detailHtml = (t: string) =>
+  t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\*\*(.+?)\*\*/g, '<strong class="n-lead">$1</strong>');
 const byId = Object.fromEntries(NODES.map((n) => [n.id, n]));
 /** A source port has two ways in; until one is picked the map alternates between them (a: decompile your copy, b: released source). */
 const BRANCH: Record<string, "a" | "b"> = { game: "a", decomp: "a", "game>decomp": "a", "decomp>src": "a", source: "b", "source>src": "b" };
@@ -218,7 +228,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
           data-node={n.id}
           data-paths={n.paths.join(" ")}
           data-branch={BRANCH[n.id]}
-          style={`--row:${n.at[0] * 2 - 1};--drow:${n.at[0] * 2};--col:${n.at[1]} / span ${n.at[2]};--mcol:${n.mat[1]} / span ${n.mat[2]}`}
+          style={`--row:${n.at[0] * 2 - 1};--drow:${n.at[0] * 2};--col:${n.at[1]} / span ${n.at[2]};--ocol:${openCols(n)};--mcol:${n.mat[1]} / span ${n.mat[2]}`}
         >
           <svg class="n-ring" aria-hidden="true"><rect /></svg>
           <button type="button" class="n-head" aria-expanded="false" aria-controls={`rd-${n.id}`}>
@@ -235,7 +245,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
           </button>
           <div class="n-more" id={`rd-${n.id}`}>
             <div>
-              <p class="n-detail">{n.detail}</p>
+              <p class="n-detail" set:html={detailHtml(n.detail)} />
             </div>
           </div>
         </div>
@@ -342,13 +352,28 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
       follow();
     };
 
-    /** Scroll so the clicked step, at its opened size, sits in the middle of the screen (or its top, if it's taller). */
+    /** Scroll so the clicked step, at its opened size, sits in the middle of the screen (or its top, if it's taller).
+     *  Own easing rather than the browser's smooth scroll, which is too brisk here; any wheel or touch takes over. */
+    let gliding = 0;
+    const stopGlide = () => cancelAnimationFrame(gliding);
+    for (const ev of ["wheel", "touchstart", "keydown"]) addEventListener(ev, stopGlide, { passive: true });
     const centre = (n: HTMLElement) => {
       const inner = n.querySelector<HTMLElement>(".n-more > div")!;
       const full = n.querySelector<HTMLElement>(".n-head")!.offsetHeight + (n.classList.contains("open") ? inner.scrollHeight : 0) + 2;
       const top = n.getBoundingClientRect().top + scrollY;
-      const y = full < innerHeight - 40 ? top + full / 2 - innerHeight / 2 : top - 20;
-      scrollTo({ top: Math.max(0, y), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      const y = Math.max(0, full < innerHeight - 40 ? top + full / 2 - innerHeight / 2 : top - 20);
+      stopGlide();
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return scrollTo(0, y);
+      const y0 = scrollY;
+      const ms = Math.min(1600, 700 + Math.abs(y - y0) * 0.9);
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const k = Math.min(1, (now - t0) / ms);
+        const e = k < 0.5 ? 4 * k * k * k : 1 - (-2 * k + 2) ** 3 / 2;
+        scrollTo(0, y0 + (y - y0) * e);
+        if (k < 1) gliding = requestAnimationFrame(step);
+      };
+      gliding = requestAnimationFrame(step);
     };
 
     /** Light a route up from the top down: each box and line waits by its distance from the start. */
@@ -551,6 +576,7 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   }
   .node.open {
     z-index: 3;
+    grid-column: var(--ocol);
     border-color: transparent;
     animation: breathe 3.2s ease-in-out infinite;
   }
@@ -598,14 +624,27 @@ const ROUTES: { key: Path | "all"; label: string; text: string }[] = [
   .node.open .n-more {
     grid-template-rows: 1fr;
   }
+  /* readable descriptions: near-white text on a darker inset, a coloured lead line, generous size and spacing */
   .n-detail {
-    margin: 0;
-    padding: 0.1rem 0.8rem 0.6rem;
-    border-top: 1px solid var(--line);
-    padding-top: 0.6rem;
-    font-size: 0.8rem;
-    line-height: 1.45;
+    margin: 0 0.4rem 0.4rem;
+    padding: 0.7rem 0.8rem 0.8rem;
+    border-radius: 8px;
+    background: rgb(5 7 12 / 0.55);
+    color: color-mix(in srgb, var(--fg) 90%, var(--muted));
+    font-size: 0.92rem;
+    line-height: 1.6;
     text-align: left;
+    text-wrap: pretty;
+  }
+  .n-detail :global(.n-lead) {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--tint);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .routes-fig[data-path="all"] .node.shared .n-detail :global(.n-lead) {
+    color: var(--fg);
   }
   /* boxes shared by several routes take the colour of the route being walked */
   .routes-fig[data-path="emu"] .node.shared {
