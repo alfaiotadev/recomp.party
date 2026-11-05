@@ -1626,6 +1626,14 @@
   based_on: [sp00nznet/GT5P]
   wikidata: Q2324928
   added: 2026-11-03
+- repo: erikomis/infamous2-recomp
+  game: inFAMOUS 2
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  based_on: [sp00nznet/ps3recomp, NoahBPeterson/ps3recomp]
+  wikidata: Q24300
+  added: 2026-11-05
 - repo: undecuple/project-pyrrhus
   game: Killzone 2
   platform: ps3
@@ -1844,6 +1852,11 @@
   kind: recomp
   wikidata: Q3321551
   added: 2026-10-28
+- repo: endercodezz/P3P3DS
+  game: "Shin Megami Tensei: Persona 3 Portable"
+  platform: psp
+  kind: port
+  added: 2026-11-05
 - repo: theweathervane/sfa3max-decomp
   game: Street Fighter Alpha 3 MAX
   platform: psp
@@ -2060,6 +2073,19 @@
   based_on: [cybersecurity/halo-ce-universal]
   wikidata: Q276217
   added: 2026-10-28
+- repo: MiddleDucky/HP-COS-Xbox-Recomp
+  game: Harry Potter and the Chamber of Secrets
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  wikidata: Q726167
+  added: 2026-11-05
+- repo: MiddleDucky/HP-PS-Xbox-Recomp
+  game: Harry Potter and the Philosopher's Stone
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  added: 2026-11-05
 - repo: TGP482/007Nightfire-XBERecomp
   game: "James Bond 007: Nightfire"
   platform: xbox
@@ -2235,6 +2261,13 @@
   kind: port
   wikidata: Q1974230
   added: 2026-10-30
+- repo: Matt-code-d/TheWarriorsRecomp
+  game: The Warriors
+  platform: xbox
+  kind: recomp
+  tool: Xbox XBE Recomp
+  wikidata: Q1974230
+  added: 2026-11-05
 - repo: phobos665/split2-recomp
   game: Timesplitters 2
   platform: xbox
@@ -2261,6 +2294,12 @@
   kind: recomp
   wikidata: Q21772565
   added: 2026-11-02
+- repo: MarkPremier/EvolutionRecomp
+  game: "Turok: Evolution"
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  added: 2026-11-05
 - repo: linkssy2/UrbanChaosRiotResponseBurnerEdition
   game: "Urban Chaos: Riot Response"
   platform: xbox
@@ -2744,6 +2783,13 @@
   tool: ReXGlue
   wikidata: Q11883844
   added: 2026-11-03
+- repo: gamboozino/ng2recomp
+  game: Ninja Gaiden II
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q2557356
+  added: 2026-11-05
 - repo: KamiTK2/openNG2
   game: Ninja Gaiden II
   platform: x360
@@ -3149,6 +3195,13 @@
   based_on: [codepdbh/nfsu2-recompiled]
   wikidata: Q247210
   added: 2026-10-31
+- repo: vasist15-source/nfs-carbon-mac
+  game: "Need for Speed: Carbon"
+  platform: pc
+  kind: recomp
+  tool: recomp-kit
+  wikidata: Q219795
+  added: 2026-11-05
 - repo: codepdbh/nfsmwpc-recompiled
   game: "Need for Speed: Most Wanted (2005)"
   platform: pc
@@ -3361,6 +3414,12 @@
   platform: nes
   kind: tool
   added: 2026-10-31
+- repo: exoteric33/ps2-native-recomp
+  game: ps2-native-recomp
+  platform: ps2
+  kind: tool
+  tool: ps2-web-recomp
+  added: 2026-11-05
 - repo: ran-j/PS2Recomp
   game: PS2Recomp
   platform: ps2
