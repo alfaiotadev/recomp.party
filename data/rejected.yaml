@@ -347,11 +347,37 @@
     source port.
   date: 2026-11-04
 - repo: SantiBros/SpiderMan2-2004-NX
-  reason: Nintendo Switch homebrew (releases are Switch .nro builds only), a console target, not a native PC/phone build.
+  reason: Nintendo Switch homebrew (releases are Switch .nro builds only), a
+    console target, not a native PC/phone build.
   date: 2026-11-04
 - repo: markaurel13/tekken3-nx
-  reason: Nintendo Switch homebrew (releases are Switch builds only), a console target, not a native PC/phone build.
+  reason: Nintendo Switch homebrew (releases are Switch builds only), a console
+    target, not a native PC/phone build.
   date: 2026-11-04
 - repo: TekRantGaming/whopping-recompilation-collection
   reason: Left out by curation (a launcher bundling three small Xbox 360 games).
   date: 2026-11-04
+- repo: Darhkfox/MickeyAndDonaldCollection
+  reason: It runs the original ROMs on a built-in Mega Drive emulator core with
+    patches, not a static recompilation or source port.
+  date: 2026-11-05
+- repo: truwa/nathan-drake-collection-macos
+  reason: It is an Apple Silicon launcher/wrapper around an existing PC port
+    rather than a game-specific recompilation or source port itself.
+  date: 2026-11-05
+- repo: AsobiCodes/rac-rs-launcher
+  reason: This repository is a launcher for another project, not a playable game
+    port or recompiler.
+  date: 2026-11-05
+- repo: intermission88/SedotDeck
+  reason: It is a launcher/updater for existing recomps, ports, and emulators, not
+    a game-specific recompilation, source port, or recompiler toolchain.
+  date: 2026-11-05
+- repo: TekRantGaming/incredible-hulk-recompiled
+  reason: It is an untested, incomplete recompilation base that cannot finish the
+    game, not a playable release.
+  date: 2026-11-05
+- repo: ILFforever/YW4Recomp
+  reason: It is an in-progress recompilation whose only release is build
+    dependencies, not a playable game build.
+  date: 2026-11-05
