@@ -8,6 +8,9 @@ permissions:
 
 jobs:
   check:
+    # The discovery bot's PRs are validated and built in discover.yml before they're opened; GitHub never runs CI for
+    # PRs opened with GITHUB_TOKEN anyway, it only leaves an empty run that turns red when the PR is merged.
+    if: github.event.pull_request.user.login != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
