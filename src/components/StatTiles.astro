@@ -98,9 +98,9 @@ const laneStyle = (ids: PlatformId[], k: number) => {
                 return (
                   <a
                     class="item"
-                    href={`/?platform=${id}#all-games`}
+                    href={`/?platform=${id}#timeline`}
                     data-platform={id}
-                    title={`Show the ${PLATFORMS[id]} games`}
+                    title={`Show the ${PLATFORMS[id]} releases and games`}
                     style={`width:${itemWidth(id)}px`}
                     aria-hidden={copy ? "true" : undefined}
                     tabindex={copy ? -1 : undefined}

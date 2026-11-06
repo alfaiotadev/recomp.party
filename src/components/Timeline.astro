@@ -22,7 +22,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
 });
 ---
 
-<section class="timeline" aria-label="Release timeline by platform">
+<section class="timeline" id="timeline" aria-label="Release timeline by platform">
   {layouts.map((l) => <input type="radio" name="tl-view" id={`tl-${l.view.id}`} checked={l.view.id === defaultView} />)}
   <div class="tl-head">
     <div>
@@ -678,6 +678,17 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       const known = ids.filter((id) => platButtons.some((b) => b.dataset.plat === id));
       if (known.length) setPlats(new Set(known));
     } catch {}
+    // One platform picked elsewhere (?platform=… or the platforms tile's "pick-platform" event) wins over the saved choice.
+    const pick = (id: string | null) => {
+      const btn = id ? platButtons.find((b) => b.dataset.plat === id) : undefined;
+      if (!btn) return;
+      setPlats(new Set([id!]));
+      // phones scroll the logo row sideways: bring the picked one into the middle of it
+      const row = btn.parentElement!;
+      if (row.scrollWidth > row.clientWidth) row.scrollLeft = btn.offsetLeft - row.offsetLeft - (row.clientWidth - btn.offsetWidth) / 2;
+    };
+    pick(new URLSearchParams(location.search).get("platform"));
+    document.addEventListener("pick-platform", (e) => pick((e as CustomEvent<string>).detail));
     if (sort !== "first") {
       root.classList.add("no-anim");
       relayout();
