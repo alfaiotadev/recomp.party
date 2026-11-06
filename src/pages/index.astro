@@ -157,7 +157,7 @@ const toolStrip = tools.slice(0, 8);
     // ?ai=… (from the Models page) picks a model or vendor
     const ai = params.get("ai");
     if (ai && form.elements.namedItem("ai").querySelector(`option[value="${CSS.escape(ai)}"]`)) form.elements.namedItem("ai").value = ai;
-    // ?platform=… (from the platform logos in the stats tiles) picks a platform
+    // ?platform=… (from the platform logos in the stats tiles) picks a platform; the timeline reads it too
     const pickPlatform = (id) => {
       const sel = form.elements.namedItem("platform");
       if (!sel.querySelector(`option[value="${CSS.escape(id)}"]`)) return false;
@@ -167,14 +167,16 @@ const toolStrip = tools.slice(0, 8);
     const platform = params.get("platform");
     const picked = platform ? pickPlatform(platform) : false;
     if (q || ai || picked) apply();
-    // on this page a logo filters in place instead of reloading
+    // on this page a logo filters in place instead of reloading: the games list here, the release timeline
+    // (both its desktop chart and phone list) through its "pick-platform" event, then jumps to the timeline
     document.addEventListener("click", (e) => {
       const a = e.target.closest?.("a[data-platform]");
       if (!a || e.metaKey || e.ctrlKey || e.shiftKey || !pickPlatform(a.dataset.platform)) return;
       e.preventDefault();
       apply();
-      history.replaceState(null, "", `/?platform=${a.dataset.platform}#all-games`);
-      document.getElementById("all-games").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      document.dispatchEvent(new CustomEvent("pick-platform", { detail: a.dataset.platform }));
+      history.replaceState(null, "", `/?platform=${a.dataset.platform}#timeline`);
+      document.getElementById("timeline").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     });
   })();
 </script>
