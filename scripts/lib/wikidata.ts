@@ -45,7 +45,8 @@ export async function sparql(query: string, tries = 5): Promise<Record<string, {
   }
 }
 
-export type WikidataCandidate = { id: string; label: string; description: string; igdb?: string; year?: string };
+/** platforms: English labels of the item's platforms (P400) */
+export type WikidataCandidate = { id: string; label: string; description: string; igdb?: string; year?: string; platforms: string[] };
 
 /** Search Wikidata for a game title; keep items that look like games (IGDB id or "video game" in the description). */
 export async function wikidataCandidates(title: string): Promise<WikidataCandidate[]> {
@@ -53,6 +54,14 @@ export async function wikidataCandidates(title: string): Promise<WikidataCandida
   const ids: string[] = search.search.map((s: { id: string }) => s.id);
   if (!ids.length) return [];
   const got = await wikidataApi({ action: "wbgetentities", ids: ids.join("|"), props: "labels|descriptions|claims", languages: "en|mul" });
+  const platformIds = (e: any): string[] =>
+    (e.claims?.P400 ?? []).map((c: any) => c.mainsnak?.datavalue?.value?.id).filter(Boolean);
+  const allPlatforms = [...new Set(ids.flatMap((id) => platformIds(got.entities[id])))];
+  const platformLabel: Record<string, string> = {};
+  for (let i = 0; i < allPlatforms.length; i += 50) {
+    const batch = await wikidataApi({ action: "wbgetentities", ids: allPlatforms.slice(i, i + 50).join("|"), props: "labels", languages: "en|mul" });
+    for (const [pid, pe] of Object.entries<any>(batch.entities)) platformLabel[pid] = pe.labels?.en?.value ?? pe.labels?.mul?.value ?? pid;
+  }
   return ids
     .map((id) => {
       const e = got.entities[id];
@@ -63,6 +72,7 @@ export async function wikidataCandidates(title: string): Promise<WikidataCandida
         description: e.descriptions?.en?.value ?? "",
         igdb: claim("P5794") as string | undefined,
         year: (claim("P577") as { time?: string } | undefined)?.time?.slice(1, 5),
+        platforms: platformIds(e).map((pid) => platformLabel[pid] ?? pid),
       };
     })
     .filter((c) => c.igdb || /video game/i.test(c.description));
