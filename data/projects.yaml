@@ -54,6 +54,13 @@
   based_on: [mstan/snesrecomp]
   wikidata: Q100096
   added: 2026-11-01
+- repo: MauricioSuporte/SuperBomberman5SNESRecomp
+  game: Super Bomberman 5
+  platform: snes
+  kind: recomp
+  tool: SNESRecomp
+  wikidata: Q3279162
+  added: 2026-11-06
 - repo: mstan/SuperMarioWorldRecomp
   game: Super Mario World
   platform: snes
@@ -705,6 +712,13 @@
   kind: recomp
   wikidata: Q170410
   added: 2026-11-03
+- repo: WitherBlitz/NSMB-Wii-Multiplayer-Recompilation
+  game: New Super Mario Bros. Wii
+  platform: wii
+  kind: recomp
+  tool: WiiCompiled
+  wikidata: Q170410
+  added: 2026-11-06
 - repo: solleo95/reuc-recomp
   game: "Resident Evil: The Umbrella Chronicles"
   platform: wii
@@ -838,6 +852,13 @@
   kind: recomp
   wikidata: Q3233480
   added: 2026-10-28
+- repo: LuvAbyss/B3-Express
+  game: Bayonetta 3
+  platform: switch
+  kind: recomp
+  tool: ScarletNX
+  wikidata: Q44997696
+  added: 2026-11-06
 - repo: Zexyen/Witch-Time
   game: Bayonetta 3
   platform: switch
@@ -1104,6 +1125,14 @@
   based_on: [Project-Holon/aletheia]
   wikidata: Q816034
   added: 2026-11-01
+- repo: DarthMDev/pmd-sky-recomp
+  game: "Pokémon Mystery Dungeon: Explorers of Sky"
+  platform: nds
+  kind: recomp
+  tool: ndsrecomp
+  based_on: [UsernameFodder/pmdsky-debug]
+  wikidata: Q1620555
+  added: 2026-11-06
 
 # --- Nintendo 3DS ----------------------------------------------------------------
 - repo: thefixinhixon/woohoo-flight-school
@@ -1134,6 +1163,13 @@
   kind: recomp
   wikidata: Q2366344
   added: 2026-11-01
+- repo: CmdrLucid/Project-Friday
+  game: Landstalker
+  platform: genesis
+  kind: recomp
+  tool: genrecomp
+  wikidata: Q1760261
+  added: 2026-11-06
 - repo: mstan/Sonic3AndKnucklesRecomp
   game: Sonic 3 & Knuckles
   platform: genesis
@@ -1524,6 +1560,12 @@
   kind: recomp
   wikidata: Q1584849
   added: 2026-11-03
+- repo: FridiNaTor1/SafeHouse
+  game: Sly Cooper
+  platform: ps2
+  kind: port
+  based_on: [theclub654/ProjectCane]
+  added: 2026-11-06
 - repo: theclub654/ProjectCane
   game: Sly Cooper and the Thievius Raccoonus
   platform: ps2
@@ -1846,6 +1888,13 @@
   tool: psprecomp
   wikidata: Q378928
   added: 2026-11-03
+- repo: SirNubs/Project-Cuga
+  game: Monster Hunter Freedom Unite
+  platform: psp
+  kind: recomp
+  tool: Yakumo
+  wikidata: Q378928
+  added: 2026-11-06
 - repo: TeamGDB/Yakumo
   game: Monster Hunter Portable 3rd HD Ver.
   platform: psp
@@ -2054,6 +2103,11 @@
   based_on: [xboxrecomp/xboxrecomp]
   wikidata: Q2101882
   added: 2026-10-30
+- repo: DivxPlays/redline-recompiled
+  game: Forza Motorsport
+  platform: xbox
+  kind: recomp
+  added: 2026-11-06
 - repo: hiburn8/Futurama-The-Game-The-Recomp
   game: "Futurama: The Game"
   platform: xbox
@@ -2652,6 +2706,13 @@
   tool: ReXGlue
   wikidata: Q12252310
   added: 2026-11-02
+- repo: Spooky098529/ITC-Recomp
+  game: Import Tuner Challenge
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q6007407
+  added: 2026-11-06
 - repo: anishchandra24/Juiced2-Recompiled
   game: "Juiced 2: Hot Import Nights"
   platform: x360
@@ -2750,6 +2811,12 @@
   kind: recomp
   wikidata: Q219795
   added: 2026-10-30
+- repo: mkalkhoven-po/nfs-carbon-ce-recomp
+  game: "Need for Speed: Carbon Collector's Edition"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  added: 2026-11-06
 - repo: bep1s69/nfsmw-ios
   game: "Need for Speed: Most Wanted"
   platform: x360
