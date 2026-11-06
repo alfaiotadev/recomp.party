@@ -8,11 +8,11 @@ import { CREDIT_ICONS } from "../lib/vendor-icons.ts";
 import CoverStack from "./CoverStack.astro";
 import StarTrend from "./StarTrend.astro";
 
-const { risers, biggest, starTrend, fresh, platform, most, fastest } = highlights;
-/** The two star slides share one card layout; the daily trend (absolute stars) goes with Biggest stars when there is one. */
+const { risers, biggest, starTrend, starTrendPct, fresh, platform, most, fastest } = highlights;
+/** The two star slides share one card layout; Rising stars charts daily growth in percent, Biggest stars in stars. */
 const starSlides = [
-  { id: "rising", slide: risers, trend: !biggest, foot: biggest ? `Growth since the start of the week, for projects that had at least ${RISING_MIN_BASE} stars then.` : undefined },
-  ...(biggest ? [{ id: "biggest", slide: biggest, trend: true, foot: undefined }] : []),
+  { id: "rising", slide: risers, trend: true, percent: !!biggest, foot: biggest ? `Growth since the start of the week, for projects that had at least ${RISING_MIN_BASE} stars then.` : undefined },
+  ...(biggest ? [{ id: "biggest", slide: biggest, trend: true, percent: false, foot: undefined }] : []),
 ].filter((s) => s.slide.items.length);
 const models = recentCredits(7);
 const GH_MARK =
@@ -126,7 +126,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             </ol>
           </article>
         )}
-        {starSlides.map(({ id, slide, trend, foot }) => (
+        {starSlides.map(({ id, slide, trend, percent, foot }) => (
           <article class="slide" id={`hl-${id}`} aria-label={slide.title}>
             <header>
               <p class="eyebrow">{slide.note}</p>
@@ -134,7 +134,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                 <svg class="star-fill" viewBox="0 0 16 16" aria-hidden="true"><path d={STAR_FILL} /></svg>
                 {slide.title}
               </h2>
-              {trend && <StarTrend days={starTrend} />}
+              {trend && <StarTrend days={percent ? starTrendPct : starTrend} percent={percent} />}
               {foot && <p class="rs-foot mono">{foot}</p>}
             </header>
             <ol class="items">

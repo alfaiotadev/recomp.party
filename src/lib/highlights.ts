@@ -31,6 +31,25 @@ function starTrend(): StarDay[] {
   });
 }
 
+/** The same days as growth: stars gained as a percentage of what those repos had the day before. */
+function starTrendPct(): StarDay[] {
+  const history = loadStarHistory();
+  const dates = Object.keys(history).sort();
+  const repos = games.map((g) => g.repo);
+  return dates.slice(1).map((date, i) => {
+    const before = history[dates[i]!]!;
+    const after = history[date]!;
+    let base = 0;
+    let gained = 0;
+    for (const r of repos)
+      if (before[r] !== undefined && after[r] !== undefined) {
+        base += before[r];
+        gained += after[r] - before[r];
+      }
+    return { date, gained: base ? (gained / base) * 100 : 0 };
+  });
+}
+
 /**
  * Stars gained over the last week, from the daily counts fetch.ts records in data/stars.json
  * (GitHub no longer lists stargazers, so there is no way to backfill). Two rankings of the same gains:
@@ -251,4 +270,4 @@ function fastest(): Fastest[] {
 }
 
 const stars = starSlides();
-export const highlights = { risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
+export const highlights = { risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), starTrendPct: starTrendPct(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
