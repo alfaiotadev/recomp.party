@@ -393,3 +393,7 @@
   reason: The repository claims a full Xbox 360 recompilation but has only a few
     kilobytes of C/C++ source, so its README is not backed by the code.
   date: 2026-11-05
+- repo: Decryptu/pokerecomp
+  reason: It is a from-scratch reimplementation, not a static recompilation or
+    source port.
+  date: 2026-11-06
