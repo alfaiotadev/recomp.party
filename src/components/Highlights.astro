@@ -2,13 +2,18 @@
 import PlatformGhost from "./PlatformGhost.astro";
 import { ago, entryPath, fitLogo, PLATFORMS, platformLogo } from "../lib/data.ts";
 import { recentCredits, shortModel } from "../lib/ai.ts";
-import { highlights } from "../lib/highlights.ts";
+import { highlights, RISING_MIN_BASE } from "../lib/highlights.ts";
 import { siteRepo } from "../lib/site-repo.ts";
 import { CREDIT_ICONS } from "../lib/vendor-icons.ts";
 import CoverStack from "./CoverStack.astro";
 import StarTrend from "./StarTrend.astro";
 
-const { risers, starTrend, fresh, platform, most, fastest } = highlights;
+const { risers, biggest, starTrend, fresh, platform, most, fastest } = highlights;
+/** The two star slides share one card layout; the daily trend (absolute stars) goes with Biggest stars when there is one. */
+const starSlides = [
+  { id: "rising", slide: risers, trend: !biggest, foot: biggest ? `Growth since the start of the week, for projects that had at least ${RISING_MIN_BASE} stars then.` : undefined },
+  ...(biggest ? [{ id: "biggest", slide: biggest, trend: true, foot: undefined }] : []),
+].filter((s) => s.slide.items.length);
 const models = recentCredits(7);
 const GH_MARK =
   "M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z";
@@ -28,7 +33,7 @@ const week7 = { commits: week.reduce((n, d) => n + d.commits.length, 0), merged:
 const dayUrl = (date: string) => `https://github.com/${site?.repo}/commits/main/?since=${date}&until=${date}`;
 const slides = [
   siteRepo && { id: "site", label: "recomp.party vitals" },
-  risers.items.length && { id: "rising", label: risers.title },
+  ...starSlides.map((s) => ({ id: s.id, label: s.slide.title })),
   fresh.items.length && { id: "fresh", label: fresh.title },
   platform && { id: "platform", label: "Platform of the week" },
   most.length && { id: "most", label: "Most recompiled" },
@@ -121,18 +126,19 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             </ol>
           </article>
         )}
-        {risers.items.length > 0 && (
-          <article class="slide" id="hl-rising" aria-label={risers.title}>
+        {starSlides.map(({ id, slide, trend, foot }) => (
+          <article class="slide" id={`hl-${id}`} aria-label={slide.title}>
             <header>
-              <p class="eyebrow">{risers.note}</p>
+              <p class="eyebrow">{slide.note}</p>
               <h2 class="rs-title">
                 <svg class="star-fill" viewBox="0 0 16 16" aria-hidden="true"><path d={STAR_FILL} /></svg>
-                {risers.title}
+                {slide.title}
               </h2>
-              <StarTrend days={starTrend} />
+              {trend && <StarTrend days={starTrend} />}
+              {foot && <p class="rs-foot mono">{foot}</p>}
             </header>
             <ol class="items">
-              {risers.items.map((r, i) => {
+              {slide.items.map((r, i) => {
                 const logo = mini(r.entry.platform);
                 return (
                   <li>
@@ -141,7 +147,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                       <span class="rank mono">{String(i + 1).padStart(2, "0")}</span>
                       <span class="big mono">
                         {r.value}
-                        {r.growth && (
+                        {r.starred && (
                           <svg class="star-fill" viewBox="0 0 16 16" aria-label="stars">
                             <path d={STAR_FILL} />
                           </svg>
@@ -162,7 +168,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
               })}
             </ol>
           </article>
-        )}
+        ))}
         {fresh.items.length > 0 && (
           <article class="slide" id="hl-fresh" aria-label={fresh.title}>
             <header>
@@ -723,6 +729,12 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     fill: currentColor;
     filter: drop-shadow(0 0 4px currentColor);
     flex: none;
+  }
+  .rs-foot {
+    margin: 0.8rem 0 0;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--muted);
   }
   .rs-title {
     display: flex;

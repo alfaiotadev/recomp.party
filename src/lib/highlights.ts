@@ -9,8 +9,13 @@ const DAY = 86_400_000;
 const now = Date.now();
 const weekAgo = now - 7 * DAY;
 
-/** `value` is the headline (stars gained), `growth` the gain relative to the star count at the start. */
-export type Riser = { entry: Entry; value: string; stars: number; growth?: string };
+/** `value` is the headline, `growth` the line under it; `starred`: the headline is a star count (gets a star icon). */
+export type Riser = { entry: Entry; value: string; stars: number; growth?: string; starred?: boolean };
+export type StarSlide = { title: string; note: string; items: Riser[] };
+
+/** Rising stars ranks by growth, which tiny repos would win with a handful of stars: they need this much to qualify. */
+export const RISING_MIN_BASE = 25;
+const RISING_MIN_GAIN = 10;
 
 /** Stars gained by all games between consecutive days of data/stars.json; only repos present on both days count. */
 export type StarDay = { date: string; gained: number };
@@ -28,11 +33,13 @@ function starTrend(): StarDay[] {
 
 /**
  * Stars gained over the last week, from the daily counts fetch.ts records in data/stars.json
- * (GitHub no longer lists stargazers, so there is no way to backfill). With less than a week of
- * history the available span is used and labelled; with a single day, young repos are ranked by
- * stars per day since creation instead.
+ * (GitHub no longer lists stargazers, so there is no way to backfill). Two rankings of the same gains:
+ *   rising   relative growth (projects with at least RISING_MIN_BASE stars a week ago and RISING_MIN_GAIN gained)
+ *   biggest  most stars gained
+ * With less than a week of history the available span is used and labelled; with a single day, young repos
+ * are ranked by stars per day since creation instead, and there is no "biggest" slide.
  */
-function risers(): { title: string; note: string; items: Riser[] } {
+function starSlides(): { rising: StarSlide; biggest?: StarSlide } {
   const all = games; // toolchains have their own page and the "Under the hood" section
   const history = loadStarHistory();
   const dates = Object.keys(history).sort();
@@ -46,21 +53,37 @@ function risers(): { title: string; note: string; items: Riser[] } {
       const p = (gain / Math.max(1, before)) * 100;
       return p >= 10 ? Math.round(p).toString() : p.toFixed(1);
     };
-    const items = all
+    const gains = all
       .map((entry) => {
         const before = history[base]?.[entry.repo];
-        return { entry, before, delta: before === undefined ? 0 : (entry.snap?.stars ?? 0) - before };
+        return { entry, before: before ?? 0, delta: before === undefined ? 0 : (entry.snap?.stars ?? 0) - before };
       })
-      .filter((r) => r.delta > 0)
+      .filter((r) => r.delta > 0);
+    const biggest = [...gains]
       .sort((a, b) => b.delta - a.delta)
       .slice(0, CARDS)
       .map(({ entry, delta, before }) => ({
         entry,
         value: `+${delta.toLocaleString("en")}`,
+        starred: true,
         stars: entry.snap!.stars,
-        growth: `▲ ${pct(delta, before!)}% in ${span}`,
+        growth: `▲ ${pct(delta, before)}% in ${span}`,
       }));
-    if (items.length) return { title: "Rising stars", note: `GitHub stars gained in ${span}`, items };
+    const rising = gains
+      .filter((r) => r.before >= RISING_MIN_BASE && r.delta >= RISING_MIN_GAIN)
+      .sort((a, b) => b.delta / b.before - a.delta / a.before)
+      .slice(0, CARDS)
+      .map(({ entry, delta, before }) => ({
+        entry,
+        value: `+${pct(delta, before)}%`,
+        stars: entry.snap!.stars,
+        growth: `▲ ${delta.toLocaleString("en")} ★ in ${span}`,
+      }));
+    if (biggest.length)
+      return {
+        rising: { title: "Rising stars", note: `Fastest growing on GitHub in ${span}`, items: rising.length ? rising : biggest },
+        biggest: { title: "Biggest stars", note: `GitHub stars gained in ${span}`, items: biggest },
+      };
   }
 
   const items = all
@@ -76,7 +99,7 @@ function risers(): { title: string; note: string; items: Riser[] } {
       value: `${Math.round(perDay).toLocaleString("en")}/day`,
       stars: entry.snap!.stars,
     }));
-  return { title: "Rising stars", note: "GitHub stars per day since the repo was created", items };
+  return { rising: { title: "Rising stars", note: "GitHub stars per day since the repo was created", items } };
 }
 
 function newReleases(): { title: string; note: string; items: Entry[]; rest: Entry[] } {
@@ -227,4 +250,5 @@ function fastest(): Fastest[] {
   return [...best.values()].sort((a, b) => a.days - b.days).slice(0, CARDS);
 }
 
-export const highlights = { risers: risers(), starTrend: starTrend(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
+const stars = starSlides();
+export const highlights = { risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
