@@ -1242,7 +1242,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   .lane {
     transition:
       transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
-      opacity 0.3s;
+      opacity 0.3s,
+      visibility 0s;
   }
   .no-anim :is(.row, .lane) {
     transition: none;
@@ -1254,9 +1255,16 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     }
   }
   /* a game's projects: hidden under the group row until it opens */
+  /* visibility as well as opacity: some browsers (Safari) don't fade an SVG <a> by opacity, which left the shut
+     rows drawn on top of their group row. Hidden only once the fade is over. */
   .row.child.shut {
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 0.3s,
+      visibility 0s 0.3s;
   }
   .row.group {
     cursor: pointer;
