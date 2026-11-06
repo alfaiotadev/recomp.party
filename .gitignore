@@ -1,4 +1,5 @@
-node_modules/
+# no trailing slash: also ignores a node_modules symlink (worktrees link the main checkout's)
+node_modules
 dist/
 .astro/
 .env
