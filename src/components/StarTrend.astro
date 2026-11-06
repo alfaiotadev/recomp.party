@@ -1,7 +1,8 @@
 ---
 /**
- * Stars gained per day across all games, as a small line with each day's value above its point. The readout
- * under it shows the latest day and follows the pointer. With a single day of history there is no line yet,
+ * Stars gained per day across all games, as a small line. Only the telling values are labelled (latest, peak,
+ * low; a valley's label sits under its point) in a compact form, so eight close points don't pile up into an
+ * unreadable row; the pointer shows any other day's value. The readout under it shows the latest day and follows the pointer. With a single day of history there is no line yet,
  * only the readout.
  */
 import type { StarDay } from "../lib/highlights.ts";
@@ -22,6 +23,15 @@ const area = `${line} L${points.at(-1)?.x} ${H} L${points[0]?.x} ${H} Z`;
 const fmt = (d: StarDay) =>
   `+${d.gained.toLocaleString("en")} ★ ${new Date(d.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" })}`;
 const last = days.at(-1);
+/** 2,524 → 2.5k: short enough to sit side by side */
+const compact = (v: number) => (v >= 1000 ? `${(v / 1000).toFixed(1).replace(/\.0$/, "")}k` : v.toLocaleString("en"));
+const vals = days.map((d) => d.gained);
+const peak = vals.indexOf(Math.max(...vals));
+const low = vals.indexOf(Math.min(...vals));
+/** labelled without hovering: the latest day, the peak and the low */
+const key = (i: number) => i === days.length - 1 || i === peak || i === low;
+/** a point lower than its neighbours gets its label underneath, out of the line's way */
+const below = (i: number) => (vals[i - 1] ?? Infinity) > vals[i]! && (vals[i + 1] ?? Infinity) > vals[i]!;
 ---
 
 {
@@ -40,11 +50,11 @@ const last = days.at(-1);
         {/* HTML labels over the SVG, so the text keeps its size however wide the chart is drawn */}
         {points.map((p, i) => (
           <span
-            class={`val mono${i === 0 ? " first" : ""}${i === points.length - 1 ? " last on" : ""}`}
+            class={`val mono${i === 0 ? " first" : ""}${i === points.length - 1 ? " last on" : ""}${key(i) ? " key" : ""}${below(i) ? " below" : ""}`}
             style={`left:${((p.x / W) * 100).toFixed(2)}%;top:${((p.y / H) * 100).toFixed(2)}%`}
             aria-hidden="true"
           >
-            {p.gained.toLocaleString("en")}
+            {compact(p.gained)}
           </span>
         ))}
         </div>
@@ -81,12 +91,14 @@ const last = days.at(-1);
       show(p);
       mark(pts.indexOf(p));
       cross.hidden = false;
+      fig.classList.add("hovering");
       cap.textContent = p.t;
     });
     svg.addEventListener("pointerleave", () => {
       show(pts.at(-1)!);
       mark(pts.length - 1);
       cross.hidden = true;
+      fig.classList.remove("hovering");
       cap.innerHTML = rest;
     });
   }
@@ -109,11 +121,27 @@ const last = days.at(-1);
   .val {
     position: absolute;
     translate: -50% calc(-100% - 6px);
-    font-size: 0.6rem;
+    font-size: 0.68rem;
     line-height: 1;
-    color: var(--faint);
+    color: var(--muted);
     white-space: nowrap;
     pointer-events: none;
+    visibility: hidden;
+    /* a dark halo keeps the digits clear of the line and the fill behind them */
+    text-shadow:
+      0 0 3px var(--surface),
+      0 0 3px var(--surface),
+      0 0 6px var(--surface);
+  }
+  .val.key {
+    visibility: visible;
+  }
+  /* while pointing, only the day under the pointer is labelled */
+  .hovering .val.key {
+    visibility: hidden;
+  }
+  .hovering .val.on {
+    visibility: visible;
   }
   .val.first {
     translate: -4px calc(-100% - 6px);
@@ -121,8 +149,18 @@ const last = days.at(-1);
   .val.last {
     translate: calc(-100% + 4px) calc(-100% - 6px);
   }
+  .val.below {
+    translate: -50% 7px;
+  }
+  .val.first.below {
+    translate: -4px 7px;
+  }
+  .val.last.below {
+    translate: calc(-100% + 4px) 7px;
+  }
   .val.on {
     color: var(--recomp);
+    font-weight: 600;
   }
   svg {
     display: block;
