@@ -505,6 +505,7 @@
   game: "Turok: Rage Wars"
   platform: n64
   kind: recomp
+  wikidata: Q3282847
   added: 2026-11-03
 - repo: jessetbh/VPW64Recomp
   game: Virtual Pro Wrestling 64
@@ -1329,6 +1330,7 @@
   platform: ps1
   kind: recomp
   tool: PSXRecomp
+  wikidata: Q3393331
   added: 2026-11-03
 - repo: khasinski/rage-racer-pc
   game: Rage Racer
@@ -1480,6 +1482,7 @@
   game: God Hand
   platform: ps2
   kind: recomp
+  wikidata: Q2553176
   added: 2026-11-03
 - repo: danielalves96/gow-pc-port
   game: God of War
@@ -1565,6 +1568,7 @@
   platform: ps2
   kind: port
   based_on: [theclub654/ProjectCane]
+  wikidata: Q40627
   added: 2026-11-06
 - repo: theclub654/ProjectCane
   game: Sly Cooper and the Thievius Raccoonus
@@ -1931,6 +1935,7 @@
   platform: xbox
   kind: recomp
   tool: Xbox XBE Recomp
+  wikidata: Q392778
   added: 2026-11-03
 - repo: hk21x/007eon-recomp
   game: "007: Everything or Nothing"
@@ -2107,6 +2112,7 @@
   game: Forza Motorsport
   platform: xbox
   kind: recomp
+  wikidata: Q1439326
   added: 2026-11-06
 - repo: hiburn8/Futurama-The-Game-The-Recomp
   game: "Futurama: The Game"
@@ -2353,6 +2359,7 @@
   platform: xbox
   kind: recomp
   tool: xboxrecomp
+  wikidata: Q2389052
   added: 2026-11-05
 - repo: linkssy2/UrbanChaosRiotResponseBurnerEdition
   game: "Urban Chaos: Riot Response"
@@ -2649,6 +2656,7 @@
   platform: x360
   kind: recomp
   tool: ReXGlue
+  wikidata: Q2090121
   added: 2026-11-03
 - repo: CaiusCodes/GoldenEye-007-XBLA-PC-Recomp
   game: GoldenEye 007
