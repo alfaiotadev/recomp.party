@@ -9,8 +9,11 @@ import type { StarDay } from "../lib/highlights.ts";
 
 interface Props {
   days: StarDay[];
+  /** `gained` is percent growth of all projects' stars that day, not a star count */
+  percent?: boolean;
 }
-const { days } = Astro.props;
+const { days, percent = false } = Astro.props;
+const num = (v: number) => (percent ? `${v.toFixed(v >= 10 ? 0 : 1)}%` : v.toLocaleString("en"));
 const W = 200;
 const H = 36; // drawing units; the chart is stretched to its CSS height
 const PAD = 4; // room for the end marker
@@ -21,10 +24,10 @@ const points = days.map((d, i) => ({ x: +x(i).toFixed(1), y: +y(d.gained).toFixe
 const line = points.map((p, i) => `${i ? "L" : "M"}${p.x} ${p.y}`).join(" ");
 const area = `${line} L${points.at(-1)?.x} ${H} L${points[0]?.x} ${H} Z`;
 const fmt = (d: StarDay) =>
-  `+${d.gained.toLocaleString("en")} ★ ${new Date(d.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" })}`;
+  `+${num(d.gained)}${percent ? "" : " ★"} ${new Date(d.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" })}`;
 const last = days.at(-1);
 /** 2,524 → 2.5k: short enough to sit side by side */
-const compact = (v: number) => (v >= 1000 ? `${(v / 1000).toFixed(1).replace(/\.0$/, "")}k` : v.toLocaleString("en"));
+const compact = (v: number) => (percent ? num(v) : v >= 1000 ? `${(v / 1000).toFixed(1).replace(/\.0$/, "")}k` : v.toLocaleString("en"));
 const vals = days.map((d) => d.gained);
 const peak = vals.indexOf(Math.max(...vals));
 const low = vals.indexOf(Math.min(...vals));
@@ -40,7 +43,7 @@ const below = (i: number) => (vals[i - 1] ?? Infinity) > vals[i]! && (vals[i + 1
       {points.length > 1 && (
         <div class="plot">
         {/* stretched to the height CSS gives it (taller on desktop); strokes keep their width */}
-        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`GitHub stars gained per day across all projects: ${days.map(fmt).join(", ")}`}>
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" role="img" aria-label={`${percent ? "Growth of GitHub stars" : "GitHub stars gained"} per day across all projects: ${days.map(fmt).join(", ")}`}>
           <path class="area" d={area} />
           <path class="line" d={line} />
           <line class="cross" x1="0" x2="0" y1="0" y2={H} hidden />
@@ -60,7 +63,7 @@ const below = (i: number) => (vals[i - 1] ?? Infinity) > vals[i]! && (vals[i + 1
         </div>
       )}
       <figcaption class="mono">
-        <b>+{last.gained.toLocaleString("en")}</b> stars across all projects since yesterday
+        <b>+{num(last.gained)}</b> {percent ? "growth in stars" : "stars"} across all projects since yesterday
       </figcaption>
     </figure>
   )
