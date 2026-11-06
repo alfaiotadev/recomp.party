@@ -157,7 +157,25 @@ const toolStrip = tools.slice(0, 8);
     // ?ai=… (from the Models page) picks a model or vendor
     const ai = params.get("ai");
     if (ai && form.elements.namedItem("ai").querySelector(`option[value="${CSS.escape(ai)}"]`)) form.elements.namedItem("ai").value = ai;
-    if (q || ai) apply();
+    // ?platform=… (from the platform logos in the stats tiles) picks a platform
+    const pickPlatform = (id) => {
+      const sel = form.elements.namedItem("platform");
+      if (!sel.querySelector(`option[value="${CSS.escape(id)}"]`)) return false;
+      sel.value = id;
+      return true;
+    };
+    const platform = params.get("platform");
+    const picked = platform ? pickPlatform(platform) : false;
+    if (q || ai || picked) apply();
+    // on this page a logo filters in place instead of reloading
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest?.("a[data-platform]");
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || !pickPlatform(a.dataset.platform)) return;
+      e.preventDefault();
+      apply();
+      history.replaceState(null, "", `/?platform=${a.dataset.platform}#all-games`);
+      document.getElementById("all-games").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    });
   })();
 </script>
 

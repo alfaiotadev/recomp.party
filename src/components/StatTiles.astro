@@ -96,15 +96,21 @@ const laneStyle = (ids: PlatformId[], k: number) => {
               ids.map((id) => {
                 const l = logoSize(id);
                 return (
-                  <span class="item" style={`width:${itemWidth(id)}px`} aria-hidden={copy ? "true" : undefined}>
+                  <a
+                    class="item"
+                    href={`/?platform=${id}#all-games`}
+                    data-platform={id}
+                    title={`Show the ${PLATFORMS[id]} games`}
+                    style={`width:${itemWidth(id)}px`}
+                    aria-hidden={copy ? "true" : undefined}
+                    tabindex={copy ? -1 : undefined}
+                  >
                     {l ? (
-                      <img class="logo-img" src={l.src} width={l.w} height={l.h} alt={copy ? "" : PLATFORMS[id]} title={PLATFORMS[id]} loading="lazy" />
+                      <img class="logo-img" src={l.src} width={l.w} height={l.h} alt={copy ? "" : PLATFORMS[id]} loading="lazy" />
                     ) : (
-                      <span class="logo-text" title={PLATFORMS[id]}>
-                        {PLATFORMS[id].split(" ")[0]}
-                      </span>
+                      <span class="logo-text">{PLATFORMS[id].split(" ")[0]}</span>
                     )}
-                  </span>
+                  </a>
                 );
               }),
             )}
@@ -445,11 +451,17 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     align-items: center;
     white-space: nowrap;
   }
-  .item img {
+  /* each logo filters the games list to its platform */
+  .item {
+    text-decoration: none;
+    color: inherit;
+  }
+  .item img,
+  .item .logo-text {
     opacity: 0.45;
     transition: opacity 0.15s;
   }
-  .item img:hover {
+  .item:is(:hover, :focus-visible) :is(img, .logo-text) {
     opacity: 1;
   }
   @keyframes drift {
