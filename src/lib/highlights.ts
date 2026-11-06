@@ -211,6 +211,8 @@ export type MostRecompiled = {
   ports: number;
   kind: Entry["kind"] | "mixed";
   platforms: { id: PlatformId; name: string; logo: Logo | undefined }[];
+  /** GitHub accounts behind the projects, most starred first */
+  owners: string[];
   cover?: Entry["cover"];
   /** Front-page game list filtered to this game. */
   href: string;
@@ -242,6 +244,8 @@ function mostRecompiled(): MostRecompiled[] {
         kind: kinds.size === 1 ? list[0]!.kind : "mixed",
         platforms,
         cover: list.find((e) => e.cover)?.cover,
+        // who made them, most starred first; one name per account even with several projects
+        owners: [...new Set([...list].sort((a, b) => (b.snap?.stars ?? 0) - (a.snap?.stars ?? 0)).map((e) => e.repo.split("/")[0]!))],
         href: `/?q=${encodeURIComponent(search)}#all-games`,
       };
     });

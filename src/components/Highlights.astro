@@ -155,6 +155,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                       </span>
                       {r.growth && <span class="growth mono">{r.growth}</span>}
                       <strong>{r.entry.game}</strong>
+                      <span class="by mono">by {r.entry.repo.split("/")[0]}</span>
                       <span class="meta mono">
                         {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[r.entry.platform]} /> : PLATFORMS[r.entry.platform]}
                         <span class="gh-star" title={`${r.stars.toLocaleString("en")} stars on GitHub`}>
@@ -193,6 +194,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                       {g.cover ? <img class="art" src={g.cover.src} width={g.cover.width} height={g.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={g.platform} />}
                       <span class={`badge ${g.kind}`}>{g.kind}</span>
                       <strong>{g.game}</strong>
+                      <span class="by mono">by {g.repo.split("/")[0]}</span>
                       <span class="meta mono">
                         {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[g.platform]} /> : PLATFORMS[g.platform]}
                         <span>{ago(g.firstReleaseAt)}</span>
@@ -262,6 +264,13 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                     <span class="big mono">×{m.count}</span>
                     <span class="growth mono">{[m.recomps && `${m.recomps} recomp${m.recomps > 1 ? "s" : ""}`, m.ports && `${m.ports} port${m.ports > 1 ? "s" : ""}`].filter(Boolean).join(" · ")}</span>
                     <strong>{m.title}</strong>
+                    {/* every maker, three names at most then a count */}
+                    <span class="by owners mono" title={`by ${m.owners.join(", ")}`}>
+                      {m.owners.slice(0, 3).map((o) => (
+                        <span class="owner">{o}</span>
+                      ))}
+                      {m.owners.length > 3 && <span class="owner more">+{m.owners.length - 3}</span>}
+                    </span>
                     <span class="meta mono plats">
                       {m.platforms.map((p) => {
                         const logo = mini(p.id);
@@ -292,6 +301,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                       <span class="big mono">{f.value}</span>
                       <span class="growth mono">out {new Date(f.released).toLocaleDateString("en", { month: "short", year: "numeric", timeZone: "UTC" })}</span>
                       <strong>{f.entry.game}</strong>
+                      <span class="by mono">by {f.entry.repo.split("/")[0]}</span>
                       <span class="meta mono">
                         {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[f.entry.platform]} /> : PLATFORMS[f.entry.platform]}
                         <span>{f.entry.tool}</span>
@@ -628,6 +638,44 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   }
   .item.has-art strong {
     text-shadow: 0 1px 8px rgb(0 0 0 / 0.8);
+  }
+  /* the GitHub account behind a card, under its title */
+  .by {
+    margin-top: -0.1rem;
+    font-size: 0.7rem;
+    line-height: 1.3;
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .item.has-art .by {
+    color: rgb(232 236 246 / 0.8);
+    text-shadow:
+      0 1px 4px rgb(0 0 0 / 0.9),
+      0 0 10px rgb(0 0 0 / 0.7);
+  }
+  /* most recompiled: one small pill per maker */
+  .by.owners {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.15rem;
+    white-space: normal;
+  }
+  .owner {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0.05rem 0.4rem;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: 999px;
+    background: rgb(11 13 20 / 0.7);
+    text-shadow: none;
+  }
+  .owner.more {
+    color: var(--faint);
   }
   .decode {
     color: var(--recomp);
