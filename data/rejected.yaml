@@ -397,3 +397,42 @@
   reason: It is a from-scratch reimplementation, not a static recompilation or
     source port.
   date: 2026-11-06
+- repo: viejunerd/Eglantine-PS5-
+  reason: It is a PS5 homebrew build of a Switch emulator, not a game-specific
+    static recompilation or source port.
+  date: 2026-11-07
+- repo: Tovarichtch/Odin
+  reason: It is a low-level arcade emulator, not a static recompilation or source port.
+  date: 2026-11-07
+- repo: RetroPortingToolKit/Retro-Launcher
+  reason: It is a launcher/frontend for managing recompilations, not a playable
+    game port or recompiler toolchain.
+  date: 2026-11-07
+- repo: Mabec-games/F-ZERO-GLINUX
+  reason: It is a launcher around a Dolphin-derived emulator runtime, not a
+    completed static recompilation or native source port.
+  date: 2026-11-07
+- repo: sp00nznet/recomp-launcher
+  reason: This is a generic installer/launcher for recomp projects, not a playable
+    game port or recompiler toolchain.
+  date: 2026-11-07
+- repo: Fire-Head/MHP
+  reason: This is an ASI mod/patch plugin for the existing PC port of Manhunt, not
+    a static recompilation or source port.
+  date: 2026-11-07
+- repo: chasem-dev/colosseum-launcher
+  reason: It is a launcher for a port rather than the port itself.
+  date: 2026-11-07
+- repo: tsapZ/SkylandersCoreOfLight
+  reason: It is a launcher/hub for multiple recompiled games rather than a
+    game-specific recompilation or source port.
+  date: 2026-11-07
+- repo: yefan911/automated-recompilers
+  reason: Experimental prototype recompiler with no demonstrated use by a playable
+    game project.
+  date: 2026-11-07
+- repo: CowKillers/letsgo-recomp-android
+  reason: It is an Android port layer with no downloadable playable build; the
+    release is only a launcher and the generated game code is intentionally
+    excluded.
+  date: 2026-11-07

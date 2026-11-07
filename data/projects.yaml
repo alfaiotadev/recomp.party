@@ -25,6 +25,12 @@
   added: 2026-11-01
 
 # --- SNES ------------------------------------------------------------------------
+- repo: DerrickGold/ar-recomp
+  game: ActRaiser
+  platform: snes
+  kind: recomp
+  wikidata: Q343033
+  added: 2026-11-07
 - repo: elliotttate/DKC1Recomp
   game: Donkey Kong Country
   platform: snes
@@ -270,6 +276,13 @@
   tool: N64Recomp
   wikidata: Q3143650
   added: 2026-10-30
+- repo: ogdanimal/HybridHeaven-Recomp
+  game: Hybrid Heaven
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  wikidata: Q3143650
+  added: 2026-11-07
 - repo: Mabec-games/iss2000-recomp
   game: International Superstar Soccer 2000
   platform: n64
@@ -501,6 +514,12 @@
   based_on: [zeldaret/oot]
   wikidata: Q213911
   added: 2026-10-28
+- repo: sostenesfreitas/ocarina-recomp
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: n64
+  kind: recomp
+  wikidata: Q213911
+  added: 2026-11-07
 - repo: ArtfulRascal8/rage-wars-recompiled
   game: "Turok: Rage Wars"
   platform: n64
@@ -567,6 +586,12 @@
   tool: DolRecomp
   wikidata: Q1258080
   added: 2026-11-01
+- repo: sabishii-bit/Gauntlet-Dark-Legacy-PC-Port
+  game: "Gauntlet: Dark Legacy"
+  platform: gc
+  kind: port
+  wikidata: Q2084001
+  added: 2026-11-07
 - repo: sonsegajp/Kirby-Air-Ride-Recompiled
   game: Kirby Air Ride
   platform: gc
@@ -606,6 +631,13 @@
   based_on: [PrimeDecomp/PrimeDecomp]
   wikidata: Q2089035
   added: 2026-10-31
+- repo: LLCOOLT/paper-cut
+  game: "Paper Mario: The Thousand-Year Door"
+  platform: gc
+  kind: port
+  based_on: [LLCOOLT/ttyd]
+  wikidata: Q1075255
+  added: 2026-11-07
 - repo: ogdanimal/SkiesOfArcadiaLegends-Recomp
   game: Skies of Arcadia Legends
   platform: gc
@@ -661,6 +693,13 @@
   kind: recomp
   wikidata: Q1052131
   added: 2026-10-31
+- repo: Mayo1970/melee-ps3
+  game: Super Smash Bros. Melee
+  platform: gc
+  kind: port
+  based_on: [doldecomp/melee]
+  wikidata: Q1052131
+  added: 2026-11-07
 - repo: chrissotraidis/bluewake
   game: "The Legend of Zelda: The Wind Waker"
   platform: gc
@@ -924,6 +963,12 @@
   based_on: [BelmanteGu/SuperMarioWonderRecomp]
   wikidata: Q63385672
   added: 2026-10-31
+- repo: lucabravi/MonZaMac
+  game: "Pokémon Legends: Z-A"
+  platform: switch
+  kind: recomp
+  wikidata: Q124672125
+  added: 2026-11-07
 - repo: raulzrrs/letsgo-recomp
   game: "Pokémon: Let's Go, Eevee!"
   platform: switch
@@ -1013,6 +1058,12 @@
   kind: recomp
   wikidata: Q64577191
   added: 2026-10-30
+- repo: ZuanCrisp/Zelda-TOTK-Port
+  game: "The Legend of Zelda: Tears of the Kingdom"
+  platform: switch
+  kind: recomp
+  wikidata: Q64577191
+  added: 2026-11-07
 - repo: josiahg2502-glitch/TomodachiLife-recomp
   game: "Tomodachi Life: Living the Dream"
   platform: switch
@@ -1047,6 +1098,12 @@
   tool: nxrecomp
   wikidata: Q136231470
   added: 2026-11-03
+- repo: NotRexed/Hookshot
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: switch2
+  kind: recomp
+  wikidata: Q213911
+  added: 2026-11-07
 
 # --- Game Boy --------------------------------------------------------------------
 - repo: bryanthaboi/gen1recomp
@@ -1064,6 +1121,27 @@
   added: 2026-11-01
 
 # --- Game Boy Advance ------------------------------------------------------------
+- repo: mstan/DragonBallZBuusFuryRecomp
+  game: "Dragon Ball Z: Buu's Fury"
+  platform: gba
+  kind: recomp
+  tool: gbarecomp
+  wikidata: Q3024823
+  added: 2026-11-07
+- repo: mstan/DragonBallZLegacyOfGokuRecomp
+  game: "Dragon Ball Z: The Legacy of Goku"
+  platform: gba
+  kind: recomp
+  tool: gbarecomp
+  wikidata: Q2705679
+  added: 2026-11-07
+- repo: mstan/DragonBallZLegacyofGokuIIRecomp
+  game: "Dragon Ball Z: The Legacy of Goku II"
+  platform: gba
+  kind: recomp
+  tool: gbarecomp
+  wikidata: Q3038740
+  added: 2026-11-07
 - repo: Shmargus/GSRecomp
   game: Golden Sun
   platform: gba
@@ -1171,6 +1249,11 @@
   tool: genrecomp
   wikidata: Q1760261
   added: 2026-11-06
+- repo: BTr-RJ/RoadRashTrilogy_Recomp
+  game: Road Rash Trilogy
+  platform: genesis
+  kind: recomp
+  added: 2026-11-07
 - repo: mstan/Sonic3AndKnucklesRecomp
   game: Sonic 3 & Knuckles
   platform: genesis
@@ -1557,6 +1640,13 @@
   based_on: [ran-j/PS2Recomp]
   wikidata: Q2441816
   added: 2026-10-30
+- repo: Korvonordico/shadow-of-rome-recompiled
+  game: Shadow of Rome
+  platform: ps2
+  kind: recomp
+  tool: PS2Recomp
+  wikidata: Q2705374
+  added: 2026-11-07
 - repo: menaman123/Sly-2-Recomp
   game: "Sly 2: Band of Thieves"
   platform: ps2
@@ -1779,6 +1869,12 @@
   kind: port
   wikidata: Q28127331
   added: 2026-11-01
+- repo: vascon-es/lego-dimensions-pc
+  game: LEGO Dimensions
+  platform: ps4
+  kind: port
+  wikidata: Q19789277
+  added: 2026-11-07
 - repo: bc160201983/medievil_2019_pc_port
   game: MediEvil
   platform: ps4
@@ -2059,6 +2155,12 @@
   kind: recomp
   wikidata: Q2630705
   added: 2026-11-03
+- repo: saironbusatto/CrimsonSkiesRecomp
+  game: "Crimson Skies: High Road to Revenge"
+  platform: xbox
+  kind: recomp
+  wikidata: Q629055
+  added: 2026-11-07
 - repo: linkssy2/DarkwatchDarkerEdition
   game: Darkwatch
   platform: xbox
@@ -2108,6 +2210,13 @@
   based_on: [xboxrecomp/xboxrecomp]
   wikidata: Q2101882
   added: 2026-10-30
+- repo: bassobr/Far-Cry-Instincts-Recomp
+  game: Far Cry Instincts
+  platform: xbox
+  kind: recomp
+  tool: fci-recomp
+  wikidata: Q2667534
+  added: 2026-11-07
 - repo: DivxPlays/redline-recompiled
   game: Forza Motorsport
   platform: xbox
@@ -2186,6 +2295,13 @@
   kind: recomp
   wikidata: Q3175831
   added: 2026-11-03
+- repo: MattSG/mm3-recomp
+  game: Midtown Madness 3
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  wikidata: Q3175831
+  added: 2026-11-07
 - repo: Jstackzz/MK-3D-rollback
   game: "Mortal Kombat: Deadly Alliance, Deception & Armageddon"
   platform: xbox
@@ -2693,6 +2809,19 @@
   tool: ReXGlue
   wikidata: Q1798154
   added: 2026-11-01
+- repo: ElGuslml/GHMetalRecomp
+  game: "Guitar Hero: Metallica"
+  platform: x360
+  kind: recomp
+  wikidata: Q1799178
+  added: 2026-11-07
+- repo: ElGuslml/GHVanHRecomp
+  game: "Guitar Hero: Van Halen"
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  wikidata: Q2603521
+  added: 2026-11-07
 - repo: saulob/hard-corps-uprising-recompiled
   game: "Hard Corps: Uprising"
   platform: x360
@@ -2995,6 +3124,13 @@
   tool: ReXGlue
   wikidata: Q1575181
   added: 2026-10-31
+- repo: cookingwithsimon/Skate2Recompiled
+  game: Skate 2
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q1575181
+  added: 2026-11-07
 - repo: 5C8/skate3recomp
   game: Skate 3
   platform: x360
@@ -3084,6 +3220,13 @@
   tool: ReXGlue
   wikidata: Q655031
   added: 2026-11-05
+- repo: saulob/tmnt-turtles-in-time-reshelled-recompiled
+  game: "Teenage Mutant Ninja Turtles: Turtles in Time Re-Shelled"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q4189928
+  added: 2026-11-07
 - repo: shihabal3amri/tekken-tag-tournament-2-pc
   game: Tekken Tag Tournament 2
   platform: x360
@@ -3188,6 +3331,18 @@
   tool: ReXGlue
   wikidata: Q1186739
   added: 2026-11-01
+- repo: nefariousjosiah/WWE-SVR2009-RECOMP
+  game: WWE SmackDown vs. Raw 2009
+  platform: x360
+  kind: recomp
+  wikidata: Q2038406
+  added: 2026-11-07
+- repo: nefariousjosiah/WWE-SVR2010-RECOMP
+  game: WWE SmackDown vs. Raw 2010
+  platform: x360
+  kind: recomp
+  wikidata: Q1314174
+  added: 2026-11-07
 - repo: KaikoClanworth1/wwe-svr2011-pc
   game: WWE SmackDown vs. Raw 2011
   platform: x360
@@ -3308,6 +3463,12 @@
   kind: recomp
   wikidata: Q726190
   added: 2026-10-31
+- repo: kanapitsas/portal2-recomp
+  game: Portal 2
+  platform: pc
+  kind: recomp
+  wikidata: Q279446
+  added: 2026-11-07
 - repo: Nazatric/ProtoDroid
   game: Prototype (2009)
   platform: pc
@@ -3395,6 +3556,11 @@
   kind: recomp
   note: Street Fighter Alpha 1–3, Super Street Fighter II Turbo, Super Gem Fighter Mini Mix and more in one launcher; replaces the earlier sfa2-recomp.
   added: 2026-10-31
+- repo: rsantos722/imsa-wcr-m2-recomp
+  game: IMSA presents World Championship Racing
+  platform: arcade
+  kind: recomp
+  added: 2026-11-07
 - repo: thefixinhixon/UltraCombo
   game: Killer Instinct (arcade) / Killer Instinct 2
   platform: arcade
