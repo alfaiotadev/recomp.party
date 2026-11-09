@@ -455,3 +455,14 @@
   reason: It is a multi-game Wii/GameCube emulator-style app for Android, not a
     game-specific static recompilation or source port.
   date: 2026-11-09
+- repo: GetBusbar/busbar
+  reason: Not a game recompilation, source port, or recompiler toolchain.
+  date: 2026-11-09
+- repo: trzz1214/RenHDrum
+  reason: It is a haptics research library for emulators, not a playable game port
+    or recompiler toolchain.
+  date: 2026-11-09
+- repo: chrissotraidis/tribespad
+  reason: It is source-build only with no prebuilt downloadable release that runs
+    the game.
+  date: 2026-11-09
