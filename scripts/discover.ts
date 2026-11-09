@@ -88,7 +88,9 @@ const hasCode = (s: RepoSnapshot) => Object.keys(languages.get(s.canonical) ?? {
 const skipped: { repo: string; why: string }[] = [];
 const eligible: RepoSnapshot[] = [];
 for (const s of found) {
-  if (known.has(s.canonical.toLowerCase())) continue; // a rename of something we already have
+  // A rename of something we already have, or a second slug (old name, other casing) for a repo seen above.
+  if (known.has(s.canonical.toLowerCase())) continue;
+  known.add(s.canonical.toLowerCase());
   const latest = s.releases[0];
   const why = s.isFork
     ? "fork"
