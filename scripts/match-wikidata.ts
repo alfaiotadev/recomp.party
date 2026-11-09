@@ -34,6 +34,7 @@ const PLATFORM_NAMES: Partial<Record<keyof typeof PLATFORMS, string[]>> = {
   dc: ["Sega Dreamcast"],
   ps1: ["PlayStation (console)"],
   psp: ["PlayStation Portable"],
+  vita: ["PlayStation Vita"],
   amiga: ["Amiga 500", "Amiga 1200", "Amiga CD32"],
 };
 const onPlatform = (c: Candidate, platform: keyof typeof PLATFORMS) => {

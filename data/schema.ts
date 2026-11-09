@@ -23,6 +23,7 @@ export const PLATFORMS = {
   ps4: "PlayStation 4",
   ps5: "PlayStation 5",
   psp: "PSP",
+  vita: "PS Vita",
   xbox: "Xbox",
   x360: "Xbox 360",
   amiga: "Amiga",

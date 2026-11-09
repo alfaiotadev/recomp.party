@@ -436,3 +436,22 @@
     release is only a launcher and the generated game code is intentionally
     excluded.
   date: 2026-11-07
+- repo: shanselman/gputaskman
+  reason: This is a GPU monitoring utility, not a game recompilation or source port.
+  date: 2026-11-09
+- repo: Mr-Shizzy/Game-Format-Converter
+  reason: It is a disc/image format converter utility, not a playable game port or
+    recompilation.
+  date: 2026-11-09
+- repo: rkaehn/uniform
+  reason: This is a general-purpose UI library, not a game recompilation, source
+    port, or recompiler toolchain.
+  date: 2026-11-09
+- repo: coolbho3k/emibios
+  reason: It is a GBA BIOS replacement, not a game-specific recompilation, source
+    port, or recompiler toolchain.
+  date: 2026-11-09
+- repo: Maddex712/WiiDS
+  reason: It is a multi-game Wii/GameCube emulator-style app for Android, not a
+    game-specific static recompilation or source port.
+  date: 2026-11-09
