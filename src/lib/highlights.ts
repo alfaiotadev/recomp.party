@@ -1,6 +1,6 @@
 /** Weekly highlights for the front-page carousel. Everything is computed at build time. */
 import { loadStarHistory } from "../../data/load.ts";
-import { games, PLATFORMS, platformLogo, type Entry, type Logo, type PlatformId } from "./data.ts";
+import { games, milestones, PLATFORMS, platformLogo, type Entry, type Logo, type Milestone, type PlatformId } from "./data.ts";
 
 /** Cards per slide: three full rows of two on phones; wider screens show the first five (or four) in one row. */
 const CARDS = 6;
@@ -134,6 +134,36 @@ function newReleases(): { title: string; note: string; items: Entry[]; rest: Ent
     /** Earlier releases in the same window that don't fit on the cards. */
     rest: sorted.slice(CARDS),
   };
+}
+
+/** Rows on the Latest updates slide: two columns of five on wide screens. */
+const UPDATES = 10;
+
+export type Update =
+  | { type: "release"; at: string; entry: Entry; tag: string; name: string; url: string; pre: boolean; earlier: number }
+  | { type: "milestone"; at: string; milestone: Milestone };
+
+/**
+ * The feed as a slide: new versions of projects that already had a release (first releases are on New this week),
+ * one row per project with the newest on top, mixed with outside milestones by date.
+ */
+function latestUpdates(): Update[] {
+  const releases: Update[] = games.flatMap((entry) => {
+    const first = entry.firstReleaseAt;
+    const later = (entry.snap?.releases ?? [])
+      .filter((r) => first && r.publishedAt > first)
+      .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+    const r = later[0];
+    if (!r) return [];
+    const earlier = later.filter((x) => Date.parse(x.publishedAt) >= weekAgo).length - 1;
+    return [{ type: "release" as const, at: r.publishedAt, entry, tag: r.tag, name: r.name || r.tag, url: r.url, pre: r.prerelease, earlier: Math.max(0, earlier) }];
+  });
+  // Releases fill ten rows within a day or two, so milestones from the last two weeks always get a row.
+  const outside: Update[] = milestones
+    .filter((m) => Date.parse(m.date) >= now - 14 * DAY)
+    .map((milestone) => ({ type: "milestone" as const, at: `${milestone.date}T12:00:00Z`, milestone }));
+  const newest = releases.sort((a, b) => b.at.localeCompare(a.at)).slice(0, UPDATES - outside.length);
+  return [...newest, ...outside].sort((a, b) => b.at.localeCompare(a.at));
 }
 
 export type PlatformOfWeek = {
@@ -274,4 +304,4 @@ function fastest(): Fastest[] {
 }
 
 const stars = starSlides();
-export const highlights = { risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), starTrendPct: starTrendPct(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
+export const highlights = { updates: latestUpdates(), risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), starTrendPct: starTrendPct(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
