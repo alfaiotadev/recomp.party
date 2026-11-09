@@ -1,13 +1,13 @@
 ---
 import PlatformGhost from "./PlatformGhost.astro";
-import { ago, entryPath, fitLogo, PLATFORMS, platformLogo } from "../lib/data.ts";
+import { ago, entryPath, fitLogo, MILESTONE_KINDS, milestonePath, PLATFORMS, platformLogo } from "../lib/data.ts";
 import { recentCredits, shortModel } from "../lib/ai.ts";
 import { highlights, RISING_MIN_BASE } from "../lib/highlights.ts";
-import { CREDIT_ICONS } from "../lib/vendor-icons.ts";
+import { CREDIT_ICONS, VENDOR_ICONS } from "../lib/vendor-icons.ts";
 import CoverStack from "./CoverStack.astro";
 import StarTrend from "./StarTrend.astro";
 
-const { risers, biggest, starTrend, starTrendPct, fresh, platform, most, fastest } = highlights;
+const { updates, risers, biggest, starTrend, starTrendPct, fresh, platform, most, fastest } = highlights;
 /** The two star slides share one card layout; Rising stars charts daily growth in percent, Biggest stars in stars. */
 const starSlides = [
   { id: "rising", slide: risers, trend: true, percent: !!biggest, foot: biggest ? `Growth since the start of the week, for projects that had at least ${RISING_MIN_BASE} stars then.` : undefined },
@@ -15,6 +15,7 @@ const starSlides = [
 ].filter((s) => s.slide.items.length);
 const models = recentCredits(7);
 const slides = [
+  updates.length && { id: "updates", label: "Latest updates" },
   ...starSlides.map((s) => ({ id: s.id, label: s.slide.title })),
   fresh.items.length && { id: "fresh", label: fresh.title },
   platform && { id: "platform", label: "Platform of the week" },
@@ -22,6 +23,14 @@ const slides = [
   fastest.length && { id: "fastest", label: "Fastest recomps" },
   models.ranking.length && { id: "models", label: "Top models" },
 ].filter(Boolean) as { id: string; label: string }[];
+/** The RSS mark (feed icon, public domain). */
+/** "5 h ago" within the last day: releases land many times a day, so "today" would say nothing. */
+const when = (iso: string) => {
+  const h = Math.floor((Date.now() - Date.parse(iso)) / 3_600_000);
+  return h < 1 ? "just now" : h < 24 ? `${h} h ago` : ago(iso);
+};
+const RSS =
+  "M3.5 16.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM1.5 9.5a13 13 0 0 1 13 13h-3a10 10 0 0 0-10-10v-3Zm0-7a20 20 0 0 1 20 20h-3a17 17 0 0 0-17-17v-3Z";
 /** GitHub's star (Primer Octicons star-16 / star-fill-16, MIT). */
 const STAR =
   "M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z";
@@ -44,6 +53,62 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   slides.length > 0 && (
     <section class="hl" id="hl" aria-roledescription="carousel" aria-label="This week">
       <div class="hl-track" id="hl-track" tabindex="0">
+        {updates.length > 0 && (
+          <article class="slide upd-slide" id="hl-updates" aria-label="Latest updates">
+            <header>
+              <p class="eyebrow">new versions, as they ship</p>
+              <h2 class="rs-title">
+                <svg class="rss-mark" viewBox="0 0 24 24" aria-hidden="true"><path d={RSS} /></svg>
+                Latest updates
+              </h2>
+              <p class="upd-note">Updates to listed recomps and ports, plus outside events that touch them.</p>
+              <p class="upd-cta">
+                <a class="cta-btn mono" href="/feed.xml">
+                  <svg class="rss-mark" viewBox="0 0 24 24" aria-hidden="true"><path d={RSS} /></svg>
+                  Follow via RSS
+                </a>
+                <span class="mono">Every new release in your feed reader.</span>
+              </p>
+            </header>
+            <ol class="upd-list">
+              {updates.map((u) =>
+                u.type === "release" ? (
+                  <li>
+                    <a class="upd" href={entryPath(u.entry)} title={`${u.entry.game}: ${u.name}`}>
+                      {u.entry.cover ? (
+                        <img class="upd-art" src={u.entry.cover.src} width={u.entry.cover.width} height={u.entry.cover.height} alt="" loading="lazy" decoding="async" />
+                      ) : (
+                        <span class="upd-art upd-icon">{(() => { const l = mini(u.entry.platform); return l && <img class="logo-img" src={l.src} width={Math.min(l.w, 28)} height={+(Math.min(l.w, 28) * l.h / l.w).toFixed(1)} alt="" />; })()}</span>
+                      )}
+                      <span class="upd-body">
+                        <strong>{u.entry.game}</strong>
+                        <span class="upd-meta mono">
+                          <span class="upd-tag">{u.tag}</span>
+                          {u.pre && <span class="upd-pre">pre</span>}
+                          {u.earlier > 0 && <span class="upd-more" title={`${u.earlier} more this week`}>+{u.earlier}<span class="upd-long"> more this week</span></span>}
+                        </span>
+                      </span>
+                      <span class="upd-when mono" data-at={u.at}>{when(u.at)}</span>
+                    </a>
+                  </li>
+                ) : (
+                  <li>
+                    <a class={`upd upd-ms v-${u.milestone.vendor}`} href={milestonePath(u.milestone)} title={u.milestone.title}>
+                      <span class="upd-art upd-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d={VENDOR_ICONS[u.milestone.vendor]} /></svg>
+                      </span>
+                      <span class="upd-body">
+                        <strong>{u.milestone.title}</strong>
+                        <span class="upd-meta mono">{MILESTONE_KINDS[u.milestone.kind]}</span>
+                      </span>
+                      <span class="upd-when mono" data-at={u.at}>{when(u.at)}</span>
+                    </a>
+                  </li>
+                ),
+              )}
+            </ol>
+          </article>
+        )}
         {starSlides.map(({ id, slide, trend, percent, foot }) => (
           <article class="slide" id={`hl-${id}`} aria-label={slide.title}>
             <header>
@@ -294,6 +359,12 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
 
 <script is:inline>
   (() => {
+    // Latest updates: the build can be hours old, so relative times are redone in the browser.
+    for (const el of document.querySelectorAll(".upd-when[data-at]")) {
+      const h = Math.floor((Date.now() - Date.parse(el.dataset.at)) / 3_600_000);
+      const d = Math.floor(h / 24);
+      el.textContent = h < 1 ? "just now" : h < 24 ? `${h} h ago` : d < 2 ? "yesterday" : d < 45 ? `${d} days ago` : el.textContent;
+    }
     const root = document.getElementById("hl");
     const track = document.getElementById("hl-track");
     const tabsEl = document.getElementById("hl-tabs");
@@ -1011,6 +1082,156 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   @media (max-width: 520px) {
     .tab-label {
       font-size: 0.6rem;
+    }
+  }
+  /* Latest updates: the RSS feed as the carousel's first page, with a call to subscribe */
+  .rss-mark {
+    width: 0.85em;
+    height: 0.85em;
+    fill: #f26522;
+  }
+  .upd-note {
+    margin: 0.6rem 0 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .upd-cta {
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+  .upd-cta > span {
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid rgb(242 101 34 / 0.45);
+    border-radius: 999px;
+    background: rgb(242 101 34 / 0.1);
+    color: var(--fg);
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .cta-btn:hover,
+  .cta-btn:focus-visible {
+    background: rgb(242 101 34 / 0.2);
+    border-color: rgb(242 101 34 / 0.8);
+  }
+  .upd-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(5, auto);
+    grid-auto-flow: column;
+    gap: 0.4rem 1rem;
+    align-content: start;
+  }
+  .upd {
+    display: grid;
+    grid-template-columns: 2.1rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.35rem 0.6rem 0.35rem 0.35rem;
+    border-radius: 8px;
+    background: rgb(255 255 255 / 0.03);
+    border: 1px solid rgb(255 255 255 / 0.05);
+    color: var(--fg);
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .upd:hover,
+  .upd:focus-visible {
+    background: rgb(255 255 255 / 0.07);
+    border-color: rgb(255 255 255 / 0.14);
+  }
+  .upd-art {
+    width: 2.1rem;
+    height: 2.8rem;
+    border-radius: 4px;
+    object-fit: cover;
+    background: rgb(255 255 255 / 0.05);
+    overflow: hidden;
+    position: relative;
+  }
+  .upd-icon {
+    display: grid;
+    place-items: center;
+    height: 2.1rem;
+  }
+  .upd-icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: currentColor;
+  }
+  .upd-ms {
+    border-style: dashed;
+  }
+  .upd-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .upd-body strong {
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .upd-meta {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    font-size: 0.68rem;
+    color: var(--muted);
+    min-width: 0;
+  }
+  .upd-tag {
+    flex: 0 1 auto;
+    min-width: 3ch;
+    color: var(--recomp);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .upd-pre {
+    padding: 0 0.3rem;
+    border: 1px solid rgb(227 179 65 / 0.5);
+    border-radius: 3px;
+    color: #e3b341;
+    font-size: 0.6rem;
+    flex: none;
+  }
+  .upd-more {
+    flex: none;
+  }
+  .upd-when {
+    font-size: 0.68rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  @media (max-width: 760px) {
+    .upd-list {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+      grid-auto-flow: row;
+    }
+    .upd-long {
+      display: none;
+    }
+    .upd-cta {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
     }
   }
 </style>
