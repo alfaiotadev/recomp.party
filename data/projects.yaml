@@ -1888,6 +1888,12 @@
   based_on: [sp00nznet/ps3recomp]
   wikidata: Q15073096
   added: 2026-10-31
+- repo: mauricristiano95-hub/F1_CE_PS3
+  game: Formula One Championship Edition
+  platform: ps3
+  kind: recomp
+  wikidata: Q593572
+  added: 2026-11-09
 - repo: otavix010/gow-ascension-pc
   game: "God of War: Ascension"
   platform: ps3
@@ -3900,6 +3906,12 @@
   platform: nes
   kind: tool
   added: 2026-10-31
+- repo: TheLostPantheon/nativ
+  game: Project Nativ
+  platform: vita
+  kind: tool
+  note: Player launcher for Killzone Mercenary, Uncharted Golden Abyss, Unit 13 and Shovel Knight.
+  added: 2026-11-09
 - repo: exoteric33/ps2-native-recomp
   game: ps2-native-recomp
   platform: ps2
