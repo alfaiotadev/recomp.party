@@ -83,6 +83,69 @@ export async function fromWebSearch(days: number): Promise<Candidate[]> {
   return githubSlugs(text).map((repo) => ({ repo, via: "web search (Gemini grounding)" }));
 }
 
+const KAGI = "https://kagi.com/api/v1";
+/** Web searches for Kagi: news sites, Reddit and blogs write about releases GitHub search misses. */
+const KAGI_QUERIES = [
+  "static recompilation PC port release github",
+  "recompiled native PC port released",
+  "decompilation native PC port download",
+  "recomp release reddit",
+  "unofficial PC port github release",
+];
+/** Article pages read in full per run, for repo links only in the body (Extract: $0.004 a page). */
+const KAGI_EXTRACT = 6;
+
+async function kagi<T>(path: string, body: unknown, key: string): Promise<T> {
+  const res = await fetch(`${KAGI}/${path}`, {
+    method: "POST",
+    headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(60_000),
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  return (await res.json()) as T;
+}
+
+/**
+ * Kagi web search ($0.012 a query): GitHub repos straight from the results, plus repo links inside the
+ * newest non-GitHub articles (read with Kagi Extract). Needs KAGI_API_KEY; ~5 queries + 6 pages a run.
+ */
+export async function fromKagi(days: number): Promise<Candidate[]> {
+  const key = process.env.KAGI_API_KEY;
+  if (!key) return [];
+  const out: Candidate[] = [];
+  const articles = new Map<string, number>();
+  for (const query of KAGI_QUERIES) {
+    try {
+      const res = await kagi<{ data?: { search?: { url: string; snippet?: string; time?: string }[] } }>(
+        "search",
+        { query, filters: { after: daysAgo(days) } },
+        key,
+      );
+      for (const r of res.data?.search ?? []) {
+        const slugs = githubSlugs(`${r.url} ${r.snippet ?? ""}`);
+        for (const repo of slugs) out.push({ repo, via: `Kagi search "${query}"` });
+        if (!slugs.length && !/github\.com/i.test(r.url)) articles.set(r.url, Date.parse(r.time ?? "") || 0);
+      }
+    } catch (err) {
+      console.warn(`  [kagi] ${query}: ${(err as Error).message}`);
+    }
+  }
+  // Listing pages (directories, wikis) rarely change; the newest dated articles are the release posts.
+  const read = [...articles].filter(([, t]) => t > 0).sort((a, b) => b[1] - a[1]).slice(0, KAGI_EXTRACT).map(([url]) => url);
+  if (read.length) {
+    try {
+      const res = await kagi<{ data?: { url: string; markdown?: string }[] }>("extract", { pages: read.map((url) => ({ url })) }, key);
+      for (const page of res.data ?? []) {
+        for (const repo of githubSlugs(page.markdown ?? "")) out.push({ repo, via: `Kagi ${page.url}` });
+      }
+    } catch (err) {
+      console.warn(`  [kagi] extract: ${(err as Error).message}`);
+    }
+  }
+  return out;
+}
+
 /** PixelCherryNinja's daily emulation/recomp news posts (Blogger JSON feed). */
 export async function fromPixelCherryNinja(days: number): Promise<Candidate[]> {
   const since = new Date(Date.now() - days * 86_400_000).toISOString();
