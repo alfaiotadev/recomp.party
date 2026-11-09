@@ -20,6 +20,7 @@ import { titleKey, wikidataCandidates } from "./lib/wikidata.ts";
 import {
   fromGitHubSearch,
   fromHackerNews,
+  fromKagi,
   fromMrSujano,
   fromPixelCherryNinja,
   fromWebSearch,
@@ -47,6 +48,7 @@ if (only) {
     ["PixelCherryNinja", fromPixelCherryNinja(DAYS)],
     ["MrSujano", fromMrSujano(DAYS)],
     ["Hacker News", fromHackerNews(DAYS)],
+    ["Kagi search", fromKagi(DAYS)],
     ["web search via Gemini", fromWebSearch(DAYS)],
   ];
   const results = await Promise.all(sources.map(([, p]) => p));
@@ -54,7 +56,8 @@ if (only) {
   sourceSummary = sources
     .map(([name], i) => {
       const n = results[i]!.length;
-      const note = name.includes("Gemini") && !n ? (process.env.GEMINI_API_KEY ? "no results or quota exhausted" : "not configured") : `${n}`;
+      const key = name.includes("Gemini") ? "GEMINI_API_KEY" : name.includes("Kagi") ? "KAGI_API_KEY" : null;
+      const note = key && !n ? (process.env[key] ? "no results or quota exhausted" : "not configured") : `${n}`;
       return `${name} (${note})`;
     })
     .join(", ");

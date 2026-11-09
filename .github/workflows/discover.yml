@@ -1,6 +1,6 @@
 name: Discover projects
 
-# Daily: search GitHub, Hacker News and (with GEMINI_API_KEY) the web for new playable recomps/ports,
+# Daily: search GitHub, Hacker News and (with KAGI_API_KEY / GEMINI_API_KEY) the web for new playable recomps/ports,
 # classify them with free LLM tiers, and open (or update) one pull request for a human to review.
 # The header countdown on the site assumes this schedule: keep DISCOVERY_CRON in src/lib/discovery.ts in sync.
 on:
@@ -38,6 +38,7 @@ jobs:
           COMMAND_CODE_API_KEY: ${{ secrets.COMMAND_CODE_API_KEY }}
           DO_NOT_TRACK: "1" # Command Code: no telemetry
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          KAGI_API_KEY: ${{ secrets.KAGI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
