@@ -108,6 +108,12 @@
   kind: port
   wikidata: Q370055
   added: 2026-11-03
+- repo: Junior-Jones/Top-Gear-SNES-Static-Recomp
+  game: Top Gear
+  platform: snes
+  kind: recomp
+  wikidata: Q2721899
+  added: 2026-11-09
 
 # --- Nintendo 64 -----------------------------------------------------------------
 - repo: thebradshaw/1080-Snowboarding-decomp
@@ -811,6 +817,12 @@
   kind: recomp
   wikidata: Q1053024
   added: 2026-11-01
+- repo: PotatoRecomp/B2HWii-Android
+  game: Sengoku Basara 2 Heroes
+  platform: wii
+  kind: recomp
+  tool: WiiCompiled
+  added: 2026-11-09
 - repo: bigmak94/GalaxyQuest
   game: Super Mario Galaxy
   platform: wii
@@ -1007,6 +1019,12 @@
   kind: recomp
   wikidata: Q30302563
   added: 2026-10-28
+- repo: Brandon04Gonzalez/nier-android
+  game: NieR:Automata
+  platform: switch
+  kind: port
+  wikidata: Q21078985
+  added: 2026-11-09
 - repo: Brandon04Gonzalez/p5r-android
   game: Persona 5 Royal
   platform: switch
@@ -1183,6 +1201,13 @@
   tool: nxrecomp
   wikidata: Q136231470
   added: 2026-11-03
+- repo: dsi-hub/HookLink
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: switch2
+  kind: port
+  tool: nxnative
+  wikidata: Q213911
+  added: 2026-11-09
 - repo: NotRexed/Hookshot
   game: "The Legend of Zelda: Ocarina of Time"
   platform: switch2
@@ -1576,6 +1601,13 @@
   based_on: [mstan/psxrecomp]
   wikidata: Q2713506
   added: 2026-10-31
+- repo: PeriBluGaming/ToyStory2Recomp
+  game: "Toy Story 2: Buzz Lightyear to the Rescue!"
+  platform: ps1
+  kind: recomp
+  tool: psxrecomp
+  wikidata: Q2709135
+  added: 2026-11-09
 - repo: JEschete/VS-NativePort
   game: Vagrant Story
   platform: ps1
@@ -1737,6 +1769,13 @@
   based_on: [ran-j/PS2Recomp]
   wikidata: Q1129775
   added: 2026-10-31
+- repo: BioRhythmicStudios/Maximo-GTG
+  game: "Maximo: Ghosts to Glory"
+  platform: ps2
+  kind: recomp
+  tool: PS2Recomp
+  wikidata: Q4043833
+  added: 2026-11-09
 - repo: AsobiCodes/rac-rs
   game: Ratchet & Clank
   platform: ps2
@@ -1931,6 +1970,13 @@
   kind: recomp
   wikidata: Q528128
   added: 2026-10-31
+- repo: gustavomorinaga/project-vekta
+  game: Killzone HD
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  wikidata: Q107424221
+  added: 2026-11-09
 - repo: HighDrexler/RACiT
   game: "Ratchet & Clank: A Crack in Time"
   platform: ps3
@@ -2091,6 +2137,12 @@
   kind: port
   wikidata: Q13427968
   added: 2026-11-01
+- repo: mateussmeneses/theorder1886-port
+  game: "The Order: 1886"
+  platform: ps4
+  kind: port
+  wikidata: Q13427968
+  added: 2026-11-09
 - repo: bc160201983/Uncharted-The-Nathan-Drake-Collection-PC-port
   game: "Uncharted: The Nathan Drake Collection"
   platform: ps4
@@ -3303,6 +3355,13 @@
   tool: ReXGlue
   wikidata: Q909812
   added: 2026-10-28
+- repo: thegh0sts/bourne-conspiracy-x360-recomp
+  game: Robert Ludlum's The Bourne Conspiracy
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q1189155
+  added: 2026-11-09
 - repo: sp00nznet/saintsrow
   game: Saints Row
   platform: x360
@@ -3452,6 +3511,13 @@
   kind: recomp
   wikidata: Q672049
   added: 2026-10-31
+- repo: mercurialw0rld/thebeatlesrockband-pcport
+  game: "The Beatles: Rock Band"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q2036806
+  added: 2026-11-09
 - repo: mdomangue26/The-Bigs-2-Recompiled
   game: The Bigs 2
   platform: x360
@@ -3656,6 +3722,12 @@
   kind: recomp
   wikidata: Q2450
   added: 2026-11-03
+- repo: segovia-no/MotoRacerRecomp
+  game: Moto Racer
+  platform: pc
+  kind: recomp
+  wikidata: Q1997345
+  added: 2026-11-09
 - repo: ZloiKILLER/nfs3recompiled-android
   game: "Need for Speed III: Hot Pursuit"
   platform: pc
