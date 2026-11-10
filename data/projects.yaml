@@ -44,6 +44,13 @@
   kind: recomp
   wikidata: Q518987
   added: 2026-10-28
+- repo: elliotttate/DKC3Recomp
+  game: "Donkey Kong Country 3: Dixie Kong's Double Trouble!"
+  platform: snes
+  kind: recomp
+  tool: snesrecomp
+  wikidata: Q1241664
+  added: 2026-11-10
 - repo: RodoLy/HarvestMoonSnesDecomp
   game: Harvest Moon
   platform: snes
@@ -81,6 +88,12 @@
   tool: snesrecomp
   wikidata: Q853143
   added: 2026-11-01
+- repo: snesrev/smw
+  game: Super Mario World
+  platform: snes
+  kind: port
+  wikidata: Q853143
+  added: 2026-11-10
 - repo: mstan/SuperMetroidRecomp
   game: Super Metroid
   platform: snes
@@ -240,6 +253,13 @@
   tool: N64Recomp
   wikidata: Q841712
   added: 2026-10-28
+- repo: akratch/goldenballoon
+  game: Diddy Kong Racing
+  platform: n64
+  kind: recomp
+  based_on: [DavidSM64/Diddy-Kong-Racing]
+  wikidata: Q545072
+  added: 2026-11-10
 - repo: ThatGuyMcd/DKR-R
   game: Diddy Kong Racing
   platform: n64
@@ -384,6 +404,13 @@
   tool: N64Recomp
   wikidata: Q2295559
   added: 2026-11-01
+- repo: HarbourMasters/PaperBoat
+  game: Paper Mario
+  platform: n64
+  kind: port
+  based_on: [bates64/papermario-dx, pmret/papermario]
+  wikidata: Q149998
+  added: 2026-11-10
 - repo: perfect-dark-pc-port/perfect_dark
   game: Perfect Dark
   platform: n64
@@ -671,6 +698,13 @@
   based_on: [LLCOOLT/ttyd]
   wikidata: Q1075255
   added: 2026-11-07
+- repo: SSunnKing/Open-Nectar---Pikmin-Native-PC-Mobile-Port
+  game: Pikmin 2
+  platform: gc
+  kind: port
+  based_on: [projectPiki/pikmin, projectPiki/pikmin2]
+  wikidata: Q1196801
+  added: 2026-11-10
 - repo: josiahg2502-glitch/Scooby-Doo-Refrightened
   game: Scooby-Doo! Night of 100 Frights
   platform: gc
@@ -699,6 +733,12 @@
   based_on: [zcanann/SFA-Decomp, Cassieandstuff/SFA-Decomp]
   wikidata: Q2578717
   added: 2026-11-05
+- repo: new-coke/strikers
+  game: Super Mario Strikers
+  platform: gc
+  kind: port
+  wikidata: Q1476209
+  added: 2026-11-10
 - repo: chasem-dev/sms-pc-port
   game: Super Mario Sunshine
   platform: gc
@@ -719,6 +759,13 @@
   kind: port
   wikidata: Q639955
   added: 2026-11-05
+- repo: 999sian/melee-pc
+  game: Super Smash Bros. Melee
+  platform: gc
+  kind: port
+  based_on: [doldecomp/melee]
+  wikidata: Q1052131
+  added: 2026-11-10
 - repo: chrissotraidis/meleepad
   game: Super Smash Bros. Melee
   platform: gc
@@ -733,6 +780,12 @@
   kind: port
   wikidata: Q1052131
   added: 2026-11-09
+- repo: Hero88go/melee-unlocked
+  game: Super Smash Bros. Melee
+  platform: gc
+  kind: port
+  wikidata: Q1052131
+  added: 2026-11-10
 - repo: jackpoison-prog/RingOut
   game: Super Smash Bros. Melee
   platform: gc
@@ -1033,6 +1086,13 @@
   based_on: [BelmanteGu/SuperMarioWonderRecomp]
   wikidata: Q63385672
   added: 2026-10-31
+- repo: Veemyu/strahlender-xnu
+  game: Pokémon Brilliant Diamond
+  platform: switch
+  kind: recomp
+  tool: LASRecomp
+  wikidata: Q105690885
+  added: 2026-11-10
 - repo: lucabravi/MonZaMac
   game: "Pokémon Legends: Z-A"
   platform: switch
@@ -1252,6 +1312,13 @@
   tool: gbarecomp
   wikidata: Q3038740
   added: 2026-11-07
+- repo: Jorge262007/FFTARecomp
+  game: Final Fantasy Tactics Advance
+  platform: gba
+  kind: recomp
+  based_on: [JRickey/gba-recomp]
+  wikidata: Q1072868
+  added: 2026-11-10
 - repo: Shmargus/GSRecomp
   game: Golden Sun
   platform: gba
@@ -1294,6 +1361,13 @@
   platform: nds
   kind: recomp
   added: 2026-11-05
+- repo: Yokimitsuro/khdays-port
+  game: Kingdom Hearts 358/2 Days
+  platform: nds
+  kind: port
+  based_on: [Yokimitsuro/khdays-decomp]
+  wikidata: Q938641
+  added: 2026-11-10
 - repo: AlonsoTlol/DS-Kart-Recompiled
   game: Mario Kart DS
   platform: nds
@@ -1444,6 +1518,13 @@
   kind: recomp
   wikidata: Q719176
   added: 2026-10-28
+- repo: CTR-tools/ctr-native
+  game: Crash Team Racing
+  platform: ps1
+  kind: port
+  based_on: [CTR-tools/CTR-ModSDK]
+  wikidata: Q834872
+  added: 2026-11-10
 - repo: 3dge7161/Jiggle-or-Physics
   game: Dead or Alive
   platform: ps1
@@ -1468,6 +1549,12 @@
   kind: recomp
   wikidata: Q3007689
   added: 2026-11-03
+- repo: OpenDriver2/REDRIVER2
+  game: Driver 2
+  platform: ps1
+  kind: recomp
+  wikidata: Q2758716
+  added: 2026-11-10
 - repo: d4rksp4rt4n/HMBTN-ReFarmed
   game: "Harvest Moon: Back to Nature"
   platform: ps1
@@ -1538,6 +1625,12 @@
   based_on: [GabeRealB/parasite-eve-2-decomp]
   wikidata: Q2266405
   added: 2026-11-01
+- repo: BodbDearg/PsyDoom
+  game: PlayStation Doom
+  platform: ps1
+  kind: port
+  based_on: [Erick194/PSXDOOM-RE]
+  added: 2026-11-10
 - repo: TekRantGaming/point-blank-recompiled
   game: Point Blank
   platform: ps1
@@ -1637,6 +1730,12 @@
   based_on: [mstan/psxrecomp]
   wikidata: Q583360
   added: 2026-11-03
+- repo: Roman215/Weltall
+  game: Xenogears
+  platform: ps1
+  kind: port
+  wikidata: Q583360
+  added: 2026-11-10
 - repo: Unchiga/Yu-Gi-Oh-Forbidden-Memories-Recompiled
   game: Yu-Gi-Oh! Forbidden Memories
   platform: ps1
@@ -1736,6 +1835,18 @@
   kind: recomp
   tool: VitaRT
   added: 2026-11-09
+- repo: OverkillLabs3/SoS-PS5
+  game: "God of War: Sons of Sparta"
+  platform: ps2
+  kind: port
+  wikidata: Q138241917
+  added: 2026-11-10
+- repo: matt-pulsipher/GT3-revisited
+  game: Gran Turismo 3 A-Spec
+  platform: ps2
+  kind: port
+  wikidata: Q975773
+  added: 2026-11-10
 - repo: moesuito/gt4-staticrecomp
   game: Gran Turismo 4
   platform: ps2
@@ -1754,6 +1865,13 @@
   kind: recomp
   wikidata: Q1512540
   added: 2026-11-01
+- repo: nathanialf/ico-pc
+  game: ICO
+  platform: ps2
+  kind: port
+  based_on: [nathanialf/ico]
+  wikidata: Q1324448
+  added: 2026-11-10
 - repo: open-goal/jak-project
   game: Jak and Daxter series
   platform: ps2
@@ -1835,6 +1953,13 @@
   kind: port
   wikidata: Q40627
   added: 2026-10-28
+- repo: crowded-street/3sx
+  game: "Street Fighter III: 3rd Strike"
+  platform: ps2
+  kind: port
+  based_on: [crowded-street/3s-decomp]
+  wikidata: Q5230754
+  added: 2026-11-10
 - repo: LAB0ULANGE/stuntman-pc
   game: Stuntman
   platform: ps2
@@ -1949,6 +2074,14 @@
   based_on: [sp00nznet/GT5P]
   wikidata: Q2324928
   added: 2026-11-03
+- repo: whompay/inFAMOUSreborn
+  game: inFamous
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  based_on: [sp00nznet/ps3recomp]
+  wikidata: Q1346174
+  added: 2026-11-10
 - repo: erikomis/infamous2-recomp
   game: inFAMOUS 2
   platform: ps3
@@ -2006,6 +2139,13 @@
   kind: port
   wikidata: Q20982904
   added: 2026-11-09
+- repo: Awakenchan/LanternEngine
+  game: Bloodborne
+  platform: ps4
+  kind: port
+  based_on: [DarkIzuku/bloodborne_pc, deadinside28/bloodborne_pc]
+  wikidata: Q17154554
+  added: 2026-11-10
 - repo: deadinside28/bloodborne_pc
   game: Bloodborne
   platform: ps4
@@ -2013,6 +2153,12 @@
   based_on: [shadps4-emu/shadPS4]
   wikidata: Q17154554
   added: 2026-10-28
+- repo: GetLostIn/CTR-NitroFueled-PC
+  game: "Crash Team Racing: Nitro-Fueled"
+  platform: ps4
+  kind: port
+  wikidata: Q59594323
+  added: 2026-11-10
 - repo: saulob/dragons-crown-pro-pc
   game: Dragon's Crown Pro
   platform: ps4
@@ -2039,6 +2185,12 @@
   based_on: [T3CHNOLOG1C/SacredFire]
   wikidata: Q42568165
   added: 2026-10-28
+- repo: HayatoG/gr2_pc
+  game: Gravity Rush 2
+  platform: ps4
+  kind: port
+  wikidata: Q23013629
+  added: 2026-11-10
 - repo: LucaPazienza/gravityrush_pc
   game: Gravity Rush Remastered
   platform: ps4
@@ -2057,6 +2209,12 @@
   kind: port
   wikidata: Q6028768
   added: 2026-10-31
+- repo: lesca-191204/killzone-shadowfall-pc
+  game: Killzone Shadow Fall
+  platform: ps4
+  kind: port
+  wikidata: Q5087859
+  added: 2026-11-10
 - repo: AbdelmoumenDeghbouche/knack_pc
   game: Knack
   platform: ps4
@@ -2773,6 +2931,20 @@
   tool: ReXGlue
   wikidata: Q2532697
   added: 2026-11-09
+- repo: zolaware/reblue
+  game: Blue Dragon
+  platform: x360
+  kind: recomp
+  wikidata: Q1471287
+  added: 2026-11-10
+- repo: shipa-2/Xerenge
+  game: Burnout Revenge
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [rexglue/rexglue-sdk, shipa-2/rexglue-xerenge]
+  wikidata: Q2207176
+  added: 2026-11-10
 - repo: FrankHUN88453/CoD3Recomp
   game: Call of Duty 3
   platform: x360
@@ -2832,6 +3004,13 @@
   tool: ReXGlue
   wikidata: Q1138424
   added: 2026-10-31
+- repo: VitoMiguelF/crashott-pc
+  game: Crash of the Titans
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  wikidata: Q869532
+  added: 2026-11-10
 - repo: Maxilure/MindOver-Recomp
   game: "Crash: Mind over Mutant"
   platform: x360
@@ -2948,6 +3127,12 @@
   tool: ReXGlue
   wikidata: Q984024
   added: 2026-10-28
+- repo: samuelit0davila/fifa-street-pc-port
+  game: FIFA Street (2012)
+  platform: x360
+  kind: recomp
+  wikidata: Q767436
+  added: 2026-11-10
 - repo: arcanite24/pinyon-shift
   game: Forza Horizon
   platform: x360
@@ -3122,6 +3307,12 @@
   tool: ReXGlue
   wikidata: Q2620589
   added: 2026-11-03
+- repo: NeverCookFirst/DimensionsRecomp
+  game: LEGO Dimensions
+  platform: x360
+  kind: recomp
+  wikidata: Q19789277
+  added: 2026-11-10
 - repo: freefrank/LostOdysseyRecomp
   game: Lost Odyssey
   platform: x360
@@ -3369,6 +3560,13 @@
   tool: ReXGlue
   wikidata: Q2020055
   added: 2026-11-02
+- repo: whompay/SaintsReborn
+  game: Saints Row
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q2020055
+  added: 2026-11-10
 - repo: Matt-code-d/Saw2Recomp
   game: "Saw II: Flesh & Blood"
   platform: x360
@@ -3637,6 +3835,14 @@
   tool: ReXGlue
   wikidata: Q1186739
   added: 2026-11-01
+- repo: HollywoodAkeem/SVR07-Recomp
+  game: WWE SmackDown vs. Raw 2007
+  platform: x360
+  kind: recomp
+  tool: RexGlue
+  based_on: [HollywoodAkeem/rexglue-sdk-yukes]
+  wikidata: Q927012
+  added: 2026-11-10
 - repo: nefariousjosiah/WWE-SVR2009-RECOMP
   game: WWE SmackDown vs. Raw 2009
   platform: x360
@@ -3686,6 +3892,12 @@
   tool: Remill
   wikidata: Q380918
   added: 2026-11-05
+- repo: dethrace-labs/dethrace
+  game: Carmageddon
+  platform: pc
+  kind: port
+  wikidata: Q379169
+  added: 2026-11-10
 - repo: Link4Electronics/Carpocalypse2
   game: "Carmageddon 2: Carpocalypse Now"
   platform: pc
@@ -3703,12 +3915,29 @@
   kind: port
   wikidata: Q1037535
   added: 2026-11-01
+- repo: Erick194/DoomRPG-RE
+  game: Doom RPG
+  platform: pc
+  kind: port
+  wikidata: Q838642
+  added: 2026-11-10
+- repo: TheFlyingFoool/DuckGameRebuilt
+  game: Duck Game
+  platform: pc
+  kind: recomp
+  wikidata: Q22690916
+  added: 2026-11-10
 - repo: rubymatrix/xi-on-anything
   game: FINAL FANTASY XI
   platform: pc
   kind: recomp
   wikidata: Q678394
   added: 2026-11-03
+- repo: Try/OpenGothic
+  game: "Gothic 2: Night of the Raven"
+  platform: pc
+  kind: port
+  added: 2026-11-10
 - repo: Awis13/liberty-pro-max
   game: Grand Theft Auto IV
   platform: pc
@@ -3722,6 +3951,18 @@
   kind: recomp
   wikidata: Q2450
   added: 2026-11-03
+- repo: Aleph-One-Marathon/alephone
+  game: "Marathon 2: Durandal"
+  platform: pc
+  kind: port
+  wikidata: Q2641836
+  added: 2026-11-10
+- repo: openmoh/openmohaa
+  game: "Medal of Honor: Allied Assault"
+  platform: pc
+  kind: port
+  wikidata: Q692360
+  added: 2026-11-10
 - repo: segovia-no/MotoRacerRecomp
   game: Moto Racer
   platform: pc
@@ -3878,6 +4119,11 @@
   platform: arcade
   kind: recomp
   added: 2026-11-07
+- repo: distilledorion-sketch/Initial-D-Arcade-Stage-3-Native-SH-4-Recompilation-WIP-
+  game: Initial D Arcade Stage 3
+  platform: arcade
+  kind: recomp
+  added: 2026-11-10
 - repo: thefixinhixon/UltraCombo
   game: Killer Instinct (arcade) / Killer Instinct 2
   platform: arcade
@@ -3890,6 +4136,12 @@
   kind: port
   note: Time Crisis 1–2, Rave Racer, Ridge Racer 2, Prop Cycle, Dirt Dash, Cyber Sled and more, rebuilt as native Linux and Windows programs.
   added: 2026-10-31
+- repo: djyt/cannonball
+  game: OutRun
+  platform: arcade
+  kind: port
+  wikidata: Q135061283
+  added: 2026-11-10
 - repo: cheviman/outrunners-port
   game: OutRunners
   platform: arcade
@@ -3958,6 +4210,12 @@
   platform: gba
   kind: tool
   added: 2026-10-31
+- repo: ExpansionPak/ModernGekko
+  game: ModernGekko
+  platform: multi
+  kind: tool
+  tool: DolRecomp
+  added: 2026-11-10
 - repo: N64Recomp/N64Recomp
   game: "N64: Recompiled"
   platform: n64
@@ -4055,6 +4313,12 @@
   kind: tool
   tool: SNESRecomp
   added: 2026-11-01
+- repo: lucas-martinic/mario64mr
+  game: Super Mario 64
+  platform: n64
+  kind: tool
+  based_on: [n64decomp/sm64]
+  added: 2026-11-10
 - repo: hedge-dev/XenonRecomp
   game: XenonRecomp
   platform: x360
