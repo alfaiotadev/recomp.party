@@ -1,15 +1,21 @@
 ---
 // Quick search under the front-page intro: games, toolchains and events; a result opens its page.
+import { games, tools } from "../lib/data.ts";
+
+/** Rounded down to the nearest 50, so the placeholder doesn't go stale between builds. */
+const about = Math.floor(games.length / 50) * 50;
 ---
 
 <div class="qs" id="qs">
-  <form role="search" onsubmit="return false">
+  <p class="qs-title" id="qs-title">What do you want to play today?</p>
+  <form role="search" onsubmit="return false" aria-labelledby="qs-title">
     <label class="visually-hidden" for="qs-input">Search games, toolchains and events</label>
     <svg class="qs-glass" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
     <input
       id="qs-input"
       type="search"
-      placeholder="Find a game, toolchain or event… try “sotn”, “mk64” or “xenon”"
+      placeholder={`Search ${about}+ games and ${tools.length} toolchains… try “sotn” or “mario kart”`}
+      data-short={`Search ${about}+ games…`}
       autocomplete="off"
       spellcheck="false"
       role="combobox"
@@ -31,7 +37,18 @@
     position: relative;
     z-index: 80; /* over the stat tiles and their cover stacks (up to 60), under the header (100) */
     max-width: 40rem;
-    margin: 1.4rem 0 0;
+    margin: 2rem auto 0.5rem;
+  }
+  .qs-title {
+    margin: 0 0 0.6rem;
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .qs-title::before {
+    content: "▸ ";
+    color: var(--recomp);
   }
   .qs form {
     position: relative;

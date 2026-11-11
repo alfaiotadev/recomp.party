@@ -63,6 +63,8 @@ const root = document.getElementById("qs");
 const input = document.getElementById("qs-input") as HTMLInputElement | null;
 const list = document.getElementById("qs-results") as HTMLUListElement | null;
 if (root && input && list) {
+  // phones: the long placeholder with examples would be cut off
+  if (input.dataset.short && matchMedia("(max-width: 600px)").matches) input.placeholder = input.dataset.short;
   let index: Prepared[] | null = null;
   let loading: Promise<void> | null = null;
   let active = -1;
