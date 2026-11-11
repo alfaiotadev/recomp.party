@@ -466,3 +466,40 @@
   reason: It is source-build only with no prebuilt downloadable release that runs
     the game.
   date: 2026-11-09
+- repo: n64decomp/sm64
+  reason: This is a matching decompilation project that builds N64 ROMs, not a
+    native PC port or static recompilation.
+  date: 2026-11-10
+- repo: isledecomp/isle
+  reason: Matching decompilation project aiming for byte-for-byte accuracy rather
+    than a modernized playable source port.
+  date: 2026-11-10
+- repo: JHDev2006/Super-Mario-Bros.-Remastered-Public
+  reason: It's a fan remake built in Godot, not a static recompilation or source
+    port of the original game.
+  date: 2026-11-10
+- repo: mariopartyrd/marioparty4
+  reason: The repo is a decompilation of Mario Party 4 with no working PC or
+    console port, thus not a playable recompilation.
+  date: 2026-11-10
+- repo: nmlgc/ReC98
+  reason: This is a matching decompilation project targeting original PC-98 DOS
+    binaries, not a native port or static recompilation.
+  date: 2026-11-10
+- repo: RSDKModding/RSDKv5-Decompilation
+  reason: This is an engine decompilation (Retro Engine v5) rather than a
+    game-specific port (the full game port is
+    RSDKModding/Sonic-Mania-Decompilation).
+  date: 2026-11-10
+- repo: Spark198rus/black-pc
+  reason: The project is an unofficial wrapper that runs the original Xbox binary
+    on PC, not a static recompilation or source port; it does not meet the add
+    criteria.
+  date: 2026-11-10
+- repo: ondrejeder/Driveclub-pc-wrapper
+  reason: This is a PS4 emulator fork, not a static recompilation or source port.
+  date: 2026-11-10
+- repo: Rotmill/Dino-Crisis-Modern-Edition
+  reason: The repo is a fan mod that requires the user's own disc to recompile the
+    game; it does not provide a ready-to-play native binary.
+  date: 2026-11-10
