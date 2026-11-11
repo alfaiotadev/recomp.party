@@ -2,6 +2,7 @@
 import Base from "../../../layouts/Base.astro";
 import { aiOf, aiSince, shortModel } from "../../../lib/ai.ts";
 import { LINK_ICONS } from "../../../lib/link-icons.ts";
+import { moreLikeThis } from "../../../lib/related.ts";
 import { CREDIT_ICONS } from "../../../lib/vendor-icons.ts";
 import { ago, creditLink, entryPath, fitLogo, gameLinks, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
 
@@ -22,6 +23,7 @@ const logoBox = logo && fitLogo(logo, 160, 40);
 const baseName = (g: Entry) => g.game.replace(/ \(.*\)$/, "");
 const sameGame = games.filter((g) => g !== e && ((e.wikidata && g.wikidata === e.wikidata) || baseName(g) === baseName(e)));
 const m = e.meta;
+const related = moreLikeThis(e);
 const makers = m && (m.developers.length ? m.developers : m.publishers);
 const links = gameLinks(e);
 const tool = e.tool ? tools.find((t) => toolUsers(t).includes(e)) : undefined;
@@ -242,9 +244,101 @@ const jsonLd = {
       </section>
     )
   }
+
+  {
+    related.length > 0 && (
+      <section>
+        <h2>More like this</h2>
+        <ul class="related">
+          {related.map(({ entry: g, why }) => {
+            const l = platformLogo(g.platform);
+            const box = l && fitLogo(l, 52, 12);
+            return (
+              <li>
+                <a href={entryPath(g)} class="rel">
+                  {g.cover ? <img class="rel-art" src={g.cover.src} width={g.cover.width} height={g.cover.height} alt="" loading="lazy" decoding="async" /> : <span class="rel-art" />}
+                  <span class="rel-body">
+                    <strong>{g.game}</strong>
+                    <span class="rel-why mono">{why}</span>
+                    <span class="rel-plat">
+                      {l && box ? <img class="logo-img" src={l.src} width={box.w} height={box.h} alt={PLATFORMS[g.platform]} /> : <span class="mono">{PLATFORMS[g.platform]}</span>}
+                      <span class={`badge ${g.kind}`}>{g.kind}</span>
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    )
+  }
 </Base>
 
 <style>
+  .related {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .rel {
+    display: grid;
+    grid-template-columns: 3.4rem minmax(0, 1fr);
+    gap: 0.8rem;
+    align-items: center;
+    padding: 0.45rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--fg);
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .rel:hover,
+  .rel:focus-visible {
+    border-color: rgb(255 255 255 / 0.2);
+    background: rgb(255 255 255 / 0.05);
+  }
+  .rel-art {
+    width: 3.4rem;
+    height: 4.5rem;
+    object-fit: cover;
+    border-radius: 4px;
+    background: rgb(255 255 255 / 0.05);
+  }
+  .rel-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .rel-body strong {
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+  .rel-why {
+    font-size: 0.68rem;
+    color: var(--muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .rel-why::first-letter {
+    text-transform: uppercase;
+  }
+  .rel-plat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+  }
+  .rel-plat .logo-img {
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+  }
   .intro.with-cover {
     display: grid;
     grid-template-columns: 160px 1fr;

@@ -23,6 +23,8 @@ const rows = await sparql(`
          (GROUP_CONCAT(DISTINCT CONCAT(STR(?dateValue), "@", STR(?precision)); separator="|") AS ?dates)
          (GROUP_CONCAT(DISTINCT ?devName; separator="|") AS ?devs)
          (GROUP_CONCAT(DISTINCT ?pubName; separator="|") AS ?pubs)
+         (GROUP_CONCAT(DISTINCT ?genreName; separator="|") AS ?genres)
+         (GROUP_CONCAT(DISTINCT ?seriesName; separator="|") AS ?series)
   WHERE {
     VALUES ?item { ${ids.map((id) => `wd:${id}`).join(" ")} }
     OPTIONAL { ?item rdfs:label ?en. FILTER(LANG(?en) = "en") }
@@ -35,6 +37,8 @@ const rows = await sparql(`
     OPTIONAL { ?item wdt:P1933 ?moby }
     OPTIONAL { ?item wdt:P178 ?dev. OPTIONAL { ?dev rdfs:label ?devEn. FILTER(LANG(?devEn) = "en") } OPTIONAL { ?dev rdfs:label ?devMul. FILTER(LANG(?devMul) = "mul") } BIND(COALESCE(?devEn, ?devMul) AS ?devName) }
     OPTIONAL { ?item wdt:P123 ?pub. OPTIONAL { ?pub rdfs:label ?pubEn. FILTER(LANG(?pubEn) = "en") } OPTIONAL { ?pub rdfs:label ?pubMul. FILTER(LANG(?pubMul) = "mul") } BIND(COALESCE(?pubEn, ?pubMul) AS ?pubName) }
+    OPTIONAL { ?item wdt:P136 ?genre. ?genre rdfs:label ?genreName. FILTER(LANG(?genreName) = "en") }
+    OPTIONAL { ?item wdt:P179 ?ser. ?ser rdfs:label ?seriesName. FILTER(LANG(?seriesName) = "en") }
   }
   GROUP BY ?item ?title ?wikipedia ?igdb ?moby`);
 
@@ -62,6 +66,8 @@ for (const r of rows) {
     released: released(r.dates?.value),
     developers: split(r.devs),
     publishers: split(r.pubs),
+    genres: split(r.genres),
+    series: split(r.series),
     wikipedia: r.wikipedia?.value,
     igdb: r.igdb?.value,
     mobygames: r.moby?.value,
