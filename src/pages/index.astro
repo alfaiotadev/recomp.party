@@ -1,6 +1,7 @@
 ---
 import GameCard from "../components/GameCard.astro";
 import Highlights from "../components/Highlights.astro";
+import QuickSearch from "../components/QuickSearch.astro";
 import StatTiles from "../components/StatTiles.astro";
 import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
@@ -19,6 +20,7 @@ const toolStrip = tools.slice(0, 8);
       Console games turned into native PC (and phone) programs. New ones ship every week — recomp.party keeps track of
       the ones you can actually play. The different methods are <a href="/explained/">explained here</a>.
     </p>
+    <QuickSearch />
   </div>
 
   <StatTiles />
