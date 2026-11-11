@@ -124,6 +124,9 @@ export const GameMeta = z.object({
   released: z.string().regex(/^\d{4}(-\d{2}(-\d{2})?)?$/).optional(),
   developers: z.array(z.string()),
   publishers: z.array(z.string()),
+  /** Genres (P136) and series (P179), English labels: what "More like this" on a game page matches on. */
+  genres: z.array(z.string()).optional(),
+  series: z.array(z.string()).optional(),
   /** External ids from Wikidata; links are built from these. */
   wikipedia: z.string().optional(),
   igdb: z.string().optional(),
