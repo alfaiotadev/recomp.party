@@ -503,3 +503,8 @@
   reason: The repo is a fan mod that requires the user's own disc to recompile the
     game; it does not provide a ready-to-play native binary.
   date: 2026-11-10
+- repo: Erick194/DoomIIRPG-RE
+  reason: Decompilation/reverse engineering project with source code but no
+    downloadable playable release; requires CMake to build from source, not a
+    distributed runnable.
+  date: 2026-11-11
