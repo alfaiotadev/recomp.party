@@ -4,7 +4,7 @@ import { aiOf, aiSince, shortModel } from "../../../lib/ai.ts";
 import { LINK_ICONS } from "../../../lib/link-icons.ts";
 import { moreLikeThis } from "../../../lib/related.ts";
 import { CREDIT_ICONS } from "../../../lib/vendor-icons.ts";
-import { ago, creditLink, entryPath, fitLogo, gameLinks, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
+import { ago, buyLinks, creditLink, entryPath, fitLogo, gameLinks, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
 
 export function getStaticPaths() {
   return games.map((entry) => {
@@ -26,6 +26,7 @@ const m = e.meta;
 const related = moreLikeThis(e);
 const makers = m && (m.developers.length ? m.developers : m.publishers);
 const links = gameLinks(e);
+const buy = buyLinks(e);
 const tool = e.tool ? tools.find((t) => toolUsers(t).includes(e)) : undefined;
 const ai = aiOf(e);
 const aiIcon = (vendor: string) => CREDIT_ICONS[vendor];
@@ -114,6 +115,31 @@ const jsonLd = {
           );
         })}
       </ul>
+    )
+  }
+
+  {
+    buy.length > 0 && (
+      <div class="buy">
+        <span class="buy-label mono" title="Store versions can differ from the release this project needs: check its README for the exact version.">Buy the game</span>
+        <ul class="links">
+          {buy.map((l) => {
+            const icon = LINK_ICONS[l.label];
+            return (
+              <li>
+                <a href={l.href} rel="external">
+                  {icon && (
+                    <svg class={icon.stroke ? "ico stroke" : "ico"} viewBox="0 0 24 24" aria-hidden="true">
+                      <path d={icon.d} />
+                    </svg>
+                  )}
+                  {l.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     )
   }
 
@@ -409,6 +435,27 @@ const jsonLd = {
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
+  }
+  .buy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 0.6rem;
+    margin-top: 0.6rem;
+  }
+  .buy .links {
+    margin: 0;
+  }
+  .buy-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .buy .links a {
+    color: var(--fg);
+    border-color: rgb(124 240 197 / 0.3);
+  }
+  .buy .links a:hover {
+    border-color: rgb(124 240 197 / 0.7);
   }
   .links a::after {
     content: " ↗";
