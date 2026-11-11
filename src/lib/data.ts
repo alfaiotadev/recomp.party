@@ -90,7 +90,6 @@ export function buyLinks(e: Pick<Entry, "meta">): { label: string; href: string 
   const links = [
     st.steam && { label: "Steam", href: `https://store.steampowered.com/app/${st.steam}/` },
     st.gog && { label: "GOG", href: `https://www.gog.com/${st.gog}` },
-    st.epic && { label: "Epic Games Store", href: `https://store.epicgames.com/p/${st.epic}` },
     st.eshop && { label: "Nintendo eShop", href: `https://www.nintendo.com/us/store/products/${st.eshop}/` },
     st.psn && { label: "PlayStation Store", href: `https://store.playstation.com/en-us/product/${st.psn}` },
     st.msstore && { label: "Microsoft Store", href: `https://www.xbox.com/en-US/games/store/x/${st.msstore}` },

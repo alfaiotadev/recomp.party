@@ -43,7 +43,7 @@ const rows = await sparql(`
   GROUP BY ?item ?title ?wikipedia ?igdb ?moby`);
 
 // --- Store ids, in a second query so the many-valued joins above don't multiply. Wikidata property per store.
-const STORE_PROPS = { steam: "P1733", gog: "P2725", epic: "P6278", eshop: "P8084", psn: "P5944", msstore: "P5885" } as const;
+const STORE_PROPS = { steam: "P1733", gog: "P2725", eshop: "P8084", psn: "P5944", msstore: "P5885" } as const;
 type Store = keyof typeof STORE_PROPS;
 const storeRows = await sparql(`
   SELECT ?item ?prop ?value WHERE {
@@ -77,7 +77,6 @@ async function pickStores(id: string): Promise<GameMeta["stores"]> {
   const stores: NonNullable<GameMeta["stores"]> = {
     steam: v.steam?.slice().sort((a, b) => Number(a) - Number(b))[0],
     gog: gog && (await gogListed(gog)) ? gog : undefined,
-    epic: shortest(v.epic),
     // the base game's listing, not a "Nintendo Switch 2 Edition" upgrade
     eshop: shortest(v.eshop),
     // PS3 and Vita products (NP… ids) are gone from the web store; PS4 (CUSA) and PS5 (PPSA) pages still open

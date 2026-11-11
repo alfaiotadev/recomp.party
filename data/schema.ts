@@ -129,7 +129,7 @@ export const GameMeta = z.object({
   series: z.array(z.string()).optional(),
   /** Store pages of the game (often a re-release on another platform), from Wikidata: where to buy it legally. */
   stores: z
-    .object({ steam: z.string(), gog: z.string(), epic: z.string(), eshop: z.string(), psn: z.string(), msstore: z.string() })
+    .object({ steam: z.string(), gog: z.string(), eshop: z.string(), psn: z.string(), msstore: z.string() })
     .partial()
     .optional(),
   /** External ids from Wikidata; links are built from these. */
