@@ -127,6 +127,11 @@ export const GameMeta = z.object({
   /** Genres (P136) and series (P179), English labels: what "More like this" on a game page matches on. */
   genres: z.array(z.string()).optional(),
   series: z.array(z.string()).optional(),
+  /** Store pages of the game (often a re-release on another platform), from Wikidata: where to buy it legally. */
+  stores: z
+    .object({ steam: z.string(), gog: z.string(), epic: z.string(), eshop: z.string(), psn: z.string(), msstore: z.string() })
+    .partial()
+    .optional(),
   /** External ids from Wikidata; links are built from these. */
   wikipedia: z.string().optional(),
   igdb: z.string().optional(),

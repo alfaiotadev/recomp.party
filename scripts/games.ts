@@ -42,6 +42,52 @@ const rows = await sparql(`
   }
   GROUP BY ?item ?title ?wikipedia ?igdb ?moby`);
 
+// --- Store ids, in a second query so the many-valued joins above don't multiply. Wikidata property per store.
+const STORE_PROPS = { steam: "P1733", gog: "P2725", epic: "P6278", eshop: "P8084", psn: "P5944", msstore: "P5885" } as const;
+type Store = keyof typeof STORE_PROPS;
+const storeRows = await sparql(`
+  SELECT ?item ?prop ?value WHERE {
+    VALUES ?item { ${ids.map((id) => `wd:${id}`).join(" ")} }
+    VALUES ?prop { ${Object.values(STORE_PROPS).map((p) => `wdt:${p}`).join(" ")} }
+    ?item ?prop ?value.
+  }`);
+const storeValues = new Map<string, Partial<Record<Store, string[]>>>();
+for (const r of storeRows) {
+  const id = r.item!.value.split("/").pop()!;
+  const prop = r.prop!.value.split("/").pop()!;
+  const store = (Object.keys(STORE_PROPS) as Store[]).find((k) => STORE_PROPS[k] === prop)!;
+  const per = storeValues.get(id) ?? {};
+  (per[store] ??= []).push(r.value!.value);
+  storeValues.set(id, per);
+}
+/** GOG sends delisted games to its catalogue page: keep only listings that still exist. */
+async function gogListed(path: string): Promise<boolean> {
+  try {
+    const res = await fetch(`https://www.gog.com/${path}`, { redirect: "follow", signal: AbortSignal.timeout(20_000) });
+    return res.ok && !/\/games\/?$/.test(new URL(res.url).pathname);
+  } catch {
+    return true; // can't tell: keep it
+  }
+}
+async function pickStores(id: string): Promise<GameMeta["stores"]> {
+  const v = storeValues.get(id);
+  if (!v) return undefined;
+  const shortest = (list?: string[]) => list?.slice().sort((a, b) => a.length - b.length || a.localeCompare(b))[0];
+  const gog = shortest(v.gog);
+  const stores: NonNullable<GameMeta["stores"]> = {
+    steam: v.steam?.slice().sort((a, b) => Number(a) - Number(b))[0],
+    gog: gog && (await gogListed(gog)) ? gog : undefined,
+    epic: shortest(v.epic),
+    // the base game's listing, not a "Nintendo Switch 2 Edition" upgrade
+    eshop: shortest(v.eshop),
+    // PS3 and Vita products (NP… ids) are gone from the web store; PS4 (CUSA) and PS5 (PPSA) pages still open
+    psn: shortest(v.psn?.filter((x) => /-(CUSA|PPSA)\d/.test(x))),
+    msstore: shortest(v.msstore),
+  };
+  const kept = Object.fromEntries(Object.entries(stores).filter(([, x]) => x));
+  return Object.keys(kept).length ? kept : undefined;
+}
+
 /** Earliest of "date@precision" values, cut to what is known: 11 = day, 10 = month, 9 = year. */
 function released(dates: string | undefined): string | undefined {
   const known = (dates ?? "")
@@ -71,6 +117,7 @@ for (const r of rows) {
     wikipedia: r.wikipedia?.value,
     igdb: r.igdb?.value,
     mobygames: r.moby?.value,
+    stores: await pickStores(id),
     cover: previous[id]?.cover,
   };
 }
