@@ -1,0 +1,186 @@
+---
+// Quick search under the front-page intro: games, toolchains and events; a result opens its page.
+---
+
+<div class="qs" id="qs">
+  <form role="search" onsubmit="return false">
+    <label class="visually-hidden" for="qs-input">Search games, toolchains and events</label>
+    <svg class="qs-glass" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
+    <input
+      id="qs-input"
+      type="search"
+      placeholder="Find a game, toolchain or event… try “sotn”, “mk64” or “xenon”"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="qs-results"
+      aria-autocomplete="list"
+    />
+    <kbd class="qs-key" aria-hidden="true">/</kbd>
+  </form>
+  <ul id="qs-results" class="qs-results" role="listbox" aria-label="Search results" hidden></ul>
+</div>
+
+<script>
+  import "../scripts/search.ts";
+</script>
+
+<style is:global>
+  .qs {
+    position: relative;
+    z-index: 80; /* over the stat tiles and their cover stacks (up to 60), under the header (100) */
+    max-width: 40rem;
+    margin: 1.4rem 0 0;
+  }
+  .qs form {
+    position: relative;
+  }
+  .qs-glass {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    width: 1.05rem;
+    height: 1.05rem;
+    translate: 0 -50%;
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 2;
+    stroke-linecap: round;
+    pointer-events: none;
+  }
+  .qs input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 2.8rem 0.8rem 2.6rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--fg);
+    font: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .qs input::placeholder {
+    color: var(--faint);
+  }
+  .qs input:focus {
+    outline: none;
+    border-color: rgb(124 240 197 / 0.6);
+    box-shadow: 0 0 0 3px rgb(124 240 197 / 0.12);
+  }
+  .qs input::-webkit-search-cancel-button {
+    display: none;
+  }
+  .qs-key {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    translate: 0 -50%;
+    padding: 0.05rem 0.45rem;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+  }
+  .qs input:focus ~ .qs-key {
+    display: none;
+  }
+  .qs-results {
+    position: absolute;
+    z-index: 30;
+    left: 0;
+    right: 0;
+    top: calc(100% + 0.4rem);
+    margin: 0;
+    padding: 0.35rem;
+    list-style: none;
+    max-height: min(26rem, 60vh);
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface-2);
+    box-shadow: 0 24px 50px -20px rgb(0 0 0 / 0.9);
+  }
+  .qs-hit {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.55rem;
+    border-radius: 7px;
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .qs-hit.on,
+  .qs-hit:hover {
+    background: var(--hover);
+  }
+  .qs-hit img,
+  .qs-ico {
+    width: 2rem;
+    height: 2.6rem;
+    border-radius: 3px;
+    object-fit: cover;
+    background: rgb(255 255 255 / 0.05);
+  }
+  .qs-ico {
+    display: grid;
+    place-items: center;
+    height: 2rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .qs-txt {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+  .qs-txt strong,
+  .qs-txt span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .qs-txt strong {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .qs-txt span {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+  .qs-type {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+  }
+  .t-t .qs-type {
+    color: var(--recomp);
+  }
+  .t-e .qs-type {
+    color: var(--accent);
+  }
+  .qs-none {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  @media (max-width: 600px) {
+    .qs-key {
+      display: none;
+    }
+    .qs input {
+      font-size: 1rem; /* no zoom-on-focus in iOS Safari */
+      padding-right: 0.9rem;
+    }
+    .qs-type {
+      display: none;
+    }
+  }
+</style>
