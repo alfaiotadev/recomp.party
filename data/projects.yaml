@@ -977,14 +977,6 @@
   added: 2026-10-28
 
 # --- Wii U -----------------------------------------------------------------------
-- repo: Vnnc1/MK8-online
-  game: Mario Kart 8 Deluxe
-  platform: wiiu
-  kind: recomp
-  tool: LASRecomp
-  based_on: [SMM2Recomp, LASRecomp]
-  wikidata: Q28321447
-  added: 2026-11-11
 - repo: BoyClinton/Cha-Cha
   game: Monster Hunter 3 Ultimate
   platform: wiiu
@@ -1103,6 +1095,14 @@
   kind: recomp
   wikidata: Q28321447
   added: 2026-11-05
+- repo: Vnnc1/MK8-online
+  game: Mario Kart 8 Deluxe
+  platform: switch
+  kind: recomp
+  tool: LASRecomp
+  based_on: [SMM2Recomp, LASRecomp]
+  wikidata: Q28321447
+  added: 2026-11-11
 - repo: yozander2009-stack/Metroid-Dread-Recomp
   game: Metroid Dread
   platform: switch
@@ -1379,7 +1379,7 @@
 - repo: kirby-letsgo/oracles-decomp
   game: "The Legend of Zelda: Oracle of Ages & Oracle of Seasons"
   platform: gbc
-  kind: recomp
+  kind: port
   added: 2026-11-11
 
 # --- Game Boy Advance ------------------------------------------------------------
@@ -1421,7 +1421,7 @@
 - repo: MatyMeatBoy/ReKHCoM
   game: "Kingdom Hearts: Chain of Memories"
   platform: gba
-  kind: recomp
+  kind: port
   based_on: [Pheenoh/khcom]
   wikidata: Q843205
   added: 2026-11-11
@@ -1507,7 +1507,7 @@
 - repo: CompaLarios18/MH4UltimateDC
   game: Monster Hunter 4 Ultimate
   platform: 3ds
-  kind: port
+  kind: recomp
   wikidata: Q30897883
   added: 2026-11-11
 - repo: thefixinhixon/woohoo-flight-school
@@ -2790,6 +2790,13 @@
   kind: port
   wikidata: Q2333813
   added: 2026-11-02
+- repo: parkerallan/doa3-recomp
+  game: Dead or Alive 3
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  wikidata: Q2333813
+  added: 2026-11-11
 - repo: NoRain211/doaxvb-re
   game: Dead or Alive Xtreme Beach Volleyball
   platform: xbox
@@ -3320,6 +3327,13 @@
   based_on: [96dot/Dragon-Age-Origins-Recomp]
   wikidata: Q735926
   added: 2026-11-05
+- repo: WistfulHopes/DBZ1
+  game: "Dragon Ball Z: Budokai"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q587752
+  added: 2026-11-11
 - repo: novapowers0/DBZ-Budokai-3-HD-Collection
   game: "Dragon Ball Z: Budokai 3 HD Collection"
   platform: x360
@@ -3377,7 +3391,7 @@
 - repo: ChunchunQ/fifa09-recomp
   game: FIFA 09
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q719740
   added: 2026-11-11
@@ -3947,7 +3961,7 @@
 - repo: GenryTheFox0/Project-2099
   game: "Spider-Man: Edge of Time"
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   based_on: [goliathret/EdgeOfTimeRecomp]
   wikidata: Q2633998
@@ -3961,7 +3975,7 @@
 - repo: 0c0de/splatterhouse-decomp
   game: Splatterhouse
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q692377
   added: 2026-11-11
@@ -4527,12 +4541,6 @@
   platform: ps5
   kind: tool
   added: 2026-10-28
-- repo: WistfulHopes/DBZ1
-  game: Dragon Ball Z Budokai
-  platform: ps2
-  kind: tool
-  tool: ReXGlue
-  added: 2026-11-11
 - repo: mstan/gbarecomp
   game: GBARecomp
   platform: gba
