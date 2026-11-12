@@ -188,6 +188,13 @@ const n = (x: number) => x.toLocaleString("en");
     font-size: 0.85rem;
     color: var(--muted);
   }
+  .qs-none :global(.qs-suggest) {
+    display: block;
+    margin-top: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--recomp);
+  }
   @media (max-width: 600px) {
     .qs-key {
       display: none;
