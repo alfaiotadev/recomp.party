@@ -75,6 +75,6 @@ jobs:
           {
             cat tmp/discover-report.md
             echo
-            if [ -n "$PR_URL" ]; then echo "Proposed change: $PR_URL — a maintainer will review it."; else echo "No change was proposed automatically; a maintainer will take a look."; fi
+            if [ -n "$PR_URL" ]; then echo "Proposed change: $PR_URL — a maintainer will review it."; else echo "A maintainer will take a look."; fi
           } > tmp/comment.md
           gh issue comment ${{ github.event.issue.number }} --body-file tmp/comment.md

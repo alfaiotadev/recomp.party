@@ -273,6 +273,8 @@ const table = (title: string, rows: Outcome[], note: string) =>
     ? `### ${title} (${rows.length})\n\n${note}\n\n| Repo | ★ | Classified as | Conf. | Reason | Model | Found via |\n|---|---|---|---|---|---|---|\n${rows.map(row).join("\n")}\n`
     : "";
 
+/** Only proposals and rejections touch data files, so only then does the workflow open a pull request. */
+const opensPr = added.length + rejectedNow.length > 0;
 const report = [
   `## Discovery run ${today}`,
   only ? `Checked suggested repos: ${only.map(link).join(", ")}` : `Sources scanned for the last ${DAYS} days: ${sourceSummary}.`,
@@ -282,9 +284,11 @@ const report = [
     ? `#### Original game on Wikidata\n\nPinned ids give the entry its cover and reference links. Fix or add \`wikidata:\` by hand where flagged (\`npm run match-wikidata\` lists candidates).\n\n${[...wikidataNote].map(([r, n]) => `- ${link(r)}: ${n}`).join("\n")}\n`
     : "",
   table("Rejected", rejectedNow, "Added to `data/rejected.yaml` so they are not proposed again. Delete a line to give a repo another chance."),
-  table("Needs a human look", review, "Not changed in this PR — add by hand if they belong."),
+  table("Needs a human look", review, `${opensPr ? "Not changed in this PR" : "Not added"} — add by hand if they belong.`),
   skipped.length ? `<details><summary>Skipped by filters (${skipped.length})</summary>\n\n${skipped.map((s) => `- ${link(s.repo)} — ${s.why}`).join("\n")}\n</details>\n` : "",
-  "AI output is a suggestion only; it may be wrong. Merging this PR is the human review.",
+  opensPr
+    ? "AI output is a suggestion only; it may be wrong. Merging this PR is the human review."
+    : "Nothing was added or rejected, so there is no pull request for this run.",
 ].join("\n");
 
 mkdirSync("tmp", { recursive: true });
