@@ -2326,6 +2326,12 @@
   based_on: [ran-j/PS2Recomp]
   wikidata: Q2116558
   added: 2026-11-03
+- repo: Destinity13/TimeSplitters-2-Native-Recomp-Windows-Linux-SteamDeck
+  game: TimeSplitters 2
+  platform: ps2
+  kind: recomp
+  wikidata: Q282008
+  added: 2026-11-12
 - repo: kayliox/transformers-armada-recomp
   game: "Transformers Armada: Prelude to Energon"
   platform: ps2
