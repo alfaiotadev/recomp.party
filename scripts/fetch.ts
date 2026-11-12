@@ -1,11 +1,18 @@
 /** Refresh data/snapshot.json from GitHub for every repo in data/projects.yaml. */
 import { writeFileSync } from "node:fs";
-import { loadProjects, loadStarHistory, SITE_REPO, SNAPSHOT_PATH, STARS_PATH } from "../data/load.ts";
+import { loadProjects, loadSnapshot, loadStarHistory, SITE_REPO, SNAPSHOT_PATH, STARS_PATH } from "../data/load.ts";
 import type { Snapshot } from "../data/schema.ts";
 import { fetchRepos } from "./lib/github.ts";
 
 const projects = loadProjects();
+const previous = loadSnapshot().repos;
 const { found, missing } = await fetchRepos(projects.map((p) => p.repo));
+
+// Keep the earliest release date ever seen: a repo that deletes its old releases must not look new again.
+for (const r of found) {
+  const seen = [previous[r.repo]?.firstReleaseAt, r.releaseDates.at(-1)?.date].filter((d): d is string => !!d).sort();
+  if (seen[0]) r.firstReleaseAt = seen[0];
+}
 
 const snapshot: Snapshot = {
   generatedAt: new Date().toISOString(),

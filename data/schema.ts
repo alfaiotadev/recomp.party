@@ -103,6 +103,11 @@ export const RepoSnapshot = z.object({
   /** Publish dates of up to 100 newest releases, newest first — drives the timeline. */
   releaseDates: z.array(z.object({ date: z.string(), prerelease: z.boolean() })),
   releaseCount: z.number(),
+  /**
+   * Publish date of the earliest release ever seen, carried over from fetch to fetch. releaseDates alone can't
+   * tell: some repos delete old releases and keep only the latest, and only the 100 newest are fetched.
+   */
+  firstReleaseAt: z.string().optional(),
 });
 export type RepoSnapshot = z.infer<typeof RepoSnapshot>;
 

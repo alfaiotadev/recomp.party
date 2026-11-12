@@ -9,10 +9,12 @@ const arrow = (d: Delta) => (d.diff > 0 ? "up" : d.diff < 0 ? "down" : "flat");
 const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
 const { newest } = projects;
 const newestMark = newest && platformMark(newest.platform);
-// Sized by area within a cap, so a long wordmark (XBOX 360, GAME BOY ADVANCE) still fits beside "OG … release".
-const newestLogo = newestMark && fitLogoArea(newestMark, 380, 64, 12);
+// Sized by area within a cap, so a long wordmark (XBOX 360, GAME BOY ADVANCE) still fits in the date list label column.
+const newestLogo = newestMark && fitLogoArea(newestMark, 300, 58, 11);
 const newestOwner = newest?.repo.split("/")[0];
 const days = updated.days;
+/** Covers in the new-projects tile: two rows on desktop, the rest are behind the link to the game list. */
+const FRESH_COVERS = 20;
 const dayMax = Math.max(1, ...days.days);
 // Platform logos drift in three lanes; each lane holds its logos twice so the loop is seamless.
 const lanes = [0, 1, 2].map((k) => platforms.ids.filter((_, i) => i % 3 === k));
@@ -41,47 +43,45 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   <div class="tile">
     <div class="top">
       <span class="n">{projects.value}</span>
-      <Spark values={projects.bars} label={projects.barsLabel} />
     </div>
     <span class="label">playable projects</span>
     {
       newest && (
         <div class="cmp newest">
-          <span class="nw-line nw-c">
-            newest: <a href={entryPath(newest)}>{newest.game}</a>
-          </span>
           <a class="nw-cover" href={entryPath(newest)} tabindex="-1" aria-hidden="true">
-            {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" /> : <span class="ph cover-ph" title="No cover yet" />}
+            {newest.cover ? <img src={newest.cover.src} width={newest.cover.width} height={newest.cover.height} alt="" loading="lazy" decoding="async" /> : <span class="ph cover-ph" title="No cover yet" />}
           </a>
-          <span class="nw-text">
-            <span class="rel">
-              <span class="nw-row">
-                <abbr title="original">OG</abbr>
-                {newestMark ? (
-                  <img class="logo-img" src={newestMark.src} height={+newestLogo!.h.toFixed(1)} width={+newestLogo!.w.toFixed(1)} alt={PLATFORMS[newest.platform]} title={PLATFORMS[newest.platform]} />
-                ) : (
-                  PLATFORMS[newest.platform]
-                )}
-                release
-              </span>
-              {newest.meta?.released ? (
-                <b class="ago" data-ago={newest.meta.released} title={newest.meta.released}>
-                  {newest.meta.released}
+          <div class="nw-text">
+            <span class="nw-eyebrow">newest</span>
+            <a class="nw-title" href={entryPath(newest)}>{newest.game}</a>
+            <span class="nw-by">
+              {newest.tool && <>{newest.tool} · </>}by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
+            </span>
+            <dl class="nw-dates">
+              <dt>playable</dt>
+              <dd>
+                <b class="ago" data-ago={newest.firstReleaseAt} data-clock title={`First GitHub release ${newest.firstReleaseAt}`}>
+                  {newest.firstReleaseAt!.slice(0, 10)}
                 </b>
-              ) : (
-                <b class="ago unknown">date unknown</b>
-              )}
-            </span>
-            <span class="rel">
-              <span>recomp GitHub release</span>
-              <b class="ago" data-ago={newest.firstReleaseAt} data-clock title={newest.firstReleaseAt}>
-                {newest.firstReleaseAt!.slice(0, 10)}
-              </b>
-            </span>
-          </span>
-          <span class="nw-line nw-c">
-            {newest.tool && <>{newest.tool} · </>}by <a href={`https://github.com/${newestOwner}`}>{newestOwner}</a>
-          </span>
+              </dd>
+              <dt>
+                {newestMark ? (
+                  <img class="logo-img" src={newestMark.src} height={+newestLogo!.h.toFixed(1)} width={+newestLogo!.w.toFixed(1)} alt={PLATFORMS[newest.platform]} title={`Original ${PLATFORMS[newest.platform]} release`} />
+                ) : (
+                  "original"
+                )}
+              </dt>
+              <dd>
+                {newest.meta?.released ? (
+                  <b class="ago og" data-ago={newest.meta.released} title={`Original release ${newest.meta.released}`}>
+                    {newest.meta.released}
+                  </b>
+                ) : (
+                  <b class="ago unknown">unknown</b>
+                )}
+              </dd>
+            </dl>
+          </div>
         </div>
       )
     }
@@ -133,7 +133,14 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     <span class={`cmp ${arrow(fresh.week)}`}>
       <b>{signed(fresh.week.diff)}</b> vs {fresh.week.before} the 7 days before
     </span>
-    <div class="covers"><CoverStack entries={fresh.entries} size={30} max={10} overlap={0.3} wrap={{ max: 20, overlap: 0.12 }} label="New projects in the last 7 days" /></div>
+    <div class="covers"><CoverStack entries={fresh.entries.slice(0, FRESH_COVERS)} size={30} overlap={0.3} wrap={{ max: FRESH_COVERS, overlap: 0.3, always: true }} label="New projects in the last 7 days" /></div>
+    {
+      fresh.value > 0 && (
+        <a class="more-link mono" href="/#all-games">
+          {fresh.value > FRESH_COVERS ? `+${fresh.value - FRESH_COVERS} more` : `all ${fresh.value}`} in the game list →
+        </a>
+      )
+    }
   </div>
 
   <div class="tile">
@@ -278,14 +285,12 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   /* fills the rest of the tile and centres in it, so the row's taller tiles leave no hole */
   .newest {
     flex: 1;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-content: center;
+    display: flex;
     align-items: center;
-    gap: 0 0.85rem;
+    gap: 0.8rem;
     white-space: normal;
-    line-height: 1.6;
   }
+  /* 528×748 IGDB covers: shown at their own aspect ratio, big enough that the downscale stays legible */
   .nw-cover {
     flex: none;
     display: block;
@@ -293,68 +298,90 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   .nw-cover img,
   .nw-cover .ph {
     display: block;
-    width: 54px;
-    height: 72px;
+    width: 64px;
+    height: 91px;
     object-fit: cover;
-    border-radius: 3px;
+    border-radius: 4px;
     box-shadow: 0 4px 10px -4px rgb(0 0 0 / 0.9);
   }
   .nw-text {
     display: flex;
     flex-direction: column;
+    gap: 0.1rem;
     min-width: 0;
+    line-height: 1.35;
   }
-  /* the title and credit lines span the full tile, under and over the cover */
-  .nw-line {
-    grid-column: 1 / -1;
+  .nw-eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--recomp);
   }
-  .nw-line,
-  .nw-text > span {
+  .newest .nw-title {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--fg);
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .newest .nw-title:hover {
+    color: var(--recomp);
+  }
+  .nw-by {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .nw-c {
-    text-align: center;
-  }
-  .newest a {
+  .newest .nw-by a {
     color: var(--muted);
   }
-  .newest a:hover {
+  .newest .nw-by a:hover {
     color: var(--fg);
   }
-  /* each release in its own small frame */
-  .rel {
+  .nw-dates {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.1rem 0.55rem;
+    margin: 0.35rem 0 0;
+  }
+  .nw-dates dt {
     display: flex;
-    flex-direction: column;
-    margin: 0.2rem 0;
-    padding: 0.1rem 0.5rem 0.15rem;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    line-height: 1.5;
+    align-items: center;
+  }
+  .nw-dates dt img {
+    opacity: 0.6;
+  }
+  .nw-dates dd {
+    margin: 0;
+    min-width: 0;
+  }
+  /* narrower four-column rows: a smaller cover leaves the dates room on one line */
+  @media (861px <= width <= 1240px) {
+    .nw-cover img,
+    .nw-cover .ph {
+      width: 48px;
+      height: 68px;
+    }
+    .newest {
+      gap: 0.65rem;
+    }
   }
   .newest .ago {
-    display: block;
     color: var(--recomp);
     font-variant-numeric: tabular-nums;
+  }
+  .newest .ago.og {
+    color: var(--muted);
+    font-weight: 400;
   }
   .newest .ago.unknown {
     color: var(--faint);
     font-weight: 400;
-  }
-  .nw-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0 0.4rem;
-  }
-  .nw-row abbr {
-    text-decoration: none;
-    cursor: help;
-  }
-  .nw-row img {
-    flex: none;
-    opacity: 0.6;
   }
   /* The last 7 days: a bar per 24 hours, the latest on the right. */
   .wk {
@@ -413,10 +440,6 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   .today .bar {
     background: var(--recomp);
     opacity: 1;
-  }
-  .newest b {
-    color: var(--recomp);
-    font-variant-numeric: tabular-nums;
   }
   /* Platforms: logos drift sideways in three lanes under a plate with the count. */
   .plat {
@@ -517,11 +540,20 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-  /* narrower four-column rows: tuck the covers further in so the "+N" chip stays inside the tile */
+  /* narrower four-column rows: tuck the covers further in so two rows still hold them all */
   @media (521px <= width <= 1240px) {
     .covers :global(.stack) {
-      --o: 0.6 !important;
+      --ow: 0.5 !important;
     }
+  }
+  .more-link {
+    margin-top: 0.55rem;
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .more-link:hover {
+    color: var(--fg);
   }
   /* phones: one tile per row, so each gets the full width */
   @media (max-width: 520px) {

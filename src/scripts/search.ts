@@ -3,6 +3,8 @@
  * whole title, word starts, initials ("sotn", "ff7"), then other facts (repo, platform aliases, developer, series,
  * genre, year). Picking a result opens its page.
  */
+import { suggestUrl } from "../lib/discovery.ts";
+
 type Item = { t: "g" | "t" | "e"; n: string; s: string; h: string; c?: string; k: string; w: number };
 type Prepared = Item & { name: string; nameWords: string[]; initials: string; compact: string; keys: string; keyWords: string[] };
 
@@ -110,7 +112,8 @@ if (root && input && list) {
               `<span class="qs-txt"><strong>${esc(p.n)}</strong><span>${esc(p.s)}</span></span><span class="qs-type">${LABEL[p.t]}</span></a></li>`,
           )
           .join("")
-      : `<li class="qs-none">No games, toolchains or events match “${esc(input!.value.trim())}”.</li>`;
+      : `<li class="qs-none">No games, toolchains or events match “${esc(input!.value.trim())}”.` +
+        ` <a class="qs-suggest" href="${esc(suggestUrl(input!.value.trim()))}">Know a playable recomp of it? Suggest it →</a></li>`;
     list!.hidden = false;
     input!.setAttribute("aria-expanded", "true");
     setActive(shown.length ? 0 : -1);

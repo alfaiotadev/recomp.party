@@ -37,8 +37,6 @@ export const stats = {
     value: games.length,
     /** The project whose first release is the most recent. */
     newest: games.filter((g) => g.firstReleaseAt).sort((a, b) => b.firstReleaseAt!.localeCompare(a.firstReleaseAt!))[0],
-    bars: series(([, end]) => games.filter((g) => g.firstReleaseAt && Date.parse(g.firstReleaseAt) < end).length),
-    barsLabel: "Playable projects over the last 12 weeks",
   },
   platforms: { value: platformsInUse.length, ids: platformsInUse },
   fresh: {

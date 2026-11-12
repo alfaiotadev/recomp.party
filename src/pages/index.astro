@@ -6,6 +6,7 @@ import StatTiles from "../components/StatTiles.astro";
 import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
 import { aiFilterOptions } from "../lib/ai.ts";
+import { SUGGEST_URL } from "../lib/discovery.ts";
 import { fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolGames, tools } from "../lib/data.ts";
 
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
@@ -107,6 +108,11 @@ const toolStrip = tools.slice(0, 8);
     <ul class="grid" id="games">
       {games.map((g) => <GameCard entry={g} />)}
     </ul>
+    <p class="suggest-foot mono" id="suggest-foot">
+      <span class="sf-none">No games match these filters.</span>
+      Missing a playable recomp or port? <a href={SUGGEST_URL} data-base={SUGGEST_URL}>Suggest it →</a>
+      <span class="sf-how">A bot checks the link and opens a pull request; a human reviews it.</span>
+    </p>
   </section>
 </Base>
 
@@ -115,6 +121,8 @@ const toolStrip = tools.slice(0, 8);
     const form = document.getElementById("filters");
     const cards = [...document.querySelectorAll("#games > li")];
     const count = document.getElementById("count");
+    const foot = document.getElementById("suggest-foot");
+    const footLink = foot.querySelector("a");
     const apply = () => {
       const f = Object.fromEntries(new FormData(form));
       const q = (f.q || "").trim().toLowerCase();
@@ -131,6 +139,10 @@ const toolStrip = tools.slice(0, 8);
         if (ok) shown++;
       }
       count.textContent = shown === cards.length ? `${cards.length} games` : `${shown} of ${cards.length} games`;
+      // Nothing found: the suggestion line stands out, with the search prefilled as the issue title.
+      foot.classList.toggle("empty", shown === 0);
+      const raw = (f.q || "").trim();
+      footLink.href = raw ? `${footLink.dataset.base}&title=${encodeURIComponent(`Suggest: ${raw}`)}` : footLink.dataset.base;
     };
     form.addEventListener("input", apply);
     // Layout: list, one column (phones) or the card grid; remembered per browser.
@@ -365,6 +377,36 @@ const toolStrip = tools.slice(0, 8);
     .grid.one {
       grid-template-columns: minmax(0, 1fr);
     }
+  }
+  .suggest-foot {
+    margin: 1.4rem 0 0;
+    font-size: 0.75rem;
+    color: var(--faint);
+    text-align: center;
+  }
+  .suggest-foot a {
+    color: var(--recomp);
+  }
+  .sf-how {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.68rem;
+  }
+  .sf-none {
+    display: none;
+  }
+  .suggest-foot.empty {
+    margin-top: 0.4rem;
+    padding: 1.4rem 1rem;
+    border: 1px dashed rgb(124 240 197 / 0.4);
+    border-radius: 12px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .suggest-foot.empty .sf-none {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--fg);
   }
   .grid {
     display: grid;

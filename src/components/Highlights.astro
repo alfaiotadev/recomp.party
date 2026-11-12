@@ -158,6 +158,10 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <header>
               <p class="eyebrow">{fresh.note}</p>
               <h2>{fresh.title}</h2>
+              <p class="fresh-count">
+                <span class="n">{fresh.items.length + fresh.rest.length}</span>
+                <span class="mono">new {fresh.items.length + fresh.rest.length === 1 ? "project" : "projects"}</span>
+              </p>
               {fresh.rest.length > 0 && (
                 <div class="more-new">
                   <CoverStack entries={fresh.rest} size={40} max={8} wrap={{ max: 15, overlap: 0.15, always: true }} label="Earlier new releases" />
@@ -592,6 +596,23 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   .slide header .eyebrow {
     margin: 0;
     color: var(--recomp);
+  }
+  /* the count, in the same type as the front-page stat tiles */
+  .fresh-count {
+    display: flex;
+    flex-direction: column;
+    margin: 0.7rem 0 0;
+  }
+  .fresh-count .n {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--recomp);
+  }
+  .fresh-count .mono {
+    font-size: 0.72rem;
+    color: var(--muted);
   }
   .more-new {
     margin-top: 0.9rem;
