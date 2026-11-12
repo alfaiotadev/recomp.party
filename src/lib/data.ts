@@ -34,7 +34,7 @@ function toEntry(p: Project): Entry {
     url: `https://github.com/${snap?.canonical ?? p.repo}`,
     snap,
     latest: snap?.releases[0],
-    firstReleaseAt: dates.at(-1)?.date,
+    firstReleaseAt: snap?.firstReleaseAt ?? dates.at(-1)?.date,
     latestReleaseAt: dates[0]?.date,
     os: snap?.releases[0]?.os ?? [],
     meta,
