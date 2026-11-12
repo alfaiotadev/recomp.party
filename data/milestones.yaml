@@ -7,6 +7,42 @@
 # Fields: see Milestone in data/schema.ts. Above the timeline: the vendor's logo, `label`
 # (the short name, without "Claude") and, if it says something the name doesn't, `sub`.
 
+- id: nintendo-github-dmca-wave-2026-11
+  date: 2026-11-06
+  kind: takedown
+  vendor: nintendo
+  label: DMCA wave
+  sub: recomps go missing
+  title: Nintendo's DMCA wave on GitHub, and recomp repos go missing
+  summary: |
+    Nintendo filed four DMCA notices with GitHub on 6 November, made public on 10 November. They
+    target Nintendo Switch emulators (Yuzu, Citron Neo) and Switch modchip firmware (SX Core, SX Lite,
+    Picofly, HWFLY); GitHub took down the Picofly notice's whole network of 144 repositories. None of
+    the notices names a static recompilation or a source port.
+
+    In the same days, decomp and recomp developers reported repositories being taken down, on GitLab as
+    well as GitHub, and advised against keeping GitHub as a project's only home. Mr. Sujano's news show
+    covered the takedowns of game decomps and recomps on 12 November. Seven projects listed here went
+    missing from GitHub between 2 and 11 November. GitHub shows none of them as blocked under the DMCA:
+    the repos, or their owners' whole accounts, are simply gone, so why each one went is not known.
+  sources:
+    - label: "GitHub DMCA notice: Switch emulators"
+      url: https://github.com/github/dmca/blob/master/2026/11/2026-11-06-nintendo-4.md
+    - label: "GitHub DMCA notice: modchip firmware"
+      url: https://github.com/github/dmca/blob/master/2026/11/2026-11-06-nintendo-2.md
+    - label: GBAtemp
+      url: https://gbatemp.net/news/nintendo-dmca-notice-takes-down-144-picofly-switch-repositories.686453/
+    - label: Video Games Chronicle
+      url: https://www.videogameschronicle.com/news/nintendos-battle-against-piracy-continues-with-a-dmca-takedown-on-switch-mod-chip-firmware/
+    - label: "Mr. Sujano: Takedowns for Game Decomps and Recomps"
+      url: https://www.youtube.com/watch?v=CsrUy_Ze9PI
+    - label: Mr. Sujano's sources for that episode
+      url: https://github.com/MrSujano/Sources/releases/tag/2026.11.12
+    - label: "r/decomps: don't make GitHub your only home"
+      url: https://www.reddit.com/r/decomps/comments/1xkop2h/psa_dont_make_github_your_only_home_for_decomp/
+    - label: "recomp.party: listed projects gone from GitHub"
+      url: https://recomp.party/?status=gone#all-games
+
 - id: claude-code-game-recreation-rule
   date: 2026-10-27
   kind: policy

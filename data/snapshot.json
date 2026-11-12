@@ -87114,6 +87114,661 @@
       "releases": [],
       "releaseDates": [],
       "releaseCount": 0
+    },
+    "badcompany94-rcmp/project-tandem": {
+      "repo": "badcompany94-rcmp/project-tandem",
+      "canonical": "badcompany94-rcmp/project-tandem",
+      "description": "Play Mario Kart: Double Dash!! online on Windows. Project Tandem is a native PC recompilation with 2-8 player solo/shared-kart multiplayer, widescreen, and mouse/keyboard controls. Requires your own compatible USA disc image.",
+      "homepage": null,
+      "stars": 137,
+      "license": "MIT",
+      "archived": false,
+      "isFork": false,
+      "pushedAt": "2026-11-05T02:18:31Z",
+      "createdAt": "2026-10-23T17:38:41Z",
+      "releases": [
+        {
+          "tag": "v0.1.0-beta.15",
+          "name": "Public Beta 15 - Ghost Lineup and Controller Fixes",
+          "url": "https://github.com/badcompany94-rcmp/project-tandem/releases/tag/v0.1.0-beta.15",
+          "publishedAt": "2026-11-05T01:44:22Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 2103
+        },
+        {
+          "tag": "v0.1.0-beta.14",
+          "name": "Public Beta 14 - Online Time Trials and Frame Pacing",
+          "url": "https://github.com/badcompany94-rcmp/project-tandem/releases/tag/v0.1.0-beta.14",
+          "publishedAt": "2026-11-04T06:37:18Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 896
+        },
+        {
+          "tag": "v0.1.0-beta.13",
+          "name": "Public Beta 13 - Experimental Direct3D 11",
+          "url": "https://github.com/badcompany94-rcmp/project-tandem/releases/tag/v0.1.0-beta.13",
+          "publishedAt": "2026-11-03T23:31:51Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 405
+        },
+        {
+          "tag": "v0.1.0-beta.12",
+          "name": "Project Tandem Public Beta 12 - Internal Resolution and Graphics Diagnostics",
+          "url": "https://github.com/badcompany94-rcmp/project-tandem/releases/tag/v0.1.0-beta.12",
+          "publishedAt": "2026-11-02T21:04:29Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 907
+        },
+        {
+          "tag": "v0.1.0-beta.11",
+          "name": "Project Tandem Public Beta 11 - Portable Folders and Update Fixes",
+          "url": "https://github.com/badcompany94-rcmp/project-tandem/releases/tag/v0.1.0-beta.11",
+          "publishedAt": "2026-11-02T16:54:49Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 238
+        }
+      ],
+      "releaseDates": [
+        {
+          "date": "2026-11-05T01:44:22Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-04T06:37:18Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-03T23:31:51Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-02T21:04:29Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-02T16:54:49Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-01T17:31:07Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-01T16:50:34Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-01T03:16:10Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-01T02:25:47Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-01T00:48:46Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-10-31T19:57:07Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-10-31T17:38:09Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-10-30T23:13:46Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-10-30T22:20:12Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-10-23T18:20:17Z",
+          "prerelease": true
+        }
+      ],
+      "releaseCount": 15,
+      "firstReleaseAt": "2026-10-23T18:20:17Z",
+      "gone": {
+        "since": "2026-11-09T18:47:31.578Z",
+        "lastSeen": "2026-11-09T08:03:19.021Z",
+        "reason": "account",
+        "misses": 15,
+        "archived": false
+      }
+    },
+    "Apolinario-coder/SkyRecomp": {
+      "repo": "Apolinario-coder/SkyRecomp",
+      "canonical": "Apolinario-coder/SkyRecomp",
+      "description": "Static recompilation of The Legend of Zelda: Skyward Sword for PC",
+      "homepage": null,
+      "stars": 608,
+      "license": null,
+      "archived": false,
+      "isFork": false,
+      "pushedAt": "2026-11-10T03:05:10Z",
+      "createdAt": "2026-10-17T09:17:49Z",
+      "releases": [
+        {
+          "tag": "v2.2.0",
+          "name": "Sky Recomp v2.2 - Game 1.0.1 & Experimental Archipelago Support",
+          "url": "https://github.com/Apolinario-coder/SkyRecomp/releases/tag/v2.2.0",
+          "publishedAt": "2026-11-10T03:22:18Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux",
+            "macos"
+          ],
+          "downloads": 2421
+        },
+        {
+          "tag": "v2.1.0",
+          "name": "Sky Recomp v2.1.0 (v2.1)",
+          "url": "https://github.com/Apolinario-coder/SkyRecomp/releases/tag/v2.1.0",
+          "publishedAt": "2026-10-31T21:21:30Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux",
+            "macos"
+          ],
+          "downloads": 9193
+        },
+        {
+          "tag": "v2.0.2",
+          "name": "Sky Recomp v2.0.2: Language fixes, setup stability and cutscene improvements",
+          "url": "https://github.com/Apolinario-coder/SkyRecomp/releases/tag/v2.0.2",
+          "publishedAt": "2026-10-26T02:31:48Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux",
+            "macos"
+          ],
+          "downloads": 7650
+        },
+        {
+          "tag": "v2.0.1",
+          "name": "Sky Recomp v2.0.1: Bug fixes and performance improvements",
+          "url": "https://github.com/Apolinario-coder/SkyRecomp/releases/tag/v2.0.1",
+          "publishedAt": "2026-10-25T17:47:44Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux",
+            "macos"
+          ],
+          "downloads": 402
+        },
+        {
+          "tag": "v2.0.0",
+          "name": "Sky Recomp v2.0.0 — Fix Crashes and Freezes",
+          "url": "https://github.com/Apolinario-coder/SkyRecomp/releases/tag/v2.0.0",
+          "publishedAt": "2026-10-25T04:58:42Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux",
+            "macos"
+          ],
+          "downloads": 486
+        }
+      ],
+      "releaseDates": [
+        {
+          "date": "2026-11-10T03:22:18Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-31T21:21:30Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-26T02:31:48Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-25T17:47:44Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-25T04:58:42Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-22T02:31:03Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-20T05:17:11Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-19T15:43:41Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-18T04:37:30Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-17T21:40:18Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-17T19:18:06Z",
+          "prerelease": false
+        }
+      ],
+      "releaseCount": 11,
+      "firstReleaseAt": "2026-10-17T19:18:06Z",
+      "gone": {
+        "since": "2026-11-11T20:10:44.395Z",
+        "lastSeen": "2026-11-11T19:40:44.781Z",
+        "reason": "account",
+        "misses": 7,
+        "archived": false
+      }
+    },
+    "veneito/engage-pc-recomp": {
+      "repo": "veneito/engage-pc-recomp",
+      "canonical": "veneito/engage-pc-recomp",
+      "description": "Experimental native Windows port of Fire Emblem Engage 2.0.0. Build locally from your own files; no game data included.",
+      "homepage": null,
+      "stars": 18,
+      "license": "MIT",
+      "archived": true,
+      "isFork": false,
+      "pushedAt": "2026-11-03T15:33:02Z",
+      "createdAt": "2026-11-02T04:37:24Z",
+      "releases": [
+        {
+          "tag": "engage-v0.1.0-alpha.4",
+          "name": "Engage PC Recomp 0.1.0-alpha.4 — update an install in place",
+          "url": "https://github.com/veneito/engage-pc-recomp/releases/tag/engage-v0.1.0-alpha.4",
+          "publishedAt": "2026-11-03T14:50:26Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 39
+        },
+        {
+          "tag": "engage-v0.1.0-alpha.3",
+          "name": "Engage PC Recomp 0.1.0-alpha.3 — F1 settings crash fix",
+          "url": "https://github.com/veneito/engage-pc-recomp/releases/tag/engage-v0.1.0-alpha.3",
+          "publishedAt": "2026-11-03T02:46:44Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 61
+        },
+        {
+          "tag": "engage-v0.1.0-alpha.2",
+          "name": "Engage PC Recomp 0.1.0-alpha.2 — Windows setup preview",
+          "url": "https://github.com/veneito/engage-pc-recomp/releases/tag/engage-v0.1.0-alpha.2",
+          "publishedAt": "2026-11-02T10:02:33Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 40
+        }
+      ],
+      "releaseDates": [
+        {
+          "date": "2026-11-03T14:50:26Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-03T02:46:44Z",
+          "prerelease": true
+        },
+        {
+          "date": "2026-11-02T10:02:33Z",
+          "prerelease": true
+        }
+      ],
+      "releaseCount": 3,
+      "firstReleaseAt": "2026-11-02T10:02:33Z",
+      "gone": {
+        "since": "2026-11-04T06:27:17.323Z",
+        "lastSeen": "2026-11-03T23:26:55.395Z",
+        "reason": "repo",
+        "misses": 33,
+        "archived": true
+      }
+    },
+    "jmars125/xc2-recomp": {
+      "repo": "jmars125/xc2-recomp",
+      "canonical": "jmars125/xc2-recomp",
+      "description": "Static recompilation of Xenoblade Chronicles 2 to Windows x86-64 with a Vulkan renderer",
+      "homepage": null,
+      "stars": 69,
+      "license": "MIT",
+      "archived": true,
+      "isFork": false,
+      "pushedAt": "2026-11-04T20:08:18Z",
+      "createdAt": "2026-11-02T19:57:26Z",
+      "releases": [
+        {
+          "tag": "v0.1.4",
+          "name": "XC2 Recomp 0.1.4",
+          "url": "https://github.com/jmars125/xc2-recomp/releases/tag/v0.1.4",
+          "publishedAt": "2026-11-04T15:57:19Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 533
+        },
+        {
+          "tag": "v0.1.3",
+          "name": "XC2 Recomp 0.1.3",
+          "url": "https://github.com/jmars125/xc2-recomp/releases/tag/v0.1.3",
+          "publishedAt": "2026-11-04T05:34:24Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 272
+        },
+        {
+          "tag": "v0.1.2",
+          "name": "XC2 Recomp 0.1.2",
+          "url": "https://github.com/jmars125/xc2-recomp/releases/tag/v0.1.2",
+          "publishedAt": "2026-11-04T05:23:32Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 16
+        },
+        {
+          "tag": "v0.1.1",
+          "name": "XC2 Recomp 0.1.1",
+          "url": "https://github.com/jmars125/xc2-recomp/releases/tag/v0.1.1",
+          "publishedAt": "2026-11-04T03:00:24Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 107
+        },
+        {
+          "tag": "v0.1.0",
+          "name": "XC2 Recomp 0.1.0",
+          "url": "https://github.com/jmars125/xc2-recomp/releases/tag/v0.1.0",
+          "publishedAt": "2026-11-04T01:25:51Z",
+          "prerelease": false,
+          "os": [
+            "windows",
+            "linux"
+          ],
+          "downloads": 111
+        }
+      ],
+      "releaseDates": [
+        {
+          "date": "2026-11-04T15:57:19Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-04T05:34:24Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-04T05:23:32Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-04T03:00:24Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-04T01:25:51Z",
+          "prerelease": false
+        }
+      ],
+      "releaseCount": 5,
+      "firstReleaseAt": "2026-11-04T01:25:51Z",
+      "gone": {
+        "since": "2026-11-10T07:24:30.182Z",
+        "lastSeen": "2026-11-09T22:24:42.558Z",
+        "reason": "repo",
+        "misses": 13,
+        "archived": false
+      }
+    },
+    "drakolordx7/pokopia-recomp": {
+      "repo": "drakolordx7/pokopia-recomp",
+      "canonical": "drakolordx7/switch2-recomp",
+      "description": "Nintendo Switch 2 games recompiled to run natively on PC.",
+      "homepage": null,
+      "stars": 510,
+      "license": "GPL-3.0",
+      "archived": false,
+      "isFork": false,
+      "pushedAt": "2026-11-04T20:05:33Z",
+      "createdAt": "2026-11-02T03:10:30Z",
+      "releases": [
+        {
+          "tag": "v0.2.0",
+          "name": "v0.2.0",
+          "url": "https://github.com/drakolordx7/switch2-recomp/releases/tag/v0.2.0",
+          "publishedAt": "2026-11-04T20:05:33Z",
+          "prerelease": false,
+          "os": [
+            "windows"
+          ],
+          "downloads": 6777
+        },
+        {
+          "tag": "v0.1.1",
+          "name": "v0.1.1",
+          "url": "https://github.com/drakolordx7/switch2-recomp/releases/tag/v0.1.1",
+          "publishedAt": "2026-11-02T17:25:36Z",
+          "prerelease": false,
+          "os": [
+            "windows"
+          ],
+          "downloads": 7865
+        },
+        {
+          "tag": "v0.1.0",
+          "name": "0.1.0",
+          "url": "https://github.com/drakolordx7/switch2-recomp/releases/tag/v0.1.0",
+          "publishedAt": "2026-11-02T14:20:29Z",
+          "prerelease": true,
+          "os": [
+            "windows"
+          ],
+          "downloads": 72
+        }
+      ],
+      "releaseDates": [
+        {
+          "date": "2026-11-04T20:05:33Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-02T17:25:36Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-02T14:20:29Z",
+          "prerelease": true
+        }
+      ],
+      "releaseCount": 3,
+      "firstReleaseAt": "2026-11-02T14:20:29Z",
+      "gone": {
+        "since": "2026-11-09T18:47:31.578Z",
+        "lastSeen": "2026-11-09T08:03:19.021Z",
+        "reason": "repo",
+        "misses": 15,
+        "archived": true
+      }
+    },
+    "josiahg2502-glitch/OogiesRevengeRecompiled": {
+      "repo": "josiahg2502-glitch/OogiesRevengeRecompiled",
+      "canonical": "josiahg2502-glitch/OogiesRevengeRecompiled",
+      "description": "Statically recompiled PC port of The Nightmare Before Christmas: Oogie's Revenge (Xbox): up to 4K, ultrawide, 120 fps, ray-traced ambient occlusion, gamepads, the game's own menu. Bring your own disc.",
+      "homepage": null,
+      "stars": 55,
+      "license": "GPL-3.0",
+      "archived": false,
+      "isFork": false,
+      "pushedAt": "2026-10-23T14:14:12Z",
+      "createdAt": "2026-10-23T02:22:11Z",
+      "releases": [
+        {
+          "tag": "v1.0.1",
+          "name": "Oogie's Revenge Recompiled v1.0.1",
+          "url": "https://github.com/josiahg2502-glitch/OogiesRevengeRecompiled/releases/tag/v1.0.1",
+          "publishedAt": "2026-10-23T14:14:12Z",
+          "prerelease": false,
+          "os": [],
+          "downloads": 811
+        },
+        {
+          "tag": "v1.0.0",
+          "name": "Oogie's Revenge Recompiled v1.0.0",
+          "url": "https://github.com/josiahg2502-glitch/OogiesRevengeRecompiled/releases/tag/v1.0.0",
+          "publishedAt": "2026-10-23T02:22:39Z",
+          "prerelease": false,
+          "os": [],
+          "downloads": 376
+        }
+      ],
+      "releaseDates": [
+        {
+          "date": "2026-10-23T14:14:12Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-10-23T02:22:39Z",
+          "prerelease": false
+        }
+      ],
+      "releaseCount": 2,
+      "firstReleaseAt": "2026-10-23T02:22:39Z",
+      "gone": {
+        "since": "2026-11-07T21:54:47.825Z",
+        "lastSeen": "2026-11-07T13:42:52.017Z",
+        "reason": "repo",
+        "misses": 21,
+        "archived": false
+      }
+    },
+    "thatcalikid760/SCDA360pcport": {
+      "repo": "thatcalikid760/SCDA360pcport",
+      "canonical": "thatcalikid760/SCDA360pcport",
+      "description": "Splinter Cell: Double Agent (Xbox 360) static recompilation to native Windows x64",
+      "homepage": null,
+      "stars": 44,
+      "license": "GPL-3.0",
+      "archived": false,
+      "isFork": false,
+      "pushedAt": "2026-11-02T16:38:06Z",
+      "createdAt": "2026-10-28T13:51:41Z",
+      "releases": [
+        {
+          "tag": "v0.1.3",
+          "name": "v0.1.3",
+          "url": "https://github.com/thatcalikid760/SCDA360pcport/releases/tag/v0.1.3",
+          "publishedAt": "2026-11-02T16:38:32Z",
+          "prerelease": false,
+          "os": [
+            "windows"
+          ],
+          "downloads": 19
+        },
+        {
+          "tag": "v0.1.2",
+          "name": "v0.1.2",
+          "url": "https://github.com/thatcalikid760/SCDA360pcport/releases/tag/v0.1.2",
+          "publishedAt": "2026-11-02T13:10:21Z",
+          "prerelease": false,
+          "os": [
+            "windows"
+          ],
+          "downloads": 26
+        },
+        {
+          "tag": "v0.1.1",
+          "name": "v0.1.1",
+          "url": "https://github.com/thatcalikid760/SCDA360pcport/releases/tag/v0.1.1",
+          "publishedAt": "2026-11-02T12:11:33Z",
+          "prerelease": false,
+          "os": [
+            "windows"
+          ],
+          "downloads": 11
+        },
+        {
+          "tag": "v0.1.0",
+          "name": "v0.1.0 - First playable build (visual bugs known)",
+          "url": "https://github.com/thatcalikid760/SCDA360pcport/releases/tag/v0.1.0",
+          "publishedAt": "2026-11-02T07:14:57Z",
+          "prerelease": false,
+          "os": [
+            "windows"
+          ],
+          "downloads": 34
+        }
+      ],
+      "releaseDates": [
+        {
+          "date": "2026-11-02T16:38:32Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-02T13:10:21Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-02T12:11:33Z",
+          "prerelease": false
+        },
+        {
+          "date": "2026-11-02T07:14:57Z",
+          "prerelease": false
+        }
+      ],
+      "releaseCount": 4,
+      "firstReleaseAt": "2026-11-02T07:14:57Z",
+      "gone": {
+        "since": "2026-11-03T01:01:06.522Z",
+        "lastSeen": "2026-11-02T20:06:04.625Z",
+        "reason": "account",
+        "misses": 39,
+        "archived": false
+      }
     }
   },
   "missing": [

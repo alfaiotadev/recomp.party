@@ -4,7 +4,7 @@ import { aiOf, aiSince, shortModel } from "../../../lib/ai.ts";
 import { LINK_ICONS } from "../../../lib/link-icons.ts";
 import { moreLikeThis } from "../../../lib/related.ts";
 import { CREDIT_ICONS } from "../../../lib/vendor-icons.ts";
-import { ago, buyLinks, creditLink, entryPath, fitLogo, gameLinks, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
+import { ago, buyLinks, creditLink, entryPath, fitLogo, gameLinks, games, GONE_REASONS, goneBadge, hostOf, KINDS, milestonePath, milestones, OS_LABELS, PLATFORMS, platformLogo, shortDate, toolUsers, tools, type Entry } from "../../../lib/data.ts";
 
 export function getStaticPaths() {
   return games.map((entry) => {
@@ -49,6 +49,9 @@ const facts: [string, string | undefined][] = [
   ["GitHub stars", s?.stars.toLocaleString("en")],
 ];
 
+// Gone from GitHub: the latest takedown event on or before the day it went, for context (not as the cause).
+const g = e.gone;
+const goneEvent = g && milestones.filter((m) => m.kind === "takedown" && m.date <= g.since.slice(0, 10)).sort((a, b) => b.date.localeCompare(a.date))[0];
 const description = `${e.game} (${PLATFORMS[e.platform]}) — ${KINDS[e.kind].toLowerCase()} by ${e.repo}. ${s?.description ?? ""}`;
 const jsonLd = {
   "@type": "SoftwareApplication",
@@ -82,9 +85,40 @@ const jsonLd = {
   <p class="badges">
     <span class={`badge ${e.kind}`}>{KINDS[e.kind]}</span>
     <span class="badge">{PLATFORMS[e.platform]}</span>
-    {s?.archived && <span class="badge">archived</span>}
+    {s?.archived && !g && <span class="badge">archived</span>}
     {s?.isFork && <span class="badge">fork</span>}
+    {g && (e.moved_to ? <span class="badge moved">moved</span> : <span class="badge gone">{goneBadge(g)}</span>)}
   </p>
+  {
+    g && (
+      <div class="gone-box" role="note">
+        <p>
+          <b>Gone from GitHub.</b> {GONE_REASONS[g.reason]}
+          {g.notice && (
+            <>
+              {" "}(<a href={g.notice}>the notice</a>)
+            </>
+          )}
+          . Noticed {shortDate(g.since)}
+          {g.lastSeen && <>, last seen {shortDate(g.lastSeen)}</>}.
+        </p>
+        <p>
+          {e.moved_to ? (
+            <>
+              The author moved it to <a href={e.moved_to}>{hostOf(e.moved_to)}</a>. The releases below are the last ones we saw on GitHub.
+            </>
+          ) : (
+            <>The releases below are the last ones we saw; their download links no longer work.</>
+          )}
+          {goneEvent && (
+            <>
+              {" "}Around then: <a href={milestonePath(goneEvent)}>{goneEvent.title}</a>.
+            </>
+          )}
+        </p>
+      </div>
+    )
+  }
   {s?.description && <p class="lede">{s.description}</p>}
   {e.note && <p>{e.note}</p>}
   {
@@ -143,11 +177,22 @@ const jsonLd = {
     )
   }
 
-  <p class="actions">
-    {e.latest && <a class="btn primary" href={e.latest.url}>Latest release: {e.latest.tag}</a>}
-    <a class="btn" href={e.url}>{e.repo} on GitHub</a>
-    {s?.homepage && <a class="btn" href={s.homepage}>Website</a>}
-  </p>
+  {
+    g ? (
+      <p class="actions">
+        {e.moved_to && <a class="btn primary" href={e.moved_to}>Now on {hostOf(e.moved_to)}</a>}
+        {g.archived && <a class="btn" href={`https://archive.softwareheritage.org/browse/origin/?origin_url=${encodeURIComponent(e.url)}`}>Source archive (Software Heritage)</a>}
+        <a class="btn" href={`https://web.archive.org/web/*/${e.url.replace(/^https:\/\//, "")}*`}>Wayback Machine</a>
+        {s?.homepage && <a class="btn" href={s.homepage}>Website</a>}
+      </p>
+    ) : (
+      <p class="actions">
+        {e.latest && <a class="btn primary" href={e.latest.url}>Latest release: {e.latest.tag}</a>}
+        <a class="btn" href={e.url}>{e.repo} on GitHub</a>
+        {s?.homepage && <a class="btn" href={s.homepage}>Website</a>}
+      </p>
+    )
+  }
   </div>
   </div>
 
@@ -210,7 +255,7 @@ const jsonLd = {
         {
           s?.releases.map((r) => (
             <li>
-              <a href={r.url}>{r.name || r.tag}</a>
+              {g ? <span>{r.name || r.tag}</span> : <a href={r.url}>{r.name || r.tag}</a>}
               {r.prerelease && <span class="badge pre">pre-release</span>}
               <span class="muted">
                 {" "}
@@ -302,6 +347,26 @@ const jsonLd = {
 </Base>
 
 <style>
+  /* the repo is gone: what we know, in a dashed frame in the warning colour */
+  .gone-box {
+    margin: 0.9rem 0 0;
+    padding: 0.7rem 0.95rem;
+    border: 1px dashed rgb(255 79 123 / 0.55);
+    border-radius: 10px;
+    background: rgb(255 79 123 / 0.06);
+    font-size: 0.9rem;
+  }
+  .gone-box p {
+    margin: 0;
+  }
+  .gone-box p + p {
+    margin-top: 0.35rem;
+    color: var(--muted);
+  }
+  .gone-box b {
+    color: var(--accent);
+  }
+
   .related {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));

@@ -88,6 +88,19 @@ const ACRONYMS = [
       asked.
     </p>
 
+    <h2>When a repo disappears</h2>
+    <p>
+      Repos get deleted, made private or taken down. A listed project whose GitHub repo is gone stays on the list,
+      marked <span class="badge gone">gone</span>, with the last releases we saw; it just stops counting towards the
+      numbers on the front page. Its page says what GitHub tells us (a DMCA block, a deleted repo or a deleted
+      account) and links to the Software Heritage archive when there is one.
+    </p>
+    <p>
+      If the author moved the project elsewhere, say to Codeberg or GitLab, <a href={`${repo}/issues/new`}>tell us</a>
+      and we'll link its new home. A weekly search looks for candidates too, but only a move a person has confirmed
+      gets linked: re-uploads by others can carry malware.
+    </p>
+
     <h2>A word on downloads</h2>
     <p>
       Every download link points at the project's own GitHub releases; recomp.party hosts nothing. Projects are reviewed

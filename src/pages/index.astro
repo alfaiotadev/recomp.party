@@ -7,7 +7,7 @@ import Timeline from "../components/Timeline.astro";
 import Base from "../layouts/Base.astro";
 import { aiFilterOptions } from "../lib/ai.ts";
 import { SUGGEST_URL } from "../lib/discovery.ts";
-import { fitLogo, games, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolGames, tools } from "../lib/data.ts";
+import { fitLogo, games, goneGames, KINDS, OS_LABELS, PLATFORMS, platformLogo, platformsInUse, toolGames, tools } from "../lib/data.ts";
 
 const osInUse = (Object.keys(OS_LABELS) as (keyof typeof OS_LABELS)[]).filter((o) => games.some((g) => g.os.includes(o)));
 const toolStrip = tools.slice(0, 8);
@@ -89,6 +89,18 @@ const toolStrip = tools.slice(0, 8);
           <option value="">Any OS</option>
           {osInUse.map((o) => <option value={o}>{OS_LABELS[o]}</option>)}
         </select>
+        {
+          goneGames.length > 0 && (
+            <>
+              <label class="visually-hidden" for="f-status">Status</label>
+              <select id="f-status" name="status" title="Projects whose GitHub repo is gone stay listed with their last known releases">
+                <option value="">Any status</option>
+                <option value="available">Available</option>
+                <option value="gone">Gone from GitHub ({goneGames.length})</option>
+              </select>
+            </>
+          )
+        }
       </form>
     </div>
     <div class="list-bar">
@@ -134,6 +146,8 @@ const toolStrip = tools.slice(0, 8);
           (!f.kind || d.kind === f.kind) &&
           (!f.os || d.os.split(" ").includes(f.os)) &&
           (!f.ai || d.ai.split(" ").includes(f.ai)) &&
+          // "gone" includes the ones with a confirmed new home; "available" counts those as available too
+          (!f.status || (f.status === "gone" ? d.status !== "available" : d.status !== "gone")) &&
           (!q || d.search.includes(q));
         c.hidden = !ok;
         if (ok) shown++;
@@ -180,7 +194,11 @@ const toolStrip = tools.slice(0, 8);
     };
     const platform = params.get("platform");
     const picked = platform ? pickPlatform(platform) : false;
-    if (q || ai || picked) apply();
+    // ?status=gone (from the Lost & found slide) shows the projects whose repo is gone
+    const status = params.get("status");
+    const statusSel = form.elements.namedItem("status");
+    if (status && statusSel?.querySelector(`option[value="${CSS.escape(status)}"]`)) statusSel.value = status;
+    if (q || ai || picked || statusSel?.value) apply();
     // on this page a logo filters in place instead of reloading: the games list here, the release timeline
     // (both its desktop chart and phone list) through its "pick-platform" event, then jumps to the timeline
     document.addEventListener("click", (e) => {

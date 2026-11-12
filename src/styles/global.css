@@ -391,6 +391,17 @@ section {
   border-color: rgb(169 180 255 / 0.35);
   background: rgb(169 180 255 / 0.06);
 }
+/* the GitHub repo is gone: dashed, in the warning colour */
+.badge.gone {
+  color: var(--accent);
+  border: 1px dashed rgb(255 79 123 / 0.6);
+  background: rgb(255 79 123 / 0.08);
+}
+.badge.moved {
+  color: var(--port);
+  border: 1px dashed rgb(255 179 92 / 0.6);
+  background: rgb(255 179 92 / 0.06);
+}
 .badge.pre {
   color: var(--accent);
   border-color: rgb(255 79 123 / 0.35);
@@ -429,6 +440,10 @@ section {
 }
 .v-google {
   --mc: #8e75b2;
+}
+/* takedowns: a warning colour rather than a brand colour */
+.v-nintendo {
+  --mc: var(--accent);
 }
 /* GitHub Copilot and Cursor marks are monochrome too; "other" agents have no logo */
 .v-github,

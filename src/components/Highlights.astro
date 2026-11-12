@@ -1,13 +1,13 @@
 ---
 import PlatformGhost from "./PlatformGhost.astro";
-import { ago, entryPath, fitLogo, MILESTONE_KINDS, milestonePath, PLATFORMS, platformLogo } from "../lib/data.ts";
+import { ago, entryPath, fitLogo, GONE_REASONS, goneBadge, hostOf, MILESTONE_KINDS, milestonePath, PLATFORMS, platformLogo, shortDate } from "../lib/data.ts";
 import { recentCredits, shortModel } from "../lib/ai.ts";
 import { highlights, RISING_MIN_BASE } from "../lib/highlights.ts";
 import { CREDIT_ICONS, VENDOR_ICONS } from "../lib/vendor-icons.ts";
 import CoverStack from "./CoverStack.astro";
 import StarTrend from "./StarTrend.astro";
 
-const { updates, risers, biggest, starTrend, starTrendPct, fresh, platform, most, fastest } = highlights;
+const { updates, risers, biggest, starTrend, starTrendPct, fresh, gone, platform, most, fastest } = highlights;
 /** The two star slides share one card layout; Rising stars charts daily growth in percent, Biggest stars in stars. */
 const starSlides = [
   { id: "rising", slide: risers, trend: true, percent: !!biggest, foot: biggest ? `Growth since the start of the week, for projects that had at least ${RISING_MIN_BASE} stars then.` : undefined },
@@ -18,6 +18,7 @@ const slides = [
   updates.length && { id: "updates", label: "Latest updates" },
   ...starSlides.map((s) => ({ id: s.id, label: s.slide.title })),
   fresh.items.length && { id: "fresh", label: fresh.title },
+  gone.total && { id: "gone", label: "Lost & found" },
   platform && { id: "platform", label: "Platform of the week" },
   most.length && { id: "most", label: "Most recompiled" },
   fastest.length && { id: "fastest", label: "Fastest recomps" },
@@ -185,6 +186,45 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                       <span class="meta mono">
                         {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[g.platform]} /> : PLATFORMS[g.platform]}
                         <span>{ago(g.firstReleaseAt)}</span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          </article>
+        )}
+        {gone.total > 0 && (
+          <article class="slide gone-slide" id="hl-gone" aria-label="Lost and found">
+            <header>
+              <p class="eyebrow">lost &amp; found</p>
+              <h2>Gone from GitHub</h2>
+              <div class="gone-head">
+                <p class="fresh-count">
+                  <span class="n">{gone.total}</span>
+                  <span class="mono">listed {gone.total === 1 ? "project" : "projects"} gone{gone.moved > 0 && <>, {gone.moved} moved</>}</span>
+                </p>
+                <span class="sad-bot" role="img" aria-label="A sad robot, crying" />
+              </div>
+              <p class="gone-note mono">
+                We keep their last known releases.{" "}
+                {gone.event && <a href={milestonePath(gone.event)}>{gone.event.label}, {shortDate(gone.event.date)} →</a>}
+              </p>
+              <a class="gone-all mono" href="/?status=gone#all-games">all gone projects →</a>
+            </header>
+            <ol class="items">
+              {gone.items.map((g) => {
+                const logo = mini(g.platform);
+                return (
+                  <li>
+                    <a href={entryPath(g)} class={`item ${g.kind} gone${g.cover ? " has-art" : " no-art"}`} title={GONE_REASONS[g.gone!.reason]}>
+                      {g.cover ? <img class="art" src={g.cover.src} width={g.cover.width} height={g.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={g.platform} />}
+                      {g.moved_to ? <span class="badge moved">moved · {hostOf(g.moved_to)}</span> : <span class="badge gone">{goneBadge(g.gone!)}</span>}
+                      <strong>{g.game}</strong>
+                      <span class="by mono">by {g.repo.split("/")[0]}</span>
+                      <span class="meta mono">
+                        {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[g.platform]} /> : PLATFORMS[g.platform]}
+                        <span>gone {ago(g.gone!.since)}</span>
                       </span>
                     </a>
                   </li>
@@ -616,6 +656,59 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   }
   .more-new {
     margin-top: 0.9rem;
+  }
+  /* Lost & found: the covers greyed out, as on a missing poster */
+  .gone-slide .fresh-count .n {
+    color: var(--accent);
+  }
+  .gone-head {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.9rem;
+  }
+  /* the mascot from the header, crying: four frames side by side in src/assets/robot-sad.svg */
+  .sad-bot {
+    flex: none;
+    width: 64px;
+    height: 64px;
+    margin-bottom: -4px;
+    background: url("../assets/robot-sad.svg") 0 0 / 400% 100% no-repeat;
+    animation: sad-loop 1.8s steps(4) infinite;
+  }
+  @keyframes sad-loop {
+    to {
+      background-position-x: 133.333%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sad-bot {
+      animation: none;
+      background-position-x: 33.333%;
+    }
+  }
+  .gone-note {
+    margin: 0.7rem 0 0;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .gone-note a,
+  .gone-all {
+    color: var(--muted);
+  }
+  .gone-note a:hover,
+  .gone-all:hover {
+    color: var(--fg);
+  }
+  .gone-all {
+    display: inline-block;
+    margin-top: 0.45rem;
+    font-size: 0.72rem;
+  }
+  .item.gone .art {
+    filter: grayscale(1) brightness(0.75);
+  }
+  .item.gone:hover .art {
+    filter: grayscale(0.3);
   }
   .more-new a {
     display: inline-block;

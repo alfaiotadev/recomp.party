@@ -18,6 +18,8 @@ export type Entry = Project & {
   meta: GameMeta | undefined;
   /** IGDB cover as served from public/covers, if there is one. */
   cover: { src: string; width: number; height: number } | undefined;
+  /** The GitHub repo no longer resolves (missed in two fetches in a row, or blocked); the rest is its last snapshot. */
+  gone: NonNullable<RepoSnapshot["gone"]> | undefined;
 };
 
 const snapshot = loadSnapshot();
@@ -39,6 +41,8 @@ function toEntry(p: Project): Entry {
     os: snap?.releases[0]?.os ?? [],
     meta,
     cover: meta?.cover && { src: `/covers/${p.wikidata}.webp`, width: meta.cover.width, height: meta.cover.height },
+    // one miss can be a GitHub hiccup; a DMCA block is certain at once
+    gone: snap?.gone && (snap.gone.misses >= 2 || snap.gone.reason === "dmca") ? snap.gone : undefined,
   };
 }
 
@@ -48,6 +52,24 @@ const byLatestRelease = (a: Entry, b: Entry) => (b.latestReleaseAt ?? "").locale
 
 /** Playable games (recomps + ports), newest release first. */
 export const games = all.filter((e) => e.kind !== "tool").sort(byLatestRelease);
+/** Games you can get right now: gone repos stay listed with a badge, but count only once they have a confirmed new home. */
+export const available = games.filter((e) => !e.gone || e.moved_to);
+/** Gone from GitHub, most recently gone first. */
+export const goneGames = games.filter((e) => e.gone).sort((a, b) => b.gone!.since.localeCompare(a.gone!.since));
+
+/** Why a repo is gone, in words. */
+export const GONE_REASONS = {
+  dmca: "Blocked by GitHub after a DMCA notice",
+  repo: "Repo deleted or made private",
+  account: "The owner's GitHub account is gone",
+} as const;
+
+/** Badge text: "DMCA" when GitHub says so, otherwise just "gone" (a 404 doesn't say why). */
+export const goneBadge = (g: NonNullable<Entry["gone"]>) => (g.reason === "dmca" ? "dmca" : "gone");
+
+/** Host name of a moved_to URL ("codeberg.org"), for "Moved to …". */
+export const hostOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
+
 export const tools = all.filter((e) => e.kind === "tool").sort((a, b) => (b.snap?.stars ?? 0) - (a.snap?.stars ?? 0));
 
 /** Platforms that have at least one game, in the canonical order of PLATFORMS. */

@@ -1,0 +1,44 @@
+name: Lost & found
+
+# Weekly: look for a new home for every listed project whose GitHub repo is gone (scripts/lost-found.ts), and keep
+# the findings in one open issue labelled lost-found. Nothing reaches the site until a person adds `moved_to:`.
+on:
+  schedule:
+    - cron: "23 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: lost-found
+  cancel-in-progress: true
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx tsx scripts/lost-found.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update the lost-found issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create lost-found --color ff4f7b --description "Gone repos and where they may have moved" --force
+          n=$(gh issue list --label lost-found --state open --json number -q '.[0].number')
+          if grep -q 'no confirmed new home: \*\*0\*\*' tmp/lost-found.md; then
+            # nothing left to look for: close the issue if there is one
+            if [ -n "$n" ]; then gh issue close "$n" --comment "Every gone project has a confirmed new home or is no longer gone."; fi
+          elif [ -n "$n" ]; then
+            gh issue edit "$n" --body-file tmp/lost-found.md
+          else
+            gh issue create --title "Lost & found: gone repos and possible new homes" --label lost-found --body-file tmp/lost-found.md
+          fi

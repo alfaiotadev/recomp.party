@@ -7,6 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "fetch": "tsx scripts/fetch.ts",
+    "lost-found": "tsx scripts/lost-found.ts",
     "games": "tsx scripts/games.ts",
     "discover": "tsx scripts/discover.ts",
     "ai": "tsx scripts/ai.ts",
