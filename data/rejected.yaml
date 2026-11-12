@@ -508,3 +508,15 @@
     downloadable playable release; requires CMake to build from source, not a
     distributed runnable.
   date: 2026-11-11
+- repo: blue0x1/EmuFive
+  reason: EmuFive is a PS5 emulator for the PS4, and emulators are excluded.
+  date: 2026-11-12
+- repo: ClickingMaster/pokeheartgold-single-screen
+  reason: It is a decompilation project fork that builds an NDS ROM, not a native
+    executable port or static recompiler tool.
+  date: 2026-11-12
+- repo: AJBats/daytona-cce95
+  reason: This is a mod/romhack of Daytona USA Circuit Edition that builds a
+    modified Saturn disc image from the user's own game rips, not a static
+    recompilation or native source port.
+  date: 2026-11-12
