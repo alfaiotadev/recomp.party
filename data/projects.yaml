@@ -2330,6 +2330,8 @@
   game: TimeSplitters 2
   platform: ps2
   kind: recomp
+  tool: PS2Recomp
+  based_on: [ran-j/PS2Recomp]
   wikidata: Q282008
   added: 2026-11-12
 - repo: kayliox/transformers-armada-recomp
