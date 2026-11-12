@@ -1,6 +1,6 @@
 /** Weekly highlights for the front-page carousel. Everything is computed at build time. */
 import { loadStarHistory } from "../../data/load.ts";
-import { games, milestones, PLATFORMS, platformLogo, type Entry, type Logo, type Milestone, type PlatformId } from "./data.ts";
+import { available, games, goneGames, milestones, PLATFORMS, platformLogo, type Entry, type Logo, type Milestone, type PlatformId } from "./data.ts";
 
 /** Cards per slide: three full rows of two on phones; wider screens show the first five (or four) in one row. */
 const CARDS = 6;
@@ -122,7 +122,7 @@ function starSlides(): { rising: StarSlide; biggest?: StarSlide } {
 }
 
 function newReleases(): { title: string; note: string; items: Entry[]; rest: Entry[] } {
-  const since = (days: number) => games.filter((g) => g.firstReleaseAt && Date.parse(g.firstReleaseAt) >= now - days * DAY);
+  const since = (days: number) => available.filter((g) => g.firstReleaseAt && Date.parse(g.firstReleaseAt) >= now - days * DAY);
   let days = 7;
   let list = since(days);
   if (list.length < 3) list = since((days = 14));
@@ -304,4 +304,10 @@ function fastest(): Fastest[] {
 }
 
 const stars = starSlides();
-export const highlights = { updates: latestUpdates(), risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), starTrendPct: starTrendPct(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
+/** Lost & found: listed projects whose GitHub repo is gone, with the latest takedown event for context. */
+function lostAndFound() {
+  const event = milestones.filter((m) => m.kind === "takedown").sort((a, b) => b.date.localeCompare(a.date))[0];
+  return { items: goneGames.slice(0, CARDS), rest: goneGames.slice(CARDS), total: goneGames.length, moved: goneGames.filter((g) => g.moved_to).length, event };
+}
+
+export const highlights = { gone: lostAndFound(), updates: latestUpdates(), risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), starTrendPct: starTrendPct(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };

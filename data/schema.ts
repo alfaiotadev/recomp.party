@@ -57,6 +57,11 @@ export const Project = z.strictObject({
   /** Date the entry was added to recomp.party (YYYY-MM-DD). */
   added: z.iso.date(),
   note: z.string().optional(),
+  /**
+   * Where the project lives now after its GitHub repo disappeared, confirmed by a person (the author's own move,
+   * e.g. to Codeberg). Never an unverified mirror: scripts/lost-found.ts only proposes candidates.
+   */
+  moved_to: z.url().optional(),
 });
 export type Project = z.infer<typeof Project>;
 
@@ -108,6 +113,26 @@ export const RepoSnapshot = z.object({
    * tell: some repos delete old releases and keep only the latest, and only the 100 newest are fetched.
    */
   firstReleaseAt: z.string().optional(),
+  /**
+   * Set when the repo no longer resolves on GitHub. The rest of the snapshot is then the last one fetched before it
+   * went, kept so the entry doesn't lose its releases. Cleared when the repo comes back.
+   */
+  gone: z
+    .object({
+      /** First fetch that found it missing (ISO). */
+      since: z.string(),
+      /** Last fetch that still found it (ISO). */
+      lastSeen: z.string().optional(),
+      /** dmca: GitHub blocks it (HTTP 451); repo: the repo 404s but its owner exists; account: the owner is gone too. */
+      reason: z.enum(["dmca", "repo", "account"]),
+      /** GitHub's notice for a DMCA block. */
+      notice: z.string().optional(),
+      /** Fetches in a row that found it missing; one miss can be a GitHub hiccup. */
+      misses: z.number(),
+      /** Software Heritage holds an archive of the repo. */
+      archived: z.boolean().optional(),
+    })
+    .optional(),
 });
 export type RepoSnapshot = z.infer<typeof RepoSnapshot>;
 
@@ -166,6 +191,7 @@ export type StarHistory = z.infer<typeof StarHistory>;
 export const MILESTONE_KINDS = {
   model: "Model release",
   policy: "Policy change",
+  takedown: "Takedowns",
 } as const;
 
 /** Whose model or policy it is; drawn as the vendor's logo on the timeline. */
@@ -173,6 +199,7 @@ export const VENDORS = {
   anthropic: "Anthropic",
   openai: "OpenAI",
   google: "Google",
+  nintendo: "Nintendo",
 } as const;
 
 /** data/milestones.yaml — outside events drawn on the release timeline as dashed lines. */

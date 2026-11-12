@@ -1,5 +1,8 @@
 /** Front-page stat tiles: headline numbers, a comparison line and 12-week bar series. */
-import { games, platformsInUse } from "./data.ts";
+import { available, platformsInUse } from "./data.ts";
+
+/** Gone repos are left out: the numbers are about what you can get today. */
+const games = available;
 
 const DAY = 86_400_000;
 const now = Date.now();

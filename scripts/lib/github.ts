@@ -193,3 +193,35 @@ export async function repoLanguages(repos: string[]): Promise<Map<string, Record
   return out;
 }
 
+
+/**
+ * Why a repo no longer resolves. GitHub answers 451 with the notice for a DMCA block; otherwise a 404 can't tell a
+ * deleted repo from a private one, but a missing owner means the whole account is gone.
+ */
+export async function whyGone(slug: string): Promise<{ reason: "dmca" | "repo" | "account"; notice?: string } | undefined> {
+  const res = await fetch(`${API}/repos/${slug}`, { headers: headers() });
+  if (res.ok) return undefined; // back after all (or renamed: the GraphQL pass resolves renames)
+  if (res.status === 451) {
+    const body = (await res.json().catch(() => ({}))) as { block?: { html_url?: string } };
+    return { reason: "dmca", notice: body.block?.html_url };
+  }
+  if (res.status !== 404) throw new Error(`GitHub GET /repos/${slug}: ${res.status}`);
+  const owner = await fetch(`${API}/users/${slug.split("/")[0]}`, { headers: headers() });
+  if (owner.status === 404) return { reason: "account" };
+  if (!owner.ok) throw new Error(`GitHub GET /users/${slug.split("/")[0]}: ${owner.status}`);
+  return { reason: "repo" };
+}
+
+/** True when Software Heritage has archived the GitHub repo (it keeps public repos after they vanish). */
+export async function inSoftwareHeritage(slug: string): Promise<boolean | undefined> {
+  try {
+    const res = await fetch(`https://archive.softwareheritage.org/api/1/origin/https://github.com/${slug}/get/`, {
+      headers: { "user-agent": "recomp.party" },
+      signal: AbortSignal.timeout(20_000),
+    });
+    if (res.status === 404) return false;
+    return res.ok ? true : undefined;
+  } catch {
+    return undefined; // unknown: keep what we had
+  }
+}

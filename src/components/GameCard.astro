@@ -1,6 +1,6 @@
 ---
 import { aiTokens, shortModel, topCredit } from "../lib/ai.ts";
-import { ago, entryPath, fitLogoArea, KINDS, PLATFORMS, platformMark, type Entry } from "../lib/data.ts";
+import { ago, entryPath, fitLogoArea, GONE_REASONS, goneBadge, hostOf, KINDS, PLATFORMS, platformMark, type Entry } from "../lib/data.ts";
 import { CREDIT_ICONS } from "../lib/vendor-icons.ts";
 
 interface Props {
@@ -14,10 +14,11 @@ const [owner, name] = e.repo.split("/");
 // Scale at which the whole cover fits the 3 : 4.1 card (object-fit: cover crops one axis): the hover zoom target.
 const CARD_ASPECT = 3 / 4.1;
 const ai = topCredit(e);
+const status = e.gone ? (e.moved_to ? "moved" : "gone") : "available";
 const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CARD_ASPECT / (e.cover.width / e.cover.height));
 ---
 
-<li class={`card ${e.kind}${e.cover ? "" : " no-cover"}`} data-platform={e.platform} data-kind={e.kind} data-os={e.os.join(" ")} data-ai={aiTokens(e)} data-search={searchText}>
+<li class={`card ${e.kind}${e.cover ? "" : " no-cover"}${e.gone ? ` ${status}` : ""}`} data-status={status} data-platform={e.platform} data-kind={e.kind} data-os={e.os.join(" ")} data-ai={aiTokens(e)} data-search={searchText}>
   {
     e.cover ? (
       <img class="art" src={e.cover.src} width={e.cover.width} height={e.cover.height} style={`--fit:${fit!.toFixed(3)}`} alt="" loading="lazy" decoding="async" />
@@ -27,7 +28,15 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
   }
   <div class="top">
     <span class={`badge ${e.kind}`} title={KINDS[e.kind]}>{e.kind}</span>
-    {e.snap?.archived && <span class="badge">archived</span>}
+    {e.snap?.archived && !e.gone && <span class="badge">archived</span>}
+    {
+      e.gone &&
+        (e.moved_to ? (
+          <span class="badge moved" title={`${GONE_REASONS[e.gone.reason]}; moved to ${hostOf(e.moved_to)}`}>moved</span>
+        ) : (
+          <span class="badge gone" title={`${GONE_REASONS[e.gone.reason]} (${ago(e.gone.since)})`}>{goneBadge(e.gone)}</span>
+        ))
+    }
 
     <span class="plat" title={PLATFORMS[e.platform]}>
       {mark && box ? <img class="logo-img" src={mark.src} width={box.w.toFixed(1)} height={box.h.toFixed(1)} alt={PLATFORMS[e.platform]} /> : PLATFORMS[e.platform]}
@@ -49,7 +58,11 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
     {
       e.latest ? (
         <p class="release">
-          <a href={e.latest.url}>{e.latest.name && e.latest.name.length <= 26 ? e.latest.name : e.latest.tag}</a>
+          {e.gone ? (
+            <span title="Last known release; its GitHub page is gone">{e.latest.name && e.latest.name.length <= 26 ? e.latest.name : e.latest.tag}</span>
+          ) : (
+            <a href={e.latest.url}>{e.latest.name && e.latest.name.length <= 26 ? e.latest.name : e.latest.tag}</a>
+          )}
           {e.latest.prerelease && <span class="badge pre">pre</span>}
           <span class="when">{ago(e.latest.publishedAt)}</span>
         </p>
@@ -82,6 +95,12 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
 </script>
 
 <style>
+  /* the GitHub repo is gone: greyed out like a missing poster, but still there */
+  .card.gone .art,
+  .card.gone .art-mark {
+    filter: grayscale(1) brightness(0.7);
+  }
+
   .ai {
     display: inline-flex;
     align-self: flex-start;

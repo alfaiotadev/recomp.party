@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { games, MILESTONE_KINDS, VENDORS, milestonePath, milestones, shortDate, type Milestone } from "../../lib/data.ts";
+import { entryPath, games, GONE_REASONS, goneGames, MILESTONE_KINDS, PLATFORMS, VENDORS, milestonePath, milestones, shortDate, type Milestone } from "../../lib/data.ts";
 
 export function getStaticPaths() {
   return milestones.map((m) => ({ params: { id: m.id }, props: { m } }));
@@ -36,6 +36,8 @@ const CW = 800,
 const markX = ((at - w0) / WEEK) * BW;
 const fmt = (t: number) => new Date(t).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 
+// A takedown wave lists the projects here whose repo went missing from a week before it on: around then, not because of it.
+const goneAround = m.kind === "takedown" ? goneGames.filter((g) => Date.parse(g.gone!.lastSeen ?? g.gone!.since) >= at - WEEK).reverse() : [];
 const paragraphs = m.summary.trim().split(/\n\s*\n/);
 const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(/\s+/g, " ")}`;
 ---
@@ -61,6 +63,25 @@ const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(
     }
   </p>
 
+  {
+    goneAround.length > 0 && (
+      <section class="gone-around">
+        <h2>Listed projects gone from GitHub</h2>
+        <p class="muted">Repos that went missing from a week before this date on. The dates are when our fetches stopped finding them.</p>
+        <ul>
+          {goneAround.map((g) => (
+            <li>
+              <a href={entryPath(g)}>{g.game}</a> <span class="mono muted">{g.repo} · {PLATFORMS[g.platform]}</span>
+              <br />
+              <span class="mono">
+                last seen {shortDate(g.gone!.lastSeen ?? g.gone!.since)} · {GONE_REASONS[g.gone!.reason].toLowerCase()}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
   <section>
     <h2>Releases around this date</h2>
     <svg class={`weeks v-${m.vendor}`} viewBox={`0 0 ${CW} ${CH + 22}`} role="img" aria-label={`Releases per week, ${fmt(w0)} to ${fmt(weeks.at(-1)!.t)}`}>
@@ -96,6 +117,17 @@ const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(
 </Base>
 
 <style>
+  .gone-around ul {
+    margin: 0.6rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .gone-around li {
+    margin: 0.45rem 0;
+  }
+  .gone-around .mono {
+    font-size: 0.78rem;
+  }
+
   .crumbs {
     margin: 2.5rem 0 0;
   }
