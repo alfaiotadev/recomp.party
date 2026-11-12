@@ -45,11 +45,18 @@ export function decodeTo(el: HTMLElement, next: string): Promise<void> {
   });
 }
 
+// Only words you can see rotate: one on a carousel slide that is scrolled away (or anywhere off screen) waits.
+const visible = new WeakSet<Element>();
+const watch = new IntersectionObserver((entries) => {
+  for (const e of entries) e.isIntersecting ? visible.add(e.target) : visible.delete(e.target);
+});
+
 for (const el of document.querySelectorAll<HTMLElement>(".decode[data-words]")) {
   if (reduce) continue;
   const words: string[] = JSON.parse(el.dataset.words!);
+  watch.observe(el);
   setInterval(() => {
-    if (document.hidden) return;
+    if (document.hidden || !visible.has(el)) return;
     let next: string;
     do next = rand(words);
     while (next === el.textContent);
