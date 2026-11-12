@@ -719,14 +719,19 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   .item.gone:hover .art {
     filter: grayscale(0.3);
   }
-  .more-new a {
-    display: inline-block;
+  /* Always exactly two lines, whatever the rotating word: a long one ("blast-processed") wraps the link onto a second
+     line, and the slide, and with it the whole carousel, must not change height when the word changes. */
+  .more-new > a {
+    display: block;
+    height: 3.2em;
+    line-height: 1.6;
+    overflow: hidden;
     margin-top: 0.55rem;
     font-size: 0.75rem;
     color: var(--muted);
     text-decoration: none;
   }
-  .more-new a:hover {
+  .more-new > a:hover {
     color: var(--fg);
   }
   /* cover as the card's backdrop, shaded where the text sits */
