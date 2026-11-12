@@ -199,18 +199,24 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
             <header>
               <p class="eyebrow">lost &amp; found</p>
               <h2>Gone from GitHub</h2>
-              <div class="gone-head">
-                <p class="fresh-count">
-                  <span class="n">{gone.total}</span>
-                  <span class="mono">listed {gone.total === 1 ? "project" : "projects"} gone{gone.moved > 0 && <>, {gone.moved} moved</>}</span>
-                </p>
-                <span class="sad-bot" role="img" aria-label="A sad robot, crying" />
-              </div>
-              <p class="gone-note mono">
-                We keep their last known releases.{" "}
-                {gone.event && <a href={milestonePath(gone.event)}>{gone.event.label}, {shortDate(gone.event.date)} →</a>}
+              <p class="fresh-count">
+                <span class="n">{gone.total}</span>
+                <span class="mono">listed {gone.total === 1 ? "project" : "projects"} gone{gone.moved > 0 && <>, {gone.moved} moved</>}</span>
               </p>
-              <a class="gone-all mono" href="/?status=gone#all-games">all gone projects →</a>
+              <p class="gone-note mono">We keep their last known releases.</p>
+              <ul class="gone-links mono">
+                {gone.event && (
+                  <li>
+                    <a href={milestonePath(gone.event)}>
+                      {gone.event.label}, {shortDate(gone.event.date)} →
+                    </a>
+                  </li>
+                )}
+                <li>
+                  <a href="/?status=gone#all-games">all gone projects →</a>
+                </li>
+              </ul>
+              <span class="sad-bot" role="img" aria-label="A sad robot, crying" />
             </header>
             <ol class="items">
               {gone.items.map((g) => {
@@ -661,18 +667,21 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
   .gone-slide .fresh-count .n {
     color: var(--accent);
   }
-  .gone-head {
+  /* the column stacks the text at the top and the mascot centred in the space left below it */
+  .gone-slide header {
     display: flex;
-    align-items: flex-end;
-    gap: 0.9rem;
+    flex-direction: column;
   }
   /* the mascot from the header, crying: four frames side by side in src/assets/robot-sad.svg */
   .sad-bot {
     flex: none;
-    width: 64px;
-    height: 64px;
-    margin-bottom: -4px;
-    background: url("../assets/robot-sad.svg") 0 0 / 400% 100% no-repeat;
+    align-self: center;
+    width: 72px;
+    height: 72px;
+    margin: auto 0 0;
+    padding-top: 1rem;
+    box-sizing: content-box;
+    background: url("../assets/robot-sad.svg") 0 100% / 400% 72px no-repeat;
     animation: sad-loop 1.8s steps(4) infinite;
   }
   @keyframes sad-loop {
@@ -691,18 +700,18 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     font-size: 0.72rem;
     color: var(--muted);
   }
-  .gone-note a,
-  .gone-all {
+  .gone-links {
+    margin: 0.45rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.72rem;
+    line-height: 1.8;
+  }
+  .gone-links a {
     color: var(--muted);
   }
-  .gone-note a:hover,
-  .gone-all:hover {
+  .gone-links a:hover {
     color: var(--fg);
-  }
-  .gone-all {
-    display: inline-block;
-    margin-top: 0.45rem;
-    font-size: 0.72rem;
   }
   .item.gone .art {
     filter: grayscale(1) brightness(0.75);
