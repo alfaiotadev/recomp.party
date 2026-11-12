@@ -3,7 +3,9 @@ name: Check suggestion
 # When someone suggests a project via the issue form, classify the linked repo(s) and open a PR.
 on:
   issues:
-    types: [opened, labeled]
+    # The issue form applies the label itself, so "labeled" alone fires once per suggestion ("opened" fired a
+    # second run that the concurrency group cancelled). A maintainer adding the label later also starts a check.
+    types: [labeled]
 
 permissions:
   contents: write
@@ -16,7 +18,7 @@ concurrency:
 
 jobs:
   check:
-    if: contains(github.event.issue.labels.*.name, 'suggestion')
+    if: github.event.label.name == 'suggestion'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
