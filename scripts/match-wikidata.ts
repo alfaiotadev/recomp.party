@@ -29,6 +29,8 @@ const PLATFORM_NAMES: Partial<Record<keyof typeof PLATFORMS, string[]>> = {
   gc: ["Nintendo GameCube"],
   switch: ["Nintendo Switch"],
   switch2: ["Nintendo Switch 2"],
+  vb: ["Virtual Boy"],
+  pce: ["TurboGrafx-16", "PC Engine", "TurboGrafx-CD", "PC Engine CD-ROM²", "CD-ROM²", "Super CD-ROM²", "PC Engine Duo", "TurboDuo"],
   genesis: ["Sega Genesis", "Mega Drive", "Sega Mega Drive"],
   saturn: ["Sega Saturn"],
   dc: ["Sega Dreamcast"],

@@ -19,6 +19,8 @@ They were sanitised (no scripts, no external references), background-stripped wh
 | `gba.svg` | File:Game Boy Advance logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Game_Boy_Advance_logo.svg |
 | `nds.svg` | File:Nintendo DS Logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Nintendo_DS_Logo.svg |
 | `3ds.svg` | File:Nintendo 3DS logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Nintendo_3DS_logo.svg |
+| `vb.svg` | File:Virtualboy logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Virtualboy_logo.svg |
+| `pce.svg` | File:PC engine logo red.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:PC_engine_logo_red.svg |
 | `genesis.svg` | File:Genesis logo.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Genesis_logo.svg |
 | `dc.svg` | File:Dreamcast logo PAL.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Dreamcast_logo_PAL.svg |
 | `xbox.svg` | File:Xbox Logo 2001.svg | Public domain (Wikimedia Commons) | https://commons.wikimedia.org/wiki/File:Xbox_Logo_2001.svg |

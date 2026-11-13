@@ -1629,6 +1629,23 @@
   wikidata: Q21078995
   added: 2026-11-09
 
+# --- Virtual Boy -----------------------------------------------------------------
+- repo: mstan/MarioTennisVirtualBoyRecomp
+  game: Mario's Tennis
+  platform: vb
+  kind: recomp
+  tool: vbrecomp
+  wikidata: Q2698314
+  added: 2026-11-13
+
+# --- PC Engine / TurboGrafx ------------------------------------------------------
+- repo: gminustwo/RondoRecomp
+  game: "Castlevania: Rondo of Blood"
+  platform: pce
+  kind: recomp
+  wikidata: Q2421908
+  added: 2026-11-13
+
 # --- Mega Drive / Genesis --------------------------------------------------------
 - repo: YuutaTsubasa/ChaotixRecompiled
   game: Knuckles' Chaotix
@@ -4965,6 +4982,12 @@
   kind: tool
   based_on: [n64decomp/sm64]
   added: 2026-11-10
+- repo: mstan/vbrecomp
+  game: vbrecomp
+  platform: vb
+  kind: tool
+  tool: vbrecomp
+  added: 2026-11-13
 - repo: hedge-dev/XenonRecomp
   game: XenonRecomp
   platform: x360

@@ -14,6 +14,8 @@ export const PLATFORMS = {
   gba: "Game Boy Advance",
   nds: "Nintendo DS",
   "3ds": "Nintendo 3DS",
+  vb: "Virtual Boy",
+  pce: "PC Engine / TurboGrafx",
   genesis: "Mega Drive / Genesis",
   saturn: "Saturn",
   dc: "Dreamcast",
