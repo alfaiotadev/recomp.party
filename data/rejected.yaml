@@ -520,3 +520,27 @@
     modified Saturn disc image from the user's own game rips, not a static
     recompilation or native source port.
   date: 2026-11-12
+- repo: dai-VGM/MegaVGMDrive
+  reason: The repository is an FPGA VGM music player, not a playable game
+    recompilation or source port.
+  date: 2026-11-13
+- repo: Frazilpop/Genesis-Pocket
+  reason: FPGA console cores and emulators are not static recompilations or native
+    source ports.
+  date: 2026-11-13
+- repo: daurosk/oot-remake-multiplayer
+  reason: The repo is a multiplayer mod for a fan remake, not a static
+    recompilation or source port of the original console game.
+  date: 2026-11-13
+- repo: oenderg/Reflourished-Darwin
+  reason: It is a mod/port of a recent mobile game, not a static recompilation or
+    source port of a classic console game.
+  date: 2026-11-13
+- repo: felixjablonka/flx-film-lab
+  reason: Repository is a photography application, not a playable game
+    recompilation or source port.
+  date: 2026-11-13
+- repo: makkaX2/DroneFlames-PC-Port
+  reason: The repo is a Godot‑based PC port of a modern game, not a static
+    recompilation or source port of a classic console title.
+  date: 2026-11-13

@@ -15,6 +15,13 @@
   tool: NESRecomp
   wikidata: Q2014874
   added: 2026-11-09
+- repo: mstan/MetroidNESRecomp
+  game: Metroid
+  platform: nes
+  kind: recomp
+  tool: nesrecomp
+  wikidata: Q2530723
+  added: 2026-11-13
 - repo: mstan/SuperMarioBrosNESRecomp
   game: Super Mario Bros.
   platform: nes
@@ -438,6 +445,14 @@
   based_on: [mariopartyrd/marioparty3]
   wikidata: Q743187
   added: 2026-11-02
+- repo: Ieatzcrayonz/MarioTennisRecomp
+  game: Mario Tennis
+  platform: n64
+  kind: port
+  tool: N64Recomp
+  based_on: [Zelda64Recomp/Zelda64Recomp]
+  wikidata: Q732943
+  added: 2026-11-13
 - repo: MegaMan64Recomp/MegaMan64Recompiled
   game: Mega Man 64
   platform: n64
@@ -812,6 +827,13 @@
   based_on: [projectPiki/pikmin, projectPiki/pikmin2]
   wikidata: Q1196801
   added: 2026-11-10
+- repo: imyourhuckleberryponcho/Pokemon-XD-PC-Port
+  game: "Pokémon XD: Gale of Darkness"
+  platform: gc
+  kind: port
+  based_on: [imyourhuckleberryponcho/Pokemon-XD-Decomp]
+  wikidata: Q2088354
+  added: 2026-11-13
 - repo: josiahg2502-glitch/Scooby-Doo-Refrightened
   game: Scooby-Doo! Night of 100 Frights
   platform: gc
@@ -988,6 +1010,13 @@
   kind: recomp
   tool: WiiCompiled
   added: 2026-11-09
+- repo: KnivesDevilish/SR-Source
+  game: "Sonic Riders: Zero Gravity"
+  platform: wii
+  kind: recomp
+  tool: DolRecomp
+  wikidata: Q1150685
+  added: 2026-11-13
 - repo: bigmak94/GalaxyQuest
   game: Super Mario Galaxy
   platform: wii
@@ -1137,6 +1166,12 @@
   tool: Kirikae
   wikidata: Q93359403
   added: 2026-11-03
+- repo: kvse/dsr-native
+  game: Dark Souls Remastered
+  platform: switch
+  kind: port
+  wikidata: Q55728812
+  added: 2026-11-13
 - repo: veneito/engage-pc-recomp
   game: Fire Emblem Engage
   platform: switch
@@ -1234,12 +1269,26 @@
   kind: recomp
   wikidata: Q124672125
   added: 2026-11-07
+- repo: tukidev-lgtm/Tera-recomp
+  game: Pokémon Scarlet
+  platform: switch
+  kind: recomp
+  wikidata: Q111031670
+  added: 2026-11-13
 - repo: Grunttanamo/KarPur
   game: Pokémon Scarlet and Violet
   platform: switch
   kind: recomp
   wikidata: Q111028839
   added: 2026-11-09
+- repo: raulzrrs/swsh-recomp
+  game: Pokémon Sword and Shield
+  platform: switch
+  kind: recomp
+  tool: LASRecomp
+  based_on: [raulzrrs/letsgo-recomp, peiikai/LASRecomp]
+  wikidata: Q54456778
+  added: 2026-11-13
 - repo: raulzrrs/letsgo-recomp
   game: "Pokémon: Let's Go, Eevee!"
   platform: switch
@@ -1268,6 +1317,18 @@
   based_on: [Coz-0/smo-recomp]
   wikidata: Q28234671
   added: 2026-11-03
+- repo: rwwo8/OdysseyRecomp
+  game: Super Mario Odyssey
+  platform: switch
+  kind: recomp
+  wikidata: Q28234671
+  added: 2026-11-13
+- repo: Simon3Sarkis/super-odyssey-pc-recomp
+  game: Super Mario Odyssey
+  platform: switch
+  kind: recomp
+  wikidata: Q28234671
+  added: 2026-11-13
 - repo: OpenSmash-Ultimate/OpenSmash-Ultimate
   game: Super Smash Bros. Ultimate
   platform: switch
@@ -1347,6 +1408,13 @@
   kind: recomp
   wikidata: Q133567959
   added: 2026-11-02
+- repo: RussoPhone/tomodachi-ltd-recomp
+  game: "Tomodachi Life: Living the Dream"
+  platform: switch
+  kind: port
+  tool: nxrt
+  wikidata: Q133567959
+  added: 2026-11-13
 - repo: AksharDP/xc2-recomp
   game: Xenoblade Chronicles 2
   platform: switch
@@ -1441,6 +1509,13 @@
   kind: port
   wikidata: Q637137
   added: 2026-11-01
+- repo: mstan/SuperMarioLand2Recomp
+  game: "Super Mario Land 2: 6 Golden Coins"
+  platform: gb
+  kind: recomp
+  tool: gbrecompiled
+  wikidata: Q596392
+  added: 2026-11-13
 - repo: GABRIELNNK/Bigodao
   game: "Wario Land: Super Mario Land 3"
   platform: gb
@@ -1534,6 +1609,13 @@
   based_on: [pret/pokefirered]
   wikidata: Q609063
   added: 2026-11-01
+- repo: mstan/SuperMarioAdvance4Recomp
+  game: "Super Mario Advance 4: Super Mario Bros. 3"
+  platform: gba
+  kind: recomp
+  tool: gbarecomp
+  wikidata: Q1886919
+  added: 2026-11-13
 
 # --- Nintendo DS -----------------------------------------------------------------
 - repo: power-pudu/egg-of-time
@@ -1584,6 +1666,14 @@
   added: 2026-11-06
 
 # --- Nintendo 3DS ----------------------------------------------------------------
+- repo: Zelkin1/fe-awakening-recomp
+  game: "Fire Emblem: Awakening"
+  platform: 3ds
+  kind: recomp
+  tool: 3dsrecomp
+  based_on: [fearkov/3dsrecomp]
+  wikidata: Q3072790
+  added: 2026-11-13
 - repo: CompaLarios18/MH4UltimateDC
   game: Monster Hunter 4 Ultimate
   platform: 3ds
@@ -1766,6 +1856,21 @@
   kind: recomp
   wikidata: Q1224677
   added: 2026-11-01
+- repo: alexbeavs-ps1-ports/dino-crisis-recomp
+  game: Dino Crisis
+  platform: ps1
+  kind: recomp
+  tool: PSXRecomp
+  based_on: [mstan/psxrecomp]
+  wikidata: Q1226632
+  added: 2026-11-13
+- repo: alexbeavs-ps1-ports/dino-crisis-2-recomp
+  game: Dino Crisis 2
+  platform: ps1
+  kind: recomp
+  tool: PSXRecomp
+  wikidata: Q1467263
+  added: 2026-11-13
 - repo: obaidr1/hercules-recompiled
   game: Disney's Hercules
   platform: ps1
@@ -1792,6 +1897,20 @@
   based_on: [mstan/psxrecomp]
   wikidata: Q1307981
   added: 2026-11-11
+- repo: alexbeavs-ps1-ports/final-fantasy-ix-recomp
+  game: Final Fantasy IX
+  platform: ps1
+  kind: recomp
+  tool: PSXRecomp
+  wikidata: Q474573
+  added: 2026-11-13
+- repo: alexbeavs-ps1-ports/final-fantasy-viii-recomp
+  game: Final Fantasy VIII
+  platform: ps1
+  kind: recomp
+  tool: PSXRecomp
+  wikidata: Q245006
+  added: 2026-11-13
 - repo: d4rksp4rt4n/HMBTN-ReFarmed
   game: "Harvest Moon: Back to Nature"
   platform: ps1
@@ -2078,6 +2197,12 @@
   kind: port
   wikidata: Q2079604
   added: 2026-10-28
+- repo: literalynn/BurnoutDominatorReversed
+  game: Burnout Dominator
+  platform: ps2
+  kind: port
+  wikidata: Q578147
+  added: 2026-11-13
 - repo: TekRantGaming/cartoon-network-racing-recompiled
   game: Cartoon Network Racing
   platform: ps2
@@ -2091,6 +2216,13 @@
   kind: recomp
   wikidata: Q2735354
   added: 2026-11-09
+- repo: denzi-gh/crashwoc-nuworld
+  game: "Crash Bandicoot: The Wrath of Cortex"
+  platform: ps2
+  kind: port
+  based_on: [denzi-gh/crashwoc-decomp-ps2]
+  wikidata: Q869511
+  added: 2026-11-13
 - repo: GioPixelGH/Crash-Twinsanity-Windows
   game: Crash Twinsanity
   platform: ps2
@@ -2278,6 +2410,12 @@
   tool: PS2Recomp
   wikidata: Q2705374
   added: 2026-11-07
+- repo: TheRealAfsan/Shinobi-PS2-Recomp
+  game: Shinobi
+  platform: ps2
+  kind: recomp
+  wikidata: Q2327011
+  added: 2026-11-13
 - repo: menaman123/Sly-2-Recomp
   game: "Sly 2: Band of Thieves"
   platform: ps2
@@ -2445,6 +2583,13 @@
   tool: ps3recomp
   wikidata: Q2298167
   added: 2026-11-12
+- repo: MormonFTP-hub/gt5-recomp
+  game: Gran Turismo 5
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  wikidata: Q773395
+  added: 2026-11-13
 - repo: mathewdouglas/Tourline-Prologue
   game: Gran Turismo 5 Prologue
   platform: ps3
@@ -2461,6 +2606,13 @@
   based_on: [sp00nznet/ps3recomp]
   wikidata: Q1346174
   added: 2026-11-10
+- repo: bhuiyah/infamous2-recomp
+  game: inFamous 2
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  wikidata: Q24300
+  added: 2026-11-13
 - repo: erikomis/infamous2-recomp
   game: inFAMOUS 2
   platform: ps3
@@ -2469,6 +2621,12 @@
   based_on: [sp00nznet/ps3recomp, NoahBPeterson/ps3recomp]
   wikidata: Q24300
   added: 2026-11-05
+- repo: SamiEnazi/infamous2-port
+  game: inFAMOUS 2
+  platform: ps3
+  kind: recomp
+  wikidata: Q24300
+  added: 2026-11-13
 - repo: undecuple/project-pyrrhus
   game: Killzone 2
   platform: ps3
@@ -2489,6 +2647,13 @@
   tool: ps3recomp
   wikidata: Q107424221
   added: 2026-11-09
+- repo: csrpfivem/PS3NHLLegacyRecomp
+  game: NHL Legacy Edition
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  based_on: [sp00nznet/ps3recomp]
+  added: 2026-11-13
 - repo: HighDrexler/RACiT
   game: "Ratchet & Clank: A Crack in Time"
   platform: ps3
@@ -2510,6 +2675,18 @@
   tool: ps3recomp
   wikidata: Q1050284
   added: 2026-10-29
+- repo: miroslavdanutalexandru-alt/Resistance3Port
+  game: Resistance 3
+  platform: ps3
+  kind: recomp
+  wikidata: Q2531844
+  added: 2026-11-13
+- repo: miroslavdanutalexandru-alt/Resistance-Fall-of-Man-Recomp
+  game: "Resistance: Fall of Man"
+  platform: ps3
+  kind: recomp
+  wikidata: Q370549
+  added: 2026-11-13
 
 # --- PlayStation 4 ---------------------------------------------------------------
 - repo: saulob/13-sentinels-aegis-rim-pc
@@ -2538,6 +2715,11 @@
   kind: port
   wikidata: Q59594323
   added: 2026-11-10
+- repo: CaduGimenes/SanctuaryPort
+  game: "Diablo III: Reaper of Souls – Ultimate Evil Edition"
+  platform: ps4
+  kind: port
+  added: 2026-11-13
 - repo: saulob/dragons-crown-pro-pc
   game: Dragon's Crown Pro
   platform: ps4
@@ -2570,6 +2752,12 @@
   kind: port
   wikidata: Q23013629
   added: 2026-11-10
+- repo: junminlee2004/GR2port
+  game: Gravity Rush 2
+  platform: ps4
+  kind: port
+  wikidata: Q23013629
+  added: 2026-11-13
 - repo: LucaPazienza/gravityrush_pc
   game: Gravity Rush Remastered
   platform: ps4
@@ -2630,6 +2818,12 @@
   kind: port
   wikidata: Q19789277
   added: 2026-11-07
+- repo: emurphy04/LBPPC
+  game: LittleBigPlanet 3
+  platform: ps4
+  kind: port
+  wikidata: Q17194812
+  added: 2026-11-13
 - repo: bc160201983/medievil_2019_pc_port
   game: MediEvil
   platform: ps4
@@ -2656,6 +2850,13 @@
   kind: port
   wikidata: Q18182633
   added: 2026-10-28
+- repo: petrishevgeorgii-debug/prototype-pc-slop
+  game: PROTOTYPE
+  platform: ps4
+  kind: port
+  based_on: [mateussmeneses/theorder1886-port]
+  wikidata: Q473852
+  added: 2026-11-13
 - repo: rcostanza/resogun-recomp
   game: Resogun
   platform: ps4
@@ -2686,6 +2887,12 @@
   kind: port
   wikidata: Q2701341
   added: 2026-11-09
+- repo: tabnul/the-last-guardian-definitive
+  game: The Last Guardian
+  platform: ps4
+  kind: port
+  wikidata: Q2701341
+  added: 2026-11-13
 - repo: ravencaio/tlou-remastered-pc
   game: The Last of Us Remastered
   platform: ps4
@@ -2761,6 +2968,13 @@
   tool: PSPRecomp
   wikidata: Q94778
   added: 2026-10-28
+- repo: zexk/portable-ops-native
+  game: "Metal Gear Solid: Portable Ops"
+  platform: psp
+  kind: recomp
+  tool: PortableKit
+  wikidata: Q1996911
+  added: 2026-11-13
 - repo: Mango77x/MHForever
   game: Monster Hunter Freedom Unite
   platform: psp
@@ -3109,6 +3323,14 @@
   kind: recomp
   wikidata: Q2201608
   added: 2026-11-05
+- repo: neonoxd/MOHRS-XBERecomp
+  game: "Medal of Honor: Rising Sun"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  based_on: [TGP482/XboxXBE-Recomp]
+  wikidata: Q2000727
+  added: 2026-11-13
 - repo: KraftMacAndChee/Mercenaries-Recompiled
   game: "Mercenaries: Playground of Destruction"
   platform: xbox
@@ -3625,6 +3847,13 @@
   tool: ReXGlue
   wikidata: Q984024
   added: 2026-10-28
+- repo: bugcoder00/FarCryInstinctsPredatorRecomp
+  game: Far Cry Instincts Predator
+  platform: x360
+  kind: recomp
+  tool: PredatorRecomp
+  wikidata: Q10494020
+  added: 2026-11-13
 - repo: ChunchunQ/fifa09-recomp
   game: FIFA 09
   platform: x360
@@ -3659,6 +3888,13 @@
   tool: ReXGlue
   wikidata: Q83843
   added: 2026-10-28
+- repo: arcanite24/lavender-shift
+  game: Forza Horizon 2
+  platform: x360
+  kind: port
+  tool: ShiftGlue
+  wikidata: Q17156024
+  added: 2026-11-13
 - repo: Gabrick75/fh2-recompiled
   game: Forza Horizon 2
   platform: x360
@@ -4556,6 +4792,11 @@
   kind: port
   wikidata: Q1397954
   added: 2026-11-12
+- repo: bhuiyah/ff7-recomp-android
+  game: FINAL FANTASY VII
+  platform: pc
+  kind: recomp
+  added: 2026-11-13
 - repo: rubymatrix/xi-on-anything
   game: FINAL FANTASY XI
   platform: pc
@@ -4710,6 +4951,11 @@
   kind: recomp
   wikidata: Q1041427
   added: 2026-10-31
+- repo: 0xl0cal/repentogxm
+  game: "The Binding of Isaac: Repentance"
+  platform: pc
+  kind: port
+  added: 2026-11-13
 - repo: ttom795/Skyrim_Android
   game: "The Elder Scrolls V: Skyrim"
   platform: pc
@@ -4722,6 +4968,12 @@
   kind: recomp
   wikidata: Q936968
   added: 2026-10-30
+- repo: Ryan3DSMods/Sims3DS
+  game: The Sims Complete Collection
+  platform: pc
+  kind: port
+  wikidata: Q12343062
+  added: 2026-11-13
 - repo: sp00nznet/themepark-recomp
   game: Theme Park
   platform: pc
@@ -4776,6 +5028,13 @@
   kind: port
   wikidata: Q973459
   added: 2026-10-30
+- repo: OpenGP-dev/OpenGP
+  game: Mario Kart Arcade GP
+  platform: arcade
+  kind: recomp
+  tool: gekkorecomp
+  wikidata: Q2575214
+  added: 2026-11-13
 - repo: spacestate1/namco22-decompile
   game: Namco System 21/22/23 arcade games
   platform: arcade
@@ -4802,6 +5061,11 @@
   based_on: [cheviman/segasonic-decomp]
   wikidata: Q2016642
   added: 2026-10-30
+- repo: tastyrepublic/spikeout-recomp
+  game: "Spikeout: Final Edition"
+  platform: arcade
+  kind: recomp
+  added: 2026-11-13
 - repo: gibletto/sfiii3-cps3-port
   game: "Street Fighter III: Third Strike"
   platform: arcade
