@@ -14,6 +14,8 @@ const ALIASES: Partial<Record<PlatformId, string[]>> = {
   gbc: ["gameboy color", "game boy colour"],
   gba: ["gameboy advance"],
   nds: ["ds"],
+  vb: ["virtual boy", "virtualboy"],
+  pce: ["pc engine", "pc-engine", "turbografx", "turbografx-16", "tg16", "tg-16", "pc engine cd", "turbografx-cd", "turbo duo"],
   genesis: ["mega drive", "megadrive", "md", "sega"],
   saturn: ["sega saturn"],
   dc: ["dreamcast", "sega"],
