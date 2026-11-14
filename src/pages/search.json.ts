@@ -29,6 +29,7 @@ const ALIASES: Partial<Record<PlatformId, string[]>> = {
   xbox: ["og xbox", "original xbox"],
   x360: ["xbox 360", "360"],
   pc: ["dos", "windows"],
+  j2me: ["java", "j2me", "java me", "mobile", "phone"],
 };
 const platformWords = (id: PlatformId) => [id, PLATFORMS[id], ...(ALIASES[id] ?? [])];
 
