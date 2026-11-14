@@ -552,13 +552,9 @@
   reason: The repository provides a neural rendering/AI upscaling tool for PC
     games, not a static recompilation or source‑port of a console/classic game.
   date: 2026-11-14
-- repo: imnotsharingmyname/pcportastrobot
-  reason: "Fake project: repository code (10 kB C++) does not support claims of a
-    native PS5 game port."
-  date: 2026-11-14
 - repo: germanalvarez15/nfsmw-vita
-  reason: The repository claims to be a native PS2 to PS Vita port, but the source
-    code contains only Python scripts and no C/C++ code to back these claims.
+  reason: A PS Vita port (a .vpk only); recomp.party lists projects you play on PC or
+    a phone.
   date: 2026-11-14
 - repo: Joaovitor404silva/bloodborne-pc-path-tracing
   reason: This repository is a graphics mod/installer for an existing Bloodborne
@@ -568,4 +564,12 @@
   reason: The repository is a launcher bundling multiple
     emulators/interpreters/recompilations for many BEMANI titles, not a single
     game-specific static recompilation or source port.
+  date: 2026-11-14
+- repo: khajit2412/SilentVitaHill
+  reason: A PS Vita port (a .vpk only); recomp.party lists projects you play on PC or
+    a phone. Built from SlickAmogus/silent-hill-decomp, which is listed.
+  date: 2026-11-14
+- repo: johnnieb333/Oracle-Recompiled
+  reason: 'The released build is interpreter-based (its README: "This version is not a
+    static recompilation"); the static recompilation on the main branch has no release yet.'
   date: 2026-11-14

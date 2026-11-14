@@ -38,6 +38,7 @@ const PLATFORM_NAMES: Partial<Record<keyof typeof PLATFORMS, string[]>> = {
   psp: ["PlayStation Portable"],
   vita: ["PlayStation Vita"],
   amiga: ["Amiga 500", "Amiga 1200", "Amiga CD32"],
+  j2me: ["Java Platform, Micro Edition", "mobile phone"],
 };
 const onPlatform = (c: Candidate, platform: keyof typeof PLATFORMS) => {
   const names = new Set([PLATFORMS[platform], ...(PLATFORM_NAMES[platform] ?? [])].map(titleKey));

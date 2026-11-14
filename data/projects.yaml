@@ -81,7 +81,7 @@
 - repo: mrOt4/babel-recomp
   game: Illusion of Gaia
   platform: snes
-  kind: port
+  kind: recomp
   tool: snesrecomp
   based_on: [RetroPortingToolKit/snesrecomp]
   wikidata: Q1658920
@@ -676,12 +676,6 @@
   based_on: [zeldaret/oot]
   wikidata: Q213911
   added: 2026-10-28
-- repo: pixl27/ProjectReLink
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: n64
-  kind: recomp
-  wikidata: Q213911
-  added: 2026-11-14
 - repo: sostenesfreitas/ocarina-recomp
   game: "The Legend of Zelda: Ocarina of Time"
   platform: n64
@@ -781,6 +775,7 @@
   kind: recomp
   tool: DolRecomp
   based_on: [ExpansionPak/DolRecomp, ExpansionPak/ModernGekko]
+  wikidata: Q812837
   added: 2026-11-14
 - repo: griches/EternalDarknessRecomp
   game: "Eternal Darkness: Sanity's Requiem"
@@ -1181,7 +1176,7 @@
 - repo: aoxzh/bayo3-recomp
   game: Bayonetta 3
   platform: switch
-  kind: port
+  kind: recomp
   wikidata: Q44997696
   added: 2026-11-14
 - repo: LuvAbyss/B3-Express
@@ -1220,12 +1215,6 @@
   based_on: [valentderah/totk-pc-recomp]
   wikidata: Q113956929
   added: 2026-11-03
-- repo: XiONDiGiTaL/EmblemWeave
-  game: "Fire Emblem: Fortune's Weave"
-  platform: switch
-  kind: recomp
-  wikidata: Q136231263
-  added: 2026-11-14
 - repo: galarianpikachu2021-hue/Racing-8-DX-Recomp
   game: Mario Kart 8 Deluxe
   platform: switch
@@ -1314,7 +1303,7 @@
   platform: switch
   kind: recomp
   tool: LZA Recomp
-  based_on: [mr.wifi1143/LZA-Recomp]
+  based_on: [https://gitlab.com/mr.wifi1143/LZA-Recomp]
   wikidata: Q105688771
   added: 2026-11-14
 - repo: lucabravi/MonZaMac
@@ -1517,6 +1506,12 @@
   kind: recomp
   wikidata: Q136231263
   added: 2026-11-09
+- repo: XiONDiGiTaL/EmblemWeave
+  game: "Fire Emblem: Fortune's Weave"
+  platform: switch2
+  kind: recomp
+  wikidata: Q136231263
+  added: 2026-11-14
 - repo: Alano6678/hwaoi-recomp
   game: "Hyrule Warriors: Age of Imprisonment"
   platform: switch2
@@ -1530,6 +1525,12 @@
   kind: recomp
   wikidata: Q131767872
   added: 2026-11-11
+- repo: MIXIDtheSilly/kart-recomp
+  game: Mario Kart World
+  platform: switch2
+  kind: recomp
+  wikidata: Q131767872
+  added: 2026-11-14
 - repo: Dittobyte/Recompia
   game: Pokémon Pokopia
   platform: switch2
@@ -1562,6 +1563,12 @@
   kind: recomp
   wikidata: Q213911
   added: 2026-11-07
+- repo: pixl27/ProjectReLink
+  game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
+  platform: switch2
+  kind: recomp
+  wikidata: Q140140365
+  added: 2026-11-14
 
 # --- Game Boy --------------------------------------------------------------------
 - repo: bryanthaboi/gen1recomp
@@ -1586,12 +1593,6 @@
   added: 2026-11-01
 
 # --- Game Boy Color --------------------------------------------------------------
-- repo: johnnieb333/Oracle-Recompiled
-  game: Oracle of Ages and Oracle of Seasons
-  platform: gbc
-  kind: port
-  based_on: [sp00nznet/oracle-recompiled, arcanite24/gb-recompiled]
-  added: 2026-11-14
 - repo: sergiomanzur/regaiden-recomp
   game: Resident Evil Gaiden
   platform: gbc
@@ -1689,6 +1690,7 @@
   kind: recomp
   tool: gbarecomp
   based_on: [mstan/gbarecomp]
+  wikidata: Q2515386
   added: 2026-11-14
 - repo: mstan/SuperMarioAdvance4Recomp
   game: "Super Mario Advance 4: Super Mario Bros. 3"
@@ -1843,6 +1845,7 @@
   game: "Phantasy Star IV: The End of the Millennium"
   platform: genesis
   kind: recomp
+  wikidata: Q626822
   added: 2026-11-14
 - repo: BTr-RJ/RoadRashTrilogy_Recomp
   game: Road Rash Trilogy
@@ -2165,13 +2168,6 @@
   based_on: [psxrecomp/psxrecomp]
   wikidata: Q6150799
   added: 2026-11-01
-- repo: khajit2412/SilentVitaHill
-  game: Silent Hill
-  platform: ps1
-  kind: port
-  based_on: [SlickAmogus/silent-hill-decomp, shdecompilations/silent-hill-decomp]
-  wikidata: Q753164
-  added: 2026-11-14
 - repo: SlickAmogus/silent-hill-decomp
   game: Silent Hill
   platform: ps1
@@ -2882,6 +2878,7 @@
   game: DRIVECLUB
   platform: ps4
   kind: port
+  based_on: [BlackLineInteractive/Driveclub-Port]
   wikidata: Q10268796
   added: 2026-11-14
 - repo: GNSB/UFC-3-PS4-PORT-LINUX-WINDOWS
@@ -3080,6 +3077,14 @@
   kind: port
   wikidata: Q28406508
   added: 2026-10-31
+
+# --- PlayStation 5 ---------------------------------------------------------------
+- repo: imnotsharingmyname/pcportastrobot
+  game: Astro Bot
+  platform: ps5
+  kind: port
+  wikidata: Q126199700
+  added: 2026-11-14
 
 # --- PSP -------------------------------------------------------------------------
 - repo: sal063/Ace-Combat-X-Recompilation
@@ -4038,7 +4043,7 @@
 - repo: itar3/Fable2RecompMac
   game: Fable II
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q984024
   added: 2026-11-14
@@ -4218,7 +4223,7 @@
 - repo: Akimitsu76/Lantern-Recomp
   game: "Green Lantern: Rise of the Manhunters"
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q4039700
   added: 2026-11-14
@@ -4265,7 +4270,7 @@
 - repo: GTTeancum/OpenH3M
   game: Halo 3
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q137802
   added: 2026-11-14
@@ -4424,7 +4429,7 @@
 - repo: 1nsec/Naruto-The-Broken-Bond-Android-Port
   game: "Naruto: The Broken Bond"
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q2633663
   added: 2026-11-14
@@ -4765,7 +4770,7 @@
 - repo: AmarilloNL/ssx-recomp
   game: SSX (2012)
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q772482
   added: 2026-11-14
@@ -5032,7 +5037,7 @@
 - repo: phys-winner/pc_decomp_cdre
   game: Crashday Redline Edition
   platform: pc
-  kind: port
+  kind: recomp
   added: 2026-11-14
 - repo: Erick194/DoomRPG-RE
   game: Doom RPG
@@ -5093,6 +5098,12 @@
   kind: port
   wikidata: Q692360
   added: 2026-11-10
+- repo: singlemate/RunnerRecompiled
+  game: Mirror's Edge
+  platform: pc
+  kind: recomp
+  tool: RunnerBuilder
+  added: 2026-11-14
 - repo: segovia-no/MotoRacerRecomp
   game: Moto Racer
   platform: pc
@@ -5271,6 +5282,14 @@
   kind: recomp
   added: 2026-10-31
 
+# --- Java phone (J2ME) -----------------------------------------------------------
+- repo: samioan/gow-betrayal-remastered
+  game: "God of War: Betrayal"
+  platform: j2me
+  kind: port
+  wikidata: Q573768
+  added: 2026-11-14
+
 # --- Arcade ----------------------------------------------------------------------
 - repo: tmcleroy/cps2recomp
   game: Capcom CPS-2 arcade games
@@ -5398,12 +5417,6 @@
   platform: gba
   kind: tool
   added: 2026-10-31
-- repo: singlemate/RunnerRecompiled
-  game: Mirror's Edge
-  platform: pc
-  kind: tool
-  tool: RunnerBuilder
-  added: 2026-11-14
 - repo: ExpansionPak/ModernGekko
   game: ModernGekko
   platform: multi
