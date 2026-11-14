@@ -984,12 +984,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     cursor: pointer;
   }
   .ai-group {
-    display: inline-flex;
-    flex-wrap: wrap; /* a vendor with many models (Anthropic) wraps inside the box */
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem 0.3rem;
-    max-width: 100%;
+    display: contents; /* chips flow in one wrapping row; the group only carries the vendor colour */
   }
   .ai-chip {
     position: relative;
