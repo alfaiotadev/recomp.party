@@ -544,3 +544,28 @@
   reason: The repo is a Godot‑based PC port of a modern game, not a static
     recompilation or source port of a classic console title.
   date: 2026-11-13
+- repo: llvm/llvm-project
+  reason: LLVM is a general-purpose compiler infrastructure, not a game-specific
+    static recompiler or game port.
+  date: 2026-11-14
+- repo: apex-compute/ANR
+  reason: The repository provides a neural rendering/AI upscaling tool for PC
+    games, not a static recompilation or source‑port of a console/classic game.
+  date: 2026-11-14
+- repo: imnotsharingmyname/pcportastrobot
+  reason: "Fake project: repository code (10 kB C++) does not support claims of a
+    native PS5 game port."
+  date: 2026-11-14
+- repo: germanalvarez15/nfsmw-vita
+  reason: The repository claims to be a native PS2 to PS Vita port, but the source
+    code contains only Python scripts and no C/C++ code to back these claims.
+  date: 2026-11-14
+- repo: Joaovitor404silva/bloodborne-pc-path-tracing
+  reason: This repository is a graphics mod/installer for an existing Bloodborne
+    port, not a standalone port or recompiler project.
+  date: 2026-11-14
+- repo: Roganis/HIRAKU
+  reason: The repository is a launcher bundling multiple
+    emulators/interpreters/recompilations for many BEMANI titles, not a single
+    game-specific static recompilation or source port.
+  date: 2026-11-14
