@@ -586,3 +586,12 @@
   reason: The project is built on the PicoDrive emulator and uses high-level
     emulation; it is not a static recompilation or source port.
   date: 2026-11-15
+- repo: BlueHeisenberg/SCSKiller
+  reason: General PC shader pre-compilation utility, not a console game static
+    recompilation or source port.
+  date: 2026-11-16
+- repo: Ghoster738/Future-Cop-MIT
+  reason: Incomplete re-implementation project with no playable build; provides
+    only viewers/rippers requiring original game data, not a static
+    recompilation or source port.
+  date: 2026-11-16
