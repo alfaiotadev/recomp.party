@@ -45,6 +45,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
       <span class="n">{projects.value}</span>
     </div>
     <span class="label">playable projects</span>
+    <span class="label games">{projects.games} different games</span>
     {
       newest && (
         <div class="cmp newest">
@@ -209,6 +210,9 @@ const laneStyle = (ids: PlatformId[], k: number) => {
 </script>
 
 <style>
+  .label.games {
+    color: var(--faint);
+  }
   .stats {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));

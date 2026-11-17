@@ -38,6 +38,8 @@ const fmt = (t: number) => new Date(t).toLocaleDateString("en-GB", { day: "numer
 
 // A takedown wave lists the projects here whose repo went missing from a week before it on: around then, not because of it.
 const goneAround = m.kind === "takedown" ? goneGames.filter((g) => Date.parse(g.gone!.lastSeen ?? g.gone!.since) >= at - WEEK).reverse() : [];
+// A count milestone names the project that took the list to the round number.
+const nth = m.project ? games.find((g) => g.repo === m.project) : undefined;
 const paragraphs = m.summary.trim().split(/\n\s*\n/);
 const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(/\s+/g, " ")}`;
 ---
@@ -63,6 +65,22 @@ const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(
     }
   </p>
 
+  {
+    nth && (
+      <section class="nth">
+        <h2>The project that made it {m.id.match(/-(\d+)(-games)?$/)?.[1]}</h2>
+        <a class="nth-card" href={entryPath(nth)}>
+          {nth.cover && <img src={nth.cover.src} width="90" height="120" alt="" />}
+          <span>
+            <strong>{nth.game}</strong>
+            <span class="mono muted">
+              {nth.repo} · {PLATFORMS[nth.platform]} · added {shortDate(nth.added)}
+            </span>
+          </span>
+        </a>
+      </section>
+    )
+  }
   {
     goneAround.length > 0 && (
       <section class="gone-around">
@@ -117,6 +135,29 @@ const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(
 </Base>
 
 <style>
+  .nth-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .nth-card:hover {
+    background: var(--hover);
+  }
+  .nth-card img {
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  .nth-card span {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
   .gone-around ul {
     margin: 0.6rem 0 0;
     padding-left: 1.1rem;

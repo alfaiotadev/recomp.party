@@ -1,6 +1,6 @@
 ---
 // Quick search under the front-page intro: games, toolchains and events; a result opens its page.
-import { games, tools } from "../lib/data.ts";
+import { countGames, games, tools } from "../lib/data.ts";
 
 /** Counts straight from the data: the site is rebuilt after every data refresh. */
 const n = (x: number) => x.toLocaleString("en");
@@ -14,8 +14,8 @@ const n = (x: number) => x.toLocaleString("en");
     <input
       id="qs-input"
       type="search"
-      placeholder={`Search ${n(games.length)} games and ${n(tools.length)} toolchains… try “sotn” or “mario kart”`}
-      data-short={`Search ${n(games.length)} games…`}
+      placeholder={`Search ${n(countGames(games))} games, ${n(games.length)} projects and ${n(tools.length)} toolchains… try “sotn”`}
+      data-short={`Search ${n(countGames(games))} games…`}
       autocomplete="off"
       spellcheck="false"
       role="combobox"

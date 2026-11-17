@@ -1,0 +1,141 @@
+---
+/**
+ * For a week after the list passes a round number (a `count` milestone, see scripts/count-milestones.ts): a banner
+ * above the stat tiles with the number, the project that took the list there and the latest arrivals.
+ */
+import { available, countGames, entryPath, milestonePath, milestones, PLATFORMS, platformsInUse } from "../lib/data.ts";
+import CoverStack from "./CoverStack.astro";
+
+const DAY = 86_400_000;
+const SHOW_DAYS = 7;
+const m = milestones.filter((x) => x.kind === "count").at(-1);
+const fresh = m && Date.now() - Date.parse(m.date) < SHOW_DAYS * DAY;
+const [, n, games] = m?.id.match(/-(\d+)(-games)?$/) ?? [];
+const nth = m?.project ? available.find((e) => e.repo === m.project) : undefined;
+// the projects listed since the milestone day began, newest first: the ones that are still arriving
+const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a, b) => b.added.localeCompare(a.added)) : [];
+---
+
+{
+  m && fresh && n && (
+    <aside class="count-banner v-recompparty" aria-label={m.title}>
+      <div class="num">
+        <span class="big">{Number(n).toLocaleString("en")}</span>
+        <span class="eyebrow">{games ? "different games" : "playable recomps & ports"}</span>
+      </div>
+      <div class="body">
+        <p class="headline">
+          {games
+            ? `${Number(n).toLocaleString("en")} different games now run natively, from ${available.length.toLocaleString("en")} projects across ${platformsInUse.length} platforms.`
+            : `recomp.party passed ${Number(n).toLocaleString("en")} projects you can play today: ${countGames(available).toLocaleString("en")} different games across ${platformsInUse.length} platforms.`}
+        </p>
+        {nth && (
+          <p class="nth">
+            {nth.cover && <img src={nth.cover.src} width="36" height="48" alt="" loading="lazy" />}
+            <span>
+              The {Number(n).toLocaleString("en")}th{games && " game"}: <a href={entryPath(nth)}>{nth.game}</a>
+              <span class="mono muted"> · {PLATFORMS[nth.platform]}</span>
+            </span>
+          </p>
+        )}
+        <a class="more mono" href={milestonePath(m)}>About the milestone →</a>
+      </div>
+      {since.length > 1 && (
+        <div class="stack-wrap">
+          <CoverStack entries={since} size={34} max={10} label="Listed since" />
+          <span class="mono muted">{since.length} added since</span>
+        </div>
+      )}
+    </aside>
+  )
+}
+
+<style>
+  .count-banner {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.4rem;
+    margin: 0 0 1.5rem;
+    padding: 1.1rem 1.4rem;
+    background:
+      radial-gradient(120% 160% at 0% 0%, rgb(245 200 76 / 0.14), transparent 55%),
+      var(--surface);
+    border: 1px solid rgb(245 200 76 / 0.35);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .num {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .big {
+    font-size: clamp(2.6rem, 6vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--mc);
+    text-shadow:
+      0 0 22px rgb(245 200 76 / 0.45),
+      0 0 2px rgb(245 200 76 / 0.6);
+  }
+  .num .eyebrow {
+    margin-top: 0.35rem;
+  }
+  .body p {
+    margin: 0 0 0.35rem;
+  }
+  .headline {
+    font-size: 1.05rem;
+  }
+  .nth {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .nth img {
+    border-radius: 3px;
+    object-fit: cover;
+  }
+  .more {
+    font-size: 0.8rem;
+  }
+  .stack-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+  }
+  /* a slow sweep of light across the banner; still for people who ask for less motion */
+  .count-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 40%, rgb(245 200 76 / 0.08) 50%, transparent 60%);
+    transform: translateX(-100%);
+    animation: sweep 6s ease-in-out 1s infinite;
+    pointer-events: none;
+  }
+  @keyframes sweep {
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .count-banner::after {
+      animation: none;
+      display: none;
+    }
+  }
+  @media (max-width: 720px) {
+    .count-banner {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+    .stack-wrap {
+      align-items: flex-start;
+    }
+  }
+</style>

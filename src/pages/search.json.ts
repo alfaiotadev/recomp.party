@@ -72,13 +72,21 @@ export function GET() {
       w: t.snap?.stars ?? 0,
     });
   }
+  /** Other words people search a milestone's vendor by. */
+  const VENDOR_WORDS: Record<keyof typeof VENDORS, string> = {
+    anthropic: "claude",
+    google: "gemini",
+    openai: "chatgpt gpt",
+    nintendo: "takedown dmca",
+    recompparty: "count celebration",
+  };
   for (const m of milestones) {
     items.push({
       t: "e",
       n: m.title,
       s: `${MILESTONE_KINDS[m.kind]} · ${VENDORS[m.vendor]} · ${m.date}`,
       h: milestonePath(m),
-      k: [m.label, m.sub, VENDORS[m.vendor], m.vendor === "anthropic" ? "claude" : m.vendor === "google" ? "gemini" : "chatgpt gpt"].filter(Boolean).join(" | "),
+      k: [m.label, m.sub, VENDORS[m.vendor], VENDOR_WORDS[m.vendor]].filter(Boolean).join(" | "),
       w: 0,
     });
   }

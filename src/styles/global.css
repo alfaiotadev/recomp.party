@@ -445,6 +445,10 @@ section {
 .v-nintendo {
   --mc: var(--accent);
 }
+/* recomp.party's own round numbers */
+.v-recompparty {
+  --mc: #f5c84c;
+}
 /* GitHub Copilot and Cursor marks are monochrome too; "other" agents have no logo */
 .v-github,
 .v-cursor {
