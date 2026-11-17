@@ -1,0 +1,52 @@
+# Candidates from the lost-found report (scripts/lost-found.ts) that a maintainer has looked at and that are not the
+# gone project's new home. The report leaves these out. A confirmed move goes to `moved_to:` in projects.yaml instead.
+#
+#   - url: <candidate URL as the report shows it>
+#     for: <owner/repo of the gone project>
+#     note: why it is not the new home
+
+# 2026-11-17, issue #144
+- url: https://github.com/metrist38/fefw-recomp
+  for: Goldoire/fefw-recomp
+  note: a copy made 2026-11-10 while the original was still up, not the author's
+- url: https://gitlab.com/XiONDiGiTaL/emblemweave
+  for: Goldoire/fefw-recomp
+  note: a mirror of a separate launcher project (XiONDiGiTaL/EmblemWeave)
+- url: https://github.com/slex2jf/Project-Tandem--ANDROID
+  for: badcompany94-rcmp/project-tandem
+  note: a separate Android project
+- url: https://github.com/slex2jf/Project-Tandem-Linux
+  for: badcompany94-rcmp/project-tandem
+  note: a separate Linux project by the same person as the Android one
+- url: https://github.com/iChris4/MetroidPrimePortVR
+  for: Odrannnn/MetroidPrimePort
+  note: a separate VR port, created 2026-10-02 alongside the original
+- url: https://github.com/iChris4/MetroidPrime2PortVR
+  for: Odrannnn/MetroidPrime2Port
+  note: a separate VR port
+- url: https://gitlab.com/FermataRest/MetroidPrimeHuntersRecomp
+  for: Odrannnn/MetroidPrimePort
+  note: a different game (Metroid Prime Hunters)
+- url: https://github.com/printfFriendo/SkyRecomp-Android
+  for: Apolinario-coder/SkyRecomp
+  note: a separate Android project
+- url: https://github.com/imalti0r/engage-pc-recomp
+  for: veneito/engage-pc-recomp
+  note: a modified re-upload (DLSS, Chinese UI); the project moved to gitlab.com/engage-pc-recomp
+# Goldoire ended fefw-recomp and deleted the repo themselves (README of 0.2.0: "I'll be deleting this repo soon.
+# Anyone is free to continue the work."); these are copies of it, not a new home.
+- url: https://github.com/Dittobyte/fefw-recomp
+  for: Goldoire/fefw-recomp
+  note: a copy of the final 0.2.0 state
+- url: https://github.com/may22es/fefw-recomp
+  for: Goldoire/fefw-recomp
+  note: a copy of 0.1.1
+- url: https://github.com/SwaaggMavii316/fefw-recomp-source-mirror
+  for: Goldoire/fefw-recomp
+  note: an unofficial mirror of 0.1.4
+- url: https://github.com/GregorioRuiz98/fefw-recomp
+  for: Goldoire/fefw-recomp
+  note: separate tools by another author
+- url: https://github.com/Naxomega/MetroidPrime2Port
+  for: Odrannnn/MetroidPrime2Port
+  note: a third-party backup ("Backup of the original MetroidPrime2Port repo by Ordrann")
