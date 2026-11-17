@@ -1,6 +1,6 @@
 /** Canonical layout of data/projects.yaml: one section per platform, toolchains last, sorted by game. */
 import { stringify } from "yaml";
-import { PLATFORMS, type Project } from "../../data/schema.ts";
+import { PLATFORMS, Project } from "../../data/schema.ts";
 
 const HEADER = `# recomp.party — curated list of playable recomps and ports.
 #
@@ -12,7 +12,11 @@ const HEADER = `# recomp.party — curated list of playable recomps and ports.
 # Fields: see data/schema.ts. Layout is generated: run \`npm run format\` after editing.
 `;
 
-const FIELDS = ["repo", "game", "platform", "kind", "tool", "based_on", "wikidata", "note", "added"] as const;
+const FIELDS = ["repo", "game", "platform", "kind", "tool", "based_on", "wikidata", "note", "added", "moved_to"] as const;
+
+// A schema field missing here would be dropped silently by `npm run format` (moved_to once was).
+const unlisted = Object.keys(Project.shape).filter((k) => !(FIELDS as readonly string[]).includes(k));
+if (unlisted.length) throw new Error(`scripts/lib/format.ts: add ${unlisted.join(", ")} to FIELDS`);
 
 const scalar = (v: string) => stringify(v, { lineWidth: 0 }).trim();
 
