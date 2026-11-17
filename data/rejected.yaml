@@ -595,3 +595,11 @@
     only viewers/rippers requiring original game data, not a static
     recompilation or source port.
   date: 2026-11-16
+- repo: pithings/unkernel
+  reason: The repository provides a Linux kernel compiled to WebAssembly, not a
+    game recompilation, source port, or game‑related recompiler tool.
+  date: 2026-11-17
+- repo: RevoSucks/CV64Recomp
+  reason: README explicitly states it doesn't build, failing the playable release
+    requirement
+  date: 2026-11-17
