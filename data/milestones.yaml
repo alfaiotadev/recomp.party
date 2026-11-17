@@ -6,6 +6,9 @@
 #
 # Fields: see Milestone in data/schema.ts. Above the timeline: the vendor's logo, `label`
 # (the short name, without "Claude") and, if it says something the name doesn't, `sub`.
+#
+# `kind: count` entries (the list passing 1000, 2000, … projects or games) are written by
+# scripts/count-milestones.ts after each data fetch; don't add them by hand.
 
 - id: nintendo-github-dmca-wave-2026-11
   date: 2026-11-06

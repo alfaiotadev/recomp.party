@@ -1,5 +1,5 @@
 /** Front-page stat tiles: headline numbers, a comparison line and 12-week bar series. */
-import { available, platformsInUse } from "./data.ts";
+import { available, countGames, platformsInUse } from "./data.ts";
 
 /** Gone repos are left out: the numbers are about what you can get today. */
 const games = available;
@@ -38,6 +38,8 @@ const delta = (a: number, b: number): Delta => ({ now: a, before: b, diff: a - b
 export const stats = {
   projects: {
     value: games.length,
+    /** Different games among them: several projects can port the same game. */
+    games: countGames(games),
     /** The project whose first release is the most recent. */
     newest: games.filter((g) => g.firstReleaseAt).sort((a, b) => b.firstReleaseAt!.localeCompare(a.firstReleaseAt!))[0],
   },

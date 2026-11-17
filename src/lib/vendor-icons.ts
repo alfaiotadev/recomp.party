@@ -6,6 +6,8 @@ import type { VENDORS } from "../../data/schema.ts";
  * had it (CC0-1.0, https://simpleicons.org).
  */
 export const VENDOR_ICONS: Record<keyof typeof VENDORS, string> = {
+  // the list's own round numbers: a plain five-pointed star
+  recompparty: "M12 1.5l3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 17.27l-6.18 3.25L7 13.63 2 8.76l6.91-1Z",
   // Takedown waves get a plain "no entry" sign, not the rights holder's logo
   nintendo: "M12 1a11 11 0 1 0 0 22 11 11 0 1 0 0-22Zm0 2.5a8.5 8.5 0 1 1 0 17 8.5 8.5 0 1 1 0-17ZM4.12 5.88l14 14 1.76-1.76-14-14Z",
   // Anthropic's entries are Claude models and Claude Code, so they get the Claude mark

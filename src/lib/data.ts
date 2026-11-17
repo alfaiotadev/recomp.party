@@ -54,6 +54,10 @@ const byLatestRelease = (a: Entry, b: Entry) => (b.latestReleaseAt ?? "").locale
 export const games = all.filter((e) => e.kind !== "tool").sort(byLatestRelease);
 /** Games you can get right now: gone repos stay listed with a badge, but count only once they have a confirmed new home. */
 export const available = games.filter((e) => !e.gone || e.moved_to);
+/** One game however many projects port it: its Wikidata item, or its name when it has none yet. */
+export const gameKey = (e: Pick<Entry, "wikidata" | "game">) => e.wikidata ?? e.game.toLowerCase();
+/** How many different games a list of projects covers (NFS: Most Wanted has six projects, but is one game). */
+export const countGames = (list: Pick<Entry, "wikidata" | "game">[]) => new Set(list.map(gameKey)).size;
 /** Gone from GitHub, most recently gone first. */
 export const goneGames = games.filter((e) => e.gone).sort((a, b) => b.gone!.since.localeCompare(a.gone!.since));
 

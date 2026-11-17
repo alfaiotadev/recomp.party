@@ -195,6 +195,8 @@ export const MILESTONE_KINDS = {
   model: "Model release",
   policy: "Policy change",
   takedown: "Takedowns",
+  /** recomp.party's own: the list passing a round number, recorded by scripts/count-milestones.ts. */
+  count: "recomp.party milestone",
 } as const;
 
 /** Whose model or policy it is; drawn as the vendor's logo on the timeline. */
@@ -203,6 +205,7 @@ export const VENDORS = {
   openai: "OpenAI",
   google: "Google",
   nintendo: "Nintendo",
+  recompparty: "recomp.party",
 } as const;
 
 /** data/milestones.yaml — outside events drawn on the release timeline as dashed lines. */
@@ -221,6 +224,8 @@ export const Milestone = z.strictObject({
   /** A neutral statement of what happened, one or more paragraphs (blank line between). */
   summary: z.string().min(1),
   sources: z.array(z.strictObject({ label: z.string().min(1), url: z.url() })).min(1),
+  /** A count milestone's Nth project (owner/repo): the one that took the list to the round number. */
+  project: z.string().optional(),
 });
 export type Milestone = z.infer<typeof Milestone>;
 
