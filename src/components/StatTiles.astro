@@ -16,7 +16,7 @@ const days = updated.days;
 /** Covers in the new-projects tile: two rows on desktop, the rest are behind the link to the game list. */
 const FRESH_COVERS = 20;
 const dayMax = Math.max(1, ...days.days);
-const gdMax = Math.max(1, ...games.days.days.flatMap((d) => [d.plus, d.minus]));
+const gdMax = Math.max(1, ...games.days.days.map((d) => d.plus + d.minus));
 // a second label row for the games gone, on every day so the bars keep one baseline, only in weeks that have any
 const gdMinus = games.days.days.some((d) => d.minus > 0);
 // Platform logos drift in three lanes; each lane holds its logos twice so the loop is seamless.
@@ -114,8 +114,10 @@ const laneStyle = (ids: PlatformId[], k: number) => {
                 <span class={`cnt ${d.plus ? "up" : ""}`}>{d.plus ? `+${d.plus}` : "±0"}</span>
                 {gdMinus && <span class="cnt down">{d.minus ? `−${d.minus}` : "\u00a0"}</span>}
                 <span class="col">
-                  <span class="bar" style={`height:${Math.max(4, (d.plus / gdMax) * 100)}%`} />
-                  {d.minus > 0 && <span class="bar off" style={`height:${Math.max(4, (d.minus / gdMax) * 100)}%`} />}
+                  <span class="stack" style={`height:${Math.max(4, ((d.plus + d.minus) / gdMax) * 100)}%`}>
+                    {d.plus > 0 && <span class="seg on" style={`flex:${d.plus}`} />}
+                    {d.minus > 0 && <span class="seg off" style={`flex:${d.minus}`} />}
+                  </span>
                 </span>
                 <span class="dl">{wd}</span>
               </li>
@@ -217,12 +219,30 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   .gd .cnt.down {
     margin-top: -1px;
   }
-  .gd .col {
-    gap: 2px;
+  /* taller than the releases chart: up to two label rows above the bars */
+  .gd .wk-bars {
+    height: 4.6rem;
   }
-  .gd .bar.off {
+  .gd .stack {
+    width: 100%;
+    min-height: 2px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2px 2px 0 0;
+    overflow: hidden;
+  }
+  .gd .seg.on {
+    background: var(--muted);
+    opacity: 0.45;
+  }
+  .gd .today .seg.on {
+    background: var(--recomp);
+    opacity: 1;
+  }
+  /* the games gone that day: a red segment at the foot of the day's bar */
+  .gd .seg.off {
     background: var(--accent);
-    opacity: 0.8;
+    min-height: 2px;
   }
   .gd .cnt.up {
     color: var(--recomp);
