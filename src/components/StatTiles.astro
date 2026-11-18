@@ -1,5 +1,5 @@
 ---
-import { entryPath, fitLogoArea, PLATFORMS, platformLogo, platformMark, type PlatformId } from "../lib/data.ts";
+import { entryPath, fitLogoArea, PLATFORMS, platformMark } from "../lib/data.ts";
 import { stats, type Delta } from "../lib/stats.ts";
 import CoverStack from "./CoverStack.astro";
 import Spark from "./Spark.astro";
@@ -19,27 +19,6 @@ const dayMax = Math.max(1, ...days.days);
 const gdMax = Math.max(1, ...games.days.days.map((d) => d.plus + d.minus));
 // a second label row for the games gone, on every day so the bars keep one baseline, only in weeks that have any
 const gdMinus = games.days.days.some((d) => d.minus > 0);
-// Platform logos drift in three lanes; each lane holds its logos twice so the loop is seamless.
-const lanes = [0, 1, 2].map((k) => platforms.ids.filter((_, i) => i % 3 === k));
-const logoSize = (id: PlatformId) => {
-  const l = platformLogo(id);
-  if (!l) return undefined;
-  // same visual area for every logo, so wordmarks and square marks weigh the same
-  const h = Math.min(22, Math.sqrt(980 / l.aspect));
-  return { src: l.src, w: +(h * l.aspect).toFixed(1), h: +h.toFixed(1) };
-};
-// Lanes move in whole-pixel steps: every item has an integer width, so the lane's loop distance is an integer
-// too. Sub-pixel motion made the thin strokes of the logos shimmer as they were resampled every frame.
-const GAP = 26;
-const SPEED = 16; // px per second
-const itemWidth = (id: PlatformId) => {
-  const l = logoSize(id);
-  return (l ? Math.ceil(l.w) : Math.ceil(PLATFORMS[id].split(" ")[0]!.length * 7.5)) + GAP;
-};
-const laneStyle = (ids: PlatformId[], k: number) => {
-  const d = ids.reduce((sum, id) => sum + itemWidth(id), 0);
-  return `--d:-${d}px;--n:${d};--t:${((d / SPEED) * [1, 1.2, 1.1][k]!).toFixed(1)}s`;
-};
 ---
 
 <div class="stats">
@@ -493,105 +472,6 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   .today .bar {
     background: var(--recomp);
     opacity: 1;
-  }
-  /* Platforms: logos drift sideways in three lanes under a plate with the count. */
-  .plat {
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-    min-height: 9.5rem;
-  }
-  .drift {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-  }
-  .lane {
-    display: flex;
-    align-items: center;
-    width: max-content;
-    animation: drift var(--t) steps(var(--n)) infinite;
-    will-change: transform; /* its own layer: moved by the compositor, the logos' filter isn't redrawn */
-  }
-  .lane.l1 {
-    animation-direction: reverse;
-  }
-  .plat:hover .lane {
-    animation-play-state: paused;
-  }
-  .item {
-    flex: none;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-  }
-  /* each logo filters the games list to its platform */
-  .item {
-    text-decoration: none;
-    color: inherit;
-  }
-  .item img,
-  .item .logo-text {
-    opacity: 0.45;
-    transition: opacity 0.15s;
-  }
-  .item:is(:hover, :focus-visible) :is(img, .logo-text) {
-    opacity: 1;
-  }
-  @keyframes drift {
-    to {
-      transform: translate3d(var(--d), 0, 0);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .drift {
-      inset: 0.6rem;
-      flex-flow: row wrap;
-      align-content: space-evenly;
-      justify-content: center;
-    }
-    .lane {
-      display: contents;
-      animation: none;
-    }
-    .item {
-      width: auto !important;
-      padding: 0 0.35rem;
-    }
-    .item img {
-      width: auto;
-      height: 0.8rem; /* width follows from the width/height attributes' aspect ratio */
-    }
-    .item[aria-hidden] {
-      display: none;
-    }
-  }
-  .plate {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    translate: -50% -50%;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.3rem 0.8rem 0.4rem;
-    white-space: nowrap;
-    background: rgb(18 22 36 / 0.9);
-    border-radius: 10px;
-    box-shadow: 0 0 16px 10px rgb(18 22 36 / 0.9);
-    pointer-events: none;
-  }
-  .logo-text {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    opacity: 0.6;
-    font-weight: 700;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
   }
   /* narrower four-column rows: tuck the covers further in so two rows still hold them all */
   @media (521px <= width <= 1240px) {
