@@ -82,12 +82,6 @@ export const stats = {
     days: gameDays(),
     /** Games with more than one project. */
     multi: [...byGame.values()].filter((l) => l.length > 1).length,
-    /** The games with the most projects; each shown by its most-starred project. */
-    most: [...byGame.values()]
-      .filter((l) => l.length > 1)
-      .sort((a, b) => b.length - a.length || (b[0]!.firstReleaseAt ?? "").localeCompare(a[0]!.firstReleaseAt ?? ""))
-      .slice(0, 3)
-      .map((l) => ({ n: l.length, entry: [...l].sort((a, b) => (b.snap?.stars ?? 0) - (a.snap?.stars ?? 0))[0]! })),
   },
   fresh: {
     value: newIn(week(0)),

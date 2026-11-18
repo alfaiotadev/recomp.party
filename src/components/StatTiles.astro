@@ -122,21 +122,6 @@ const laneStyle = (ids: PlatformId[], k: number) => {
         }
       </ol>
     </div>
-    <span class="most-head mono">most projects</span>
-    <ol class="most">
-      {
-        games.most.map(({ n, entry }) => (
-          <li>
-            <a href={entryPath(entry)} title={entry.game}>
-              {entry.cover ? <img src={entry.cover.src} width="22" height="29" alt="" loading="lazy" /> : <span class="ph cover-ph icon" />}
-              <span class="g">{entry.game}</span>
-              <span class="bar" style={`--wn:${Math.round((n / games.most[0]!.n) * 100)}`} />
-              <b class="mono">{n}×</b>
-            </a>
-          </li>
-        ))
-      }
-    </ol>
   </div>
 
   <div class="tile">
@@ -240,59 +225,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
   .label.sub {
     color: var(--faint);
   }
-  .most-head {
-    margin-top: 0.75rem;
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--faint);
-  }
-  .most {
-    list-style: none;
-    margin: 0.35rem 0 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .most a {
-    position: relative;
-    display: grid;
-    grid-template-columns: 22px 1fr auto;
-    align-items: center;
-    gap: 0.5rem;
-    color: inherit;
-    text-decoration: none;
-    font-size: 0.8rem;
-  }
-  .most img,
-  .most .ph {
-    width: 22px;
-    height: 29px;
-    border-radius: 2px;
-    object-fit: cover;
-  }
-  .most .g {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .most .bar {
-    position: absolute;
-    left: 30px;
-    bottom: 0;
-    height: 2px;
-    width: calc((100% - 30px) * 0.01 * var(--wn, 100));
-    background: var(--recomp);
-    opacity: 0.5;
-  }
-  .most b {
-    font-size: 0.72rem;
-    color: var(--recomp);
-  }
-  .most a:hover .g {
-    text-decoration: underline;
-  }
+
   .label.games {
     color: var(--faint);
   }
