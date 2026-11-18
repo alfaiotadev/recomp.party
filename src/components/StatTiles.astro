@@ -4,7 +4,7 @@ import { stats, type Delta } from "../lib/stats.ts";
 import CoverStack from "./CoverStack.astro";
 import Spark from "./Spark.astro";
 
-const { projects, platforms, fresh, updated } = stats;
+const { projects, platforms, games, fresh, updated } = stats;
 const arrow = (d: Delta) => (d.diff > 0 ? "up" : d.diff < 0 ? "down" : "flat");
 const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
 const { newest } = projects;
@@ -16,6 +16,7 @@ const days = updated.days;
 /** Covers in the new-projects tile: two rows on desktop, the rest are behind the link to the game list. */
 const FRESH_COVERS = 20;
 const dayMax = Math.max(1, ...days.days);
+const gdMax = Math.max(1, ...games.days.days.flatMap((d) => [d.plus, d.minus]));
 // Platform logos drift in three lanes; each lane holds its logos twice so the loop is seamless.
 const lanes = [0, 1, 2].map((k) => platforms.ids.filter((_, i) => i % 3 === k));
 const logoSize = (id: PlatformId) => {
@@ -45,7 +46,7 @@ const laneStyle = (ids: PlatformId[], k: number) => {
       <span class="n">{projects.value}</span>
     </div>
     <span class="label">playable projects</span>
-    <span class="label games">{projects.games} different games</span>
+    <span class="label sub">from {platforms.value} original platforms</span>
     {
       newest && (
         <div class="cmp newest">
@@ -88,41 +89,54 @@ const laneStyle = (ids: PlatformId[], k: number) => {
     }
   </div>
 
-  <div class="tile plat">
-    <div class="drift">
+  <div class="tile gm">
+    <div class="top">
+      <span class="n">{games.value}</span>
+      <Spark values={games.bars} label={games.barsLabel} />
+    </div>
+    <span class="label">different games</span>
+    <span class="cmp">
+      <b>{games.multi}</b> have several projects
+    </span>
+    <div class="wk gd">
+      <div class="wk-head mono">
+        <span>last <b>7</b> days</span>
+        <span>{signed(games.days.net)} games listed</span>
+      </div>
+      <ol class="wk-bars" aria-label="Different games added to and gone from the list per day, last 7 days">
+        {
+          games.days.days.map((d, i) => {
+            const net = d.plus - d.minus;
+            const wd = i === 6 ? "today" : new Date(`${d.date}T12:00:00Z`).toLocaleDateString("en-GB", { weekday: "short", timeZone: "UTC" });
+            return (
+              <li class={`day${i === 6 ? " today" : ""}`} title={`${d.date}: ${d.plus} new ${d.plus === 1 ? "game" : "games"}${d.minus ? `, ${d.minus} gone` : ""}`}>
+                <span class={`cnt ${net > 0 ? "up" : net < 0 ? "down" : ""}`}>{net === 0 ? "±0" : signed(net).replace("-", "−")}</span>
+                <span class="col">
+                  <span class="bar" style={`height:${Math.max(4, (d.plus / gdMax) * 100)}%`} />
+                  {d.minus > 0 && <span class="bar off" style={`height:${Math.max(4, (d.minus / gdMax) * 100)}%`} />}
+                </span>
+                <span class="dl">{wd}</span>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+    <span class="most-head mono">most projects</span>
+    <ol class="most">
       {
-        lanes.map((ids, k) => (
-          <div class={`lane l${k}`} style={laneStyle(ids, k)}>
-            {[0, 1].map((copy) =>
-              ids.map((id) => {
-                const l = logoSize(id);
-                return (
-                  <a
-                    class="item"
-                    href={`/?platform=${id}#timeline`}
-                    data-platform={id}
-                    title={`Show the ${PLATFORMS[id]} releases and games`}
-                    style={`width:${itemWidth(id)}px`}
-                    aria-hidden={copy ? "true" : undefined}
-                    tabindex={copy ? -1 : undefined}
-                  >
-                    {l ? (
-                      <img class="logo-img" src={l.src} width={l.w} height={l.h} alt={copy ? "" : PLATFORMS[id]} loading="lazy" />
-                    ) : (
-                      <span class="logo-text">{PLATFORMS[id].split(" ")[0]}</span>
-                    )}
-                  </a>
-                );
-              }),
-            )}
-          </div>
+        games.most.map(({ n, entry }) => (
+          <li>
+            <a href={entryPath(entry)} title={entry.game}>
+              {entry.cover ? <img src={entry.cover.src} width="22" height="29" alt="" loading="lazy" /> : <span class="ph cover-ph icon" />}
+              <span class="g">{entry.game}</span>
+              <span class="bar" style={`--wn:${Math.round((n / games.most[0]!.n) * 100)}`} />
+              <b class="mono">{n}×</b>
+            </a>
+          </li>
         ))
       }
-    </div>
-    <div class="plate">
-      <span class="n">{platforms.value}</span>
-      <span class="label">original platforms</span>
-    </div>
+    </ol>
   </div>
 
   <div class="tile">
@@ -210,6 +224,75 @@ const laneStyle = (ids: PlatformId[], k: number) => {
 </script>
 
 <style>
+  .gd .col {
+    gap: 2px;
+  }
+  .gd .bar.off {
+    background: var(--accent);
+    opacity: 0.8;
+  }
+  .gd .cnt.up {
+    color: var(--recomp);
+  }
+  .gd .cnt.down {
+    color: var(--accent);
+  }
+  .label.sub {
+    color: var(--faint);
+  }
+  .most-head {
+    margin-top: 0.75rem;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+  }
+  .most {
+    list-style: none;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .most a {
+    position: relative;
+    display: grid;
+    grid-template-columns: 22px 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.8rem;
+  }
+  .most img,
+  .most .ph {
+    width: 22px;
+    height: 29px;
+    border-radius: 2px;
+    object-fit: cover;
+  }
+  .most .g {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .most .bar {
+    position: absolute;
+    left: 30px;
+    bottom: 0;
+    height: 2px;
+    width: calc((100% - 30px) * 0.01 * var(--wn, 100));
+    background: var(--recomp);
+    opacity: 0.5;
+  }
+  .most b {
+    font-size: 0.72rem;
+    color: var(--recomp);
+  }
+  .most a:hover .g {
+    text-decoration: underline;
+  }
   .label.games {
     color: var(--faint);
   }
