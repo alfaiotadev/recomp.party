@@ -6,6 +6,9 @@ import type { VENDORS } from "../../data/schema.ts";
  * had it (CC0-1.0, https://simpleicons.org).
  */
 export const VENDOR_ICONS: Record<keyof typeof VENDORS, string> = {
+  // Game launches get a plain gamepad, not the publisher's logo (Material Icons "sports_esports", Apache-2.0)
+  rockstar:
+    "M21.58 16.09l-1.09-7.66C20.21 6.46 18.52 5 16.53 5H7.47C5.48 5 3.79 6.46 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19c.68 0 1.32-.27 1.8-.75L9 16h6l2.25 2.25c.48.48 1.13.75 1.8.75 1.56 0 2.75-1.37 2.53-2.91zM11 11H9v2H8v-2H6v-1h2V8h1v2h2v1zm4-1c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm2 3c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z",
   // the list's own round numbers: a plain five-pointed star
   recompparty: "M12 1.5l3.09 6.26 6.91 1-5 4.87 1.18 6.88L12 17.27l-6.18 3.25L7 13.63 2 8.76l6.91-1Z",
   // Takedown waves get a plain "no entry" sign, not the rights holder's logo

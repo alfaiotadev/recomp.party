@@ -445,6 +445,10 @@ section {
 .v-nintendo {
   --mc: var(--accent);
 }
+/* big game launches: a sunset orange */
+.v-rockstar {
+  --mc: #ff8a5c;
+}
 /* recomp.party's own round numbers */
 .v-recompparty {
   --mc: #f5c84c;
