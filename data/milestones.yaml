@@ -10,6 +10,31 @@
 # `kind: count` entries (the list passing 1000, 2000, … projects or games) are written by
 # scripts/count-milestones.ts after each data fetch; don't add them by hand.
 
+- id: gta-vi-launch
+  date: 2026-11-19
+  kind: release
+  vendor: rockstar
+  label: GTA VI
+  sub: launch day
+  title: Grand Theft Auto VI launches
+  summary: |
+    Rockstar Games released Grand Theft Auto VI on 19 November 2026 for PlayStation 5 and Xbox
+    Series X|S, with a rolling midnight launch by country, and on Xbox Cloud Gaming. No PC version
+    has been announced. Rockstar set the date on 6 November 2025, after moving the launch from
+    autumn 2025 and then from 26 May 2026.
+
+    It is marked here as context: the weeks after one of the biggest game launches in years are a
+    natural point to compare the pace of recomp and port releases against.
+  sources:
+    - label: "Rockstar Games: launch set for November 19, 2026"
+      url: https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026
+    - label: "Rockstar Games: platforms, editions and versions"
+      url: https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions
+    - label: "Forbes: release date and time on PS5 and Xbox Series X"
+      url: https://www.forbes.com/sites/erikkain/2026/11/16/gta-6-release-date-time-ps5-xbox-series-x-download-size-day-one-update/
+    - label: Wikipedia
+      url: https://en.wikipedia.org/wiki/Grand_Theft_Auto_VI
+
 - id: nintendo-github-dmca-wave-2026-11
   date: 2026-11-06
   kind: takedown

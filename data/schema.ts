@@ -195,6 +195,8 @@ export const MILESTONE_KINDS = {
   model: "Model release",
   policy: "Policy change",
   takedown: "Takedowns",
+  /** A big game launch that may pull players, and recomp developers, away for a while. */
+  release: "Game release",
   /** recomp.party's own: the list passing a round number, recorded by scripts/count-milestones.ts. */
   count: "recomp.party milestone",
 } as const;
@@ -205,6 +207,7 @@ export const VENDORS = {
   openai: "OpenAI",
   google: "Google",
   nintendo: "Nintendo",
+  rockstar: "Rockstar Games",
   recompparty: "recomp.party",
 } as const;
 

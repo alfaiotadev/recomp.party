@@ -78,6 +78,7 @@ export function GET() {
     google: "gemini",
     openai: "chatgpt gpt",
     nintendo: "takedown dmca",
+    rockstar: "gta grand theft auto launch",
     recompparty: "count celebration",
   };
   for (const m of milestones) {
