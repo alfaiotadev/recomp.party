@@ -17,6 +17,8 @@ const days = updated.days;
 const FRESH_COVERS = 20;
 const dayMax = Math.max(1, ...days.days);
 const gdMax = Math.max(1, ...games.days.days.flatMap((d) => [d.plus, d.minus]));
+// a second label row for the games gone, on every day so the bars keep one baseline, only in weeks that have any
+const gdMinus = games.days.days.some((d) => d.minus > 0);
 // Platform logos drift in three lanes; each lane holds its logos twice so the loop is seamless.
 const lanes = [0, 1, 2].map((k) => platforms.ids.filter((_, i) => i % 3 === k));
 const logoSize = (id: PlatformId) => {
@@ -106,11 +108,11 @@ const laneStyle = (ids: PlatformId[], k: number) => {
       <ol class="wk-bars" aria-label="Different games added to and gone from the list per day, last 7 days">
         {
           games.days.days.map((d, i) => {
-            const net = d.plus - d.minus;
             const wd = i === 6 ? "today" : new Date(`${d.date}T12:00:00Z`).toLocaleDateString("en-GB", { weekday: "short", timeZone: "UTC" });
             return (
               <li class={`day${i === 6 ? " today" : ""}`} title={`${d.date}: ${d.plus} new ${d.plus === 1 ? "game" : "games"}${d.minus ? `, ${d.minus} gone` : ""}`}>
-                <span class={`cnt ${net > 0 ? "up" : net < 0 ? "down" : ""}`}>{net === 0 ? "±0" : signed(net).replace("-", "−")}</span>
+                <span class={`cnt ${d.plus ? "up" : ""}`}>{d.plus ? `+${d.plus}` : "±0"}</span>
+                {gdMinus && <span class="cnt down">{d.minus ? `−${d.minus}` : "\u00a0"}</span>}
                 <span class="col">
                   <span class="bar" style={`height:${Math.max(4, (d.plus / gdMax) * 100)}%`} />
                   {d.minus > 0 && <span class="bar off" style={`height:${Math.max(4, (d.minus / gdMax) * 100)}%`} />}
@@ -209,6 +211,12 @@ const laneStyle = (ids: PlatformId[], k: number) => {
 </script>
 
 <style>
+  .gd .day:has(.cnt.down) {
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+  }
+  .gd .cnt.down {
+    margin-top: -1px;
+  }
   .gd .col {
     gap: 2px;
   }
