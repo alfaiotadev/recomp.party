@@ -603,3 +603,21 @@
   reason: README explicitly states it doesn't build, failing the playable release
     requirement
   date: 2026-11-17
+- repo: mr-anjaneyam/Emittr
+  reason: Emittr is a USB HID keyboard/mouse tool, not a game recompilation,
+    source port, or recompiler.
+  date: 2026-11-18
+- repo: chasem-dev/orre-launcher
+  reason: Launcher utility, not a static recompilation or source port
+  date: 2026-11-18
+- repo: undecuple/qwarks-awakening
+  reason: The project explicitly states that it is early work and not playable yet.
+  date: 2026-11-18
+- repo: goodthanksdev/harbour
+  reason: It is a general-purpose launcher/aggregator for ports and emulators, not
+    a game-specific static recompilation or source port.
+  date: 2026-11-18
+- repo: galhack/WhiteAlbum2_iOS
+  reason: Port of a recent PC visual novel to iOS using a Godot engine rewrite,
+    not a static recompilation or source port of a console/classic game.
+  date: 2026-11-18
