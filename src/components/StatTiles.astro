@@ -16,6 +16,8 @@ const days = updated.days;
 /** Covers in the new-projects tile: two rows on desktop, the rest are behind the link to the game list. */
 const FRESH_COVERS = 20;
 const dayMax = Math.max(1, ...days.days);
+/** Day labels shared by both 7-day charts: "Thu" … "today". */
+const weekday = (i: number, date: string) => (i === 6 ? "today" : new Date(`${date}T12:00:00Z`).toLocaleDateString("en-GB", { weekday: "short", timeZone: "UTC" }));
 const gdMax = Math.max(1, ...games.days.days.map((d) => d.plus + d.minus));
 // a second label row for the games gone, on every day so the bars keep one baseline, only in weeks that have any
 const gdMinus = games.days.days.some((d) => d.minus > 0);
@@ -87,7 +89,7 @@ const gdMinus = games.days.days.some((d) => d.minus > 0);
       <ol class="wk-bars" aria-label="Different games added to and gone from the list per day, last 7 days">
         {
           games.days.days.map((d, i) => {
-            const wd = i === 6 ? "today" : new Date(`${d.date}T12:00:00Z`).toLocaleDateString("en-GB", { weekday: "short", timeZone: "UTC" });
+            const wd = weekday(i, d.date);
             return (
               <li class={`day${i === 6 ? " today" : ""}`} title={`${d.date}: ${d.plus} new ${d.plus === 1 ? "game" : "games"}${d.minus ? `, ${d.minus} gone` : ""}`}>
                 <span class={`cnt ${d.plus ? "up" : ""}`}>{d.plus ? `+${d.plus}` : "±0"}</span>
@@ -140,15 +142,15 @@ const gdMinus = games.days.days.some((d) => d.minus > 0);
         <span>last <b>7</b> days</span>
         <span>{days.total.toLocaleString("en")} releases</span>
       </div>
-      <ol class="wk-bars" aria-label="Releases per 24 hours over the last 7 days">
+      <ol class="wk-bars" aria-label="Releases per day over the last 7 days">
         {
           days.days.map((d, i) => {
-            const ago = 6 - i; // 0 = the latest 24 hours
+            const date = days.dates[i]!;
             return (
-              <li class={`day${ago === 0 ? " today" : ""}`} title={`${ago === 0 ? "Last 24 hours" : `${ago * 24}–${(ago + 1) * 24} hours ago`}: ${d} releases`}>
+              <li class={`day${i === 6 ? " today" : ""}`} title={`${i === 6 ? "Today so far" : date}: ${d} releases`}>
                 <span class="cnt">{d}</span>
                 <span class="col"><span class="bar" style={`height:${Math.max(4, (d / dayMax) * 100)}%`} /></span>
-                <span class="dl">{ago === 0 ? "24h" : `-${ago}d`}</span>
+                <span class="dl">{weekday(i, date)}</span>
               </li>
             );
           })
