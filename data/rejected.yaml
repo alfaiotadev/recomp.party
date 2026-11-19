@@ -621,3 +621,123 @@
   reason: Port of a recent PC visual novel to iOS using a Godot engine rewrite,
     not a static recompilation or source port of a console/classic game.
   date: 2026-11-18
+- repo: Zagitta/gpu-unlock
+  reason: This is a GPU hardware/driver tweak tool for AI workloads, not a game
+    recompilation or source port.
+  date: 2026-11-19
+- repo: JustAResearcher/gpu-unlock-ada
+  reason: The repository is a GPU unlock kernel module, not a game recompilation,
+    source port, or recompiler toolchain for games.
+  date: 2026-11-19
+- repo: fxgl/steamac
+  reason: The repo provides a VM/launcher for SteamOS, not a game-specific
+    recompilation, source port, or recompilation toolchain.
+  date: 2026-11-19
+- repo: Leviidev/Henge
+  reason: The project is an OS emulator for macOS on iOS, not a game recompilation
+    or source port.
+  date: 2026-11-19
+- repo: hugelton/Felucca
+  reason: The repository is custom firmware for a music synthesizer, not a game
+    recompilation or port.
+  date: 2026-11-19
+- repo: ps5-linux/ps5-linux-loader
+  reason: Repository provides a PS5 Linux payload/jailbreak, not a game
+    recompilation, source port, or recompiler toolchain.
+  date: 2026-11-19
+- repo: OpenEmu-Silicon/OpenEmu-Silicon
+  reason: OpenEmu-Silicon is a general emulator front‑end, not a game‑specific
+    static recompilation or source port.
+  date: 2026-11-19
+- repo: autorunhq/autorun
+  reason: Autorun is a generic Wine‑based compatibility layer for running
+    arbitrary PC games on Switch, not a static recompilation or source port of a
+    specific game.
+  date: 2026-11-19
+- repo: darkxex/ProsperoStore
+  reason: The repository is a PS5 homebrew app store, not a game recompilation,
+    source port, or recompiler toolchain.
+  date: 2026-11-19
+- repo: starman-tech/mousepods
+  reason: It is a Linux AirPods head-tracking app and protocol documentation
+    project, not a playable native game recompilation or source port.
+  date: 2026-11-19
+- repo: chrissotraidis/harkinianpad
+  reason: No downloadable release that runs the game; requires building from
+    source with user-provided ROM.
+  date: 2026-11-19
+- repo: BrinooTk/PS5X360
+  reason: This is an Xbox 360 emulator, not a static recompilation or source port.
+  date: 2026-11-19
+- repo: Villagers654/Venture
+  reason: It is a VR emulator, not a static recompilation or source port of a
+    console/classic game.
+  date: 2026-11-19
+- repo: ouncebrew/kaihen
+  reason: kaiHEN is a homebrew enabler and minimal CFW for Switch 2, not a game
+    static recompilation, source port, or recompiler toolchain.
+  date: 2026-11-19
+- repo: carafe-nx/carafe
+  reason: The repository is a desktop utility that packages Windows games as
+    Switch NSPs using emulation, not a static recompilation or source port of a
+    specific game.
+  date: 2026-11-19
+- repo: WonderLantern/wonder-lantern-z30
+  reason: Not a game recompilation or source port; it is a camera firmware patch tool.
+  date: 2026-11-19
+- repo: mpereiraesaa/prospero-win
+  reason: The project is a Windows compatibility runtime for PS5 homebrew, not a
+    static recompilation or source port of a console game.
+  date: 2026-11-19
+- repo: crazyriddler/xbased
+  reason: This is an original Xbox emulator, not a static recompilation or source port.
+  date: 2026-11-19
+- repo: odiecay/android-tv-ps4
+  reason: The repository is an Android TV operating system port for PS4, not a
+    game static recompilation or source port.
+  date: 2026-11-19
+- repo: RafaelNGP/psbox-cloud-gaming
+  reason: The repository is a cloud gaming client streaming Xbox Cloud Gaming, not
+    a static recompilation or source port of a game.
+  date: 2026-11-19
+- repo: ZiZc3/XPSemu
+  reason: XPSemu is an original Xbox emulator, not a static recompilation or
+    source port.
+  date: 2026-11-19
+- repo: JulioFerrero/pocket-foundry
+  reason: The project is an Android wrapper running the official Factorio Linux
+    ARM64 binary, not a static recompilation or source port of a console/classic
+    game.
+  date: 2026-11-19
+- repo: Phoenixx1202/PS4SX2
+  reason: The repository is an emulator (PS4SX2) for PS2 games, not a
+    game-specific static recompilation or source port.
+  date: 2026-11-19
+- repo: luuumi-dev/nullarc
+  reason: The repository is a macOS AMD Radeon GPU driver and WindowServer
+    compositor project, not a game recompilation, source port, or relevant
+    toolchain.
+  date: 2026-11-19
+- repo: bmdhacks/malisx2
+  reason: The repository is a Vulkan driver for an emulator, not a playable game
+    recompilation or source port.
+  date: 2026-11-19
+- repo: DialingSpoon527/seedsow-lua-editor
+  reason: Repository is a Lua editor/save installer for a Switch demo exploit, not
+    a playable game recompilation or source port.
+  date: 2026-11-19
+- repo: yuk27/VBoyColor
+  reason: It is an emulator for Virtual Boy hardware, not a static recompilation
+    or source port.
+  date: 2026-11-19
+- repo: byizmysh/IZ2S-Platform
+  reason: The repository is a homebrew launcher and includes an emulator, not a
+    playable static recompilation or source port of a classic game.
+  date: 2026-11-19
+- repo: darkxex/SwanStationPS5
+  reason: The repository provides a PS1 emulator for PS5, which is an emulator,
+    not a game-specific static recompilation or source port.
+  date: 2026-11-19
+- repo: SynoPiia/PSXS5
+  reason: It is a PlayStation 1 emulator, not a static recompilation or source port.
+  date: 2026-11-19

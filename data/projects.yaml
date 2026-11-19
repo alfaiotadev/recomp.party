@@ -228,6 +228,13 @@
   kind: port
   wikidata: Q370055
   added: 2026-11-01
+- repo: EstebanPdN/zelda-alttp-3ds
+  game: "The Legend of Zelda: A Link to the Past"
+  platform: snes
+  kind: port
+  based_on: [snesrev/zelda3]
+  wikidata: Q370055
+  added: 2026-11-19
 - repo: mstan/ZeldaAlttPSNESRecomp
   game: "The Legend of Zelda: A Link to the Past"
   platform: snes
@@ -468,6 +475,13 @@
   based_on: [inspectredc/fzerox]
   wikidata: Q2609497
   added: 2026-10-28
+- repo: jkdansereau/goldeneye-pc-port
+  game: GoldenEye 007
+  platform: n64
+  kind: port
+  based_on: [n64decomp/007]
+  wikidata: Q369086
+  added: 2026-11-19
 - repo: murkantor/Project-Midas
   game: GoldenEye 007
   platform: n64
@@ -621,6 +635,14 @@
   based_on: [bates64/papermario-dx, pmret/papermario]
   wikidata: Q149998
   added: 2026-11-10
+- repo: SMCGames/Paper-Mario-ReCut-Deprecated
+  game: Paper Mario
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [pmret/papermario]
+  wikidata: Q149998
+  added: 2026-11-19
 - repo: perfect-dark-pc-port/perfect_dark
   game: Perfect Dark
   platform: n64
@@ -1441,6 +1463,12 @@
   kind: port
   wikidata: Q55728812
   added: 2026-11-13
+- repo: jhaizhou-ops/d2r-mobile
+  game: "Diablo II: Resurrected"
+  platform: switch
+  kind: port
+  wikidata: Q105592900
+  added: 2026-11-19
 - repo: retrogameworld/Diablo-III-Switch-Recomp
   game: "Diablo III: Eternal Collection"
   platform: switch
@@ -1741,6 +1769,12 @@
   kind: recomp
   wikidata: Q64577191
   added: 2026-10-28
+- repo: ly05010419/MacNativeGames
+  game: "The Legend of Zelda: Tears of the Kingdom"
+  platform: switch
+  kind: port
+  wikidata: Q64577191
+  added: 2026-11-19
 - repo: mamcjr/TOTKDroid
   game: "The Legend of Zelda: Tears of the Kingdom"
   platform: switch
@@ -2083,6 +2117,13 @@
   based_on: [mstan/gbarecomp]
   wikidata: Q2734887
   added: 2026-11-18
+- repo: EstebanPdN/zelda-tmc-3ds
+  game: "The Legend of Zelda: The Minish Cap"
+  platform: gba
+  kind: port
+  based_on: [zeldaret/tmc, 999sian/tmc]
+  wikidata: Q474798
+  added: 2026-11-19
 - repo: mstan/MinishCapRecomp
   game: "The Legend of Zelda: The Minish Cap"
   platform: gba
@@ -2193,6 +2234,12 @@
   kind: recomp
   wikidata: Q2530441
   added: 2026-11-03
+- repo: ZallaxDev/emerald-3ds
+  game: Pokémon Emerald
+  platform: 3ds
+  kind: port
+  wikidata: Q2045645
+  added: 2026-11-19
 - repo: Invictus-potens/smt4-recomp
   game: Shin Megami Tensei IV
   platform: 3ds
@@ -3219,6 +3266,14 @@
   tool: PS2Recomp
   wikidata: Q2705374
   added: 2026-11-07
+- repo: LightVelox/sotc-vibe-pc
+  game: Shadow of the Colossus
+  platform: ps2
+  kind: recomp
+  tool: PS2Recomp
+  based_on: [ran-j/PS2Recomp]
+  wikidata: Q47474153
+  added: 2026-11-19
 - repo: TheRealAfsan/Shinobi-PS2-Recomp
   game: Shinobi
   platform: ps2
@@ -3564,6 +3619,12 @@
   based_on: [shadps4-emu/shadPS4]
   wikidata: Q17154554
   added: 2026-10-28
+- repo: droogie/bbhost
+  game: Bloodborne
+  platform: ps4
+  kind: port
+  wikidata: Q17154554
+  added: 2026-11-19
 - repo: GetLostIn/CTR-NitroFueled-PC
   game: "Crash Team Racing: Nitro-Fueled"
   platform: ps4
@@ -5233,6 +5294,14 @@
   tool: ReXGlue
   wikidata: Q3772920
   added: 2026-11-01
+- repo: elripalda/gta4-ps5
+  game: Grand Theft Auto IV
+  platform: x360
+  kind: port
+  tool: ReXGlue
+  based_on: [OZORDI/LibertyRecomp, vaduur/LibertyRecompAndroid]
+  wikidata: Q94797
+  added: 2026-11-19
 - repo: andrewnakas/gtav-recomp
   game: Grand Theft Auto V
   platform: x360
@@ -5788,6 +5857,13 @@
   tool: XenonRecomp
   wikidata: Q1150928
   added: 2026-10-28
+- repo: SansNope/UnleashedRecomp-Android
+  game: Sonic Unleashed
+  platform: x360
+  kind: port
+  based_on: [hedge-dev/UnleashedRecomp]
+  wikidata: Q1150928
+  added: 2026-11-19
 - repo: TekRantGaming/south-park-tower-defense-recompiled
   game: "South Park: Let's Go Tower Defense Play!"
   platform: x360
@@ -6150,6 +6226,19 @@
   platform: pc
   kind: recomp
   added: 2026-11-14
+- repo: banteg/crimson
+  game: Crimsonland
+  platform: pc
+  kind: port
+  wikidata: Q1973179
+  added: 2026-11-19
+- repo: wojciech-graj/doom-ascii
+  game: Doom
+  platform: pc
+  kind: port
+  based_on: [ozkl/doomgeneric]
+  wikidata: Q189784
+  added: 2026-11-19
 - repo: NightSightProductions/DOOM-Recomp
   game: DOOM (2016)
   platform: pc
@@ -6309,6 +6398,11 @@
   kind: recomp
   wikidata: Q726190
   added: 2026-10-31
+- repo: wszqkzqk/PvZ-Portable
+  game: "Plants vs. Zombies: Game of the Year Edition"
+  platform: pc
+  kind: port
+  added: 2026-11-19
 - repo: kanapitsas/portal2-recomp
   game: Portal 2
   platform: pc
@@ -6380,6 +6474,12 @@
   kind: recomp
   wikidata: Q282945
   added: 2026-11-15
+- repo: elyosh/OpenTIE
+  game: "Star Wars: TIE Fighter"
+  platform: pc
+  kind: port
+  wikidata: Q55312
+  added: 2026-11-19
 - repo: mrboyplayz/subrosa-recomp
   game: Sub Rosa
   platform: pc
@@ -6433,6 +6533,12 @@
   tool: pcrecomp
   wikidata: Q1543280
   added: 2026-11-03
+- repo: nanolathe-gg/nanolathe
+  game: Total Annihilation
+  platform: pc
+  kind: port
+  wikidata: Q951384
+  added: 2026-11-19
 - repo: opentyrian/opentyrian
   game: Tyrian
   platform: pc
@@ -6620,11 +6726,22 @@
   platform: ps5
   kind: tool
   added: 2026-10-28
+- repo: arcanite24/gb-recompiled
+  game: GB Recompiled
+  platform: gb
+  kind: tool
+  added: 2026-11-19
 - repo: mstan/gbarecomp
   game: GBARecomp
   platform: gba
   kind: tool
   added: 2026-10-31
+- repo: azmasm/hermit
+  game: Hermit
+  platform: multi
+  kind: tool
+  tool: Hermit
+  added: 2026-11-19
 - repo: ExpansionPak/ModernGekko
   game: ModernGekko
   platform: multi
@@ -6651,6 +6768,12 @@
   platform: nes
   kind: tool
   added: 2026-10-31
+- repo: shirai91/nx2android
+  game: nx2android
+  platform: switch
+  kind: tool
+  based_on: [seedds/nxnative]
+  added: 2026-11-19
 - repo: TheLostPantheon/nativ
   game: Project Nativ
   platform: vita
