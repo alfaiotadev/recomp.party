@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T20:35:57.662Z",
+ "generatedAt": "2026-11-19T20:46:30.725Z",
  "since": "2025-02-24",
  "repos": {
   "0c0de/splatterhouse-decomp": {
@@ -1911,9 +1911,9 @@
    "files": []
   },
   "azmasm/hermit": {
-   "head": "b7833c69f10382c5d8a2342fa5120d476da62906",
-   "scannedAt": "2026-11-19T20:35:50.822Z",
-   "commits": 1063,
+   "head": "b03a1bf246890ab0e2a51d4589d2c7c0f6c9a724",
+   "scannedAt": "2026-11-19T20:46:30.412Z",
+   "commits": 1064,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -2580,9 +2580,9 @@
    "files": []
   },
   "boykopovar/AnyPS5": {
-   "head": "fd6d6f4a8498f7a4124fb7cc2ea08d97652e963b",
-   "scannedAt": "2026-11-19T20:35:43.565Z",
-   "commits": 45968,
+   "head": "fa0b7e3ce40785882720adf9ceaeb090a82d63ea",
+   "scannedAt": "2026-11-19T20:46:29.770Z",
+   "commits": 45972,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -4779,9 +4779,9 @@
    "files": []
   },
   "denzi-gh/crashwoc-nuworld": {
-   "head": "1542540aaac7b5cb7134c8a883c3c9448be280b2",
-   "scannedAt": "2026-11-19T20:34:13.806Z",
-   "commits": 622,
+   "head": "d6c7309921944547542e7d8532df344492756ac1",
+   "scannedAt": "2026-11-19T20:46:28.605Z",
+   "commits": 628,
    "credits": {},
    "files": []
   },
@@ -4976,9 +4976,9 @@
    "files": []
   },
   "Dittobyte/Recompia": {
-   "head": "f7820df7f4e1a5c2eb7d35c9268f13bc9650310d",
-   "scannedAt": "2026-11-19T20:34:02.299Z",
-   "commits": 1935,
+   "head": "f125612818fe11e1a8c88d2ccf04c087de92aaba",
+   "scannedAt": "2026-11-19T20:46:27.277Z",
+   "commits": 1946,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -4996,7 +4996,7 @@
       "2026-11-16": 14,
       "2026-11-17": 6,
       "2026-11-18": 6,
-      "2026-11-19": 54
+      "2026-11-19": 64
      }
     },
     "Claude Fable 5.1": {
@@ -9609,9 +9609,9 @@
    "files": []
   },
   "JEschete/VS-NativePort": {
-   "head": "4b1894cd69db77f998ec199307aa3ebcca4a07ce",
-   "scannedAt": "2026-11-19T20:34:13.061Z",
-   "commits": 3590,
+   "head": "369ce1a8ac1405e55de747c3eb7bd193e24d6719",
+   "scannedAt": "2026-11-19T20:46:28.287Z",
+   "commits": 3591,
    "credits": {},
    "files": []
   },
@@ -9745,9 +9745,9 @@
    "files": []
   },
   "jhaizhou-ops/S2Arm": {
-   "head": "26a202acba84b40fd32cabd1a2d2aed5bcf3e475",
-   "scannedAt": "2026-11-19T20:35:57.661Z",
-   "commits": 7547,
+   "head": "13316e78d8413bb7327b7a366fee113e32623634",
+   "scannedAt": "2026-11-19T20:46:30.724Z",
+   "commits": 7551,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -9796,7 +9796,7 @@
       "2026-11-16": 329,
       "2026-11-17": 313,
       "2026-11-18": 113,
-      "2026-11-19": 221
+      "2026-11-19": 223
      }
     },
     "Claude Sonnet 5.5": {
@@ -18636,9 +18636,9 @@
    "files": []
   },
   "ogdanimal/SkiesOfArcadiaLegends-Recomp": {
-   "head": "88f81eaa11034a36b88683e0ab54b33a00cf2a91",
-   "scannedAt": "2026-11-03T10:08:08.258Z",
-   "commits": 213,
+   "head": "22d4398f04de01fa5ba1775a63b11cd9b2ca418c",
+   "scannedAt": "2026-11-19T20:46:26.686Z",
+   "commits": 214,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -18653,7 +18653,8 @@
       "2026-10-17": 34,
       "2026-10-15": 1,
       "2026-10-14": 5,
-      "2026-10-12": 1
+      "2026-10-12": 1,
+      "2026-11-19": 1
      }
     }
    },
@@ -19705,9 +19706,9 @@
    "files": []
   },
   "Project-Holon/eidos": {
-   "head": "e2357e8067f95ad7a567add9247e7cd01a74d677",
-   "scannedAt": "2026-11-19T20:34:03.729Z",
-   "commits": 799,
+   "head": "c9eba976954d9c7862113e140280baef175bc93b",
+   "scannedAt": "2026-11-19T20:46:27.630Z",
+   "commits": 800,
    "credits": {},
    "files": []
   },
