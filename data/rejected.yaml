@@ -741,3 +741,28 @@
 - repo: SynoPiia/PSXS5
   reason: It is a PlayStation 1 emulator, not a static recompilation or source port.
   date: 2026-11-19
+- repo: Jondalar/TRX64U-MultiCore
+  reason: The repository provides FPGA firmware for a hardware board, not a
+    game-specific static recompilation or source port.
+  date: 2026-11-20
+- repo: Conker64Recomp/conker64-recompiled
+  reason: The README explicitly states that the project is not a finished
+    recompilation yet and does not play the game code.
+  date: 2026-11-20
+- repo: akitaonrails/omarchy-games-menu
+  reason: It's a generic game launcher, not a playable recompilation, source port,
+    or recompiler toolchain.
+  date: 2026-11-20
+- repo: linuxopt/plza-recomp
+  reason: It is a packaging and launcher wrapper (AppImage) that repackages
+    another recompilation project (LZA-Recomp).
+  date: 2026-11-20
+- repo: goodshepherd23/Baroque-SaturnRecomp
+  reason: It is a launcher/setup wrapper around an interpreter-based Sega Saturn
+    runtime rather than a static recompilation or native source port.
+  date: 2026-11-20
+- repo: chrissotraidis/snappad
+  reason: Repo supplies build scripts and integration for a static recompile but
+    does not provide a downloadable playable release; users must supply their
+    own ROM and build via PadMint.
+  date: 2026-11-20
