@@ -4366,6 +4366,13 @@
   tool: XboxRecomp
   wikidata: Q1063810
   added: 2026-11-02
+- repo: spriteice/JSRF-PC
+  game: Jet Set Radio Future
+  platform: xbox
+  kind: recomp
+  based_on: [JuMatt/JetSetRadioFuture-Unleashed]
+  wikidata: Q1063810
+  added: 2026-11-20
 - repo: 15Cyber/marvel-nemesis-recomp
   game: "Marvel Nemesis: Rise of the Imperfects"
   platform: xbox
