@@ -876,12 +876,6 @@
   based_on: [zeldaret/oot]
   wikidata: Q213911
   added: 2026-10-28
-- repo: ItsNotRexed/Hookshot
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: n64
-  kind: recomp
-  wikidata: Q213911
-  added: 2026-11-21
 - repo: THPS64Recomp/THPS2-64Recomp
   game: Tony Hawk's Pro Skater 2
   platform: n64
@@ -1038,6 +1032,7 @@
   game: "Mario Kart: Double Dash!!"
   platform: gc
   kind: recomp
+  based_on: [LeftInWalmart/MKDD-Recomp, doldecomp/mkdd]
   wikidata: Q5721431
   added: 2026-11-21
 - repo: mariopartyrd/partyboard
@@ -1509,6 +1504,7 @@
   game: "Cadence of Hyrule: Crypt of the NecroDancer Featuring The Legend of Zelda"
   platform: switch
   kind: recomp
+  wikidata: Q62128701
   added: 2026-11-21
 - repo: darkuni/cruisn-blast-recomp
   game: Cruis'n Blast
@@ -2038,7 +2034,7 @@
   kind: recomp
   wikidata: Q140140365
   added: 2026-11-07
-  moved_to: https://git.magicbean.dev/MagicBeanDev/Longshot
+  moved_to: https://git.notrexed.dev/Hookshot/Hookshot
 - repo: sostenesfreitas/ocarina-recomp
   game: "The Legend of Zelda: Ocarina of Time"
   platform: switch2
@@ -3844,6 +3840,7 @@
   game: "Deception IV: The Nightmare Princess"
   platform: ps4
   kind: port
+  wikidata: Q19280338
   added: 2026-11-21
 - repo: CaduGimenes/SanctuaryPort
   game: "Diablo III: Reaper of Souls – Ultimate Evil Edition"
@@ -4199,6 +4196,7 @@
   game: "Tekken: Dark Resurrection"
   platform: psp
   kind: recomp
+  wikidata: Q2290448
   added: 2026-11-21
 - repo: BasedYuki/the-3rd-birthday-recomp
   game: The 3rd Birthday

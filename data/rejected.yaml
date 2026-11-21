@@ -837,3 +837,6 @@
     with only a GPU compatibility check tool, not a game recompilation or source
     port.
   date: 2026-11-21
+- repo: ItsNotRexed/Hookshot
+  reason: The GitHub mirror of Hookshot, listed as NotRexed/Hookshot, which its author now hosts at git.notrexed.dev (moved_to).
+  date: 2026-11-21

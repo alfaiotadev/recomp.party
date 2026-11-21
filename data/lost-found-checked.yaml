@@ -89,4 +89,7 @@
 # 2026-11-21: Hookshot's continuation is Longshot (moved_to); these are copies
 - url: https://github.com/ZuanCrisp/Zelda-OOT-Port
   for: NotRexed/Hookshot
-  note: a copy of Hookshot's README and builds; the project continues as Longshot on git.magicbean.dev
+  note: a copy of Hookshot's README and builds; NotRexed continues Hookshot at git.notrexed.dev
+- url: https://git.magicbean.dev/MagicBeanDev/Longshot
+  for: NotRexed/Hookshot
+  note: a continuation by Hookshot's maintainers; the author's own home is git.notrexed.dev (moved_to)
