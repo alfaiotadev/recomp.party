@@ -1,14 +1,13 @@
 ---
 /**
  * For a week after the list passes a round number (a `count` milestone, see scripts/count-milestones.ts): a banner
- * above the stat tiles with the number, the project that took the list there and the latest arrivals.
+ * above the stat tiles with the number, the project that took the list there and a little party.
  */
 import { available, countGames, entryPath, milestonePath, milestones, PLATFORMS, platformsInUse } from "../lib/data.ts";
 // Press Start 2P (SIL OFL): 1980s arcade lettering, for the number only
 import "@fontsource/press-start-2p/latin-400.css";
 import fireworks from "../assets/fireworks.svg";
 import robot from "../assets/robot.svg";
-import CoverStack from "./CoverStack.astro";
 
 const DAY = 86_400_000;
 const SHOW_DAYS = 7;
@@ -16,8 +15,6 @@ const m = milestones.filter((x) => x.kind === "count").at(-1);
 const fresh = m && Date.now() - Date.parse(m.date) < SHOW_DAYS * DAY;
 const [, n, games] = m?.id.match(/-(\d+)(-games)?$/) ?? [];
 const nth = m?.project ? available.find((e) => e.repo === m.project) : undefined;
-// the projects listed since the milestone day began, newest first: the ones that are still arriving
-const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a, b) => b.added.localeCompare(a.added)) : [];
 ---
 
 {
@@ -47,12 +44,6 @@ const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a,
         )}
         <a class="more mono" href={milestonePath(m)}>About the milestone →</a>
       </div>
-      {since.length > 1 && (
-        <div class="stack-wrap">
-          <CoverStack entries={since} size={34} max={10} label="Listed since" />
-          <span class="mono muted">{since.length} added since</span>
-        </div>
-      )}
     </aside>
   )
 }
@@ -68,7 +59,7 @@ const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a,
     position: relative;
     isolation: isolate;
     display: grid;
-    grid-template-columns: auto auto 1fr auto;
+    grid-template-columns: auto auto 1fr;
     align-items: center;
     gap: 1.4rem;
     margin: 1.4rem 0 0;
@@ -123,8 +114,8 @@ const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a,
     pointer-events: none;
   }
   .fw1 {
-    top: -1rem;
-    right: 17%;
+    top: -0.8rem;
+    right: 1.5%;
   }
   .fw2 {
     bottom: -1.1rem;
@@ -175,13 +166,6 @@ const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a,
   .more {
     font-size: 0.8rem;
   }
-  .stack-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.35rem;
-    font-size: 0.75rem;
-  }
   @media (prefers-reduced-motion: reduce) {
     .count-banner::before {
       animation: none;
@@ -197,12 +181,8 @@ const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a,
       grid-template-columns: auto 1fr;
       gap: 0.8rem 1rem;
     }
-    .body,
-    .stack-wrap {
+    .body {
       grid-column: 1 / -1;
-    }
-    .stack-wrap {
-      align-items: flex-start;
     }
   }
 </style>
