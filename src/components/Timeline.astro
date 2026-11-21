@@ -29,14 +29,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       <p class="eyebrow">Release timeline</p>
       <h2>One lane per original platform</h2>
     </div>
-    <div class="tl-tabs" role="group" aria-label="Time range">
-      {layouts.map((l) => (
-        <label for={`tl-${l.view.id}`} title={l.view.label}>
-          <span class="tab-long">{l.view.label}</span>
-          <span class="tab-short">{l.view.short}</span>
-        </label>
-      ))}
-    </div>
   </div>
   <p class="tl-legend">
     <span class="sw recomp"></span> static recompilation
@@ -76,6 +68,22 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       </span>
     ))}
   </div>
+  <div class="tl-bar">
+      <div class="tl-tabs" role="group" aria-label="Time range">
+        {layouts.map((l) => (
+          <label for={`tl-${l.view.id}`} title={l.view.label}>
+            <span class="tab-long">{l.view.label}</span>
+            <span class="tab-short">{l.view.short}</span>
+          </label>
+        ))}
+      </div>
+    <label class="tl-sort" hidden>
+      <span>sort</span>
+      <select aria-label="Sort projects within each platform">
+        {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
+      </select>
+    </label>
+  </div>
   <p class="m-empty" hidden>No releases for this platform in this range.</p>
   <div class="tl-views">
     {
@@ -94,12 +102,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
             </button>
           </div>
           {l.top > 0 && <Odometer class="tl-count" n={l.lanes.reduce((sum, lane) => sum + lane.count, 0)} style={`left:${(12 / W) * 100}%;top:${(4 / l.initial.height) * 100}%`} />}
-          <label class="tl-sort" hidden style={`left:${(NAME_X / W) * 100}%;width:${(NAME_W / W) * 100}%;top:${(l.top / l.initial.height) * 100}%;height:${(AXIS_H / l.initial.height) * 100}%`}>
-            <span>sort</span>
-            <select aria-label="Sort projects within each platform">
-              {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
-            </select>
-          </label>
           <svg viewBox={`0 0 ${W} ${l.initial.height}`} role="img" aria-label={`${l.view.label}: releases per platform`}>
             {l.lanes.map((lane, i) => (
               <g class="lane" style={`transform:translateY(${l.initial.lanes[i]!.y}px)`}>
@@ -211,12 +213,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
                   <span class="fold-text">expand all</span>
                 </button>
               </div>
-              <label class="tl-sort m-sort" hidden>
-                <span>sort</span>
-                <select aria-label="Sort projects within each platform">
-                  {SORTS.map((s) => <option value={s.id}>{s.label}</option>)}
-                </select>
-              </label>
             </div>
             {l.marks.length > 0 && (
               <div class="m-miles">
@@ -514,7 +510,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         roll(count, total);
       }
       for (const line of view.querySelectorAll(".to-bottom")) line.setAttribute("y2", String(p.height));
-      for (const el of view.querySelectorAll<HTMLElement>(".tl-inner > .tl-sort, .tl-inner > .tl-fold")) {
+      for (const el of view.querySelectorAll<HTMLElement>(".tl-inner > .tl-fold")) {
         el.style.top = `${(top / p.height) * 100}%`;
         el.style.height = `${(AXIS_H / p.height) * 100}%`;
       }
@@ -1052,20 +1048,20 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     font-size: 0.75rem;
     text-align: center;
   }
-#tl-1d:checked ~ .tl-head label[for="tl-1d"],
-  #tl-1w:checked ~ .tl-head label[for="tl-1w"],
-  #tl-1m:checked ~ .tl-head label[for="tl-1m"],
-  #tl-1y:checked ~ .tl-head label[for="tl-1y"],
-  #tl-all:checked ~ .tl-head label[for="tl-all"] {
+#tl-1d:checked ~ .tl-bar label[for="tl-1d"],
+  #tl-1w:checked ~ .tl-bar label[for="tl-1w"],
+  #tl-1m:checked ~ .tl-bar label[for="tl-1m"],
+  #tl-1y:checked ~ .tl-bar label[for="tl-1y"],
+  #tl-all:checked ~ .tl-bar label[for="tl-all"] {
     background: var(--surface-2);
     color: var(--recomp);
     box-shadow: inset 0 0 0 1px rgb(124 240 197 / 0.3);
   }
-#tl-1d:focus-visible ~ .tl-head label[for="tl-1d"],
-  #tl-1w:focus-visible ~ .tl-head label[for="tl-1w"],
-  #tl-1m:focus-visible ~ .tl-head label[for="tl-1m"],
-  #tl-1y:focus-visible ~ .tl-head label[for="tl-1y"],
-  #tl-all:focus-visible ~ .tl-head label[for="tl-all"] {
+#tl-1d:focus-visible ~ .tl-bar label[for="tl-1d"],
+  #tl-1w:focus-visible ~ .tl-bar label[for="tl-1w"],
+  #tl-1m:focus-visible ~ .tl-bar label[for="tl-1m"],
+  #tl-1y:focus-visible ~ .tl-bar label[for="tl-1y"],
+  #tl-all:focus-visible ~ .tl-bar label[for="tl-all"] {
     outline: 2px solid var(--recomp);
   }
   .tl-views {
@@ -1220,9 +1216,17 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     position: relative;
     min-width: 900px;
   }
+  /* time range and sort, right above the chart they drive */
+  .tl-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+    margin: 0 0 0.8rem;
+  }
   .tl-sort {
-    position: absolute;
-    top: 0;
+    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -1611,10 +1615,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   }
   .m-fold {
     position: static;
-  }
-  .m-sort {
-    position: static;
-    margin-left: auto;
   }
   .m-lane {
     margin-bottom: 1rem;
