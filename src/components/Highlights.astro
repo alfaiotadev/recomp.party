@@ -983,7 +983,7 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
     margin-top: auto;
     padding-top: 0.3rem;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     gap: 0.4rem;
     font-size: 0.68rem;
@@ -996,6 +996,10 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
   /* a bigger logo must not push "2d ago" onto two lines, nor out of the card */
   .meta > span {
     min-width: 0;
+    /* line-height 1 puts the text's baseline near the logo's bottom edge; the padding keeps descenders out of the clip */
+    line-height: 1;
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
