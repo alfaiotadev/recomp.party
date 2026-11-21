@@ -4,6 +4,10 @@
  * above the stat tiles with the number, the project that took the list there and the latest arrivals.
  */
 import { available, countGames, entryPath, milestonePath, milestones, PLATFORMS, platformsInUse } from "../lib/data.ts";
+// Press Start 2P (SIL OFL): 1980s arcade lettering, for the number only
+import "@fontsource/press-start-2p/latin-400.css";
+import fireworks from "../assets/fireworks.svg";
+import robot from "../assets/robot.svg";
 import CoverStack from "./CoverStack.astro";
 
 const DAY = 86_400_000;
@@ -18,7 +22,10 @@ const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a,
 
 {
   m && fresh && n && (
-    <aside class="count-banner v-recompparty" aria-label={m.title}>
+    <aside class="count-banner v-recompparty" aria-label={m.title} style={`--robot:url(${robot.src});--fw:url(${fireworks.src})`}>
+      <span class="fw fw1" aria-hidden="true" />
+      <span class="fw fw2" aria-hidden="true" />
+      <span class="bot" aria-hidden="true" />
       <div class="num">
         <span class="big">{Number(n).toLocaleString("en")}</span>
         <span class="eyebrow">{games ? "different games" : "playable recomps & ports"}</span>
@@ -51,37 +58,104 @@ const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a,
 }
 
 <style>
+  /* An angle the border's gradient turns through; registered so it can be animated. */
+  @property --spin {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
   .count-banner {
     position: relative;
+    isolation: isolate;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto auto 1fr auto;
     align-items: center;
     gap: 1.4rem;
-    margin: 0 0 1.5rem;
-    padding: 1.1rem 1.4rem;
+    margin: 1.4rem 0 0;
+    padding: 1.2rem 1.4rem;
     background:
-      radial-gradient(120% 160% at 0% 0%, rgb(245 200 76 / 0.14), transparent 55%),
+      radial-gradient(120% 160% at 0% 0%, rgb(245 200 76 / 0.16), transparent 55%),
+      radial-gradient(90% 140% at 100% 100%, rgb(255 79 123 / 0.1), transparent 60%),
       var(--surface);
-    border: 1px solid rgb(245 200 76 / 0.35);
     border-radius: 12px;
     overflow: hidden;
+  }
+  /* the party border: a gold → orange → pink → green ring that slowly turns */
+  .count-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    padding: 2px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--spin), #f5c84c, #ff8a5c, #ff4f7b, #7cf0c5, #f5c84c);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    animation: spin 8s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      --spin: 360deg;
+    }
+  }
+  /* the header's party sprites, four frames each: the robot dances, fireworks go off in two corners */
+  .bot,
+  .fw {
+    background: var(--robot) 0 0 / 400% 100% no-repeat;
+    animation: frames 1.1s steps(4) infinite;
+  }
+  .bot {
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+  .fw {
+    position: absolute;
+    z-index: -1;
+    width: 3.4rem;
+    height: 3.4rem;
+    background-image: var(--fw);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .fw1 {
+    top: -1rem;
+    right: 17%;
+  }
+  .fw2 {
+    bottom: -1.1rem;
+    left: 55%;
+    width: 2.6rem;
+    height: 2.6rem;
+    animation-delay: -0.55s;
+  }
+  @keyframes frames {
+    to {
+      background-position-x: 133.333%;
+    }
   }
   .num {
     display: flex;
     flex-direction: column;
     line-height: 1;
   }
+  /* arcade score digits: pixel font, a hard pink drop shadow one "pixel" down-right, and a gold glow */
   .big {
-    font-size: clamp(2.6rem, 6vw, 3.6rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-family: "Press Start 2P", var(--mono);
+    font-size: clamp(2rem, 4.6vw, 2.9rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
     color: var(--mc);
     text-shadow:
-      0 0 22px rgb(245 200 76 / 0.45),
-      0 0 2px rgb(245 200 76 / 0.6);
+      0.09em 0.09em 0 #ff4f7b,
+      0 0 18px rgb(245 200 76 / 0.4);
   }
   .num .eyebrow {
-    margin-top: 0.35rem;
+    margin-top: 0.45rem;
   }
   .body p {
     margin: 0 0 0.35rem;
@@ -108,31 +182,24 @@ const since = m ? available.filter((e) => e.added >= m.date && e.cover).sort((a,
     gap: 0.35rem;
     font-size: 0.75rem;
   }
-  /* a slow sweep of light across the banner; still for people who ask for less motion */
-  .count-banner::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(100deg, transparent 40%, rgb(245 200 76 / 0.08) 50%, transparent 60%);
-    transform: translateX(-100%);
-    animation: sweep 6s ease-in-out 1s infinite;
-    pointer-events: none;
-  }
-  @keyframes sweep {
-    to {
-      transform: translateX(100%);
-    }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .count-banner::after {
+    .count-banner::before {
       animation: none;
-      display: none;
+    }
+    .bot,
+    .fw {
+      animation: none;
+      background-position-x: 100%;
     }
   }
   @media (max-width: 720px) {
     .count-banner {
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
+      grid-template-columns: auto 1fr;
+      gap: 0.8rem 1rem;
+    }
+    .body,
+    .stack-wrap {
+      grid-column: 1 / -1;
     }
     .stack-wrap {
       align-items: flex-start;
