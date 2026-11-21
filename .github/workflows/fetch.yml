@@ -39,21 +39,32 @@ jobs:
         continue-on-error: true # a slow or failing commit scan must not hold back the release refresh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run milestones # the list passing 1000, 2000, … playable projects
       - run: npm run validate
       - name: Commit data if it changed
         run: |
-          git add data/snapshot.json data/stars.json data/games.json data/ai.json data/milestones.yaml public/covers
-          git diff --cached --quiet && { echo "No changes."; exit 0; }
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "data: refresh snapshot"
-          # Anything still modified here is a by-product nobody commits; it used to make every pull below refuse to
-          # rebase ("You have unstaged changes"). Show it in the log, and stash it out of the way.
-          git status --short
-          # main often moves during the run (merges, discovery); only this job writes these files, so a rebase is safe.
+          # main often moves during the run (merges, discovery), and a run queued behind another starts from the
+          # commit that triggered it, older than the data the run before pushed. So the files this job generates are
+          # put whole on top of the latest main: this run fetched them last. Merging them line by line conflicted
+          # (and could splice two versions of a JSON file).
+          DATA="data/snapshot.json data/stars.json data/games.json data/ai.json"
+          SAVE=$(mktemp -d)
+          cp $DATA "$SAVE/" && cp -a public/covers "$SAVE/covers"
           for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin main && git push && exit 0
+            git fetch -q origin main && git reset -q --hard origin/main
+            cp "$SAVE"/*.json data/ && cp -a "$SAVE/covers/." public/covers/
+            git add $DATA public/covers
+            git diff --cached --quiet || git commit -q -m "data: refresh snapshot"
+            # Count milestones (the list passing 1000, 2000, … projects or games) are recorded on the latest main
+            # too, so one the run before already wrote stays as it is (scripts/count-milestones.ts skips existing ids).
+            npm run -s milestones
+            npm run -s validate
+            git add data/milestones.yaml
+            git diff --cached --quiet || git commit -q -m "data: count milestone"
+            git log origin/main..HEAD --oneline | grep -q . || { echo "No changes."; exit 0; }
+            git log origin/main..HEAD --oneline
+            git push && exit 0
             sleep $((i * 10))
           done
           exit 1
