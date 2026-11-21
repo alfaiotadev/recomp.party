@@ -4449,6 +4449,14 @@
   tool: XboxRecomp
   wikidata: Q1063810
   added: 2026-11-02
+- repo: spriteice/JSRF-PC
+  game: Jet Set Radio Future
+  platform: xbox
+  kind: recomp
+  tool: XboxRecomp
+  based_on: [JuMatt/JetSetRadioFuture-Unleashed]
+  wikidata: Q1063810
+  added: 2026-11-20
 - repo: hk21x/juiced-recomp
   game: Juiced
   platform: xbox
