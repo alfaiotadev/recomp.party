@@ -10,6 +10,27 @@
 # `kind: count` entries (the list passing 1000, 2000, … projects or games) are written by
 # scripts/count-milestones.ts after each data fetch; don't add them by hand.
 
+- id: recomp-party-1000
+  date: 2026-11-20
+  kind: count
+  vendor: recompparty
+  label: 1,000 projects
+  sub: on recomp.party
+  title: recomp.party lists 1,000 playable recomps and ports
+  summary: |-
+    The list reached 1,000 playable projects on 20 November 2026, for 790 different games: 749 static
+    recompilations and 251 source ports across 31 platforms. Every one can be downloaded and run natively today with your own game files.
+
+    Counted in the order projects were added, the 1,000th is Grand Theft Auto: Liberty City Stories / Vice City Stories
+    (batinium/gta-stories-recompiled, PlayStation 2). Projects whose repo has gone missing without a confirmed new home
+    are not counted.
+  sources:
+    - label: "The 1,000th: Grand Theft Auto: Liberty City Stories / Vice City Stories"
+      url: https://recomp.party/p/batinium/gta-stories-recompiled/
+    - label: "recomp.party: every listed game"
+      url: https://recomp.party/#all-games
+  project: batinium/gta-stories-recompiled
+
 - id: gta-vi-launch
   date: 2026-11-19
   kind: release
