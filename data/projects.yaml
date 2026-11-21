@@ -454,14 +454,6 @@
   kind: recomp
   wikidata: Q545072
   added: 2026-11-01
-- repo: chrissotraidis/dinopad
-  game: Dinosaur Planet
-  platform: n64
-  kind: port
-  tool: N64Recomp
-  based_on: [DinosaurPlanetRecomp/dino-recomp]
-  wikidata: Q64620866
-  added: 2026-11-20
 - repo: DinosaurPlanetRecomp/dino-recomp
   game: Dinosaur Planet (2000 prototype)
   platform: n64
@@ -469,14 +461,6 @@
   tool: N64Recomp
   wikidata: Q64620866
   added: 2026-10-28
-- repo: chrissotraidis/bananapad
-  game: Donkey Kong 64
-  platform: n64
-  kind: port
-  tool: N64Recomp
-  based_on: [Rainchus/Donkey-Kong-64-Recompiled]
-  wikidata: Q774773
-  added: 2026-11-20
 - repo: Rainchus/Donkey-Kong-64-Recompiled
   game: Donkey Kong 64
   platform: n64
@@ -870,12 +854,6 @@
   based_on: [zeldaret/oot]
   wikidata: Q213911
   added: 2026-10-28
-- repo: heydemoura/PS5_Longshot
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: n64
-  kind: port
-  wikidata: Q213911
-  added: 2026-11-20
 - repo: sostenesfreitas/ocarina-recomp
   game: "The Legend of Zelda: Ocarina of Time"
   platform: n64
@@ -1801,12 +1779,6 @@
   kind: recomp
   wikidata: Q61745904
   added: 2026-10-28
-- repo: ZuanCrisp/Zelda-OOT-Port
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: switch
-  kind: recomp
-  wikidata: Q213911
-  added: 2026-11-20
 - repo: daniel-madrid-07/weeping-of-the-empire
   game: "The Legend of Zelda: Tears of the Kingdom"
   platform: switch
@@ -1979,6 +1951,13 @@
   tool: nxnative
   wikidata: Q213911
   added: 2026-11-09
+- repo: heydemoura/PS5_Longshot
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: switch2
+  kind: port
+  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
+  wikidata: Q140140365
+  added: 2026-11-20
 - repo: NotRexed/Hookshot
   game: "The Legend of Zelda: Ocarina of Time"
   platform: switch2
@@ -2203,6 +2182,7 @@
   kind: recomp
   tool: ndsrecomp
   based_on: [dqix/dqix-decomp]
+  wikidata: Q2221461
   added: 2026-11-20
 - repo: JonathanDC64/FFCCEOT-Recomp
   game: "Final Fantasy Crystal Chronicles: Echoes of Time"
@@ -2684,6 +2664,7 @@
   platform: ps1
   kind: recomp
   tool: RecompOne
+  wikidata: Q6188861
   added: 2026-11-20
 - repo: Voicedrew11/verdite2
   game: King's Field
@@ -3249,7 +3230,7 @@
   platform: ps2
   kind: recomp
   based_on: [gothamor/gta-vcs-recomp, ran-j/PS2Recomp]
-  wikidata: Q94640
+  wikidata: Q94778
   added: 2026-11-20
 - repo: gothamor/gta-vcs-recomp
   game: "Grand Theft Auto: Vice City Stories"
@@ -3283,13 +3264,6 @@
   wikidata: Q1784103
   note: OpenGOAL — decompiles and recompiles the GOAL language the games were written in.
   added: 2026-10-28
-- repo: chrissotraidis/ottsel
-  game: "Jak and Daxter: The Precursor Legacy"
-  platform: ps2
-  kind: port
-  based_on: [open-goal/jak-project]
-  wikidata: Q1784103
-  added: 2026-11-20
 - repo: drakolordx7/KillzoneRecomp
   game: Killzone
   platform: ps2
@@ -5128,6 +5102,14 @@
   tool: ReXGlue
   wikidata: Q22344575
   added: 2026-11-05
+- repo: springah/daytona_recomp
+  game: Daytona USA
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [springah/rexglue-sdk]
+  wikidata: Q1326048
+  added: 2026-11-20
 - repo: hibikifukui22/Dead-or-Alive-Xtreme-2-Recompilation
   game: Dead or Alive Xtreme 2
   platform: x360
@@ -6189,6 +6171,7 @@
   kind: recomp
   tool: ReXGlue
   based_on: [masterspike52/reNut]
+  wikidata: Q917272
   added: 2026-11-20
 - repo: theokyr/Project8Recomp
   game: Tony Hawk's Project 8
@@ -6788,14 +6771,6 @@
   kind: recomp
   note: Street Fighter Alpha 1–3, Super Street Fighter II Turbo, Super Gem Fighter Mini Mix and more in one launcher; replaces the earlier sfa2-recomp.
   added: 2026-10-31
-- repo: springah/daytona_recomp
-  game: Daytona USA
-  platform: arcade
-  kind: recomp
-  tool: ReXGlue
-  based_on: [springah/rexglue-sdk]
-  wikidata: Q1326048
-  added: 2026-11-20
 - repo: CapsLock4284/DonPachi-Recomp
   game: DonPachi
   platform: arcade

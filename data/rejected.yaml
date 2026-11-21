@@ -766,3 +766,15 @@
     does not provide a downloadable playable release; users must supply their
     own ROM and build via PadMint.
   date: 2026-11-20
+- repo: ZuanCrisp/Zelda-OOT-Port
+  reason: A copy of NotRexed/Hookshot (its README and builds), which went missing from GitHub; its continuation is Longshot on git.magicbean.dev.
+  date: 2026-11-21
+- repo: chrissotraidis/bananapad
+  reason: An iOS shell that PadMint builds the game into; no downloadable playable release (like chrissotraidis/snappad).
+  date: 2026-11-21
+- repo: chrissotraidis/dinopad
+  reason: An iOS shell that PadMint builds the game into; no downloadable playable release (like chrissotraidis/snappad).
+  date: 2026-11-21
+- repo: chrissotraidis/ottsel
+  reason: Build integration for PadMint only; the release has no playable build (like chrissotraidis/snappad).
+  date: 2026-11-21
