@@ -7,7 +7,7 @@ const n = (x: number) => x.toLocaleString("en");
 ---
 
 <div class="qs" id="qs">
-  <p class="qs-title" id="qs-title">What do you want to play today?</p>
+  <p class="qs-title"><span id="qs-title">What do you want to play today?</span> <a class="qs-jump" href="#all-games" onclick="const t=document.getElementById('all-games');if(!t)return true;t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});history.replaceState(null,'','#all-games');return false">or jump to all games ↓</a></p>
   <form role="search" onsubmit="return false" aria-labelledby="qs-title">
     <label class="visually-hidden" for="qs-input">Search games, toolchains and events</label>
     <svg class="qs-glass" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
@@ -45,6 +45,18 @@ const n = (x: number) => x.toLocaleString("en");
     font-size: 1.05rem;
     font-weight: 600;
     color: var(--fg);
+  }
+  .qs-jump {
+    margin-left: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .qs-jump:hover {
+    color: var(--recomp);
   }
   .qs-title::before {
     content: "▸ ";

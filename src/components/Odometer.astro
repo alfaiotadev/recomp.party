@@ -30,7 +30,8 @@ const DIGITS = [..."0123456789"];
 <style>
   p {
     display: flex;
-    align-items: baseline;
+    /* not baseline: an overflow-hidden digit column's baseline is its bottom edge, which dropped the unit below the digits */
+    align-items: flex-end;
     gap: 0.4rem;
     margin: 0;
     font-family: var(--mono);
@@ -67,6 +68,9 @@ const DIGITS = [..."0123456789"];
     }
   }
   .unit {
+    /* lifts the unit's baseline onto the digits' (about 0.2em above the column's bottom) */
+    padding-bottom: 0.06rem;
+    line-height: 1;
     font-size: 0.7rem;
     color: var(--faint);
   }

@@ -14,12 +14,22 @@ const layouts = views().map((v) => layout(games, v, milestones));
 const aiMap = Object.fromEntries(games.map((g) => [g.repo, aiTokens(g)]).filter(([, t]) => t));
 const dayMonth = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const defaultView = "1y";
-// Platform filter (logo buttons; a scrolling row on phones): every platform with a lane in the widest range.
+// AI co-author filter: the big frontier families in one row, everything else behind "+N more"
+const FRONTIER: Record<string, string> = { anthropic: "Claude", openai: "OpenAI", github: "Copilot" };
+const aiTop = aiFilterGroups
+  .filter((g) => FRONTIER[g.vendor])
+  .map((g) => ({ vendor: g.vendor, value: g.whole ? g.value : g.models[0]!.value, label: FRONTIER[g.vendor]!, title: g.title, n: g.n }));
+const aiTopValues = new Set(aiTop.map((t) => t.value));
+const aiMoreCount = aiFilterGroups.reduce((n, g) => n + g.models.filter((m) => !aiTopValues.has(m.value)).length + (g.whole && CREDIT_ICONS[g.vendor] && !aiTopValues.has(g.value) ? 1 : 0), 0);
+// Platform filter (logo buttons): every platform with a lane in the widest range.
 const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   const logo = platformLogo(l.id as PlatformId);
   // same visual weight for wordmarks and square marks
   return { id: l.id, name: l.name, n: l.count, logo: logo && { src: logo.src, ...fitLogoArea(logo, 700, 84, 18) } };
 });
+// The platforms with the most projects get the always-visible row (in lane order); the rest fold away.
+const PLAT_TOP = 9;
+const platTop = new Set([...lanePlatforms].sort((a, b) => b.n - a.n).slice(0, PLAT_TOP).map((p) => p.id));
 ---
 
 <section class="timeline" id="timeline" aria-label="Release timeline by platform">
@@ -40,33 +50,56 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
   <div class="fbox d-plat-filter" role="group" aria-label="Platforms to show">
     <span class="fbox-h">Platform</span>
     <button type="button" class="all" data-plat="" aria-pressed="true">All</button>
-    {lanePlatforms.map((p) => (
+    {lanePlatforms.filter((p) => platTop.has(p.id)).map((p) => (
       <button type="button" data-plat={p.id} aria-pressed="false" title={`${p.name} · ${p.n} projects`}>
         {p.logo ? <img class="logo-img" src={p.logo.src} width={+p.logo.w.toFixed(1)} height={+p.logo.h.toFixed(1)} alt={p.name} /> : p.name}
         <span class="cnt" aria-hidden="true">{p.n}</span>
       </button>
     ))}
+    <button type="button" class="f-more-btn" aria-expanded="false" aria-controls="tl-plat-more">
+      +{lanePlatforms.length - platTop.size} more<span class="f-more-chev" aria-hidden="true" />
+    </button>
+    <div class="f-more" id="tl-plat-more" hidden>
+      {lanePlatforms.filter((p) => !platTop.has(p.id)).map((p) => (
+        <button type="button" data-plat={p.id} aria-pressed="false" title={`${p.name} · ${p.n} projects`}>
+          {p.logo ? <img class="logo-img" src={p.logo.src} width={+p.logo.w.toFixed(1)} height={+p.logo.h.toFixed(1)} alt={p.name} /> : p.name}
+          <span class="cnt" aria-hidden="true">{p.n}</span>
+        </button>
+      ))}
+    </div>
   </div>
   <div class="fbox tl-ai" role="group" aria-label="Show projects whose commits credit these models or agents" data-map={JSON.stringify(aiMap)}>
     <span class="fbox-h">AI co-author</span>
     <button type="button" class="all" data-ai="" aria-pressed="true">All</button>
-    {aiFilterGroups.map((g) => (
-      <span class={`ai-group v-${g.vendor}`}>
-        {g.whole && CREDIT_ICONS[g.vendor] && (
-          <button type="button" class="ai-chip whole" data-ai={g.value} aria-pressed="false" title={g.title} aria-label={g.title}>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d={CREDIT_ICONS[g.vendor]} /></svg>
-            <span class="cnt" aria-hidden="true">{g.n}</span>
-          </button>
-        )}
-        {g.models.map((m) => (
-          <button type="button" class="ai-chip" data-ai={m.value} aria-pressed="false" title={`${m.title} · ${m.n} projects`}>
-            {!g.whole && CREDIT_ICONS[g.vendor] && <svg viewBox="0 0 24 24" aria-hidden="true"><path d={CREDIT_ICONS[g.vendor]} /></svg>}
-            {m.label}
-            <span class="cnt" aria-hidden="true">{m.n}</span>
-          </button>
-        ))}
-      </span>
+    {aiTop.map((t) => (
+      <button type="button" class={`ai-chip top v-${t.vendor}`} data-ai={t.value} aria-pressed="false" title={t.title}>
+        {CREDIT_ICONS[t.vendor] && <svg viewBox="0 0 24 24" aria-hidden="true"><path d={CREDIT_ICONS[t.vendor]} /></svg>}
+        {t.label}
+        <span class="cnt" aria-hidden="true">{t.n}</span>
+      </button>
     ))}
+    <button type="button" class="f-more-btn" aria-expanded="false" aria-controls="tl-ai-more">
+      +{aiMoreCount} more<span class="f-more-chev" aria-hidden="true" />
+    </button>
+    <div class="f-more" id="tl-ai-more" hidden>
+      {aiFilterGroups.map((g) => (
+        <span class={`ai-group v-${g.vendor}`}>
+          {g.whole && CREDIT_ICONS[g.vendor] && !aiTopValues.has(g.value) && (
+            <button type="button" class="ai-chip whole" data-ai={g.value} aria-pressed="false" title={g.title} aria-label={g.title}>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d={CREDIT_ICONS[g.vendor]} /></svg>
+              <span class="cnt" aria-hidden="true">{g.n}</span>
+            </button>
+          )}
+          {g.models.filter((m) => !aiTopValues.has(m.value)).map((m) => (
+            <button type="button" class="ai-chip" data-ai={m.value} aria-pressed="false" title={`${m.title} · ${m.n} projects`}>
+              {!g.whole && CREDIT_ICONS[g.vendor] && <svg viewBox="0 0 24 24" aria-hidden="true"><path d={CREDIT_ICONS[g.vendor]} /></svg>}
+              {m.label}
+              <span class="cnt" aria-hidden="true">{m.n}</span>
+            </button>
+          ))}
+        </span>
+      ))}
+    </div>
   </div>
   <div class="tl-bar">
       <div class="tl-tabs" role="group" aria-label="Time range">
@@ -557,7 +590,14 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     };
     // Platforms to show (none picked = all) in every range, including ones materialized later: toggling
     // logo buttons, on desktop and phones alike.
-    const platButtons = [...root.querySelectorAll<HTMLButtonElement>(".d-plat-filter button")];
+    const platButtons = [...root.querySelectorAll<HTMLButtonElement>(".d-plat-filter button[data-plat]")];
+    // "+N more" toggles: the rest of a filter's choices fold open below its row
+    for (const b of root.querySelectorAll<HTMLButtonElement>(".f-more-btn"))
+      b.addEventListener("click", () => {
+        const panel = document.getElementById(b.getAttribute("aria-controls")!)!;
+        panel.hidden = !panel.hidden;
+        b.setAttribute("aria-expanded", String(!panel.hidden));
+      });
     const empty = root.querySelector<HTMLElement>(".m-empty")!;
     let plats = new Set<string>();
     const filterLanes = () => {
@@ -581,7 +621,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     // AI co-authors to show (none picked = all): a project stays if its commits credit any picked model or vendor
     const aiBox = root.querySelector<HTMLElement>(".tl-ai")!;
     const aiMap = JSON.parse(aiBox.dataset.map!) as Record<string, string>;
-    const aiButtons = [...aiBox.querySelectorAll<HTMLButtonElement>("button")];
+    const aiButtons = [...aiBox.querySelectorAll<HTMLButtonElement>("button[data-ai]")];
+    const aiMoreBtn = aiBox.querySelector<HTMLButtonElement>(".f-more-btn")!;
     let aiSel = new Set<string>();
     /** Project row ids are repos; group rows ("g:…") are kept or dropped with their projects. */
     const aiOk = (id: string) => !aiSel.size || id.startsWith("g:") || (aiMap[id] ?? "").split(" ").some((t) => aiSel.has(t));
@@ -592,6 +633,8 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
         else if (!next.delete(b.dataset.ai)) next.add(b.dataset.ai);
         aiSel = next;
         for (const x of aiButtons) x.setAttribute("aria-pressed", String(x.dataset.ai ? aiSel.has(x.dataset.ai) : aiSel.size === 0));
+        // a pick hidden in the closed list still shows on its toggle
+        aiMoreBtn.classList.toggle("has-sel", !!aiBox.querySelector(".f-more [aria-pressed='true']"));
         root.classList.add("no-anim");
         for (const v of views) layoutDesktop(v);
         filterLanes();
@@ -600,6 +643,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     const setPlats = (next: Set<string>) => {
       plats = next;
       for (const b of platButtons) b.setAttribute("aria-pressed", String(b.dataset.plat ? plats.has(b.dataset.plat) : plats.size === 0));
+      root.querySelector(".d-plat-filter .f-more-btn")?.classList.toggle("has-sel", !!root.querySelector(".d-plat-filter .f-more [aria-pressed='true']"));
       root.classList.add("no-anim");
       for (const v of views) layoutDesktop(v);
       filterLanes();
@@ -607,6 +651,11 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       try {
         localStorage.setItem("tl-plat", JSON.stringify([...plats]));
       } catch {}
+    };
+    /** A saved or linked platform that lives in the folded list opens it, so the pick can be seen. */
+    const revealPlat = () => {
+      const btn = root.querySelector<HTMLButtonElement>(".d-plat-filter .f-more-btn.has-sel");
+      if (btn && btn.getAttribute("aria-expanded") !== "true") btn.click();
     };
     for (const b of platButtons)
       b.addEventListener("click", () => {
@@ -673,12 +722,14 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
       const ids: string[] = saved?.startsWith("[") ? JSON.parse(saved) : saved ? [saved] : [];
       const known = ids.filter((id) => platButtons.some((b) => b.dataset.plat === id));
       if (known.length) setPlats(new Set(known));
+      revealPlat();
     } catch {}
     // One platform picked elsewhere (?platform=… or the platforms tile's "pick-platform" event) wins over the saved choice.
     const pick = (id: string | null) => {
       const btn = id ? platButtons.find((b) => b.dataset.plat === id) : undefined;
       if (!btn) return;
       setPlats(new Set([id!]));
+      revealPlat();
       // phones scroll the logo row sideways: bring the picked one into the middle of it
       const row = btn.parentElement!;
       if (row.scrollWidth > row.clientWidth) row.scrollLeft = btn.offsetLeft - row.offsetLeft - (row.clientWidth - btn.offsetWidth) / 2;
@@ -906,7 +957,7 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     background: var(--mc, var(--recomp));
     color: var(--bg);
   }
-  .d-plat-filter button {
+  .d-plat-filter button[data-plat] {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -978,6 +1029,55 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     font-family: var(--mono);
     font-size: 0.75rem;
     cursor: pointer;
+  }
+  .f-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 1.7rem;
+    padding: 0 0.55rem;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    background: none;
+    color: var(--faint);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    cursor: pointer;
+  }
+  .f-more-btn:hover,
+  .f-more-btn[aria-expanded="true"] {
+    color: var(--fg);
+  }
+  .f-more-btn.has-sel {
+    border-style: solid;
+    border-color: rgb(124 240 197 / 0.45);
+    color: var(--recomp);
+  }
+  .f-more-chev {
+    width: 0.4rem;
+    height: 0.4rem;
+    margin-top: -0.2rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s, margin 0.2s;
+  }
+  .f-more-btn[aria-expanded="true"] .f-more-chev {
+    margin-top: 0.2rem;
+    transform: rotate(-135deg);
+  }
+  .f-more {
+    flex: 0 0 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: inherit;
+    padding-top: 0.55rem;
+    border-top: 1px dashed var(--line);
+  }
+  .f-more[hidden] {
+    display: none;
   }
   .ai-group {
     display: contents; /* chips flow in one wrapping row; the group only carries the vendor colour */
@@ -1585,25 +1685,6 @@ const lanePlatforms = layouts.at(-1)!.lanes.map((l) => {
     }
     .tab-short {
       display: inline;
-    }
-    /* one scrolling row of logos or chips */
-    .d-plat-filter,
-    .tl-ai {
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    :is(.d-plat-filter, .tl-ai) > * {
-      flex: none;
-    }
-    /* a scrolling box would clip a label sitting on its border */
-    .d-plat-filter .fbox-h,
-    .tl-ai .fbox-h {
-      position: static;
-      flex: none;
-      padding: 0;
-      background: none;
     }
   }
   .m-bar-top {
