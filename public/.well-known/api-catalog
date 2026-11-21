@@ -1,0 +1,14 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://recomp.party/projects.json",
+      "service-desc": [{ "href": "https://recomp.party/openapi.json", "type": "application/vnd.oai.openapi+json" }],
+      "service-doc": [{ "href": "https://recomp.party/about/#data", "type": "text/html" }]
+    },
+    {
+      "anchor": "https://recomp.party/feed.xml",
+      "service-desc": [{ "href": "https://recomp.party/openapi.json", "type": "application/vnd.oai.openapi+json" }],
+      "service-doc": [{ "href": "https://recomp.party/about/#data", "type": "text/html" }]
+    }
+  ]
+}

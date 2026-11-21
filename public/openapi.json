@@ -1,0 +1,77 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "recomp.party data",
+    "version": "1",
+    "description": "Read-only, static data behind recomp.party: playable static recompilations and source ports of console and arcade games. Rebuilt every six hours from the GitHub API. No authentication, no rate limits beyond the host's.",
+    "contact": { "url": "https://recomp.party/about/" }
+  },
+  "servers": [{ "url": "https://recomp.party" }],
+  "paths": {
+    "/projects.json": {
+      "get": {
+        "summary": "Every listed project",
+        "description": "All listed recomps and ports with platform, latest release, toolchain, credits, AI co-authors and status. The same data the site's WebMCP tools answer from.",
+        "responses": {
+          "200": {
+            "description": "The list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "generated_at": { "type": "string", "format": "date-time" },
+                    "count": { "type": "integer" },
+                    "projects": { "type": "array", "items": { "$ref": "#/components/schemas/Project" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feed.xml": {
+      "get": {
+        "summary": "Releases feed",
+        "description": "RSS 2.0 feed of new releases of listed projects.",
+        "responses": { "200": { "description": "RSS feed", "content": { "application/rss+xml": {} } } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Project": {
+        "type": "object",
+        "properties": {
+          "game": { "type": "string" },
+          "platform": { "type": "string", "description": "The original platform, e.g. \"Nintendo 64\"." },
+          "kind": { "type": "string", "enum": ["static recompilation", "source port"] },
+          "repo": { "type": "string", "description": "GitHub owner/name." },
+          "page": { "type": "string", "format": "uri" },
+          "github": { "type": "string", "format": "uri" },
+          "description": { "type": ["string", "null"] },
+          "stars": { "type": "integer" },
+          "status": { "type": "string", "enum": ["available", "moved", "gone from GitHub"] },
+          "moved_to": { "type": ["string", "null"], "format": "uri" },
+          "first_release": { "type": ["string", "null"], "format": "date-time" },
+          "latest_release": {
+            "type": ["object", "null"],
+            "properties": {
+              "tag": { "type": "string" },
+              "date": { "type": "string", "format": "date-time" },
+              "url": { "type": "string", "format": "uri" },
+              "prerelease": { "type": "boolean" },
+              "runs_on": { "type": "array", "items": { "type": "string" }, "description": "Guessed from release file names." }
+            }
+          },
+          "toolchain": { "type": ["string", "null"] },
+          "based_on": { "type": "array", "items": { "type": "string" } },
+          "ai_coauthors": { "type": "array", "items": { "type": "string" } },
+          "original_release_year": { "type": ["integer", "null"] },
+          "words": { "type": "string", "description": "Search words: repo, platform aliases, developer, series, genres." }
+        }
+      }
+    }
+  }
+}
