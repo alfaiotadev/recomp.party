@@ -767,14 +767,73 @@
     own ROM and build via PadMint.
   date: 2026-11-20
 - repo: ZuanCrisp/Zelda-OOT-Port
-  reason: A copy of NotRexed/Hookshot (its README and builds), which went missing from GitHub; its continuation is Longshot on git.magicbean.dev.
+  reason: A copy of NotRexed/Hookshot (its README and builds), which went missing
+    from GitHub; its continuation is Longshot on git.magicbean.dev.
   date: 2026-11-21
 - repo: chrissotraidis/bananapad
-  reason: An iOS shell that PadMint builds the game into; no downloadable playable release (like chrissotraidis/snappad).
+  reason: An iOS shell that PadMint builds the game into; no downloadable playable
+    release (like chrissotraidis/snappad).
   date: 2026-11-21
 - repo: chrissotraidis/dinopad
-  reason: An iOS shell that PadMint builds the game into; no downloadable playable release (like chrissotraidis/snappad).
+  reason: An iOS shell that PadMint builds the game into; no downloadable playable
+    release (like chrissotraidis/snappad).
   date: 2026-11-21
 - repo: chrissotraidis/ottsel
-  reason: Build integration for PadMint only; the release has no playable build (like chrissotraidis/snappad).
+  reason: Build integration for PadMint only; the release has no playable build
+    (like chrissotraidis/snappad).
+  date: 2026-11-21
+- repo: SebaaMG/ns2jb-modloader
+  reason: It's a Switch 2 modloader, not a static recompilation or source‑port of
+    a game.
+  date: 2026-11-21
+- repo: stjanovitz/tilefinch
+  reason: It is a web browser for the PSP, not a game recompilation or source port.
+  date: 2026-11-21
+- repo: iHaiDeeZ/M33
+  reason: The repository is a PSP emulator (PPSSPP) for PS4, which is an emulator,
+    not a game-specific static recompilation or source port.
+  date: 2026-11-21
+- repo: ricowp81/Salsa64
+  reason: Salsa64 is a general Nintendo 64 emulator for the PS3, not a
+    game-specific static recompilation or source port.
+  date: 2026-11-21
+- repo: ZiZc3/VLC
+  reason: VLC is a media player application, not a game port or static recompilation.
+  date: 2026-11-21
+- repo: zecoxao/BD-JB-Relapse
+  reason: This is a console kernel exploit/jailbreak payload, not a game
+    recompilation or source port.
+  date: 2026-11-21
+- repo: k-iseri/BonDriver_PlutoSDR
+  reason: Not a video game static recompilation or source port; it is an SDR TV
+    tuner/demodulator project for ISDB-T/C broadcasts.
+  date: 2026-11-21
+- repo: zombu4/121GW-Open-Firmware
+  reason: This is open firmware and an emulator for a physical digital multimeter
+    (EEVblog 121GW), not a console or classic video game port.
+  date: 2026-11-21
+- repo: Pharaoh2k/ps4debug-NG
+  reason: This is a debugger payload for jailbroken PS4 consoles, not a game
+    static recompilation, source port, or game recompiler toolchain.
+  date: 2026-11-21
+- repo: mottopanikeiku/doomformer
+  reason: Doomformer is a tool for compiling neural networks into DOOM maps/WADs,
+    not a game source port or static recompiler.
+  date: 2026-11-21
+- repo: johnrash/bebox
+  reason: It is a general computer system emulator for the BeBox hardware, not a
+    game-specific recompilation or source port.
+  date: 2026-11-21
+- repo: MiladRTX/Breeze
+  reason: It's a PS5 fan‑control payload, not a game recompilation, source port,
+    or recompiler toolchain.
+  date: 2026-11-21
+- repo: ubis/OSIRIS
+  reason: Repository is open-source firmware for Onkyo AV receivers, unrelated to
+    game static recompilation or source ports.
+  date: 2026-11-21
+- repo: R0Y00/Xbox2Windows
+  reason: No playable game release; repository is static recompilation research
+    with only a GPU compatibility check tool, not a game recompilation or source
+    port.
   date: 2026-11-21
