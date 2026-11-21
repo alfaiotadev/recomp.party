@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import AgentTools from "../components/AgentTools.astro";
 import { generatedAt, tools } from "../lib/data.ts";
 import { SHOW_STARS_FROM, SITE_REPO, siteStars } from "../lib/repo-stars.ts";
 import { CANDIDATE_PRS, DISCOVERY_PRS, DISCOVERY_UTC, SUGGEST_URL } from "../lib/discovery.ts";
@@ -169,5 +170,6 @@ const breadcrumbs = crumbs?.length
       import "../scripts/review.ts";
       import "../scripts/outbound.ts";
     </script>
+    <AgentTools />
   </body>
 </html>

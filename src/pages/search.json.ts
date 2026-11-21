@@ -1,37 +1,7 @@
 /** Index for the front-page quick search: games, toolchains and outside events, fetched on first use. Results open the item's own page. */
-import { entryPath, games, KINDS, MILESTONE_KINDS, milestonePath, milestones, PLATFORMS, tools, VENDORS, type PlatformId } from "../lib/data.ts";
+import { gameWords, platformWords } from "../lib/search-words.ts";
+import { entryPath, games, KINDS, MILESTONE_KINDS, milestonePath, milestones, PLATFORMS, tools, VENDORS } from "../lib/data.ts";
 
-/** What people type for a platform besides its name and id. */
-const ALIASES: Partial<Record<PlatformId, string[]>> = {
-  nes: ["famicom"],
-  snes: ["super nintendo", "super famicom", "sfc"],
-  n64: ["nintendo 64"],
-  gc: ["gamecube", "ngc", "gcn"],
-  wiiu: ["wii u"],
-  switch: ["nx", "ns"],
-  switch2: ["ns2"],
-  gb: ["gameboy"],
-  gbc: ["gameboy color", "game boy colour"],
-  gba: ["gameboy advance"],
-  nds: ["ds"],
-  vb: ["virtual boy", "virtualboy"],
-  pce: ["pc engine", "pc-engine", "turbografx", "turbografx-16", "tg16", "tg-16", "pc engine cd", "turbografx-cd", "turbo duo"],
-  genesis: ["mega drive", "megadrive", "md", "sega"],
-  saturn: ["sega saturn"],
-  dc: ["dreamcast", "sega"],
-  ps1: ["psx", "psone", "playstation 1", "ps"],
-  ps2: ["playstation 2"],
-  ps3: ["playstation 3"],
-  ps4: ["playstation 4"],
-  ps5: ["playstation 5"],
-  psp: ["playstation portable"],
-  vita: ["psvita", "playstation vita"],
-  xbox: ["og xbox", "original xbox"],
-  x360: ["xbox 360", "360"],
-  pc: ["dos", "windows"],
-  j2me: ["java", "j2me", "java me", "mobile", "phone"],
-};
-const platformWords = (id: PlatformId) => [id, PLATFORMS[id], ...(ALIASES[id] ?? [])];
 
 export type SearchItem = {
   /** g game, t toolchain, e event */
@@ -49,16 +19,13 @@ export type SearchItem = {
 export function GET() {
   const items: SearchItem[] = [];
   for (const g of games) {
-    const m = g.meta;
     items.push({
       t: "g",
       n: g.game,
       s: `${PLATFORMS[g.platform]} · ${KINDS[g.kind].toLowerCase()} · ${g.repo.split("/")[0]}`,
       h: entryPath(g),
       c: g.cover?.src,
-      k: [g.repo, ...platformWords(g.platform), g.tool, ...(g.based_on ?? []), m?.title, ...(m?.developers ?? []), ...(m?.series ?? []), ...(m?.genres ?? []), m?.year]
-        .filter(Boolean)
-        .join(" | "),
+      k: gameWords(g),
       w: g.snap?.stars ?? 0,
     });
   }
