@@ -16,8 +16,10 @@ interface Props {
    * BreadcrumbList so search results can show "recomp.party › Nintendo 64 › Star Fox 64" in place of the URL.
    */
   crumbs?: { name: string; path?: string }[];
+  /** For the 404 page: served at whatever address was missed, so no canonical and no indexing. */
+  noindex?: boolean;
 }
-const { title, description = "A tracker for playable static recompilations and source ports of classic games.", image, jsonLd, crumbs } = Astro.props;
+const { title, description = "A tracker for playable static recompilations and source ports of classic games.", image, jsonLd, crumbs, noindex } = Astro.props;
 const fullTitle = title ? `${title} · recomp.party` : "recomp.party — playable recomps & ports";
 /** short: the label on phones, where all the links share one row */
 const nav: { href: string; label: string; short?: string; count?: number }[] = [
@@ -59,7 +61,7 @@ const breadcrumbs = crumbs?.length
     {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
     {/* covers are portrait: the small card crops them least */}
     <meta name="twitter:card" content="summary" />
-    <link rel="canonical" href={new URL(here, Astro.site)} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={new URL(here, Astro.site)} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="recomp.party releases" href="/feed.xml" />
     {jsonLd && <script type="application/ld+json" set:html={ld(jsonLd)} />}

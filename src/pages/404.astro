@@ -1,0 +1,62 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<!--
+  Served by GitHub Pages for every missing path. Without a 404.html of its own the site fell through to GitHub's
+  shared error service, which behind Cloudflare answered most misses with a "Unicorn!" 503 rather than a 404.
+-->
+<Base title="Page not found" description="This page isn't on recomp.party." noindex>
+  <section class="nf">
+    <span class="sad-bot" role="img" aria-label="A sad robot, crying" />
+    <p class="eyebrow">404</p>
+    <h1>This page isn't here</h1>
+    <p class="mono">It may have moved, or the project it described was renamed or dropped from the list.</p>
+    <p class="links mono">
+      <a href="/">All games →</a>
+      <a href="/m/">Milestones →</a>
+      <a href="/tools/">Toolchains →</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    max-width: 34rem;
+    margin: 4rem auto 6rem;
+    text-align: center;
+  }
+  .nf h1 {
+    margin: 0.3rem 0 0.8rem;
+  }
+  .nf p {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+    margin-top: 1.6rem;
+  }
+  .sad-bot {
+    display: block;
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 1.2rem;
+    background: url("../assets/robot-sad.svg") 0 100% / 400% 96px no-repeat;
+    animation: sad-loop 1.8s steps(4) infinite;
+  }
+  @keyframes sad-loop {
+    to {
+      background-position-x: 133.333%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sad-bot {
+      animation: none;
+      background-position-x: 33.333%;
+    }
+  }
+</style>
