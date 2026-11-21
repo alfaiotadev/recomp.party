@@ -1,6 +1,6 @@
 ---
 import PlatformGhost from "./PlatformGhost.astro";
-import { ago, entryPath, fitLogo, GONE_REASONS, goneBadge, hostOf, MILESTONE_KINDS, milestonePath, PLATFORMS, platformLogo, shortDate } from "../lib/data.ts";
+import { ago, entryPath, fitLogo, fitLogoArea, GONE_REASONS, goneBadge, hostOf, MILESTONE_KINDS, milestonePath, PLATFORMS, platformLogo, shortDate } from "../lib/data.ts";
 import { recentCredits, shortModel } from "../lib/ai.ts";
 import { highlights, RISING_MIN_BASE } from "../lib/highlights.ts";
 import { CREDIT_ICONS, VENDOR_ICONS } from "../lib/vendor-icons.ts";
@@ -44,7 +44,16 @@ const ADJECTIVES = [
   "buttery-smooth", "60-fps", "widescreen", "turbo", "delightful", "bodacious", "spicy", "lovingly-ported",
   "nostalgic", "crunchy", "blast-processed", "uncapped",
 ];
+/**
+ * A card's platform logo, sized by area rather than height: a square mark (Switch) and a long wordmark (XBOX 360)
+ * get the same weight, where a shared height box left square marks a few pixels tall.
+ */
 const mini = (id: Parameters<typeof platformLogo>[0]) => {
+  const l = platformLogo(id);
+  return l && { src: l.src, ...fitLogoArea(l, 600, 76, 22) };
+};
+/** The latest-updates row icon keeps its own small box. */
+const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
   const l = platformLogo(id);
   return l && { src: l.src, ...fitLogo(l, 56, 13) };
 };
@@ -79,7 +88,7 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
                       {u.entry.cover ? (
                         <img class="upd-art" src={u.entry.cover.src} width={u.entry.cover.width} height={u.entry.cover.height} alt="" loading="lazy" decoding="async" />
                       ) : (
-                        <span class="upd-art upd-icon">{(() => { const l = mini(u.entry.platform); return l && <img class="logo-img" src={l.src} width={Math.min(l.w, 28)} height={+(Math.min(l.w, 28) * l.h / l.w).toFixed(1)} alt="" />; })()}</span>
+                        <span class="upd-art upd-icon">{(() => { const l = rowIcon(u.entry.platform); return l && <img class="logo-img" src={l.src} width={Math.min(l.w, 28)} height={+(Math.min(l.w, 28) * l.h / l.w).toFixed(1)} alt="" />; })()}</span>
                       )}
                       <span class="upd-body">
                         <strong>{u.entry.game}</strong>
@@ -966,7 +975,12 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
     color: var(--muted);
   }
   .meta img {
-    opacity: 0.55;
+    flex: none;
+    opacity: 0.85;
+  }
+  /* a bigger logo must not push "2 days ago" onto two lines */
+  .meta > span {
+    white-space: nowrap;
   }
   .plat-rank {
     list-style: none;
