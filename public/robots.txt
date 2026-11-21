@@ -1,4 +1,7 @@
+# Content Signals (https://contentsignals.org): how automated systems may use this site's content.
+# search: search indexes and links; ai-input: AI answers grounded in these pages; ai-train: model training.
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 Sitemap: https://recomp.party/sitemap-index.xml
