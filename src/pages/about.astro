@@ -108,11 +108,17 @@ const ACRONYMS = [
       anything asking for passwords or pointing to file-sharing sites.
     </p>
 
-    <h2>Data</h2>
+    <h2 id="data">Data</h2>
     <p>
       Release and repository data comes from the GitHub API and is refreshed every six hours. Supported operating systems
       are guessed from release file names, so they can be wrong. The site itself is static and built with Astro on GitHub
       Actions; <a href={repo}>the source is on GitHub</a>.
+    </p>
+    <p>
+      The list is open data: <a href="/projects.json">/projects.json</a> has every listed project (platform, latest release,
+      toolchain, credits, status) and <a href="/feed.xml">/feed.xml</a> is an RSS feed of new releases, both described in
+      <a href="/openapi.json">/openapi.json</a>. AI agents in a WebMCP-capable browser can also search the list through the
+      page's own tools: <code>search_games</code>, <code>get_project</code> and <code>list_recent</code>.
     </p>
   </article>
 </Base>
