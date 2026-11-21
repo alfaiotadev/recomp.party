@@ -176,6 +176,14 @@
   based_on: [mstan/snesrecomp]
   wikidata: Q2744116
   added: 2026-11-17
+- repo: PoultryTumor/Evertopia
+  game: Secret of Evermore
+  platform: snes
+  kind: recomp
+  tool: snesrecomp
+  based_on: [RetroPortingToolKit/snesrecomp, RetroPortingToolKit/recomp-ui]
+  wikidata: Q958761
+  added: 2026-11-20
 - repo: jeff-strutb/stuntracefx
   game: Stunt Race FX
   platform: snes
@@ -1577,12 +1585,26 @@
   kind: recomp
   wikidata: Q96357198
   added: 2026-11-18
+- repo: MatyMeatBoy/NewSnapRecomp
+  game: New Pokémon Snap
+  platform: switch
+  kind: recomp
+  based_on: [captainj-sparrow/astral-chain-pc-recomp, valentderah/totk-pc-recomp]
+  wikidata: Q96357198
+  added: 2026-11-20
 - repo: Brandon04Gonzalez/nier-android
   game: NieR:Automata
   platform: switch
   kind: port
   wikidata: Q21078985
   added: 2026-11-09
+- repo: Brandon04Gonzalez/p4au-android
+  game: Persona 4 Arena Ultimax
+  platform: switch
+  kind: port
+  based_on: [BelmanteGu/SuperMarioWonderRecomp]
+  wikidata: Q16746773
+  added: 2026-11-20
 - repo: Brandon04Gonzalez/p5r-android
   game: Persona 5 Royal
   platform: switch
@@ -1929,6 +1951,13 @@
   tool: nxnative
   wikidata: Q213911
   added: 2026-11-09
+- repo: heydemoura/PS5_Longshot
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: switch2
+  kind: port
+  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
+  wikidata: Q140140365
+  added: 2026-11-20
 - repo: NotRexed/Hookshot
   game: "The Legend of Zelda: Ocarina of Time"
   platform: switch2
@@ -2147,6 +2176,14 @@
   kind: recomp
   wikidata: Q761815
   added: 2026-10-31
+- repo: birabittoh/DQ9Recompiled
+  game: "Dragon Quest IX: Sentinels of the Starry Skies"
+  platform: nds
+  kind: recomp
+  tool: ndsrecomp
+  based_on: [dqix/dqix-decomp]
+  wikidata: Q2221461
+  added: 2026-11-20
 - repo: JonathanDC64/FFCCEOT-Recomp
   game: "Final Fantasy Crystal Chronicles: Echoes of Time"
   platform: nds
@@ -2195,6 +2232,12 @@
   added: 2026-11-06
 
 # --- Nintendo 3DS ----------------------------------------------------------------
+- repo: tyle-beep/Haiku
+  game: Fire Emblem Fates
+  platform: 3ds
+  kind: recomp
+  wikidata: Q18762399
+  added: 2026-11-20
 - repo: Zelkin1/fe-awakening-recomp
   game: "Fire Emblem: Awakening"
   platform: 3ds
@@ -2228,6 +2271,12 @@
   kind: recomp
   wikidata: Q30897883
   added: 2026-11-12
+- repo: Okxmir/new-super-mario-bros-2-recompiled
+  game: New Super Mario Bros. 2
+  platform: 3ds
+  kind: recomp
+  wikidata: Q558621
+  added: 2026-11-20
 - repo: thefixinhixon/woohoo-flight-school
   game: Pilotwings Resort
   platform: 3ds
@@ -2610,6 +2659,13 @@
   kind: port
   wikidata: Q3110001
   added: 2026-11-12
+- repo: goodshepherd23/JetMoto2-Recomp
+  game: "Jet Moto 2: Championship Edition"
+  platform: ps1
+  kind: recomp
+  tool: RecompOne
+  wikidata: Q6188861
+  added: 2026-11-20
 - repo: Voicedrew11/verdite2
   game: King's Field
   platform: ps1
@@ -2766,6 +2822,12 @@
   based_on: [RetroPortingToolKit/psxrecomp]
   wikidata: Q739784
   added: 2026-10-28
+- repo: MachinaAeon/RESPeCt
+  game: Resident Evil Survivor
+  platform: ps1
+  kind: port
+  wikidata: Q602617
+  added: 2026-11-20
 - repo: tetrisgm/RidgeRacerType4Recomp
   game: Ridge Racer Type 4
   platform: ps1
@@ -2812,6 +2874,13 @@
   kind: port
   tool: RecompOne
   added: 2026-11-01
+- repo: SomeoneIsWorking/psx-spyro
+  game: Spyro the Dragon
+  platform: ps1
+  kind: port
+  based_on: [SomeoneIsWorking/psxport]
+  wikidata: Q858391
+  added: 2026-11-20
 - repo: TechnicallyComputers/Street-Fighter-Alpha-3-Recomp
   game: Street Fighter Alpha 3
   platform: ps1
@@ -3143,12 +3212,26 @@
   kind: port
   wikidata: Q975773
   added: 2026-11-10
+- repo: Silentwarior112/GT3-PC-ENHANCED
+  game: "Gran Turismo 3: A-Spec"
+  platform: ps2
+  kind: port
+  based_on: [Silentwarior112/gt3-decomp]
+  wikidata: Q975773
+  added: 2026-11-20
 - repo: moesuito/gt4-staticrecomp
   game: Gran Turismo 4
   platform: ps2
   kind: recomp
   wikidata: Q845695
   added: 2026-10-28
+- repo: batinium/gta-stories-recompiled
+  game: "Grand Theft Auto: Liberty City Stories / Vice City Stories"
+  platform: ps2
+  kind: recomp
+  based_on: [gothamor/gta-vcs-recomp, ran-j/PS2Recomp]
+  wikidata: Q94778
+  added: 2026-11-20
 - repo: gothamor/gta-vcs-recomp
   game: "Grand Theft Auto: Vice City Stories"
   platform: ps2
@@ -4374,6 +4457,13 @@
   based_on: [JuMatt/JetSetRadioFuture-Unleashed]
   wikidata: Q1063810
   added: 2026-11-20
+- repo: hk21x/juiced-recomp
+  game: Juiced
+  platform: xbox
+  kind: recomp
+  tool: Xbox XBE Recomp
+  wikidata: Q1711572
+  added: 2026-11-20
 - repo: 15Cyber/marvel-nemesis-recomp
   game: "Marvel Nemesis: Rise of the Imperfects"
   platform: xbox
@@ -4388,6 +4478,13 @@
   tool: xboxrecomp
   wikidata: Q3303832
   added: 2026-11-17
+- repo: Mazillion/MechAssault2-PC-Recomp
+  game: "MechAssault 2: Lone Wolf"
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  wikidata: Q3303832
+  added: 2026-11-20
 - repo: boodyandmustafa-create/MOH-EuropeanAssault-PC-Port
   game: "Medal of Honor: European Assault"
   platform: xbox
@@ -4531,6 +4628,13 @@
   tool: Xbox XBE Recomp
   wikidata: Q641697
   added: 2026-11-09
+- repo: efm-games/scarface-recomp
+  game: "Scarface: The World Is Yours"
+  platform: xbox
+  kind: recomp
+  tool: Xbox XBE Recomp
+  wikidata: Q1139501
+  added: 2026-11-20
 - repo: FlyinRabit205/STH-Recompiled
   game: Shadow the Hedgehog
   platform: xbox
@@ -4852,6 +4956,19 @@
   tool: ReXGlue
   wikidata: Q2532697
   added: 2026-11-09
+- repo: ElGuslml/BandHRecomp
+  game: Band Hero
+  platform: x360
+  kind: recomp
+  wikidata: Q2076560
+  added: 2026-11-20
+- repo: papand7/Battlefield-Recompilation-Project
+  game: Battlefield 1943
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  wikidata: Q811018
+  added: 2026-11-20
 - repo: TekRantGaming/Battlefield-1943-Reborn
   game: Battlefield 1943
   platform: x360
@@ -4865,6 +4982,13 @@
   tool: ReXGlue
   wikidata: Q935083
   added: 2026-11-16
+- repo: EddyGameDev/bioshock1-native-recomp
+  game: BioShock
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q57270
+  added: 2026-11-20
 - repo: zolaware/reblue
   game: Blue Dragon
   platform: x360
@@ -4986,6 +5110,14 @@
   tool: ReXGlue
   wikidata: Q22344575
   added: 2026-11-05
+- repo: springah/daytona_recomp
+  game: Daytona USA
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [springah/rexglue-sdk]
+  wikidata: Q1326048
+  added: 2026-11-20
 - repo: hibikifukui22/Dead-or-Alive-Xtreme-2-Recompilation
   game: Dead or Alive Xtreme 2
   platform: x360
@@ -5014,6 +5146,13 @@
   kind: recomp
   wikidata: Q1180940
   added: 2026-10-31
+- repo: BanhMi93P/deadpool-nx
+  game: Deadpool
+  platform: x360
+  kind: port
+  tool: ReXGlue
+  wikidata: Q2112423
+  added: 2026-11-20
 - repo: masterspike52/reDAHM
   game: Destroy All Humans! Path of the Furon
   platform: x360
@@ -5163,6 +5302,12 @@
   tool: ReXGlue
   wikidata: Q2601461
   added: 2026-11-17
+- repo: recomp-nx/fnxf_xiii
+  game: Final Fantasy XIII
+  platform: x360
+  kind: recomp
+  wikidata: Q390595
+  added: 2026-11-20
 - repo: arcanite24/pinyon-shift
   game: Forza Horizon
   platform: x360
@@ -5281,6 +5426,13 @@
   tool: ReXGlue
   wikidata: Q2090121
   added: 2026-11-03
+- repo: alex-stampede/GRFS-Recomp
+  game: Ghost Recon Future Soldier
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q2313070
+  added: 2026-11-20
 - repo: CaiusCodes/GoldenEye-007-XBLA-PC-Recomp
   game: GoldenEye 007
   platform: x360
@@ -5537,6 +5689,13 @@
   tool: ReXGlue
   wikidata: Q2713853
   added: 2026-10-28
+- repo: malinkin-s/naruto-rise-of-a-ninja-nx
+  game: "Naruto: Rise of a Ninja"
+  platform: x360
+  kind: port
+  tool: ReXGlue
+  wikidata: Q2713853
+  added: 2026-11-20
 - repo: 1nsec/Naruto-The-Broken-Bond-Android-Port
   game: "Naruto: The Broken Bond"
   platform: x360
@@ -6014,6 +6173,14 @@
   tool: ReXGlue
   wikidata: Q1139044
   added: 2026-10-28
+- repo: recomp-nx/tw2de_nx
+  game: "The Witcher 2: Definitive Edition"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [masterspike52/reNut]
+  wikidata: Q917272
+  added: 2026-11-20
 - repo: theokyr/Project8Recomp
   game: Tony Hawk's Project 8
   platform: x360
@@ -6173,6 +6340,12 @@
   added: 2026-11-15
 
 # --- Amiga -----------------------------------------------------------------------
+- repo: Santorayo3/icftd-recomp
+  game: It Came from the Desert
+  platform: amiga
+  kind: recomp
+  wikidata: Q3155818
+  added: 2026-11-20
 - repo: griches/JamesPond2RobocodRecomp
   game: "James Pond 2: Codename RoboCod"
   platform: amiga
@@ -6288,6 +6461,12 @@
   kind: recomp
   wikidata: Q678394
   added: 2026-11-03
+- repo: ps4star/WhiteRecomp
+  game: Final Fantasy XIII
+  platform: pc
+  kind: recomp
+  wikidata: Q390595
+  added: 2026-11-20
 - repo: Try/OpenGothic
   game: "Gothic 2: Night of the Raven"
   platform: pc
@@ -6423,6 +6602,12 @@
   kind: port
   based_on: [dhewm/dhewm3]
   added: 2026-11-11
+- repo: Cleverdee/pop-t2t-android
+  game: "Prince of Persia: The Two Thrones"
+  platform: pc
+  kind: recomp
+  wikidata: Q753892
+  added: 2026-11-20
 - repo: OpenIGI/OpenIGI
   game: "Project I.G.I.: I'm Going In"
   platform: pc
