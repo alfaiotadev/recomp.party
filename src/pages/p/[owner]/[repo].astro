@@ -71,13 +71,13 @@ const jsonLd = {
 };
 ---
 
-<Base title={e.game} description={description} image={e.cover?.src} jsonLd={jsonLd}>
+<Base title={e.game} description={description} image={e.cover?.src} jsonLd={jsonLd} crumbs={[{ name: PLATFORMS[e.platform], path: `/?platform=${e.platform}` }, { name: e.game }]}>
   <div class={e.cover ? "intro with-cover" : "intro"}>
   {e.cover && <img class="cover" src={e.cover.src} width={e.cover.width} height={e.cover.height} alt={`${m?.title ?? e.game} cover`} />}
   <div>
   <div class="head">
     <div>
-      <p class="crumbs eyebrow"><a href="/">Games</a> / {PLATFORMS[e.platform]}</p>
+      <p class="crumbs eyebrow"><a href="/">Games</a> / <a href={`/?platform=${e.platform}#all-games`}>{PLATFORMS[e.platform]}</a></p>
       <h1>{e.game}</h1>
     </div>
     {logo && logoBox && <img class="logo-img head-logo" src={logo.src} width={logoBox.w} height={logoBox.h} alt={PLATFORMS[e.platform]} />}

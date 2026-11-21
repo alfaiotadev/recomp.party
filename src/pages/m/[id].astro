@@ -44,7 +44,7 @@ const paragraphs = m.summary.trim().split(/\n\s*\n/);
 const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(/\s+/g, " ")}`;
 ---
 
-<Base title={m.title} description={description}>
+<Base title={m.title} description={description} crumbs={[{ name: "Milestones", path: "/m/" }, { name: m.title }]}>
   <p class="crumbs eyebrow"><a href="/">Timeline</a> / <a href="/m/">Milestones</a></p>
   <h1>{m.title}</h1>
   <p class="badges">
