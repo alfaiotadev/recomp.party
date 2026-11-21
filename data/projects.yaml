@@ -854,24 +854,6 @@
   based_on: [zeldaret/oot]
   wikidata: Q213911
   added: 2026-10-28
-- repo: sostenesfreitas/ocarina-recomp
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: n64
-  kind: recomp
-  wikidata: Q213911
-  added: 2026-11-07
-- repo: tangerineturtle1/NX2navi
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: n64
-  kind: recomp
-  wikidata: Q213911
-  added: 2026-11-09
-- repo: Unkn0wnAli4n/TOoT-R
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: n64
-  kind: recomp
-  wikidata: Q213911
-  added: 2026-11-18
 - repo: ArtfulRascal8/rage-wars-recompiled
   game: "Turok: Rage Wars"
   platform: n64
@@ -1949,7 +1931,7 @@
   platform: switch2
   kind: port
   tool: nxnative
-  wikidata: Q213911
+  wikidata: Q140140365
   added: 2026-11-09
 - repo: heydemoura/PS5_Longshot
   game: "The Legend of Zelda: Ocarina of Time"
@@ -1962,8 +1944,27 @@
   game: "The Legend of Zelda: Ocarina of Time"
   platform: switch2
   kind: recomp
-  wikidata: Q213911
+  wikidata: Q140140365
   added: 2026-11-07
+  moved_to: https://git.magicbean.dev/MagicBeanDev/Longshot
+- repo: sostenesfreitas/ocarina-recomp
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: switch2
+  kind: recomp
+  wikidata: Q140140365
+  added: 2026-11-07
+- repo: tangerineturtle1/NX2navi
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: switch2
+  kind: recomp
+  wikidata: Q140140365
+  added: 2026-11-09
+- repo: Unkn0wnAli4n/TOoT-R
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: switch2
+  kind: recomp
+  wikidata: Q140140365
+  added: 2026-11-18
 - repo: pixl27/ProjectReLink
   game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
   platform: switch2
