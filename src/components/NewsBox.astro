@@ -1,0 +1,183 @@
+---
+/**
+ * News & events under the search bar: the last 30 days of milestones (launches, takedowns, the list's round
+ * numbers) and listed projects that found a new home after their GitHub repo went missing, newest first.
+ */
+import { entryPath, games, hostOf, MILESTONE_KINDS, milestonePath, milestones, shortDate } from "../lib/data.ts";
+import { VENDOR_ICONS } from "../lib/vendor-icons.ts";
+
+const DAY = 86_400_000;
+const DAYS = 30;
+const SHOW = 4;
+const since = Date.now() - DAYS * DAY;
+
+type Item = { date: string; kind: string; title: string; text: string; href: string; vendor: string; icon?: string };
+
+const firstSentence = (s: string) => {
+  const flat = s.trim().split(/\n\s*\n/)[0]!.replace(/\s+/g, " ");
+  const end = flat.search(/[.!?](\s|$)/);
+  return end > 0 ? flat.slice(0, end + 1) : flat;
+};
+
+// a moved project's page link sign: an arrow out of a box
+const MOVED_ICON = "M14 3h7v7h-2V6.41l-8.29 8.3-1.42-1.42L17.59 5H14V3ZM5 5h6v2H5v12h12v-6h2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z";
+
+const items: Item[] = [
+  ...milestones
+    .filter((m) => Date.parse(m.date) >= since)
+    .map((m) => ({
+      date: m.date,
+      // "recomp.party milestone" is too long for the card's top line
+      kind: m.kind === "count" ? "Milestone" : MILESTONE_KINDS[m.kind],
+      title: m.title,
+      text: firstSentence(m.summary),
+      href: milestonePath(m),
+      vendor: m.vendor,
+      icon: VENDOR_ICONS[m.vendor],
+    })),
+  ...games
+    .filter((g) => g.moved_to && g.gone && Date.parse(g.gone.since) >= since)
+    .map((g) => ({
+      date: g.gone!.since.slice(0, 10),
+      kind: "Moved",
+      title: `${g.game} moved to ${hostOf(g.moved_to!)}`,
+      text: `${g.repo} is gone from GitHub; the project continues at ${g.moved_to!.replace(/^https:\/\//, "")}.`,
+      href: entryPath(g),
+      vendor: "moved",
+      icon: MOVED_ICON,
+    })),
+].sort((a, b) => b.date.localeCompare(a.date));
+
+const shown = items.slice(0, SHOW);
+---
+
+{
+  shown.length > 0 && (
+    <section class="news" aria-labelledby="news-h">
+      <div class="news-head">
+        <h2 id="news-h" class="eyebrow">News &amp; events</h2>
+        <a class="more mono" href="/m/">All milestones →</a>
+      </div>
+      <ol class="news-list">
+        {shown.map((it) => (
+          <li class={`v-${it.vendor}`}>
+            <a href={it.href}>
+              <span class="top">
+                {it.icon && (
+                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d={it.icon} />
+                  </svg>
+                )}
+                <span class="kind mono">{it.kind}</span>
+                <span class="date mono">{shortDate(it.date)}</span>
+              </span>
+              <strong>{it.title}</strong>
+              <span class="text">{it.text}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
+
+<style>
+  /* the same gap between every front-page box (search, news, stat tiles, highlights) and the highlights' padding */
+  .news {
+    margin: 1.4rem 0 0;
+    padding: 1.3rem 1.4rem 1.4rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .news-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.8rem;
+  }
+  .news-head h2 {
+    margin: 0;
+    font-weight: 500;
+    color: var(--recomp);
+  }
+  .more {
+    font-size: 0.75rem;
+  }
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+  .news-list a {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.7rem 0.8rem 0.75rem;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--mc, var(--muted));
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+  }
+  .news-list a:hover {
+    background: var(--hover);
+  }
+  .news-list a:hover strong {
+    text-decoration: underline;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.65rem;
+  }
+  .ic {
+    width: 14px;
+    height: 14px;
+    fill: var(--mc, var(--muted));
+    flex: none;
+  }
+  .kind {
+    color: var(--mc, var(--muted));
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .date {
+    margin-left: auto;
+    white-space: nowrap;
+    color: var(--faint);
+  }
+  strong {
+    font-size: 0.92rem;
+    line-height: 1.25;
+  }
+  .text {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .v-moved {
+    --mc: var(--recomp);
+  }
+  @media (max-width: 1000px) {
+    .news-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 520px) {
+    .news-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
