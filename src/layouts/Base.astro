@@ -11,8 +11,13 @@ interface Props {
   image?: string;
   /** schema.org data for search engines, emitted as JSON-LD. */
   jsonLd?: Record<string, unknown>;
+  /**
+   * The trail below the home page, ending with this page (no path needed for it), emitted as a schema.org
+   * BreadcrumbList so search results can show "recomp.party › Nintendo 64 › Star Fox 64" in place of the URL.
+   */
+  crumbs?: { name: string; path?: string }[];
 }
-const { title, description = "A tracker for playable static recompilations and source ports of classic games.", image, jsonLd } = Astro.props;
+const { title, description = "A tracker for playable static recompilations and source ports of classic games.", image, jsonLd, crumbs } = Astro.props;
 const fullTitle = title ? `${title} · recomp.party` : "recomp.party — playable recomps & ports";
 /** short: the label on phones, where all the links share one row */
 const nav: { href: string; label: string; short?: string; count?: number }[] = [
@@ -23,6 +28,19 @@ const nav: { href: string; label: string; short?: string; count?: number }[] = [
   { href: "/about/", label: "About" },
 ];
 const here = Astro.url.pathname;
+const ld = (data: Record<string, unknown>) => JSON.stringify({ "@context": "https://schema.org", ...data }).replaceAll("<", "\\u003c");
+const breadcrumbs = crumbs?.length
+  ? {
+      "@type": "BreadcrumbList",
+      itemListElement: [{ name: "recomp.party", path: "/" }, ...crumbs].map((c, i, all) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: c.name,
+        // the last item is this page: its own URL
+        item: new URL(i === all.length - 1 ? here : c.path!, Astro.site).href,
+      })),
+    }
+  : undefined;
 ---
 
 <!doctype html>
@@ -44,7 +62,8 @@ const here = Astro.url.pathname;
     <link rel="canonical" href={new URL(here, Astro.site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="recomp.party releases" href="/feed.xml" />
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify({ "@context": "https://schema.org", ...jsonLd }).replaceAll("<", "\\u003c")} />}
+    {jsonLd && <script type="application/ld+json" set:html={ld(jsonLd)} />}
+    {breadcrumbs && <script type="application/ld+json" set:html={ld(breadcrumbs)} />}
     <script is:inline data-goatcounter="https://alfaiotadev.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   </head>
   <body>
