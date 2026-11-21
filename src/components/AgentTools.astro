@@ -1,0 +1,151 @@
+---
+/**
+ * WebMCP (https://webmachinelearning.github.io/webmcp/): tools an AI agent in the visitor's browser can call in place
+ * of clicking through pages. All read-only, all answered from /projects.json. Browsers without WebMCP skip this.
+ */
+---
+
+<script>
+  type Project = {
+    game: string;
+    platform: string;
+    kind: string;
+    repo: string;
+    page: string;
+    github: string;
+    description: string | null;
+    stars: number;
+    status: string;
+    moved_to: string | null;
+    first_release: string | null;
+    latest_release: { tag: string; date: string; url: string; prerelease: boolean; runs_on: string[] } | null;
+    toolchain: string | null;
+    based_on: string[];
+    ai_coauthors: string[];
+    original_release_year: number | null;
+    words: string;
+  };
+  type Tool = {
+    name: string;
+    title: string;
+    description: string;
+    inputSchema: object;
+    annotations: { readOnlyHint: boolean };
+    execute: (input: Record<string, unknown>) => Promise<unknown>;
+  };
+  type ModelContext = { registerTool: (tool: Tool) => Promise<void> | void };
+
+  // The current draft puts the API on document; earlier drafts and polyfills on navigator.
+  const mc = ((document as unknown as { modelContext?: ModelContext }).modelContext ?? (navigator as unknown as { modelContext?: ModelContext }).modelContext) as ModelContext | undefined;
+
+  if (mc?.registerTool) {
+    let data: Promise<Project[]> | undefined;
+    const projects = () => (data ??= fetch("/projects.json").then((r) => r.json()).then((d: { projects: Project[] }) => d.projects));
+    const norm = (s: string) =>
+      s
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, " ")
+        .trim();
+    const DAY = 86_400_000;
+    /** What a list entry carries; get_project gives the rest. */
+    const brief = (p: Project) => ({
+      game: p.game,
+      platform: p.platform,
+      kind: p.kind,
+      repo: p.repo,
+      status: p.status,
+      stars: p.stars,
+      latest_release: p.latest_release && { tag: p.latest_release.tag, date: p.latest_release.date.slice(0, 10) },
+      page: p.page,
+    });
+    /** Both shapes at once: the draft serializes whatever comes back, MCP-style clients read content[].text. */
+    const reply = (data: unknown) => ({ content: [{ type: "text", text: JSON.stringify(data) }], structuredContent: data });
+    const num = (v: unknown, def: number, max: number) => Math.min(max, Math.max(1, Math.floor(Number(v) || def)));
+
+    const tools: Tool[] = [
+      {
+        name: "search_games",
+        title: "Search recomp.party",
+        description:
+          "Find playable static recompilations and source ports of console and arcade games listed on recomp.party: native PC (and phone) versions built from the original game's code. Matches game titles, original platforms (e.g. 'n64', 'ps2'), developers, series, genres and GitHub repos. Returns the best matches, most relevant first.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            query: { type: "string", description: "Words to search for, e.g. 'zelda link to the past' or 'gran turismo ps2'." },
+            limit: { type: "integer", minimum: 1, maximum: 25, description: "How many results at most (default 10)." },
+          },
+          required: ["query"],
+        },
+        annotations: { readOnlyHint: true },
+        async execute(input) {
+          const words = norm(String(input.query ?? "")).split(" ").filter(Boolean);
+          if (!words.length) return reply({ error: "query is empty" });
+          const q = words.join(" ");
+          const hits = (await projects())
+            .map((p) => {
+              const name = norm(p.game);
+              const hay = `${name} ${norm(p.words)}`;
+              if (!words.every((w) => hay.includes(w))) return undefined;
+              const score = (name === q ? 4 : name.startsWith(q) ? 3 : name.includes(q) ? 2 : 0) + (p.status === "available" ? 1 : 0);
+              return { p, score };
+            })
+            .filter((h) => h !== undefined)
+            .sort((a, b) => b.score - a.score || b.p.stars - a.p.stars);
+          return reply({ total: hits.length, results: hits.slice(0, num(input.limit, 10, 25)).map((h) => brief(h.p)) });
+        },
+      },
+      {
+        name: "get_project",
+        title: "Project details",
+        description:
+          "Everything recomp.party knows about one listed project: its latest release (tag, date, download page, systems it runs on), the toolchain it was built with, the projects it credits, AI co-authors credited in its commits, and whether it is still on GitHub. Pass the GitHub repo ('owner/name') or the project's recomp.party page URL.",
+        inputSchema: {
+          type: "object",
+          properties: { repo: { type: "string", description: "'owner/name', a github.com URL or a recomp.party/p/… URL." } },
+          required: ["repo"],
+        },
+        annotations: { readOnlyHint: true },
+        async execute(input) {
+          const raw = String(input.repo ?? "").trim();
+          const m = raw.match(/(?:github\.com|recomp\.party\/p)\/([^/\s]+\/[^/\s#?]+)/) ?? raw.match(/^([^/\s]+\/[^/\s]+)$/);
+          if (!m) return reply({ error: "pass 'owner/name' or a project URL" });
+          const key = m[1]!.replace(/\/$/, "").toLowerCase();
+          const p = (await projects()).find((x) => x.repo.toLowerCase() === key);
+          if (!p) return reply({ error: `${m[1]} is not listed on recomp.party; try search_games` });
+          const { words: _words, ...rest } = p;
+          return reply(rest);
+        },
+      },
+      {
+        name: "list_recent",
+        title: "Recent recomps and ports",
+        description:
+          "Projects on recomp.party that recently became playable (first release in the window) or shipped an update (latest release in the window), newest first.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            type: { type: "string", enum: ["new", "updated"], description: "'new': first playable release in the window (default); 'updated': any release in it." },
+            days: { type: "integer", minimum: 1, maximum: 90, description: "Window in days (default 7)." },
+            limit: { type: "integer", minimum: 1, maximum: 50, description: "How many at most (default 20)." },
+          },
+        },
+        annotations: { readOnlyHint: true },
+        async execute(input) {
+          const updated = input.type === "updated";
+          const since = Date.now() - num(input.days, 7, 90) * DAY;
+          const at = (p: Project) => Date.parse((updated ? p.latest_release?.date : p.first_release) ?? "") || 0;
+          const hits = (await projects()).filter((p) => at(p) >= since).sort((a, b) => at(b) - at(a));
+          return reply({ total: hits.length, results: hits.slice(0, num(input.limit, 20, 50)).map(brief) });
+        },
+      },
+    ];
+    for (const t of tools) {
+      try {
+        // a page restored from the back/forward cache must not register twice
+        Promise.resolve(mc.registerTool(t)).catch(() => {});
+      } catch {}
+    }
+  }
+</script>
