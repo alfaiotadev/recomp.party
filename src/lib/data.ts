@@ -153,6 +153,18 @@ export const OS_LABELS: Record<Release["os"][number], string> = {
 /** Platforms with a monochrome-ready logo in public/logos (see public/logos/SOURCES.md), with width/height ratio. */
 const LOGO_ASPECT: Partial<Record<PlatformId, number>> = {"nes": 2.708, "snes": 3.945, "n64": 6.913, "gc": 4.434, "wii": 2.299, "wiiu": 3.541, "switch": 0.983, "switch2": 1.119, "gb": 5.711, "gbc": 2.45, "gba": 11.188, "nds": 7.243, "3ds": 8.455, "vb": 3.977, "pce": 2.067, "genesis": 4.848, "dc": 1.323, "xbox": 3.873, "x360": 6.264, "ps1": 1.276, "ps2": 5.797, "ps3": 4.669, "ps4": 4.678, "ps5": 4.66, "psp": 5.797, "vita": 5.299, "amiga": 3.033, "pc": 1.961, "arcade": 2.357};
 
+/** Short form for tight card rows: "today", "yesterday", "2d ago", "3mo ago", "2y ago". */
+export function agoShort(iso: string | undefined, now = Date.now()): string {
+  if (!iso) return "never";
+  const days = Math.floor((now - Date.parse(iso)) / DAY);
+  if (days < 1) return "today";
+  if (days < 2) return "yesterday";
+  if (days < 45) return `${days}d ago`;
+  const months = Math.round(days / 30.44);
+  if (months < 18) return `${months}mo ago`;
+  return `${Math.round(days / 365.25)}y ago`;
+}
+
 export type Logo = { src: string; aspect: number };
 
 export function platformLogo(id: PlatformId): Logo | undefined {
