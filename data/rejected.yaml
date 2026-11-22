@@ -838,5 +838,22 @@
     port.
   date: 2026-11-21
 - repo: ItsNotRexed/Hookshot
-  reason: The GitHub mirror of Hookshot, listed as NotRexed/Hookshot, which its author now hosts at git.notrexed.dev (moved_to).
+  reason: The GitHub mirror of Hookshot, listed as NotRexed/Hookshot, which its
+    author now hosts at git.notrexed.dev (moved_to).
   date: 2026-11-21
+- repo: agentichunter-blip/magic-trick
+  reason: The repo provides a generic game library/mod for FPGA hardware, not a
+    game-specific static recompilation or source port.
+  date: 2026-11-22
+- repo: GalvarinoDev/DeckOps
+  reason: This is an automated installer/launcher script collection for Linux
+    devices, not a game-specific source port or recompilation itself.
+  date: 2026-11-22
+- repo: GalvarinoDev/DeckOps-Nightly
+  reason: Repository is a launcher/installer for community Call of Duty clients,
+    not a static recompilation or source port.
+  date: 2026-11-22
+- repo: anarqz/mkwmp
+  reason: It is a launcher/mod that requires the original game and does not
+    provide a native recompiled or source‑ported version.
+  date: 2026-11-22

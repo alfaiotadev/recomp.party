@@ -1131,6 +1131,12 @@
   based_on: [zcanann/SFA-Decomp, Cassieandstuff/SFA-Decomp]
   wikidata: Q2578717
   added: 2026-11-05
+- repo: gminustwo/red_two
+  game: "Star Wars: Rogue Squadron II – Rogue Leader"
+  platform: gc
+  kind: recomp
+  wikidata: Q54307
+  added: 2026-11-22
 - repo: new-coke/strikers
   game: Super Mario Strikers
   platform: gc
@@ -1324,6 +1330,14 @@
   kind: recomp
   wikidata: Q2454500
   added: 2026-11-15
+- repo: VoltTMC/SonicColorsRecomp
+  game: Sonic Colors
+  platform: wii
+  kind: recomp
+  tool: BlackKnightRecomp
+  based_on: [yunophilia/BlackKnightRecomp]
+  wikidata: Q2454500
+  added: 2026-11-22
 - repo: KnivesDevilish/SR-Source
   game: "Sonic Riders: Zero Gravity"
   platform: wii
@@ -1555,6 +1569,12 @@
   based_on: [captainj-sparrow/astral-chain-pc-recomp, valentderah/totk-pc-recomp, seedds/nxnative]
   wikidata: Q98969837
   added: 2026-11-21
+- repo: eliasm4r/AgeOfCalamityRecomp
+  game: "Hyrule Warriors: Age of Calamity"
+  platform: switch
+  kind: recomp
+  wikidata: Q98969837
+  added: 2026-11-22
 - repo: scarxity/kirby-forgotten-land-recompiled
   game: Kirby and the Forgotten Land
   platform: switch
@@ -1610,6 +1630,12 @@
   based_on: [peiikai/LASRecomp]
   wikidata: Q116734030
   added: 2026-11-01
+- repo: sam110411/fastball
+  game: MLB The Show 26
+  platform: switch
+  kind: recomp
+  wikidata: Q136735050
+  added: 2026-11-22
 - repo: sam110411/mlbts-native
   game: MLB The Show 26
   platform: switch
@@ -2009,6 +2035,13 @@
   tool: nxrecomp
   wikidata: Q136231470
   added: 2026-11-03
+- repo: Elie-0066/SPR-Recomp-Project
+  game: Splatoon Raiders
+  platform: switch2
+  kind: recomp
+  based_on: [Lucas-blip-png/dkb-pc-recomp, valentderah/totk-pc-recomp]
+  wikidata: Q134822854
+  added: 2026-11-22
 - repo: SerenityG4K/SpaceAnimalsRecomp
   game: Star Fox
   platform: switch2
@@ -2700,6 +2733,14 @@
   kind: recomp
   wikidata: Q3007689
   added: 2026-11-03
+- repo: victor-takai/dragon-valor-recomp
+  game: Dragon Valor
+  platform: ps1
+  kind: recomp
+  tool: psxrecomp
+  based_on: [RetroPortingToolKit/psxrecomp]
+  wikidata: Q3715070
+  added: 2026-11-22
 - repo: OpenDriver2/REDRIVER2
   game: Driver 2
   platform: ps1
@@ -2891,6 +2932,12 @@
   based_on: [GabeRealB/parasite-eve-2-decomp]
   wikidata: Q2266405
   added: 2026-11-01
+- repo: sargon494/PersonaRM
+  game: "Persona 2: Eternal Punishment"
+  platform: ps1
+  kind: recomp
+  wikidata: Q19997467
+  added: 2026-11-22
 - repo: BodbDearg/PsyDoom
   game: PlayStation Doom
   platform: ps1
@@ -3057,6 +3104,13 @@
   tool: psxrecomp
   wikidata: Q2709135
   added: 2026-11-09
+- repo: Tokatta007/OpenTM2
+  game: Twisted Metal 2
+  platform: ps1
+  kind: port
+  based_on: [Tokatta007/TM2-Decomp]
+  wikidata: Q2367032
+  added: 2026-11-22
 - repo: TechnicallyComputers/TwistedMetal4Recomp
   game: Twisted Metal 4
   platform: ps1
@@ -4576,6 +4630,13 @@
   tool: XboxXBE-Recomp
   wikidata: Q161188
   added: 2026-11-01
+- repo: Eladerino/JetSetRadioFuture-Unleashed-NX
+  game: Jet Set Radio Future
+  platform: xbox
+  kind: port
+  based_on: [JuMatt/JetSetRadioFuture-Unleashed]
+  wikidata: Q1063810
+  added: 2026-11-22
 - repo: JuMatt/JetSetRadioFuture-Unleashed
   game: Jet Set Radio Future
   platform: xbox
@@ -6022,6 +6083,13 @@
   kind: port
   tool: ReXGlue
   added: 2026-11-01
+- repo: penettrator/prototype2-nx
+  game: Prototype 2
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q2075296
+  added: 2026-11-22
 - repo: cyberheater/Xbox-360-Quake4-decomp
   game: Quake 4
   platform: x360
@@ -6166,6 +6234,14 @@
   based_on: [hedge-dev/XenonRecomp]
   wikidata: Q2072189
   added: 2026-10-31
+- repo: SansNope/MarathonRecomp-Android
+  game: Sonic the Hedgehog (2006)
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  based_on: [sonicnext-dev/MarathonRecomp]
+  wikidata: Q37123
+  added: 2026-11-22
 - repo: sonicnext-dev/MarathonRecomp
   game: Sonic the Hedgehog (2006)
   platform: x360
@@ -6578,6 +6654,12 @@
   based_on: [sp00nznet/pcrecomp]
   wikidata: Q684904
   added: 2026-11-21
+- repo: sp00nznet/tiberiansun-recomp
+  game: "Command & Conquer: Tiberian Sun"
+  platform: pc
+  kind: recomp
+  wikidata: Q754335
+  added: 2026-11-22
 - repo: phys-winner/pc_decomp_cdre
   game: Crashday Redline Edition
   platform: pc
@@ -6589,6 +6671,13 @@
   kind: port
   wikidata: Q1973179
   added: 2026-11-19
+- repo: aplaino/darksouls-mac
+  game: "Dark Souls: Prepare to Die Edition"
+  platform: pc
+  kind: recomp
+  tool: x86recomp
+  wikidata: Q131905970
+  added: 2026-11-22
 - repo: wojciech-graj/doom-ascii
   game: Doom
   platform: pc
@@ -7009,6 +7098,12 @@
   tool: gekkorecomp
   wikidata: Q2575214
   added: 2026-11-13
+- repo: gibletto/mvc2-naomi-dc
+  game: "Marvel vs. Capcom 2: New Age of Heroes"
+  platform: arcade
+  kind: port
+  wikidata: Q383700
+  added: 2026-11-22
 - repo: spacestate1/namco22-decompile
   game: Namco System 21/22/23 arcade games
   platform: arcade
