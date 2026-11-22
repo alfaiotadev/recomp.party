@@ -136,8 +136,8 @@ function newReleases(): { title: string; note: string; items: Entry[]; rest: Ent
   };
 }
 
-/** Rows on the Latest updates slide: two columns of five on wide screens. */
-const UPDATES = 10;
+/** Rows on the Latest updates slide: two columns of six on wide screens. */
+const UPDATES = 12;
 
 export type Update =
   | { type: "release"; at: string; entry: Entry; tag: string; name: string; url: string; pre: boolean; earlier: number }
@@ -158,7 +158,7 @@ function latestUpdates(): Update[] {
     const earlier = later.filter((x) => Date.parse(x.publishedAt) >= weekAgo).length - 1;
     return [{ type: "release" as const, at: r.publishedAt, entry, tag: r.tag, name: r.name || r.tag, url: r.url, pre: r.prerelease, earlier: Math.max(0, earlier) }];
   });
-  // Releases fill ten rows within a day or two, so milestones from the last two weeks always get a row.
+  // Releases fill twelve rows within a day or two, so milestones from the last two weeks always get a row.
   const outside: Update[] = milestones
     .filter((m) => Date.parse(m.date) >= now - 14 * DAY)
     .map((milestone) => ({ type: "milestone" as const, at: `${milestone.date}T12:00:00Z`, milestone }));
