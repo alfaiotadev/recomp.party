@@ -2935,7 +2935,7 @@
 - repo: sargon494/PersonaRM
   game: "Persona 2: Eternal Punishment"
   platform: ps1
-  kind: port
+  kind: recomp
   wikidata: Q19997467
   added: 2026-11-22
 - repo: BodbDearg/PsyDoom
@@ -6235,7 +6235,7 @@
   wikidata: Q2072189
   added: 2026-10-31
 - repo: SansNope/MarathonRecomp-Android
-  game: Sonic the Hedgehog
+  game: Sonic the Hedgehog (2006)
   platform: x360
   kind: recomp
   tool: XenonRecomp
