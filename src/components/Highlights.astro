@@ -258,9 +258,9 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
               <h2>Platform of the week</h2>
               <ol class="plat-rank" aria-label="Releases in the last 7 days by platform">
                 {platform.ranking.map((r, k) => {
-                  // equal visual area, so square marks (Switch) aren't dwarfed by wide wordmarks
-                  const h = r.logo && Math.min(15, Math.sqrt(230 / r.logo.aspect), 44 / r.logo.aspect);
-                  const box = r.logo && h && { w: +(h * r.logo.aspect).toFixed(1), h: +h.toFixed(1) };
+                  // equal visual area, so square marks (Switch) aren't dwarfed by wide wordmarks; Nintendo's fine print gets more
+                  const fit = r.logo && (FINE_PRINT.has(r.id) ? fitLogoArea(r.logo, 1100, 72, 30) : fitLogoArea(r.logo, 480, 72, 20));
+                  const box = fit && { w: +fit.w.toFixed(1), h: +fit.h.toFixed(1) };
                   return (
                     <li class={k === 0 ? "win" : ""}>
                       <span class="r-plat" title={r.name}>
@@ -278,18 +278,22 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
               </p>
             </header>
             <ol class="items">
-              {platform.top.map((t) => (
-                <li>
-                  <a href={entryPath(t.entry)} class={`item ${t.entry.kind}${t.entry.cover ? " has-art" : " no-art"}`}>
-                    {t.entry.cover ? <img class="art" src={t.entry.cover.src} width={t.entry.cover.width} height={t.entry.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={t.entry.platform} />}
-                    <span class="big mono">{t.releases}×</span>
-                    <strong>{t.entry.game}</strong>
-                    <span class="meta mono">
-                      <span>{t.entry.repo.split("/")[0]}</span>
-                    </span>
-                  </a>
-                </li>
-              ))}
+              {platform.top.map((t) => {
+                const logo = mini(t.entry.platform);
+                return (
+                  <li>
+                    <a href={entryPath(t.entry)} class={`item ${t.entry.kind}${t.entry.cover ? " has-art" : " no-art"}`}>
+                      {t.entry.cover ? <img class="art" src={t.entry.cover.src} width={t.entry.cover.width} height={t.entry.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={t.entry.platform} />}
+                      <span class="big mono">{t.releases}×</span>
+                      <strong>{t.entry.game}</strong>
+                      <span class="by mono">by {t.entry.repo.split("/")[0]}</span>
+                      <span class="meta mono">
+                        {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[t.entry.platform]} /> : PLATFORMS[t.entry.platform]}
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
             </ol>
           </article>
         )}
@@ -1004,16 +1008,23 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  /* the ranking fills the column: the rows spread over the height the covers give it */
+  .plat-slide header {
+    display: flex;
+    flex-direction: column;
+  }
   .plat-rank {
     list-style: none;
     margin: 0.9rem 0 0;
     padding: 0;
     display: grid;
     gap: 0.3rem;
+    flex: 1;
+    align-content: space-evenly;
   }
   .plat-rank li {
     display: grid;
-    grid-template-columns: 46px 1fr 2.2rem;
+    grid-template-columns: 72px 1fr 2.2rem;
     align-items: center;
     gap: 0.5rem;
   }
@@ -1051,7 +1062,7 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
   .r-plat {
     display: flex;
     align-items: center;
-    height: 16px;
+    min-height: 30px;
   }
   .r-plat img {
     opacity: 0.55;

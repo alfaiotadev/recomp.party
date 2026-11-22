@@ -230,7 +230,7 @@ function platformOfWeek(): PlatformOfWeek | undefined {
     top: current.list.sort((a, b) => b.releases - a.releases).slice(0, CARDS),
     weeksOnTop,
     streak,
-    ranking: current.ranked.slice(0, 5).map((r) => ({ id: r.id, name: PLATFORMS[r.id], logo: platformLogo(r.id), releases: r.releases })),
+    ranking: current.ranked.slice(0, 6).map((r) => ({ id: r.id, name: PLATFORMS[r.id], logo: platformLogo(r.id), releases: r.releases })),
   };
 }
 
