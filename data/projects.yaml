@@ -3594,6 +3594,12 @@
   tool: PS2Recomp
   wikidata: Q964925
   added: 2026-10-31
+- repo: HammMannCH/HyperToken
+  game: "Wacky Races Starring: Dastardly & Muttley"
+  platform: ps2
+  kind: recomp
+  tool: ps2-native-recomp
+  added: 2026-11-23
 - repo: yanm1103/War_of_the_Monsters_recomp
   game: War of the Monsters
   platform: ps2
