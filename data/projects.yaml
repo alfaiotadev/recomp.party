@@ -24,6 +24,13 @@
   based_on: [mstan/nesrecomp]
   wikidata: Q764069
   added: 2026-11-17
+- repo: formae-group/ducktales-recompiled
+  game: DuckTales
+  platform: nes
+  kind: recomp
+  tool: NESRecomp
+  wikidata: Q933328
+  added: 2026-11-23
 - repo: mstan/FaxanaduRecomp
   game: Faxanadu
   platform: nes
@@ -230,6 +237,14 @@
   based_on: [RetroPortingToolKit/snesrecomp]
   wikidata: Q1045765
   added: 2026-11-21
+- repo: Zaxaerith/SuperMarioWorld2YoshisIslandRecomp
+  game: "Super Mario World 2: Yoshi's Island"
+  platform: snes
+  kind: recomp
+  tool: snesrecomp
+  based_on: [RetroPortingToolKit/snesrecomp]
+  wikidata: Q1045765
+  added: 2026-11-23
 - repo: mstan/SuperMetroidRecomp
   game: Super Metroid
   platform: snes
@@ -876,6 +891,12 @@
   based_on: [zeldaret/oot]
   wikidata: Q213911
   added: 2026-10-28
+- repo: SqueezyLemonade/HookshotVR
+  game: "The Legend of Zelda: Ocarina of Time"
+  platform: n64
+  kind: recomp
+  wikidata: Q213911
+  added: 2026-11-23
 - repo: THPS64Recomp/THPS2-64Recomp
   game: Tony Hawk's Pro Skater 2
   platform: n64
@@ -1227,6 +1248,19 @@
   added: 2026-11-16
 
 # --- Wii -------------------------------------------------------------------------
+- repo: rob646464/city-folk-recompiled
+  game: "Animal Crossing: City Folk"
+  platform: wii
+  kind: recomp
+  wikidata: Q1195260
+  added: 2026-11-23
+- repo: Coockie1173/Janus-Project
+  game: GoldenEye 007 (2010)
+  platform: wii
+  kind: recomp
+  based_on: [vs-sr-dev/wiikit]
+  wikidata: Q2708114
+  added: 2026-11-23
 - repo: RivierGrullon/kirby-epic-yarn-recomp
   game: Kirby's Epic Yarn
   platform: wii
@@ -1312,6 +1346,13 @@
   kind: recomp
   wikidata: Q2421213
   added: 2026-11-16
+- repo: PotatoRecomp/RE4Wii-Android
+  game: "Resident Evil 4: Wii Edition"
+  platform: wii
+  kind: recomp
+  tool: WiiCompiled
+  wikidata: Q66770124
+  added: 2026-11-23
 - repo: solleo95/reuc-recomp
   game: "Resident Evil: The Umbrella Chronicles"
   platform: wii
@@ -1443,6 +1484,13 @@
   based_on: [ZeldaWWHDRecomp/ZeldaWWHDRecomp]
   wikidata: Q17185964
   added: 2026-11-05
+- repo: zlinoliver/BotW-SheikahVision
+  game: "The Legend of Zelda: Breath of the Wild"
+  platform: wiiu
+  kind: recomp
+  based_on: [IshaanKalra2103/BotWRecomp]
+  wikidata: Q17185964
+  added: 2026-11-23
 - repo: centollOS/SwitchWakerHD
   game: "The Legend of Zelda: The Wind Waker HD"
   platform: wiiu
@@ -1481,6 +1529,14 @@
   based_on: [BelmanteGu/SuperMarioWonderRecomp]
   wikidata: Q64566657
   added: 2026-10-30
+- repo: VirtuaQuest/Arms-Rearmed
+  game: ARMS
+  platform: switch
+  kind: recomp
+  tool: LAS Recomp
+  based_on: [peiikai/LASRecomp]
+  wikidata: Q28312454
+  added: 2026-11-23
 - repo: Puddz/AstralChain-PC
   game: Astral Chain
   platform: switch
@@ -1597,6 +1653,14 @@
   based_on: [SMM2Recomp, LASRecomp]
   wikidata: Q28321447
   added: 2026-11-11
+- repo: MTG9T4/strikers-recomp
+  game: "Mario Strikers: Battle League"
+  platform: switch
+  kind: recomp
+  tool: llvm
+  based_on: [ssbu-recomp, smo-recomp]
+  wikidata: Q110876089
+  added: 2026-11-23
 - repo: KaikoClanworth1/mua3-native
   game: "Marvel Ultimate Alliance 3: The Black Order"
   platform: switch
@@ -1839,6 +1903,14 @@
   kind: recomp
   wikidata: Q54093632
   added: 2026-10-28
+- repo: guideahon/BOTW-VR-RECOMP
+  game: "The Legend of Zelda: Breath of the Wild"
+  platform: switch
+  kind: recomp
+  tool: Savage Wind Recomp
+  based_on: [Revivedx/SavageWindRecomp]
+  wikidata: Q17185964
+  added: 2026-11-23
 - repo: mamcjr/BOTWRecompAndroid
   game: "The Legend of Zelda: Breath of the Wild"
   platform: switch
@@ -2991,6 +3063,12 @@
   platform: ps1
   kind: recomp
   added: 2026-11-17
+- repo: wbalmung/Rugrats-Search-for-Reptar-Recomp
+  game: "Rugrats: Search for Reptar"
+  platform: ps1
+  kind: recomp
+  wikidata: Q7378615
+  added: 2026-11-23
 - repo: Y0oshi/lain-psx-decompiled
   game: Serial Experiments Lain
   platform: ps1
@@ -3740,6 +3818,13 @@
   based_on: [sp00nznet/GT5P]
   wikidata: Q2324928
   added: 2026-11-03
+- repo: PrimeTimerer/Project-Grand-Tourer-Advanced
+  game: Gran Turismo 6
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  wikidata: Q5884557
+  added: 2026-11-23
 - repo: zdiemer/haze-recomp
   game: Haze
   platform: ps3
@@ -3844,6 +3929,14 @@
   tool: ps3recomp
   wikidata: Q37123
   added: 2026-11-14
+- repo: n0madic/Soulcalibur2HD-recomp
+  game: Soulcalibur II HD Online
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  based_on: [sp00nznet/ps3recomp]
+  wikidata: Q107549038
+  added: 2026-11-23
 - repo: whompay/GodfatherReborn
   game: "The Godfather: The Don's Edition"
   platform: ps3
@@ -4025,6 +4118,13 @@
   based_on: [FelipePrado0/gow3_pc]
   wikidata: Q60099491
   added: 2026-10-28
+- repo: thegh0sts/NHL-21-PS4-PORT
+  game: NHL 21
+  platform: ps4
+  kind: port
+  based_on: [thegh0sts/NHL-19-PS4-PORT-WINDOWS]
+  wikidata: Q98307221
+  added: 2026-11-23
 - repo: HajDEO/nhl24pc
   game: NHL 24
   platform: ps4
@@ -4143,6 +4243,12 @@
   kind: port
   wikidata: Q126199700
   added: 2026-11-14
+- repo: SulphurS16/Regaliant
+  game: Demon's Souls (2020)
+  platform: ps5
+  kind: port
+  wikidata: Q96227146
+  added: 2026-11-23
 
 # --- PSP -------------------------------------------------------------------------
 - repo: sal063/Ace-Combat-X-Recompilation
@@ -4739,6 +4845,14 @@
   kind: port
   wikidata: Q1313975
   added: 2026-10-28
+- repo: Thorhax/ShaolinMonks-NX
+  game: "Mortal Kombat: Shaolin Monks"
+  platform: xbox
+  kind: port
+  tool: XboxXBERecomp
+  based_on: [OAleex/OpenShao]
+  wikidata: Q1313975
+  added: 2026-11-23
 - repo: antoxa2584x/nfsc-sw
   game: "Need for Speed: Carbon"
   platform: xbox
@@ -4746,6 +4860,14 @@
   tool: xboxrecomp
   wikidata: Q219795
   added: 2026-11-21
+- repo: Katon17/nfsmw-linux
+  game: "Need for Speed: Most Wanted"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  based_on: [RanggaCasper/MostWanted-Android, TGP482/XboxXBE-Recomp]
+  wikidata: Q220365
+  added: 2026-11-23
 - repo: gamboozino/ngbrecomp
   game: Ninja Gaiden Black
   platform: xbox
@@ -4995,6 +5117,14 @@
   kind: recomp
   tool: XboxXBERecomp
   added: 2026-11-15
+- repo: Anthonyp85/TheSuffering-Recomp
+  game: The Suffering
+  platform: xbox
+  kind: recomp
+  tool: XboxXBERecomp
+  based_on: [TGP482/XboxXBERecomp]
+  wikidata: Q579105
+  added: 2026-11-23
 - repo: abilliontokens/urbz-recomp
   game: "The Urbz: Sims in the City"
   platform: xbox
@@ -5124,6 +5254,13 @@
   tool: ReXGlue
   wikidata: Q481741
   added: 2026-10-28
+- repo: CaiusCodes/Aegis-Wing-XBLA-PC-Recomp
+  game: Aegis Wing
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q4687629
+  added: 2026-11-23
 - repo: LomoXSoft/AfroSamuraiRecomp
   game: Afro Samurai
   platform: x360
@@ -5616,6 +5753,13 @@
   tool: ReXGlue
   wikidata: Q1050833
   added: 2026-11-01
+- repo: Jauidev/Gears3Recomp
+  game: Gears of War 3
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q1050833
+  added: 2026-11-23
 - repo: Shagg88/COGBox
   game: Gears of War series
   platform: x360
@@ -5732,6 +5876,13 @@
   based_on: [YoshiCrystal9/re-gh2]
   wikidata: Q949134
   added: 2026-11-12
+- repo: george0815/halo-3-recomp
+  game: Halo 3
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  wikidata: Q137802
+  added: 2026-11-23
 - repo: GTTeancum/OpenH3M
   game: Halo 3
   platform: x360
@@ -6738,6 +6889,12 @@
   kind: recomp
   wikidata: Q390595
   added: 2026-11-20
+- repo: Sergey004/FNAF1-Recomp-proj
+  game: Five Nights at Freddy's
+  platform: pc
+  kind: port
+  wikidata: Q17618314
+  added: 2026-11-23
 - repo: Try/OpenGothic
   game: "Gothic 2: Night of the Raven"
   platform: pc
@@ -6812,6 +6969,12 @@
   based_on: [codepdbh/nfsu2-recompiled]
   wikidata: Q247210
   added: 2026-10-31
+- repo: elforeign/nfs-carbon-mac
+  game: "Need for Speed: Carbon"
+  platform: pc
+  kind: recomp
+  wikidata: Q219795
+  added: 2026-11-23
 - repo: vasist15-source/nfs-carbon-mac
   game: "Need for Speed: Carbon"
   platform: pc
@@ -6902,6 +7065,12 @@
   kind: recomp
   wikidata: Q15093798
   added: 2026-11-05
+- repo: Rick-Barber/ScreamerRally-Recomp
+  game: Screamer Rally
+  platform: pc
+  kind: recomp
+  wikidata: Q3953051
+  added: 2026-11-23
 - repo: SDW-Community/Sheep-Dog-n-Wolf-Rewooled
   game: Sheep, Dog 'n' Wolf
   platform: pc
@@ -7061,6 +7230,34 @@
   wikidata: Q573768
   added: 2026-11-14
 
+# --- Android ---------------------------------------------------------------------
+- repo: Berny23/slingshot-animals-recomp
+  game: Angry Birds
+  platform: android
+  kind: recomp
+  wikidata: Q4558721
+  added: 2026-11-24
+- repo: dafioram/dead-space-mobile-pc
+  game: Dead Space (2011)
+  platform: android
+  kind: port
+  based_on: [UndeadObvlivion/dead-space-mobile-pc]
+  wikidata: Q4037091
+  added: 2026-11-24
+- repo: AllenWalkerED/nier-reincarnation-pc
+  game: NieR Re[in]carnation
+  platform: android
+  kind: recomp
+  based_on: [Walter-Sparrow/lunar-tear]
+  wikidata: Q104862407
+  added: 2026-11-24
+- repo: veritr1x/reincomp
+  game: NieR Re[in]carnation
+  platform: android
+  kind: recomp
+  wikidata: Q104862407
+  added: 2026-11-24
+
 # --- Arcade ----------------------------------------------------------------------
 - repo: tmcleroy/cps2recomp
   game: Capcom CPS-2 arcade games
@@ -7185,6 +7382,16 @@
   kind: recomp
   wikidata: Q2698836
   added: 2026-11-18
+- repo: davidptrssvea/HOTD-4-Special-recomp
+  game: The House of the Dead 4 Special
+  platform: arcade
+  kind: recomp
+  added: 2026-11-23
+- repo: davidptrssvea/HOTD-EX-recomp
+  game: The House of the Dead EX
+  platform: arcade
+  kind: recomp
+  added: 2026-11-23
 - repo: spita90/konami-viper-recomp
   game: Thrill Drive 2 & GTI Club 2
   platform: arcade
@@ -7379,6 +7586,12 @@
   platform: arcade
   kind: tool
   added: 2026-11-21
+- repo: T4ctica1YT/UEWASM
+  game: UEWASM
+  platform: pc
+  kind: tool
+  tool: UEWASM
+  added: 2026-11-23
 - repo: mstan/vbrecomp
   game: vbrecomp
   platform: vb

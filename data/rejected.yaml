@@ -857,3 +857,25 @@
   reason: It is a launcher/mod that requires the original game and does not
     provide a native recompiled or source‑ported version.
   date: 2026-11-22
+- repo: zxl0714/EVAC-PC-LABEL
+  reason: The repository is a launcher that bundles multiple ports; launchers are
+    excluded from recomp.party.
+  date: 2026-11-23
+- repo: atomsprout/nestvane
+  reason: The repository is an Android‑on‑iOS translation/emulation project, not a
+    game‑specific static recompilation or source port.
+  date: 2026-11-23
+- repo: onedeck-launcher/onedeck
+  reason: It is a launcher/front‑end that bundles emulators and PC ports, not a
+    playable native game recompilation or source port.
+  date: 2026-11-23
+- repo: DJTOMATO/nfsu2desktop
+  reason: It is a desktop wrapper/Electron client for a web-based game service
+    (nfsu2.xyz), classified as a launcher, which is explicitly excluded from
+    recomp.party.
+  date: 2026-11-23
+- repo: HammMannCH/HyperToken
+  reason: The release ships the game's own executable (SLES_501.83) and a memory
+    dump of the running game; recomp.party lists only projects that run from the
+    player's own game files. Welcome back once the release leaves them out.
+  date: 2026-11-24
