@@ -874,3 +874,8 @@
     (nfsu2.xyz), classified as a launcher, which is explicitly excluded from
     recomp.party.
   date: 2026-11-23
+- repo: HammMannCH/HyperToken
+  reason: The release ships the game's own executable (SLES_501.83) and a memory
+    dump of the running game; recomp.party lists only projects that run from the
+    player's own game files. Welcome back once the release leaves them out.
+  date: 2026-11-24

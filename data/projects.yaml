@@ -1255,11 +1255,11 @@
   wikidata: Q1195260
   added: 2026-11-23
 - repo: Coockie1173/Janus-Project
-  game: GoldenEye 007
+  game: GoldenEye 007 (2010)
   platform: wii
   kind: recomp
   based_on: [vs-sr-dev/wiikit]
-  wikidata: Q369086
+  wikidata: Q2708114
   added: 2026-11-23
 - repo: RivierGrullon/kirby-epic-yarn-recomp
   game: Kirby's Epic Yarn
@@ -1347,10 +1347,11 @@
   wikidata: Q2421213
   added: 2026-11-16
 - repo: PotatoRecomp/RE4Wii-Android
-  game: Resident Evil 4 Wii edition
+  game: "Resident Evil 4: Wii Edition"
   platform: wii
   kind: recomp
   tool: WiiCompiled
+  wikidata: Q66770124
   added: 2026-11-23
 - repo: solleo95/reuc-recomp
   game: "Resident Evil: The Umbrella Chronicles"
@@ -1486,7 +1487,7 @@
 - repo: zlinoliver/BotW-SheikahVision
   game: "The Legend of Zelda: Breath of the Wild"
   platform: wiiu
-  kind: port
+  kind: recomp
   based_on: [IshaanKalra2103/BotWRecomp]
   wikidata: Q17185964
   added: 2026-11-23
@@ -4243,10 +4244,10 @@
   wikidata: Q126199700
   added: 2026-11-14
 - repo: SulphurS16/Regaliant
-  game: Demon's Souls
+  game: Demon's Souls (2020)
   platform: ps5
   kind: port
-  wikidata: Q1153708
+  wikidata: Q96227146
   added: 2026-11-23
 
 # --- PSP -------------------------------------------------------------------------
@@ -4860,11 +4861,12 @@
   wikidata: Q219795
   added: 2026-11-21
 - repo: Katon17/nfsmw-linux
-  game: "Need for Speed: Most Wanted Black Edition"
+  game: "Need for Speed: Most Wanted"
   platform: xbox
-  kind: port
+  kind: recomp
   tool: XboxXBE-Recomp
   based_on: [RanggaCasper/MostWanted-Android, TGP482/XboxXBE-Recomp]
+  wikidata: Q220365
   added: 2026-11-23
 - repo: gamboozino/ngbrecomp
   game: Ninja Gaiden Black
@@ -7228,6 +7230,34 @@
   wikidata: Q573768
   added: 2026-11-14
 
+# --- Android ---------------------------------------------------------------------
+- repo: Berny23/slingshot-animals-recomp
+  game: Angry Birds
+  platform: android
+  kind: recomp
+  wikidata: Q4558721
+  added: 2026-11-24
+- repo: dafioram/dead-space-mobile-pc
+  game: Dead Space (2011)
+  platform: android
+  kind: port
+  based_on: [UndeadObvlivion/dead-space-mobile-pc]
+  wikidata: Q4037091
+  added: 2026-11-24
+- repo: AllenWalkerED/nier-reincarnation-pc
+  game: NieR Re[in]carnation
+  platform: android
+  kind: recomp
+  based_on: [Walter-Sparrow/lunar-tear]
+  wikidata: Q104862407
+  added: 2026-11-24
+- repo: veritr1x/reincomp
+  game: NieR Re[in]carnation
+  platform: android
+  kind: recomp
+  wikidata: Q104862407
+  added: 2026-11-24
+
 # --- Arcade ----------------------------------------------------------------------
 - repo: tmcleroy/cps2recomp
   game: Capcom CPS-2 arcade games
@@ -7352,6 +7382,16 @@
   kind: recomp
   wikidata: Q2698836
   added: 2026-11-18
+- repo: davidptrssvea/HOTD-4-Special-recomp
+  game: The House of the Dead 4 Special
+  platform: arcade
+  kind: recomp
+  added: 2026-11-23
+- repo: davidptrssvea/HOTD-EX-recomp
+  game: The House of the Dead EX
+  platform: arcade
+  kind: recomp
+  added: 2026-11-23
 - repo: spita90/konami-viper-recomp
   game: Thrill Drive 2 & GTI Club 2
   platform: arcade
@@ -7404,11 +7444,6 @@
   kind: tool
   tool: Hermit
   added: 2026-11-19
-- repo: davidptrssvea/HOTD-EX-recomp
-  game: House of the Dead EX
-  platform: arcade
-  kind: tool
-  added: 2026-11-23
 - repo: ExpansionPak/ModernGekko
   game: ModernGekko
   platform: multi
@@ -7541,11 +7576,6 @@
   kind: tool
   based_on: [n64decomp/sm64]
   added: 2026-11-10
-- repo: davidptrssvea/HOTD-4-Special-recomp
-  game: The House of the Dead 4 Special
-  platform: arcade
-  kind: tool
-  added: 2026-11-23
 - repo: jeff-strutb/brally
   game: Top Gear Rally
   platform: n64

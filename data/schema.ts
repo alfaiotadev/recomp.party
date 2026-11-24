@@ -31,6 +31,7 @@ export const PLATFORMS = {
   amiga: "Amiga",
   pc: "PC (DOS/Windows)",
   j2me: "Java phone (J2ME)",
+  android: "Android",
   arcade: "Arcade",
   /** Toolchains only: a recompiler for several consoles. */
   multi: "Multi-platform",
