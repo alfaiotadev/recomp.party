@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-24T00:05:44.772Z",
+ "generatedAt": "2026-11-24T06:53:26.223Z",
  "since": "2025-02-24",
  "repos": {
   "0c0de/splatterhouse-decomp": {
@@ -357,9 +357,9 @@
    "files": []
   },
   "Adeelshah001/DWG2Recomp": {
-   "head": "0d7a281548e384dd7764f554c62af400cdb3a6a2",
-   "scannedAt": "2026-11-24T00:05:15.011Z",
-   "commits": 52,
+   "head": "b82f56b6e07cbc5fa2a9ae378a3949a22003432a",
+   "scannedAt": "2026-11-24T06:53:11.398Z",
+   "commits": 53,
    "credits": {},
    "files": [
     "AGENTS.md"
@@ -422,9 +422,9 @@
    "files": []
   },
   "adrbn/bo2-mac": {
-   "head": "a5788810931cac93de53c1c3bc62a25bf978e7bd",
-   "scannedAt": "2026-11-24T00:05:25.220Z",
-   "commits": 64,
+   "head": "e360a0f447957f5b579bd63d9140c9496ede3cfb",
+   "scannedAt": "2026-11-24T06:53:16.236Z",
+   "commits": 65,
    "credits": {},
    "files": []
   },
@@ -557,9 +557,9 @@
    "files": []
   },
   "AjncSystem/ShadowOfTheColossus-PC": {
-   "head": "a8d330b7816d896bc4500bba76f59a59a5dd6485",
-   "scannedAt": "2026-11-24T00:04:58.653Z",
-   "commits": 1017,
+   "head": "aaf95c06deec0f744b98ba78cd8eda209ee3563b",
+   "scannedAt": "2026-11-24T06:52:57.166Z",
+   "commits": 1064,
    "credits": {
     "Claude Fable 5.1": {
      "vendor": "anthropic",
@@ -617,7 +617,8 @@
       "2026-11-16": 8,
       "2026-11-17": 5,
       "2026-11-19": 2,
-      "2026-11-23": 6
+      "2026-11-23": 6,
+      "2026-11-24": 8
      }
     },
     "Claude Sonnet 5": {
@@ -668,9 +669,9 @@
    ]
   },
   "AksharDP/xc2-recomp": {
-   "head": "52274fee104cb94a3943e5eb52601f5210aba0d9",
-   "scannedAt": "2026-11-23T07:46:54.387Z",
-   "commits": 399,
+   "head": "04323a3550862588ba34b61b5ed6a7b931c86a30",
+   "scannedAt": "2026-11-24T06:52:38.297Z",
+   "commits": 442,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -678,7 +679,8 @@
      "versioned": true,
      "days": {
       "2026-11-04": 5,
-      "2026-11-02": 1
+      "2026-11-02": 1,
+      "2026-11-23": 2
      }
     }
    },
@@ -771,6 +773,13 @@
    "credits": {},
    "files": []
   },
+  "AllenWalkerED/nier-reincarnation-pc": {
+   "head": "181d539ed6b64f41e30df5f771ed43f128b405fb",
+   "scannedAt": "2026-11-24T06:53:20.461Z",
+   "commits": 10,
+   "credits": {},
+   "files": []
+  },
   "almost-drowned-rat/Orta-Recompiled": {
    "head": "393820cc943ea9689ef0dec1059691877067f5ea",
    "scannedAt": "2026-11-24T00:05:07.651Z",
@@ -788,9 +797,9 @@
    "files": []
   },
   "almost-drowned-rat/THPS2X-Recompiled": {
-   "head": "8e0de7b315dec7f232d67132a77a2f09320e129c",
-   "scannedAt": "2026-11-18T20:43:22.795Z",
-   "commits": 21,
+   "head": "8b874064d98a405690d8d496464b2e63ae367415",
+   "scannedAt": "2026-11-24T06:53:08.888Z",
+   "commits": 22,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -1450,6 +1459,13 @@
    },
    "files": []
   },
+  "Anthonyp85/TheSuffering-Recomp": {
+   "head": "cc4aea0e628e95f2c2d26f1cee4d5b19a0466919",
+   "scannedAt": "2026-11-24T06:53:08.535Z",
+   "commits": 3,
+   "credits": {},
+   "files": []
+  },
   "antoxa2584x/nfsc-sw": {
    "head": "655ec76ccec0756a00ee017b099f89461f496f82",
    "scannedAt": "2026-11-21T16:49:10.754Z",
@@ -1998,9 +2014,9 @@
    "files": []
   },
   "azmasm/hermit": {
-   "head": "428d7e4024c45c421360e94217d79fe27c1c5b62",
-   "scannedAt": "2026-11-24T00:05:37.132Z",
-   "commits": 1295,
+   "head": "eb96f3d9f62fac1ce59ac3e3f436027e93d2d913",
+   "scannedAt": "2026-11-24T06:53:24.324Z",
+   "commits": 1310,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -2183,9 +2199,9 @@
    "files": []
   },
   "bbelgg/rs-rearmed": {
-   "head": "03a5d92fc4d0c1ea63f4e74f3b9c86cb6ac3381a",
-   "scannedAt": "2026-11-24T00:05:29.571Z",
-   "commits": 332,
+   "head": "bad77d8a11b07922d0047fd2207659ca0e87ca94",
+   "scannedAt": "2026-11-24T06:53:18.603Z",
+   "commits": 333,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -2209,7 +2225,8 @@
       "2026-11-18": 6,
       "2026-11-19": 1,
       "2026-11-20": 4,
-      "2026-11-23": 2
+      "2026-11-23": 2,
+      "2026-11-24": 1
      }
     },
     "Claude Opus 4.6": {
@@ -2376,6 +2393,13 @@
    "head": "556cc7458f422bb53a48342dbe7c43d303b5aa14",
    "scannedAt": "2026-11-18T20:43:32.412Z",
    "commits": 1049,
+   "credits": {},
+   "files": []
+  },
+  "Berny23/slingshot-animals-recomp": {
+   "head": "1c29eb1bd33e41fc83dc5140b3346bdb7a0f636b",
+   "scannedAt": "2026-11-24T06:53:19.407Z",
+   "commits": 42,
    "credits": {},
    "files": []
   },
@@ -2608,9 +2632,9 @@
    "files": []
   },
   "birabittoh/DQ9Recompiled": {
-   "head": "ca99a25b60261258f579bc70bbf95927ee95198b",
-   "scannedAt": "2026-11-24T00:04:39.488Z",
-   "commits": 346,
+   "head": "b62db4261b636095bf5db196a1f8c9eb62605c0e",
+   "scannedAt": "2026-11-24T06:52:41.257Z",
+   "commits": 348,
    "credits": {},
    "files": []
   },
@@ -2766,9 +2790,9 @@
    "files": []
   },
   "boykopovar/AnyPS5": {
-   "head": "c161b55334677eff982a195b3fb8f1aea1f8bdf2",
-   "scannedAt": "2026-11-24T00:05:36.603Z",
-   "commits": 49418,
+   "head": "8a9d18195395ff9362cc530ce3fc7b956b8d11f4",
+   "scannedAt": "2026-11-24T06:53:23.842Z",
+   "commits": 49599,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -2994,7 +3018,8 @@
       "2026-11-20": 9,
       "2026-11-21": 28,
       "2026-11-22": 15,
-      "2026-11-23": 60
+      "2026-11-23": 60,
+      "2026-11-24": 1
      }
     },
     "Claude Sonnet 5": {
@@ -3277,9 +3302,9 @@
    "files": []
   },
   "BrewSparrow/ArmyOfTwoTDC-Recomp": {
-   "head": "9e34e7c0270abdd85fa00208aad57ec944ebf65c",
-   "scannedAt": "2026-11-21T07:18:36.198Z",
-   "commits": 15,
+   "head": "aec5825f8acad64bb0409a3b6f7532f5da596d73",
+   "scannedAt": "2026-11-24T06:53:09.741Z",
+   "commits": 16,
    "credits": {},
    "files": []
   },
@@ -3545,6 +3570,33 @@
    },
    "files": []
   },
+  "CaiusCodes/Aegis-Wing-XBLA-PC-Recomp": {
+   "head": "8b108ddfa7367d3caca699d3d0f466576ca45fa8",
+   "scannedAt": "2026-11-24T06:53:09.398Z",
+   "commits": 26,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-10": 1,
+      "2026-10-07": 4
+     }
+    },
+    "Claude Sonnet 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-10-13": 1,
+      "2026-10-08": 3,
+      "2026-10-07": 5
+     }
+    }
+   },
+   "files": []
+  },
   "CaiusCodes/GoldenEye-007-XBLA-PC-Recomp": {
    "head": "5cc384239b932f900a8f658970b94d49fb8b55cf",
    "scannedAt": "2026-11-18T07:36:56.855Z",
@@ -3611,9 +3663,9 @@
    "files": []
   },
   "CapsLock4284/DonPachi-Recomp": {
-   "head": "13e22f8fde9def4a086c378713342b604d193387",
-   "scannedAt": "2026-11-24T00:05:32.957Z",
-   "commits": 173,
+   "head": "010aeb8177be47e1032cd41d519dcd4e1533a177",
+   "scannedAt": "2026-11-24T06:53:21.484Z",
+   "commits": 176,
    "credits": {},
    "files": []
   },
@@ -3805,9 +3857,9 @@
    ]
   },
   "ChanseyIsTheBest/sa2-nx": {
-   "head": "baf523b8e93a1b02d8b73d13aebf86780f8cc0c6",
-   "scannedAt": "2026-11-06T07:49:13.347Z",
-   "commits": 24,
+   "head": "79e86a62a8081a5d067dff16f795aaa0e4a9efb7",
+   "scannedAt": "2026-11-24T06:53:13.371Z",
+   "commits": 121,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -3822,7 +3874,13 @@
       "2026-10-14": 2,
       "2026-10-13": 2,
       "2026-10-12": 9,
-      "2026-10-07": 4
+      "2026-10-07": 4,
+      "2026-11-24": 6,
+      "2026-11-23": 15,
+      "2026-11-22": 6,
+      "2026-11-21": 4,
+      "2026-11-20": 12,
+      "2026-11-19": 54
      }
     }
    },
@@ -3920,9 +3978,9 @@
    "files": []
   },
   "chrissotraidis/bluewake": {
-   "head": "82ab6be0f3bd8a9da4549d092b9c6ff578727083",
-   "scannedAt": "2026-11-23T07:46:45.589Z",
-   "commits": 2220,
+   "head": "cced6493bd6fb0f0470f889f008bd0c064071dfc",
+   "scannedAt": "2026-11-24T06:52:23.542Z",
+   "commits": 2236,
    "credits": {},
    "files": [
     ".claude",
@@ -4417,6 +4475,13 @@
     "CLAUDE.md"
    ]
   },
+  "Coockie1173/Janus-Project": {
+   "head": "aed82fd07d4a68d6d715d7893823b0e14d171821",
+   "scannedAt": "2026-11-24T06:52:28.095Z",
+   "commits": 442,
+   "credits": {},
+   "files": []
+  },
   "cookingwithsimon/Skate1Recompiled": {
    "head": "0cff73c31b07ef0aaee1899fc1d441467278a7e5",
    "scannedAt": "2026-11-18T07:37:00.864Z",
@@ -4473,9 +4538,9 @@
    "files": []
   },
   "crabsmack/xmen2-pc": {
-   "head": "9e29450ae741365579e905117793ad77917a9f74",
-   "scannedAt": "2026-11-19T20:34:09.304Z",
-   "commits": 190,
+   "head": "295ad1d8b5454444f1dcb90ff452123b5e37c8e8",
+   "scannedAt": "2026-11-24T06:52:44.953Z",
+   "commits": 194,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -4498,7 +4563,8 @@
       "2026-11-17": 2,
       "2026-11-08": 1,
       "2026-11-18": 9,
-      "2026-11-19": 6
+      "2026-11-19": 6,
+      "2026-11-24": 4
      }
     }
    },
@@ -4615,6 +4681,35 @@
     }
    },
    "files": []
+  },
+  "dafioram/dead-space-mobile-pc": {
+   "head": "f7335c95a80bb1b34d06376bf835f82ad674eb6c",
+   "scannedAt": "2026-11-24T06:53:20.172Z",
+   "commits": 108,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-10-12": 1,
+      "2026-10-11": 4,
+      "2026-10-10": 2
+     }
+    },
+    "Codex": {
+     "vendor": "openai",
+     "tool": "Codex",
+     "versioned": false,
+     "days": {
+      "2026-11-14": 1,
+      "2026-11-13": 11
+     }
+    }
+   },
+   "files": [
+    "AGENTS.md"
+   ]
   },
   "DahSidiAbdallah/ConkerBFDReloaded": {
    "head": "1c865a0db019c12e08fcac8a0db01e3db493628d",
@@ -4955,6 +5050,20 @@
     ".gemini"
    ]
   },
+  "davidptrssvea/HOTD-4-Special-recomp": {
+   "head": "10fcbe52e49bd80c2aa7e072442e4f6029168d5a",
+   "scannedAt": "2026-11-24T06:53:21.813Z",
+   "commits": 18,
+   "credits": {},
+   "files": []
+  },
+  "davidptrssvea/HOTD-EX-recomp": {
+   "head": "6828dbbf35a63aa7bb87b6172727675433d8f570",
+   "scannedAt": "2026-11-24T06:53:22.114Z",
+   "commits": 14,
+   "credits": {},
+   "files": []
+  },
   "davidptrssvea/HOTD4-recomp": {
    "head": "6baf21d5a922a4268396197102ae587cfa7264e6",
    "scannedAt": "2026-11-24T00:05:34.142Z",
@@ -5100,9 +5209,9 @@
    "files": []
   },
   "DerrickGold/ar-recomp": {
-   "head": "dcb3bb23f00fbc86bd23426fc1e7199f676cd704",
-   "scannedAt": "2026-11-23T07:46:36.739Z",
-   "commits": 992,
+   "head": "133ffb189eec2b8ecfda0d751a51f6239e5fe9b5",
+   "scannedAt": "2026-11-24T06:52:19.017Z",
+   "commits": 994,
    "credits": {
     "Claude Fable 5": {
      "vendor": "anthropic",
@@ -5171,9 +5280,9 @@
    "files": []
   },
   "Destinity13/TimeSplitters-2-Native-Recomp-Windows-Linux-SteamDeck": {
-   "head": "b1488a7f711f07fab4ed413964a62c58a7442d9d",
-   "scannedAt": "2026-11-21T11:46:26.860Z",
-   "commits": 52,
+   "head": "c2dbb6165f7fb7cd26ccc17c7e4b45576651c0fe",
+   "scannedAt": "2026-11-24T06:52:49.367Z",
+   "commits": 53,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -5350,9 +5459,9 @@
    "files": []
   },
   "Dittobyte/Recompia": {
-   "head": "90457a88c54aa21bd3b4149d1857951e05b9ed9a",
-   "scannedAt": "2026-11-24T00:04:37.237Z",
-   "commits": 2301,
+   "head": "56e095e37d032d46d15e18271519aaf6752aba01",
+   "scannedAt": "2026-11-24T06:52:40.875Z",
+   "commits": 2416,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -5374,7 +5483,8 @@
       "2026-11-20": 37,
       "2026-11-21": 3,
       "2026-11-22": 3,
-      "2026-11-23": 4
+      "2026-11-23": 4,
+      "2026-11-24": 13
      }
     },
     "Claude Fable 5.1": {
@@ -5440,9 +5550,9 @@
    ]
   },
   "DivinusX/a-port-of-the-order-1886-thats-actually-alive": {
-   "head": "f92041409956c9766fa1009c3663572fd2dc99ab",
-   "scannedAt": "2026-11-24T00:05:00.473Z",
-   "commits": 96,
+   "head": "c3306bc3c87b0376eb5c0a4f61e367f81968dc91",
+   "scannedAt": "2026-11-24T06:52:59.030Z",
+   "commits": 98,
    "credits": {
     "Claude Fable 5.1": {
      "vendor": "anthropic",
@@ -5551,9 +5661,9 @@
    "files": []
   },
   "dorakyuraduang/whitealbum2-Android": {
-   "head": "ac956b605898355aade9ac6513ddcae3696c2bf9",
-   "scannedAt": "2026-11-21T16:49:32.153Z",
-   "commits": 239,
+   "head": "e5b9dcd22123fdb51a5c3db24d76f81afbb3ce68",
+   "scannedAt": "2026-11-24T06:53:19.150Z",
+   "commits": 240,
    "credits": {},
    "files": [
     "AGENTS.md"
@@ -5800,9 +5910,9 @@
    ]
   },
   "dyzz/srw64-recomp": {
-   "head": "d586d1564c45bffd23c87a28a1c4082a02366e6e",
-   "scannedAt": "2026-11-24T00:04:12.543Z",
-   "commits": 1437,
+   "head": "a5cb8bc409519a54e13e9ac8e4d4001c70cbdce6",
+   "scannedAt": "2026-11-24T06:52:20.238Z",
+   "commits": 1448,
    "credits": {
     "Claude Fable 5.1": {
      "vendor": "anthropic",
@@ -5915,7 +6025,8 @@
       "2026-11-20": 28,
       "2026-11-21": 22,
       "2026-11-22": 6,
-      "2026-11-23": 19
+      "2026-11-23": 19,
+      "2026-11-24": 11
      }
     }
    },
@@ -6040,6 +6151,13 @@
      }
     }
    },
+   "files": []
+  },
+  "elforeign/nfs-carbon-mac": {
+   "head": "6538d73c2066cbf89da9e0add0d21f4183e5de36",
+   "scannedAt": "2026-11-24T06:53:18.109Z",
+   "commits": 8,
+   "credits": {},
    "files": []
   },
   "elforeign/nfs-most-wanted-mac": {
@@ -6600,9 +6718,9 @@
    "files": []
   },
   "FH1-ReImagined/ForzaHorizon1-ReImagined": {
-   "head": "5e6a40af13e7c06ebccc6ab22550ce5ca615dd0c",
-   "scannedAt": "2026-11-24T00:05:15.568Z",
-   "commits": 684,
+   "head": "17e1faaae1ea566d7386ab5d430283945ec837cc",
+   "scannedAt": "2026-11-24T06:53:11.978Z",
+   "commits": 686,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -6850,6 +6968,15 @@
    "commits": 442,
    "credits": {},
    "files": []
+  },
+  "formae-group/ducktales-recompiled": {
+   "head": "6209080ce4eb136ba778be91e02ecaf22f75bc64",
+   "scannedAt": "2026-11-24T06:52:18.510Z",
+   "commits": 385,
+   "credits": {},
+   "files": [
+    "AGENTS.md"
+   ]
   },
   "FoxWorkshop/ShadowRecomp": {
    "head": "02b96a03c9ff08f55ac84f45498deeac4c4f32e1",
@@ -7118,9 +7245,9 @@
    ]
   },
   "gamboozino/ngbrecomp": {
-   "head": "fd3e5cf272bf838ac4e40cc3e0e91787be8648a4",
-   "scannedAt": "2026-11-24T00:05:06.800Z",
-   "commits": 562,
+   "head": "042ab3a18f8666289cd598e3cb8075425020cd06",
+   "scannedAt": "2026-11-24T06:53:08.260Z",
+   "commits": 564,
    "credits": {
     "Claude Fable 5.1": {
      "vendor": "anthropic",
@@ -7282,6 +7409,13 @@
      }
     }
    },
+   "files": []
+  },
+  "george0815/halo-3-recomp": {
+   "head": "f07c96e0905d69fb014f820ce2e180d7bb064014",
+   "scannedAt": "2026-11-24T06:53:12.643Z",
+   "commits": 53,
+   "credits": {},
    "files": []
   },
   "gerisson1996/gow-collection-nx": {
@@ -7451,9 +7585,9 @@
    "files": []
   },
   "gminustwo/minustwo": {
-   "head": "1b9e429bb3998efb6793e51a78ff4175ab6209d0",
-   "scannedAt": "2026-11-20T07:25:38.891Z",
-   "commits": 84,
+   "head": "3e6918a60891b368c06b317cf39f3e71a94f28c9",
+   "scannedAt": "2026-11-24T06:52:53.793Z",
+   "commits": 86,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -7471,16 +7605,17 @@
       "2026-10-25": 5,
       "2026-10-24": 26,
       "2026-11-17": 9,
-      "2026-11-20": 6
+      "2026-11-20": 6,
+      "2026-11-24": 1
      }
     }
    },
    "files": []
   },
   "gminustwo/primerecomp": {
-   "head": "ce936fa83951b074fea647dc546cf5d78b41d74e",
-   "scannedAt": "2026-11-23T07:46:50.781Z",
-   "commits": 388,
+   "head": "00fb0662b06ebbd903609dd2e022ee8266c53356",
+   "scannedAt": "2026-11-24T06:52:33.062Z",
+   "commits": 390,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -7517,16 +7652,17 @@
       "2026-10-15": 12,
       "2026-10-14": 41,
       "2026-11-21": 3,
-      "2026-11-23": 10
+      "2026-11-23": 10,
+      "2026-11-24": 1
      }
     }
    },
    "files": []
   },
   "gminustwo/red_two": {
-   "head": "a07858317d811664687884e75a6ebaa430b055bf",
-   "scannedAt": "2026-11-22T15:13:27.125Z",
-   "commits": 96,
+   "head": "1feb5a7815cfb27714c1512dd022e74e02977b4e",
+   "scannedAt": "2026-11-24T06:52:22.669Z",
+   "commits": 107,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -7546,16 +7682,18 @@
       "2026-11-09": 3,
       "2026-11-08": 6,
       "2026-11-07": 6,
-      "2026-11-05": 20
+      "2026-11-05": 20,
+      "2026-11-24": 5,
+      "2026-11-23": 3
      }
     }
    },
    "files": []
   },
   "gminustwo/RondoRecomp": {
-   "head": "c94048bc790f7b4680365721a84da9d567b68280",
-   "scannedAt": "2026-11-19T07:36:46.282Z",
-   "commits": 50,
+   "head": "43dbfe3a5cf35c9dd376b28adcd4642314d14be4",
+   "scannedAt": "2026-11-24T06:52:43.264Z",
+   "commits": 54,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -7570,7 +7708,8 @@
       "2026-11-07": 27,
       "2026-11-14": 1,
       "2026-11-18": 1,
-      "2026-11-19": 2
+      "2026-11-19": 2,
+      "2026-11-24": 3
      }
     }
    },
@@ -7941,9 +8080,9 @@
    ]
   },
   "GTTeancum/SpideyPS1recomp": {
-   "head": "23ec99a0e7d617b46b570310dffceb1338935cfb",
-   "scannedAt": "2026-11-23T07:47:05.367Z",
-   "commits": 324,
+   "head": "c25b160a447c653b8cf41c0f99442cc1e77a0167",
+   "scannedAt": "2026-11-24T06:52:47.558Z",
+   "commits": 326,
    "credits": {
     "Claude Opus 5": {
      "vendor": "anthropic",
@@ -8158,6 +8297,87 @@
     "AGENTS.md"
    ]
   },
+  "guideahon/BOTW-VR-RECOMP": {
+   "head": "6f1d74f2eb3f1fb6816008001ead9dea461e7c3d",
+   "scannedAt": "2026-11-24T06:52:36.814Z",
+   "commits": 409,
+   "credits": {
+    "Claude Fable 5.2": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-18": 3,
+      "2026-11-13": 2
+     }
+    },
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-23": 9,
+      "2026-11-22": 12,
+      "2026-11-21": 17,
+      "2026-11-20": 22,
+      "2026-11-19": 28,
+      "2026-11-18": 1,
+      "2026-11-17": 3,
+      "2026-11-16": 2,
+      "2026-11-15": 13,
+      "2026-11-14": 2,
+      "2026-11-13": 3,
+      "2026-11-12": 42,
+      "2026-11-11": 39,
+      "2026-11-10": 32,
+      "2026-11-09": 2,
+      "2026-11-08": 9,
+      "2026-11-07": 4,
+      "2026-11-06": 6,
+      "2026-11-05": 3,
+      "2026-11-03": 1,
+      "2026-11-02": 2,
+      "2026-11-01": 5,
+      "2026-10-31": 16,
+      "2026-10-30": 4,
+      "2026-10-29": 4,
+      "2026-10-28": 9,
+      "2026-10-27": 1,
+      "2026-10-26": 9,
+      "2026-10-25": 1,
+      "2026-10-24": 12,
+      "2026-10-23": 6,
+      "2026-10-22": 1,
+      "2026-10-17": 4,
+      "2026-10-16": 2
+     }
+    },
+    "Claude Sonnet 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-15": 1,
+      "2026-11-08": 1,
+      "2026-11-04": 2,
+      "2026-11-03": 1,
+      "2026-11-02": 1,
+      "2026-10-31": 4
+     }
+    },
+    "Codex": {
+     "vendor": "openai",
+     "tool": "Codex",
+     "versioned": false,
+     "days": {
+      "2026-11-22": 2
+     }
+    }
+   },
+   "files": [
+    "AGENTS.md"
+   ]
+  },
   "guimaraf/3sxw": {
    "head": "c6b8e98b00ef03796008a4130039819db568115b",
    "scannedAt": "2026-11-12T14:57:59.492Z",
@@ -8343,9 +8563,9 @@
    ]
   },
   "gustavomorinaga/project-vekta": {
-   "head": "d08b305949aee30ba7dc583e8d87da19c05ce641",
-   "scannedAt": "2026-11-21T07:18:26.892Z",
-   "commits": 126,
+   "head": "fd97c34f56541751058e7b3d17074a71d00bad3c",
+   "scannedAt": "2026-11-24T06:52:53.018Z",
+   "commits": 127,
    "credits": {},
    "files": [
     "AGENTS.md"
@@ -8866,9 +9086,9 @@
    "files": []
   },
   "Hero88go/melee-unlocked": {
-   "head": "5b5afc8f5739674d4944214c32e36d4b9d20c03e",
-   "scannedAt": "2026-11-24T00:04:18.025Z",
-   "commits": 1396,
+   "head": "a7ab29aad91ce4b4f7119086e14b2a6342a3b454",
+   "scannedAt": "2026-11-24T06:52:23.059Z",
+   "commits": 1418,
    "credits": {
     "Claude Fable 5.1": {
      "vendor": "anthropic",
@@ -8892,7 +9112,8 @@
       "2026-11-20": 5,
       "2026-11-21": 3,
       "2026-11-23": 11,
-      "2026-11-22": 5
+      "2026-11-22": 5,
+      "2026-11-24": 4
      }
     },
     "Claude Opus 5": {
@@ -8967,7 +9188,8 @@
       "2026-11-20": 33,
       "2026-11-21": 64,
       "2026-11-22": 50,
-      "2026-11-23": 48
+      "2026-11-23": 48,
+      "2026-11-24": 18
      }
     },
     "Claude Sonnet 5": {
@@ -9788,9 +10010,9 @@
    "files": []
   },
   "iCosiSenpai/age-of-decomp": {
-   "head": "4c2cca71b75b41daf8e1ceabd7d00fc7eafb3648",
-   "scannedAt": "2026-11-24T00:04:35.710Z",
-   "commits": 64,
+   "head": "db6ea51fe8c057eb4048dd0f9393d52dfdbfacd7",
+   "scannedAt": "2026-11-24T06:52:39.919Z",
+   "commits": 69,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -9812,7 +10034,8 @@
       "2026-11-17": 2,
       "2026-11-16": 2,
       "2026-11-23": 14,
-      "2026-11-22": 2
+      "2026-11-22": 2,
+      "2026-11-24": 5
      }
     }
    },
@@ -9982,9 +10205,9 @@
    "files": []
   },
   "imnotsharingmyname/pcportastrobot": {
-   "head": "6c6560af85cc6c63ef716e3a3aa31ecc90d24bda",
-   "scannedAt": "2026-11-23T07:47:14.698Z",
-   "commits": 31,
+   "head": "51ae284c3bf3c91ad4b1e531565be245c18ac0f3",
+   "scannedAt": "2026-11-24T06:52:59.763Z",
+   "commits": 44,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -10107,16 +10330,16 @@
    ]
   },
   "imyourhuckleberryponcho/Pokemon-XD-PC-Port": {
-   "head": "272a03da154b40753ee13212c31933dbb32c266a",
-   "scannedAt": "2026-11-24T00:04:16.576Z",
-   "commits": 24,
+   "head": "1c40dffde42f635056ba8f7785d117db860caba6",
+   "scannedAt": "2026-11-24T06:52:21.642Z",
+   "commits": 25,
    "credits": {},
    "files": []
   },
   "Invictus-potens/smt4-recomp": {
-   "head": "d4162e79c77f736ff1c2ea08ff9be454f7f72b3f",
-   "scannedAt": "2026-11-15T06:42:26.128Z",
-   "commits": 64,
+   "head": "88bb44669d88f2225cb0955301e33acd90fadd39",
+   "scannedAt": "2026-11-24T06:52:42.437Z",
+   "commits": 67,
    "credits": {},
    "files": []
   },
@@ -10148,9 +10371,9 @@
    "files": []
   },
   "irnutsmurt/Cubic.Heroes": {
-   "head": "3132ca4f0b5fe6d7adb6daec1c42f770f4f96ab1",
-   "scannedAt": "2026-11-22T19:49:11.547Z",
-   "commits": 404,
+   "head": "ff17459936eba3179119110205bf8705f09806f6",
+   "scannedAt": "2026-11-24T06:52:49.908Z",
+   "commits": 442,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -10178,7 +10401,10 @@
       "2026-11-02": 17,
       "2026-11-01": 20,
       "2026-10-31": 9,
-      "2026-10-30": 12
+      "2026-10-30": 12,
+      "2026-11-24": 6,
+      "2026-11-23": 22,
+      "2026-11-22": 1
      }
     }
    },
@@ -10567,9 +10793,9 @@
    ]
   },
   "Jarrodfeng/wwe2k14-recomp": {
-   "head": "de26df28d477c73ee58a258163f01dd666daba3d",
-   "scannedAt": "2026-11-20T20:32:24.633Z",
-   "commits": 40,
+   "head": "8139715a84a68345ea2db8fb313ab3dc4e384f06",
+   "scannedAt": "2026-11-24T06:53:14.683Z",
+   "commits": 41,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -10595,7 +10821,33 @@
       "2026-11-13": 1,
       "2026-11-15": 1,
       "2026-11-19": 1,
-      "2026-11-20": 1
+      "2026-11-20": 1,
+      "2026-11-24": 1
+     }
+    }
+   },
+   "files": []
+  },
+  "Jauidev/Gears3Recomp": {
+   "head": "13cd520410c0a98b7c624d69cc27892fc5bbd1de",
+   "scannedAt": "2026-11-24T06:53:12.236Z",
+   "commits": 7,
+   "credits": {
+    "Claude Fable 5.2": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-10": 1
+     }
+    },
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-23": 4,
+      "2026-11-03": 2
      }
     }
    },
@@ -10649,9 +10901,9 @@
    "files": []
   },
   "JEschete/VS-NativePort": {
-   "head": "a144ae986d4d1318c4fe8bfa1077494758187f21",
-   "scannedAt": "2026-11-24T00:04:48.269Z",
-   "commits": 3741,
+   "head": "7a69555d2530270b630cccf78238a7f310b07dcf",
+   "scannedAt": "2026-11-24T06:52:48.209Z",
+   "commits": 3754,
    "credits": {},
    "files": []
   },
@@ -10788,9 +11040,9 @@
    "files": []
   },
   "jhaizhou-ops/S2Arm": {
-   "head": "9d5c754e097261e2d0b4097edc96eeb08fcba3b2",
-   "scannedAt": "2026-11-24T00:05:42.426Z",
-   "commits": 9635,
+   "head": "3e6178d82314d78e28b0b23d094187a6b20948c2",
+   "scannedAt": "2026-11-24T06:53:25.490Z",
+   "commits": 9681,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -10844,7 +11096,8 @@
       "2026-11-20": 326,
       "2026-11-21": 246,
       "2026-11-22": 156,
-      "2026-11-23": 128
+      "2026-11-23": 129,
+      "2026-11-24": 17
      }
     },
     "Claude Sonnet 5.5": {
@@ -11104,9 +11357,9 @@
    "files": []
   },
   "JonathanDC64/DemonsSoulsRecomp": {
-   "head": "bfe810b011462a3cea9bb92a37cd2c555820fbca",
-   "scannedAt": "2026-11-24T00:04:52.357Z",
-   "commits": 2111,
+   "head": "2661e472e12331e1e2291973498b9a78fdf0a79c",
+   "scannedAt": "2026-11-24T06:52:50.261Z",
+   "commits": 2114,
    "credits": {
     "Claude Opus 4.8": {
      "vendor": "anthropic",
@@ -11177,7 +11430,8 @@
       "2026-11-20": 15,
       "2026-11-21": 13,
       "2026-11-22": 33,
-      "2026-11-23": 16
+      "2026-11-23": 16,
+      "2026-11-24": 2
      }
     }
    },
@@ -11576,9 +11830,9 @@
    ]
   },
   "Jstackzz/MK-3D-rollback": {
-   "head": "25ac00656334bbc199135d62399e459ad4ad6333",
-   "scannedAt": "2026-11-21T07:18:33.387Z",
-   "commits": 80,
+   "head": "3d00082a7f2a504a04bff9728a623ffc3a448aa7",
+   "scannedAt": "2026-11-24T06:53:06.654Z",
+   "commits": 82,
    "credits": {
     "Claude Fable 5.1": {
      "vendor": "anthropic",
@@ -11614,16 +11868,17 @@
       "2026-11-14": 9,
       "2026-11-17": 1,
       "2026-11-19": 2,
-      "2026-11-20": 3
+      "2026-11-20": 3,
+      "2026-11-24": 2
      }
     }
    },
    "files": []
   },
   "Jstar269/Nakagawa-Recomp": {
-   "head": "797d3a6190392f9b2e69e1c6ad3b262fed2d902b",
-   "scannedAt": "2026-11-24T00:05:37.577Z",
-   "commits": 1912,
+   "head": "a5cb9d13e03daa099f25da011f2a0cb49bd6efb5",
+   "scannedAt": "2026-11-24T06:53:24.725Z",
+   "commits": 1917,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -11970,9 +12225,9 @@
    "files": []
   },
   "KaikoClanworth1/mua3-native": {
-   "head": "d982d9d12aa2e9422d5f62fd6540c789a1a868b5",
-   "scannedAt": "2026-11-24T00:04:27.114Z",
-   "commits": 230,
+   "head": "452f4f16e26e2cce2aae32e8dc26d53a95154ee4",
+   "scannedAt": "2026-11-24T06:52:32.621Z",
+   "commits": 237,
    "credits": {
     "Claude Fable 5.1": {
      "vendor": "anthropic",
@@ -12018,7 +12273,8 @@
       "2026-11-20": 9,
       "2026-11-21": 6,
       "2026-11-22": 2,
-      "2026-11-23": 12
+      "2026-11-23": 12,
+      "2026-11-24": 7
      }
     }
    },
@@ -12382,6 +12638,13 @@
    },
    "files": []
   },
+  "Katon17/nfsmw-linux": {
+   "head": "ef10bc273a727f60331eae85a38f2a54e4b56088",
+   "scannedAt": "2026-11-24T06:53:07.871Z",
+   "commits": 38,
+   "credits": {},
+   "files": []
+  },
   "KawaiiBunga/MKVDCU-Recomp": {
    "head": "da5f1dd608135ffd55b4103bd669183089628501",
    "scannedAt": "2026-11-12T14:58:22.753Z",
@@ -12414,16 +12677,16 @@
    "files": []
   },
   "keepvaibin/nebula": {
-   "head": "68a015980d2df845be2c0692519d390d4b9ffcb1",
-   "scannedAt": "2026-11-24T00:04:21.858Z",
-   "commits": 3101,
+   "head": "cd1dc8cae22e26e52f13c40382cc1be1b99e115e",
+   "scannedAt": "2026-11-24T06:52:30.103Z",
+   "commits": 3127,
    "credits": {},
    "files": []
   },
   "kerokline/BreathOfFire3PCPort": {
-   "head": "e16f999e4fddedb1bb2ce819cbda46dfcf24d5fa",
-   "scannedAt": "2026-11-24T00:05:24.855Z",
-   "commits": 5338,
+   "head": "65b7810f29d6b86d13ddf34286f43974248589ec",
+   "scannedAt": "2026-11-24T06:53:15.677Z",
+   "commits": 5344,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -12506,7 +12769,8 @@
       "2026-11-20": 25,
       "2026-11-22": 23,
       "2026-11-21": 12,
-      "2026-11-23": 17
+      "2026-11-23": 17,
+      "2026-11-24": 2
      }
     },
     "Claude Opus": {
@@ -12584,7 +12848,8 @@
       "2026-11-20": 34,
       "2026-11-21": 25,
       "2026-11-22": 8,
-      "2026-11-23": 3
+      "2026-11-23": 3,
+      "2026-11-24": 3
      }
     }
    },
@@ -12660,9 +12925,9 @@
    ]
   },
   "klark231/mhrise-recomp": {
-   "head": "79efe23ae9187e5e90cb3bed1e37abb5d6b5c766",
-   "scannedAt": "2026-11-24T00:04:28.169Z",
-   "commits": 146,
+   "head": "62907c0da86cc5168e2f96f66fe22f40b896f969",
+   "scannedAt": "2026-11-24T06:52:33.526Z",
+   "commits": 147,
    "credits": {},
    "files": []
   },
@@ -12791,9 +13056,9 @@
    "files": []
   },
   "kvse/dsr-native": {
-   "head": "5c059eeae03dfe4b6d063163c45f1a732e874aee",
-   "scannedAt": "2026-11-22T15:13:32.465Z",
-   "commits": 206,
+   "head": "17fe8838a5d53284826ff71abae8b59396b104e6",
+   "scannedAt": "2026-11-24T06:52:31.672Z",
+   "commits": 208,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -12817,7 +13082,8 @@
       "2026-11-06": 4,
       "2026-11-05": 51,
       "2026-11-04": 49,
-      "2026-11-22": 10
+      "2026-11-22": 10,
+      "2026-11-24": 2
      }
     }
    },
@@ -12939,9 +13205,9 @@
    "files": []
   },
   "Lazaer-YZY/ff13-lr-recomp": {
-   "head": "6e6c1cefe66c49ad193b51d6c1279b92012af911",
-   "scannedAt": "2026-11-24T00:05:16.611Z",
-   "commits": 13,
+   "head": "326557a60a6716e666887809e7a8adcb8a5633ff",
+   "scannedAt": "2026-11-24T06:53:13.056Z",
+   "commits": 14,
    "credits": {},
    "files": []
   },
@@ -13565,9 +13831,9 @@
    "files": []
   },
   "Lucas-blip-png/dkb-pc-recomp": {
-   "head": "8794addde155356cbc64e4f8ae4bf829ebfdb4ee",
-   "scannedAt": "2026-11-22T06:56:42.912Z",
-   "commits": 1746,
+   "head": "a104a3fad5dffd75013bd63e618c5e0b7520cf33",
+   "scannedAt": "2026-11-24T06:52:38.835Z",
+   "commits": 1778,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -13602,7 +13868,9 @@
       "2026-11-16": 10,
       "2026-11-17": 7,
       "2026-11-18": 2,
-      "2026-11-19": 1
+      "2026-11-19": 1,
+      "2026-11-24": 1,
+      "2026-11-23": 1
      }
     },
     "Claude Sonnet 5.5": {
@@ -14019,9 +14287,9 @@
    ]
   },
   "mamcjr/BOTWRecompAndroid": {
-   "head": "4da6fc3baee5f0bf850a6ac2f84f929de1744e03",
-   "scannedAt": "2026-11-24T00:04:32.348Z",
-   "commits": 667,
+   "head": "69a7db8b3014694dea41d2c0158cd73414a471ec",
+   "scannedAt": "2026-11-24T06:52:37.285Z",
+   "commits": 675,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -14061,7 +14329,8 @@
       "2026-11-20": 5,
       "2026-11-21": 6,
       "2026-11-22": 1,
-      "2026-11-23": 1
+      "2026-11-23": 1,
+      "2026-11-24": 3
      }
     }
    },
@@ -14070,9 +14339,9 @@
    ]
   },
   "mamcjr/TOTKDroid": {
-   "head": "deec5c114d85ad05abe3ddb0e8c84843c3e8e2e0",
-   "scannedAt": "2026-11-24T00:04:33.509Z",
-   "commits": 513,
+   "head": "a3a9130bcfd8578d40ad865e2f6ab249ec1e9ac2",
+   "scannedAt": "2026-11-24T06:52:37.816Z",
+   "commits": 517,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -14109,7 +14378,8 @@
       "2026-11-20": 2,
       "2026-11-21": 4,
       "2026-11-22": 13,
-      "2026-11-23": 9
+      "2026-11-23": 9,
+      "2026-11-24": 4
      }
     }
    },
@@ -14541,9 +14811,9 @@
    "files": []
   },
   "Matteo842/CrashBandicoot-Launcher": {
-   "head": "1869be57b52a26f3e97815fc46298fb3ef64e06a",
-   "scannedAt": "2026-11-24T00:04:42.389Z",
-   "commits": 459,
+   "head": "02eaae380ce2d46e04223223b90797db62ea04c0",
+   "scannedAt": "2026-11-24T06:52:45.697Z",
+   "commits": 464,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -15520,9 +15790,9 @@
    "files": []
   },
   "MildRain479/PokePark-2-Wiicompiled": {
-   "head": "10528237001dfdb996f290d22df506984425297d",
-   "scannedAt": "2026-11-17T20:34:19.342Z",
-   "commits": 273,
+   "head": "620f6bfdfae1606d42c98aac5b1e7db02e05523f",
+   "scannedAt": "2026-11-24T06:52:28.961Z",
+   "commits": 277,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -15541,7 +15811,10 @@
       "2026-10-31": 7,
       "2026-10-30": 10,
       "2026-10-29": 31,
-      "2026-10-28": 19
+      "2026-10-28": 19,
+      "2026-11-24": 1,
+      "2026-11-23": 1,
+      "2026-11-22": 2
      }
     }
    },
@@ -15905,9 +16178,9 @@
    "files": []
   },
   "MormonFTP-hub/gt5-recomp": {
-   "head": "bfe9bea476e41aadeae450128fdcc274851dcb61",
-   "scannedAt": "2026-11-24T00:04:53.939Z",
-   "commits": 170,
+   "head": "64ca1697c5f9bb513bfe0414d9a36c10dafd0a37",
+   "scannedAt": "2026-11-24T06:52:51.258Z",
+   "commits": 171,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -15917,7 +16190,8 @@
       "2026-11-18": 7,
       "2026-11-20": 1,
       "2026-11-22": 1,
-      "2026-11-23": 1
+      "2026-11-23": 1,
+      "2026-11-24": 1
      }
     },
     "Claude Opus 5.5": {
@@ -15966,9 +16240,9 @@
    ]
   },
   "MotaviaWorks/PSIVRecomp": {
-   "head": "c9a756cd6362f20fdd9a491a99fbbb542271004c",
-   "scannedAt": "2026-11-23T07:47:01.345Z",
-   "commits": 121,
+   "head": "c6dd2447e575db76980763523a7107e51f3b7fff",
+   "scannedAt": "2026-11-24T06:52:43.751Z",
+   "commits": 126,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -16000,7 +16274,8 @@
       "2026-11-19": 1,
       "2026-11-20": 2,
       "2026-11-22": 3,
-      "2026-11-23": 1
+      "2026-11-23": 1,
+      "2026-11-24": 5
      }
     }
    },
@@ -17840,9 +18115,9 @@
    ]
   },
   "mstan/Sonic3AndKnucklesRecomp": {
-   "head": "64139c65a7c8e7975e70a03eb38ce8d64f93fc49",
-   "scannedAt": "2026-11-23T07:47:01.903Z",
-   "commits": 485,
+   "head": "8289e44765c689faa2bd7d5385b2f65044804ed8",
+   "scannedAt": "2026-11-24T06:52:44.244Z",
+   "commits": 493,
    "credits": {
     "Claude Fable 5": {
      "vendor": "anthropic",
@@ -18817,6 +19092,25 @@
    },
    "files": []
   },
+  "MTG9T4/strikers-recomp": {
+   "head": "54aa14f8646ae38c9d9b2c326fdc51556057ada8",
+   "scannedAt": "2026-11-24T06:52:32.192Z",
+   "commits": 10,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-24": 1,
+      "2026-11-23": 1,
+      "2026-11-22": 1,
+      "2026-11-16": 2
+     }
+    }
+   },
+   "files": []
+  },
   "murkantor/Project-Midas": {
    "head": "adfbbf817cda21fe5918a56cf3292f84ed93e9e4",
    "scannedAt": "2026-11-08T06:07:41.262Z",
@@ -18829,6 +19123,31 @@
    "scannedAt": "2026-11-24T00:05:19.191Z",
    "commits": 12,
    "credits": {},
+   "files": []
+  },
+  "n0madic/Soulcalibur2HD-recomp": {
+   "head": "16da5c2940412717ab8b6ac49e566c7422610d77",
+   "scannedAt": "2026-11-24T06:52:53.312Z",
+   "commits": 38,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-10-16": 8
+     }
+    },
+    "Claude Sonnet 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-10-21": 3,
+      "2026-10-17": 2
+     }
+    }
+   },
    "files": []
   },
   "n0madic/StarCraft64-recomp": {
@@ -18952,9 +19271,9 @@
    ]
   },
   "n64hub/mario-party-recomp": {
-   "head": "b90a151cea425547b669821cf808ecf0c5ce8242",
-   "scannedAt": "2026-11-24T00:04:10.046Z",
-   "commits": 237,
+   "head": "3a003e49b1c1f0161c50972a8d1509486ded0a8c",
+   "scannedAt": "2026-11-24T06:52:19.758Z",
+   "commits": 297,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -18980,7 +19299,8 @@
       "2026-11-14": 1,
       "2026-11-18": 9,
       "2026-11-19": 1,
-      "2026-11-23": 9
+      "2026-11-23": 11,
+      "2026-11-24": 35
      }
     }
    },
@@ -19207,9 +19527,9 @@
    ]
   },
   "nathanialf/ico-pc": {
-   "head": "0aaa7ac704e3590b01bb1a6bba2e12c0c1161015",
-   "scannedAt": "2026-11-22T06:56:52.418Z",
-   "commits": 10867,
+   "head": "5396fcfcd273c1baffe7585b0fc3c79b899f5d17",
+   "scannedAt": "2026-11-24T06:52:48.922Z",
+   "commits": 10961,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -19277,9 +19597,9 @@
    "files": []
   },
   "Neguchads/Castlevania-COD-Recomp": {
-   "head": "2580f5386597716d811ffcf465d5c4e208bb66c6",
-   "scannedAt": "2026-11-24T00:05:02.942Z",
-   "commits": 6,
+   "head": "32072b45861a23ffff1c37be027e5f23a9d81ca1",
+   "scannedAt": "2026-11-24T06:53:05.283Z",
+   "commits": 8,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -19753,9 +20073,9 @@
    "files": []
   },
   "novapowers0/DBZ-Budokai-3-HD-Collection": {
-   "head": "4a8123dfd70b01bcb8c00fba317e36c2d54f6972",
-   "scannedAt": "2026-11-09T08:05:25.457Z",
-   "commits": 232,
+   "head": "ebf3430098a0958213739ac8f51e5aeca3a1567c",
+   "scannedAt": "2026-11-24T06:53:10.909Z",
+   "commits": 235,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -19777,7 +20097,8 @@
       "2026-10-09": 2,
       "2026-10-06": 6,
       "2026-10-05": 1,
-      "2026-10-04": 4
+      "2026-10-04": 4,
+      "2026-11-24": 3
      }
     }
    },
@@ -19839,9 +20160,9 @@
    "files": []
   },
   "nvd123-YT/MK7Recomp": {
-   "head": "bad4815a188c19a62dddac0933ca4369ec2569fb",
-   "scannedAt": "2026-11-24T00:04:40.246Z",
-   "commits": 244,
+   "head": "b9288cad32de246002007f0746d91b2fb032e24d",
+   "scannedAt": "2026-11-24T06:52:42.088Z",
+   "commits": 247,
    "credits": {},
    "files": []
   },
@@ -19904,9 +20225,9 @@
    ]
   },
   "OAleex/OpenShao": {
-   "head": "34a9b102e3032d085feaf500c3ab33891f22aa53",
-   "scannedAt": "2026-11-21T07:18:33.642Z",
-   "commits": 13,
+   "head": "b16310921eedd6c9f638b0880680eccc77121aec",
+   "scannedAt": "2026-11-24T06:53:07.067Z",
+   "commits": 14,
    "credits": {},
    "files": [
     "AGENTS.md"
@@ -20050,9 +20371,9 @@
    "files": []
   },
   "Okxmir/super-mario-3d-land-recompiled": {
-   "head": "b664070d325c3b4a91c80f4cbd7d3ec899b8a0cb",
-   "scannedAt": "2026-11-23T07:46:59.225Z",
-   "commits": 24,
+   "head": "0823d0b0a3721cadac7f2b1b736abe8e38846e7c",
+   "scannedAt": "2026-11-24T06:52:42.829Z",
+   "commits": 25,
    "credits": {},
    "files": []
   },
@@ -20205,9 +20526,9 @@
    ]
   },
   "OpenSmash-Ultimate/OpenSmash-Ultimate": {
-   "head": "c057aefab6821e14741f8a023f4e5ade0be3cff0",
-   "scannedAt": "2026-11-24T00:04:31.905Z",
-   "commits": 1259,
+   "head": "d348d070629ca2f566832823a5e71007767df9f6",
+   "scannedAt": "2026-11-24T06:52:34.209Z",
+   "commits": 1272,
    "credits": {
     "Claude Fable 5.1": {
      "vendor": "anthropic",
@@ -20277,7 +20598,8 @@
       "2026-11-16": 3,
       "2026-11-17": 4,
       "2026-11-20": 1,
-      "2026-11-23": 1
+      "2026-11-23": 1,
+      "2026-11-24": 1
      }
     },
     "Cursor": {
@@ -20935,10 +21257,19 @@
    "files": []
   },
   "Petexy/Tekken-Tag-2-Ultimate-Edition": {
-   "head": "af72bebca41727fd314cc2e3142aa67e26743c03",
-   "scannedAt": "2026-11-21T11:45:55.064Z",
-   "commits": 351,
+   "head": "7db8a1cfc80534f6603ff8056d26aa47f872498b",
+   "scannedAt": "2026-11-24T06:52:30.588Z",
+   "commits": 456,
    "credits": {
+    "Claude Fable 5.2": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-23": 8,
+      "2026-11-22": 8
+     }
+    },
     "Claude Opus 5.5": {
      "vendor": "anthropic",
      "tool": "Claude Code",
@@ -20976,7 +21307,10 @@
       "2026-11-17": 14,
       "2026-11-14": 3,
       "2026-11-13": 2,
-      "2026-11-21": 2
+      "2026-11-21": 14,
+      "2026-11-24": 1,
+      "2026-11-23": 22,
+      "2026-11-22": 4
      }
     },
     "Codex": {
@@ -21203,6 +21537,42 @@
    },
    "files": []
   },
+  "PotatoRecomp/RE4Wii-Android": {
+   "head": "b8f764e25570fca081f2e1d4c846abc451262bb3",
+   "scannedAt": "2026-11-24T06:52:29.377Z",
+   "commits": 40,
+   "credits": {
+    "Claude": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": false,
+     "days": {
+      "2026-11-22": 3,
+      "2026-11-21": 5,
+      "2026-11-20": 1,
+      "2026-11-19": 2,
+      "2026-11-15": 1,
+      "2026-11-10": 1
+     }
+    },
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-19": 1,
+      "2026-11-18": 2,
+      "2026-11-17": 1,
+      "2026-11-15": 8,
+      "2026-11-14": 6,
+      "2026-11-13": 4,
+      "2026-11-12": 1,
+      "2026-11-11": 4
+     }
+    }
+   },
+   "files": []
+  },
   "PoultryTumor/Evertopia": {
    "head": "6eb7d0ed2316a239b87f794cab4cc1ad1d8890e2",
    "scannedAt": "2026-11-23T07:46:38.658Z",
@@ -21255,6 +21625,31 @@
    "scannedAt": "2026-11-14T18:09:25.227Z",
    "commits": 209,
    "credits": {},
+   "files": []
+  },
+  "PrimeTimerer/Project-Grand-Tourer-Advanced": {
+   "head": "4d8b4aa86ed706461e4bffb25a4807a33d3ae2ec",
+   "scannedAt": "2026-11-24T06:52:51.620Z",
+   "commits": 9,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-24": 3,
+      "2026-11-23": 5
+     }
+    },
+    "Claude Sonnet 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-23": 1
+     }
+    }
+   },
    "files": []
   },
   "Project-Holon/eidos": {
@@ -21333,9 +21728,9 @@
    "files": []
   },
   "ps4star/WhiteRecomp": {
-   "head": "65047f891356a295dc6b246d8ac2b3f09e7172cc",
-   "scannedAt": "2026-11-24T00:05:26.709Z",
-   "commits": 50,
+   "head": "537c9cceb991fd27d6d90d4bc4a568ec52524c18",
+   "scannedAt": "2026-11-24T06:53:16.583Z",
+   "commits": 51,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -21347,7 +21742,8 @@
       "2026-11-19": 3,
       "2026-11-18": 12,
       "2026-11-22": 4,
-      "2026-11-23": 7
+      "2026-11-23": 7,
+      "2026-11-24": 1
      }
     }
    },
@@ -21420,9 +21816,9 @@
    "files": []
   },
   "qnfn/GRport": {
-   "head": "ac30ade2f65536651e9a0cd0bafb0c34a3cd09e1",
-   "scannedAt": "2026-11-20T20:32:09.537Z",
-   "commits": 109,
+   "head": "5ac4e563b2999aa6ca81a2e189e53344b52190d8",
+   "scannedAt": "2026-11-24T06:52:54.256Z",
+   "commits": 112,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -21436,7 +21832,8 @@
       "2026-11-17": 7,
       "2026-11-18": 3,
       "2026-11-19": 5,
-      "2026-11-20": 4
+      "2026-11-20": 4,
+      "2026-11-24": 3
      }
     }
    },
@@ -21861,9 +22258,9 @@
    "files": []
   },
   "recomp-nx/tw2de_nx": {
-   "head": "32df729a19ba948f40109e57d660fbc922302f95",
-   "scannedAt": "2026-11-21T11:46:36.321Z",
-   "commits": 52,
+   "head": "15111cb20e6219e916282a981c53a9fe8d0d7c5b",
+   "scannedAt": "2026-11-24T06:53:14.384Z",
+   "commits": 53,
    "credits": {},
    "files": []
   },
@@ -22649,10 +23046,27 @@
    "credits": {},
    "files": []
   },
+  "Rick-Barber/ScreamerRally-Recomp": {
+   "head": "02d5deb8fe88ba0899bbc7f5a0ad6182fb859035",
+   "scannedAt": "2026-11-24T06:53:18.821Z",
+   "commits": 2,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-23": 1,
+      "2026-11-22": 1
+     }
+    }
+   },
+   "files": []
+  },
   "rigaz29/Ascension-R": {
-   "head": "dad56329609b1eecbcb10cbc22302defd580cbc4",
-   "scannedAt": "2026-11-24T00:04:52.945Z",
-   "commits": 496,
+   "head": "970602f52cae47bb8a9729962f8622b78dd17b80",
+   "scannedAt": "2026-11-24T06:52:50.830Z",
+   "commits": 504,
    "credits": {},
    "files": []
   },
@@ -22687,11 +23101,47 @@
    "files": []
   },
   "RivierGrullon/kirby-epic-yarn-recomp": {
-   "head": "2744f1cda7b4c3bc02ebf664b7f9304436da7a69",
-   "scannedAt": "2026-11-24T00:04:18.660Z",
-   "commits": 177,
+   "head": "4bd35bafc6a4f6792b991d8c9df59fe139eef1c1",
+   "scannedAt": "2026-11-24T06:52:28.563Z",
+   "commits": 181,
    "credits": {},
    "files": []
+  },
+  "rob646464/city-folk-recompiled": {
+   "head": "1597da4d2d000a9c0fd3b633864626cc9c92657e",
+   "scannedAt": "2026-11-24T06:52:25.847Z",
+   "commits": 405,
+   "credits": {
+    "Claude Fable 5.2": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-11": 9
+     }
+    },
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-17": 6,
+      "2026-11-15": 4,
+      "2026-11-13": 9,
+      "2026-11-12": 32,
+      "2026-11-11": 8,
+      "2026-11-10": 56,
+      "2026-11-05": 11,
+      "2026-11-04": 67,
+      "2026-11-03": 49,
+      "2026-10-28": 51,
+      "2026-10-27": 71
+     }
+    }
+   },
+   "files": [
+    "CLAUDE.md"
+   ]
   },
   "rob646464/luigis-mansion-recompiled": {
    "head": "4605e9b2de9fd344d480223eb00abe1b6ed13f08",
@@ -22956,9 +23406,9 @@
    "files": []
   },
   "sabishii-bit/Gauntlet-Dark-Legacy-PC-Port": {
-   "head": "f7024da1f5faad56eae3bed91ae1a82176f7d930",
-   "scannedAt": "2026-11-24T00:04:16.206Z",
-   "commits": 1345,
+   "head": "a0e03b45e18e70e2497888cdbe92a1e8f68ed873",
+   "scannedAt": "2026-11-24T06:52:21.089Z",
+   "commits": 1379,
    "credits": {},
    "files": []
   },
@@ -23311,9 +23761,9 @@
    "files": []
   },
   "Santorayo3/icftd-recomp": {
-   "head": "b4cadc30ea89bf53a712a60df7265b531469bbd9",
-   "scannedAt": "2026-11-21T11:46:37.670Z",
-   "commits": 184,
+   "head": "99943d2fc448091e759ddfa76693cccc63ed24ac",
+   "scannedAt": "2026-11-24T06:53:15.305Z",
+   "commits": 187,
    "credits": {
     "GitHub Copilot": {
      "vendor": "github",
@@ -23324,7 +23774,8 @@
       "2026-11-15": 4,
       "2026-11-14": 4,
       "2026-11-13": 2,
-      "2026-11-12": 38
+      "2026-11-12": 38,
+      "2026-11-20": 2
      }
     }
    },
@@ -23631,10 +24082,19 @@
    },
    "files": []
   },
+  "Sergey004/FNAF1-Recomp-proj": {
+   "head": "214e63a5b3cfc119b40481ac154e28cca6d92c79",
+   "scannedAt": "2026-11-24T06:53:17.690Z",
+   "commits": 141,
+   "credits": {},
+   "files": [
+    "AGENTS.md"
+   ]
+  },
   "sergiomanzur/noble-archimedes": {
-   "head": "122f4d21c26963ad22edac80fefa2f1aa0ce27e8",
-   "scannedAt": "2026-11-24T00:05:03.268Z",
-   "commits": 57,
+   "head": "02822abd47a1271c1dbd85a62db03107ca537089",
+   "scannedAt": "2026-11-24T06:53:05.733Z",
+   "commits": 58,
    "credits": {
     "Claude Sonnet 5.5": {
      "vendor": "anthropic",
@@ -24169,9 +24629,9 @@
    ]
   },
   "Silentwarior112/GT3-PC-ENHANCED": {
-   "head": "9f8874e7666cccb390b541fe7109eb6fe2bd35e0",
-   "scannedAt": "2026-11-21T11:46:26.332Z",
-   "commits": 33,
+   "head": "c89b59cfc53ef12a50e627e2e8d33d83d9adb31c",
+   "scannedAt": "2026-11-24T06:52:48.568Z",
+   "commits": 34,
    "credits": {},
    "files": []
   },
@@ -24449,9 +24909,9 @@
    "files": []
   },
   "SlickAmogus/silent-hill-decomp": {
-   "head": "7f27206d6e6e5f5cf37cdbc923499ac00c6a65b8",
-   "scannedAt": "2026-11-24T00:04:46.711Z",
-   "commits": 6410,
+   "head": "9e598dc3a7dc8dd237cae43d1611cd780af6f728",
+   "scannedAt": "2026-11-24T06:52:46.936Z",
+   "commits": 6411,
    "credits": {
     "Claude Fable 5": {
      "vendor": "anthropic",
@@ -24763,7 +25223,7 @@
       "2026-11-19": 1,
       "2026-11-21": 1,
       "2026-11-22": 4,
-      "2026-11-23": 5
+      "2026-11-23": 6
      }
     },
     "Claude Sonnet 4.6": {
@@ -24911,9 +25371,9 @@
    "files": []
   },
   "SmokeDoggy044/CoD2-BRO-Native-Loader": {
-   "head": "7341aba04a829a51810a4b21d1082dff876270ef",
-   "scannedAt": "2026-11-22T06:56:59.684Z",
-   "commits": 1821,
+   "head": "7a607dc48ad12798537ea2dddfc14d9cf4d82b16",
+   "scannedAt": "2026-11-24T06:53:04.884Z",
+   "commits": 1872,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -24959,7 +25419,10 @@
       "2026-11-18": 27,
       "2026-11-19": 16,
       "2026-11-20": 13,
-      "2026-11-21": 23
+      "2026-11-21": 37,
+      "2026-11-24": 20,
+      "2026-11-23": 2,
+      "2026-11-22": 15
      }
     }
    },
@@ -25760,9 +26223,9 @@
    "files": []
   },
   "Spicywonda/castlevania-chronicles-recomp": {
-   "head": "99ac8ae85e679ad60eadb7cc86be4f59bd4580ce",
-   "scannedAt": "2026-11-15T17:41:56.976Z",
-   "commits": 18,
+   "head": "14c556ea463adbaf9542f8c5d7a59eef7dc9451f",
+   "scannedAt": "2026-11-24T06:52:45.312Z",
+   "commits": 21,
    "credits": {},
    "files": []
   },
@@ -26054,9 +26517,9 @@
    "files": []
   },
   "spriteice/JSRF-PC": {
-   "head": "6b682484c047915003573ae4a9ea4e5104fb1acb",
-   "scannedAt": "2026-11-24T00:05:06.356Z",
-   "commits": 874,
+   "head": "cd3d61d35def258a04c75a1474e3e28f7942bb5d",
+   "scannedAt": "2026-11-24T06:53:06.230Z",
+   "commits": 879,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -26073,7 +26536,7 @@
      "days": {
       "2026-11-14": 2,
       "2026-11-22": 4,
-      "2026-11-23": 4
+      "2026-11-23": 9
      }
     },
     "Claude Opus 4.6": {
@@ -26177,6 +26640,26 @@
    },
    "files": [
     ".claude"
+   ]
+  },
+  "SqueezyLemonade/HookshotVR": {
+   "head": "266d31f8f644a1be044fc19c6f426c6448aa66af",
+   "scannedAt": "2026-11-24T06:52:20.530Z",
+   "commits": 4,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-24": 1,
+      "2026-11-23": 3
+     }
+    }
+   },
+   "files": [
+    ".claude",
+    "AGENTS.md"
    ]
   },
   "SSunnKing/Open-Nectar---Pikmin-Native-PC-Mobile-Port": {
@@ -26479,6 +26962,79 @@
    },
    "files": []
   },
+  "SulphurS16/Regaliant": {
+   "head": "9ab1b76231a03ce3095c90fa4643f8f1b3a126df",
+   "scannedAt": "2026-11-24T06:53:04.482Z",
+   "commits": 937,
+   "credits": {
+    "Claude Fable 5.2": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-18": 2,
+      "2026-11-17": 22,
+      "2026-11-15": 1,
+      "2026-11-14": 2
+     }
+    },
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-24": 5,
+      "2026-11-23": 18,
+      "2026-11-22": 21,
+      "2026-11-21": 20,
+      "2026-11-20": 11,
+      "2026-11-19": 15,
+      "2026-11-18": 24,
+      "2026-11-16": 36,
+      "2026-11-15": 36,
+      "2026-11-14": 16,
+      "2026-11-13": 19,
+      "2026-11-12": 17,
+      "2026-11-11": 31,
+      "2026-11-10": 23,
+      "2026-11-09": 36,
+      "2026-11-08": 5,
+      "2026-11-07": 19,
+      "2026-11-06": 29,
+      "2026-11-05": 16,
+      "2026-11-04": 22,
+      "2026-11-03": 16,
+      "2026-11-02": 13,
+      "2026-11-01": 29,
+      "2026-10-31": 29,
+      "2026-10-30": 14,
+      "2026-10-29": 26,
+      "2026-10-28": 16,
+      "2026-10-27": 13,
+      "2026-10-26": 19,
+      "2026-10-25": 3,
+      "2026-10-24": 14,
+      "2026-10-23": 19,
+      "2026-10-22": 6,
+      "2026-10-21": 22,
+      "2026-10-20": 8,
+      "2026-10-19": 13,
+      "2026-10-18": 2,
+      "2026-10-17": 7,
+      "2026-10-16": 15,
+      "2026-10-15": 27,
+      "2026-10-14": 25,
+      "2026-10-13": 26,
+      "2026-10-12": 30,
+      "2026-10-11": 29,
+      "2026-10-10": 31,
+      "2026-10-09": 11,
+      "2026-10-08": 24
+     }
+    }
+   },
+   "files": []
+  },
   "SulphurS16/TLG-Port": {
    "head": "900a20e3a6947713277021434f16520dacd84211",
    "scannedAt": "2026-11-24T00:04:59.061Z",
@@ -26520,9 +27076,9 @@
    "files": []
   },
   "SuperCatElvis/UntilDawn_PC": {
-   "head": "9660fdcab83448aa971644b33aff95a2310bab41",
-   "scannedAt": "2026-11-21T11:46:28.582Z",
-   "commits": 46,
+   "head": "9e9968d209e69a0930dab522da737794f9cff250",
+   "scannedAt": "2026-11-24T06:52:59.323Z",
+   "commits": 47,
    "credits": {
     "Claude Opus 5.5": {
      "vendor": "anthropic",
@@ -26603,6 +27159,23 @@
      "versioned": false,
      "days": {
       "2026-10-05": 1
+     }
+    }
+   },
+   "files": []
+  },
+  "T4ctica1YT/UEWASM": {
+   "head": "54542ae3c251eb1a11ce81eef5983e58a1a84ee9",
+   "scannedAt": "2026-11-24T06:53:26.223Z",
+   "commits": 54,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-20": 2,
+      "2026-11-18": 1
      }
     }
    },
@@ -27138,9 +27711,9 @@
    "files": []
   },
   "teclilla18/sonic-riders-recomp": {
-   "head": "81654b46ecb62a0d8bae9d329415343b9bf7776c",
-   "scannedAt": "2026-11-24T00:04:17.644Z",
-   "commits": 557,
+   "head": "2f1d028d187361e9994d3b94676a4f3af2fbe1fe",
+   "scannedAt": "2026-11-24T06:52:22.057Z",
+   "commits": 558,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -27187,7 +27760,8 @@
       "2026-11-20": 37,
       "2026-11-21": 5,
       "2026-11-22": 1,
-      "2026-11-23": 1
+      "2026-11-23": 1,
+      "2026-11-24": 1
      }
     },
     "Codex": {
@@ -27223,9 +27797,9 @@
    "files": []
   },
   "TekRantGaming/Battlefield-1943-Reborn": {
-   "head": "4acb315fb57cb968ee56706442ffc4881236bd94",
-   "scannedAt": "2026-11-24T00:05:12.655Z",
-   "commits": 411,
+   "head": "cacefd2ddcb91dbebdaf4cda58d8861c8ead77a3",
+   "scannedAt": "2026-11-24T06:53:10.326Z",
+   "commits": 415,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -27265,7 +27839,8 @@
       "2026-11-20": 42,
       "2026-11-21": 13,
       "2026-11-22": 1,
-      "2026-11-23": 4
+      "2026-11-23": 4,
+      "2026-11-24": 4
      }
     }
    },
@@ -27874,6 +28449,59 @@
    },
    "files": []
   },
+  "thegh0sts/NHL-21-PS4-PORT": {
+   "head": "16bd55e8ff7ad87f574b46d88ace0251655b8ce1",
+   "scannedAt": "2026-11-24T06:52:56.593Z",
+   "commits": 493,
+   "credits": {
+    "Claude Fable 5.1": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-10-10": 10,
+      "2026-10-09": 18
+     }
+    },
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-18": 2,
+      "2026-11-17": 1,
+      "2026-11-14": 2,
+      "2026-11-13": 1,
+      "2026-11-11": 2,
+      "2026-10-26": 1,
+      "2026-10-24": 1,
+      "2026-10-21": 14,
+      "2026-10-20": 19,
+      "2026-10-19": 3,
+      "2026-10-17": 9,
+      "2026-10-16": 31,
+      "2026-10-15": 40,
+      "2026-10-14": 7,
+      "2026-10-07": 1,
+      "2026-10-06": 1,
+      "2026-10-03": 1,
+      "2026-10-01": 19,
+      "2026-09-30": 29,
+      "2026-09-26": 3,
+      "2026-09-25": 83
+     }
+    },
+    "Claude Sonnet 5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-09-27": 1
+     }
+    }
+   },
+   "files": []
+  },
   "TheGh0stShip/BattleTanx-Global-Assault-PC-Port": {
    "head": "3c074c3bd9e20e81c32a37b588a70ecd2073e128",
    "scannedAt": "2026-11-03T14:15:47.508Z",
@@ -28041,6 +28669,26 @@
       "2026-11-05": 1,
       "2026-11-06": 2,
       "2026-11-08": 5
+     }
+    }
+   },
+   "files": []
+  },
+  "Thorhax/ShaolinMonks-NX": {
+   "head": "f3fb1692beda214196394ecd488e05425c1efd41",
+   "scannedAt": "2026-11-24T06:53:07.440Z",
+   "commits": 8,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-22": 1,
+      "2026-11-10": 2,
+      "2026-10-27": 2,
+      "2026-10-22": 1,
+      "2026-10-21": 2
      }
     }
    },
@@ -28489,9 +29137,9 @@
    "files": []
   },
   "tyle-beep/Haiku": {
-   "head": "f23e8956ff4ba166781e611f57dc6dcd1ee7cc87",
-   "scannedAt": "2026-11-21T11:46:19.595Z",
-   "commits": 6,
+   "head": "26669c95b6bb4ecb152ec6883b6118d1135a383c",
+   "scannedAt": "2026-11-24T06:52:41.600Z",
+   "commits": 7,
    "credits": {},
    "files": []
   },
@@ -28819,18 +29467,18 @@
    "files": []
   },
   "undecuple/project-helghast": {
-   "head": "7072e49af4d9c4bcc577034fc6bd2872cd7fce9f",
-   "scannedAt": "2026-11-24T00:04:55.527Z",
-   "commits": 60,
+   "head": "d79d4ec4c6da7901801e29df5c0d0274657ac7e3",
+   "scannedAt": "2026-11-24T06:52:52.597Z",
+   "commits": 67,
    "credits": {},
    "files": [
     "AGENTS.md"
    ]
   },
   "undecuple/project-pyrrhus": {
-   "head": "9895fb9a66a2cde85e33cf1531be95e689b099d9",
-   "scannedAt": "2026-11-19T20:34:22.392Z",
-   "commits": 48,
+   "head": "29f0a7596f1812846bfad7c37d666ba6ee231a3a",
+   "scannedAt": "2026-11-24T06:52:52.016Z",
+   "commits": 54,
    "credits": {},
    "files": [
     "AGENTS.md"
@@ -29218,6 +29866,13 @@
     "CLAUDE.md"
    ]
   },
+  "veritr1x/reincomp": {
+   "head": "b3376259fbbd54ec79f71cf5f419d8c1cb9b3f1d",
+   "scannedAt": "2026-11-24T06:53:20.771Z",
+   "commits": 45,
+   "credits": {},
+   "files": []
+  },
   "vfjoo888/SuperWonders": {
    "head": "3e69008b41d4ad31f52d15a1d3363e337e71fa16",
    "scannedAt": "2026-11-24T00:04:29.943Z",
@@ -29393,6 +30048,25 @@
       "2026-10-18": 3,
       "2026-10-17": 1,
       "2026-11-21": 1
+     }
+    }
+   },
+   "files": []
+  },
+  "VirtuaQuest/Arms-Rearmed": {
+   "head": "d236f7ada1ef6f3fd52cc60ddfb1ade927cc113a",
+   "scannedAt": "2026-11-24T06:52:31.272Z",
+   "commits": 19,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-24": 1,
+      "2026-11-22": 5,
+      "2026-11-11": 3,
+      "2026-11-08": 10
      }
     }
    },
@@ -29716,9 +30390,9 @@
    "files": []
   },
   "VoltTMC/SonicColorsRecomp": {
-   "head": "0e3321168642b14882eff6670d634229d0be8027",
-   "scannedAt": "2026-11-24T00:04:21.421Z",
-   "commits": 150,
+   "head": "6e01cd587c3318dac1f57f677c8aa3bf44115d62",
+   "scannedAt": "2026-11-24T06:52:29.789Z",
+   "commits": 154,
    "credits": {
     "Cursor": {
      "vendor": "cursor",
@@ -29727,7 +30401,8 @@
      "days": {
       "2026-11-21": 26,
       "2026-11-20": 23,
-      "2026-11-23": 23
+      "2026-11-23": 23,
+      "2026-11-24": 4
      }
     }
    },
@@ -29852,6 +30527,27 @@
    },
    "files": []
   },
+  "wbalmung/Rugrats-Search-for-Reptar-Recomp": {
+   "head": "52694a636035e8248a7dec4a585f2fe4dcc09561",
+   "scannedAt": "2026-11-24T06:52:46.260Z",
+   "commits": 53,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-24": 8,
+      "2026-11-23": 16,
+      "2026-11-21": 6,
+      "2026-11-20": 1,
+      "2026-11-19": 17,
+      "2026-11-15": 5
+     }
+    }
+   },
+   "files": []
+  },
   "weile10000/xc2-ns2-recomp": {
    "head": "1d91e58e0a6e460c3982335543c30e5dc5a9dfcb",
    "scannedAt": "2026-11-24T00:04:33.943Z",
@@ -29917,9 +30613,9 @@
    "files": []
   },
   "wie-project/PS4Recomp": {
-   "head": "5b40664045708cccc50746cbbd0511e32c8921ba",
-   "scannedAt": "2026-11-24T00:05:40.552Z",
-   "commits": 310,
+   "head": "97d9f6e3f74717d9fc15ebcf398d9a0808163417",
+   "scannedAt": "2026-11-24T06:53:25.144Z",
+   "commits": 312,
    "credits": {
     "Claude": {
      "vendor": "anthropic",
@@ -30533,9 +31229,9 @@
    "files": []
   },
   "XiONDiGiTaL/EmblemWeave": {
-   "head": "ea4a7adc3ac3b9559b0ab837a78ed47fa35b18b7",
-   "scannedAt": "2026-11-24T00:04:35.308Z",
-   "commits": 444,
+   "head": "6ac9791f2b60b40a5b52b3bb6350ead4fae58dcb",
+   "scannedAt": "2026-11-24T06:52:39.619Z",
+   "commits": 458,
    "credits": {
     "Claude Fable 5.2": {
      "vendor": "anthropic",
@@ -30579,7 +31275,8 @@
       "2026-11-19": 10,
       "2026-11-20": 16,
       "2026-11-23": 14,
-      "2026-11-22": 2
+      "2026-11-22": 2,
+      "2026-11-24": 10
      }
     }
    },
@@ -31039,9 +31736,9 @@
    "files": []
   },
   "YuutaTsubasa/Free-Riders-Recompiled": {
-   "head": "74ebaad12100d9ed913a9f2c35966c43202edefb",
-   "scannedAt": "2026-11-24T00:05:20.568Z",
-   "commits": 1218,
+   "head": "eb550ec112d4781d28bc8300c26a0f0de83b5b7c",
+   "scannedAt": "2026-11-24T06:53:13.904Z",
+   "commits": 1222,
    "credits": {
     "Claude Opus 5": {
      "vendor": "anthropic",
@@ -31108,7 +31805,8 @@
       "2026-11-20": 21,
       "2026-11-21": 22,
       "2026-11-22": 4,
-      "2026-11-23": 7
+      "2026-11-23": 8,
+      "2026-11-24": 1
      }
     },
     "Claude Sonnet 5.5": {
@@ -31239,6 +31937,13 @@
    "files": [
     ".claude"
    ]
+  },
+  "Zaxaerith/SuperMarioWorld2YoshisIslandRecomp": {
+   "head": "4af0bcfad05eebdd2312b1ec145ada6935bc22b6",
+   "scannedAt": "2026-11-24T06:52:19.370Z",
+   "commits": 46,
+   "credits": {},
+   "files": []
   },
   "zdiemer/haze-recomp": {
    "head": "8e3c1c38a3cbe3bd7c234fcd6b4aca827fe76591",
@@ -31590,6 +32295,25 @@
    "files": [
     ".claude"
    ]
+  },
+  "zlinoliver/BotW-SheikahVision": {
+   "head": "3a39c9171af84d6008dd57e02b7fd6fd3ec56e8e",
+   "scannedAt": "2026-11-24T06:52:30.985Z",
+   "commits": 13,
+   "credits": {
+    "Claude Opus 5.5": {
+     "vendor": "anthropic",
+     "tool": "Claude Code",
+     "versioned": true,
+     "days": {
+      "2026-11-23": 3,
+      "2026-11-22": 5,
+      "2026-11-19": 2,
+      "2026-11-18": 3
+     }
+    }
+   },
+   "files": []
   },
   "ZloiKILLER/nfs3recompiled-android": {
    "head": "9644b1d3cdc1cd44beea684c30a46ce92728033b",
