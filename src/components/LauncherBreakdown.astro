@@ -1,0 +1,124 @@
+---
+/**
+ * Where the listed games stand in RecompLauncher (data/launcher.json): one whole as a tall segmented bar. An ordinal ramp of RecompLauncher's cyan (validated for the dark
+ * surface: monotone lightness, one hue); "not in the catalog" is the empty track, not a fourth colour.
+ */
+import { available, type Entry } from "../lib/data.ts";
+
+const LEVELS = [
+  { id: "own", name: "1-click, developer's own setup", color: "#34f2e8", ink: "#0b0d14", test: (e: Entry) => Boolean(e.launcher?.easy && e.launcher.own) },
+  { id: "rl", name: "1-click, set up by RecompLauncher", color: "#22aaa6", ink: "#0b0d14", test: (e: Entry) => Boolean(e.launcher?.easy && !e.launcher.own) },
+  { id: "listed", name: "In the catalog, set up by hand", color: "#1a6f73", ink: "#e8ecf6", test: (e: Entry) => Boolean(e.launcher && !e.launcher.easy) },
+  { id: "none", name: "Not in RecompLauncher", color: "", ink: "var(--muted)", test: (e: Entry) => !e.launcher },
+] as const;
+
+const total = available.length;
+const parts = LEVELS.map((l) => {
+  const n = available.filter(l.test).length;
+  return { ...l, n, share: n / total };
+});
+const pct = (x: number) => `${Math.round(x * 100)}%`;
+
+---
+
+<section class="rlb">
+  <h2>Where the list stands in RecompLauncher</h2>
+  <p class="muted">All {total.toLocaleString("en")} games you can get now, by what RecompLauncher does with them. From its public catalog, refreshed with every data fetch.</p>
+
+  <div class="seg" role="img" aria-label={parts.map((p) => `${p.name}: ${p.n} (${pct(p.share)})`).join("; ")}>
+    {
+      parts
+        .filter((p) => p.n > 0)
+        .map((p) => (
+          <span class={`blk b-${p.id}`} style={`flex:${p.n} 1 0;${p.color ? `background:${p.color};` : ""}color:${p.ink}`} title={`${p.name}: ${p.n.toLocaleString("en")} games (${pct(p.share)})`} tabindex="0">
+            {p.share >= 0.07 && <span class="v">{pct(p.share)}</span>}
+          </span>
+        ))
+    }
+  </div>
+  <ul class="legend">
+    {
+      parts.map((p) => (
+        <li>
+          <span class={`sw b-${p.id}`} style={p.color ? `background:${p.color}` : ""} />
+          {p.name} <span class="mono muted">{p.n.toLocaleString("en")}{p.share < 0.07 && ` · ${pct(p.share)}`}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+
+  <details class="table-view">
+    <summary class="mono">Show as a table</summary>
+    <table>
+      <thead><tr><th>Status</th><th>Games</th><th>Share</th></tr></thead>
+      <tbody>{parts.map((p) => <tr><td>{p.name}</td><td class="mono">{p.n}</td><td class="mono">{pct(p.share)}</td></tr>)}</tbody>
+    </table>
+  </details>
+</section>
+
+<style>
+  .seg {
+    display: flex;
+    gap: 2px;
+    height: 28px;
+    margin: 1.2rem 0 0.7rem;
+  }
+  .blk {
+    min-width: 2px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .blk:focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+  /* not in the catalog: nothing there, so the empty track */
+  .b-none {
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .legend {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.2rem;
+    font-size: 0.82rem;
+  }
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .sw {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 3px;
+  }
+  .table-view {
+    margin-top: 1.2rem;
+    font-size: 0.82rem;
+  }
+  .table-view summary {
+    cursor: pointer;
+    color: var(--muted);
+  }
+  .table-view table {
+    margin-top: 0.8rem;
+    border-collapse: collapse;
+  }
+  .table-view th,
+  .table-view td {
+    padding: 0.2rem 1rem 0.2rem 0;
+    text-align: left;
+  }
+</style>

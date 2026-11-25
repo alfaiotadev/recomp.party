@@ -232,6 +232,8 @@ export const Milestone = z.strictObject({
   sources: z.array(z.strictObject({ label: z.string().min(1), url: z.url() })).min(1),
   /** A count milestone's Nth project (owner/repo): the one that took the list to the round number. */
   project: z.string().optional(),
+  /** A chart of its own on the milestone's page, in place of the releases-per-week chart. */
+  chart: z.enum(["launcher"]).optional(),
 });
 export type Milestone = z.infer<typeof Milestone>;
 
@@ -283,6 +285,11 @@ export const LauncherGame = z.object({
   easy: z.boolean(),
   /** The setup comes from the developer's own recomplauncher.json, not from the launcher's catalog. */
   own: z.boolean(),
+  /**
+   * One-click setup since: the day a data fetch first saw it. The catalog has no such date, so the ones already there
+   * on the first fetch (2026-11-25) carry the day RecompLauncher's catalog added the game instead.
+   */
+  since: z.iso.date().optional(),
 });
 export const LauncherData = z.object({
   generatedAt: z.string(),

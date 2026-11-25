@@ -7,7 +7,7 @@ import { CREDIT_ICONS, VENDOR_ICONS } from "../lib/vendor-icons.ts";
 import CoverStack from "./CoverStack.astro";
 import StarTrend from "./StarTrend.astro";
 
-const { updates, risers, biggest, starTrend, starTrendPct, fresh, gone, platform, most, fastest } = highlights;
+const { updates, risers, biggest, starTrend, starTrendPct, fresh, oneClick, gone, platform, most, fastest } = highlights;
 /** The two star slides share one card layout; Rising stars charts daily growth in percent, Biggest stars in stars. */
 const starSlides = [
   { id: "rising", slide: risers, trend: true, percent: !!biggest, foot: biggest ? `Growth since the start of the week, for projects that had at least ${RISING_MIN_BASE} stars then.` : undefined },
@@ -18,6 +18,7 @@ const slides = [
   updates.length && { id: "updates", label: "Latest updates" },
   ...starSlides.map((s) => ({ id: s.id, label: s.slide.title })),
   fresh.items.length && { id: "fresh", label: fresh.title },
+  oneClick.items.length && { id: "oneclick", label: "1-click setups" },
   gone.total && { id: "gone", label: "Lost & found" },
   platform && { id: "platform", label: "Platform of the week" },
   most.length && { id: "most", label: "Most recompiled" },
@@ -198,6 +199,40 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
                       <span class="meta mono">
                         {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[g.platform]} /> : PLATFORMS[g.platform]}
                         <span>{agoShort(g.firstReleaseAt)}</span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          </article>
+        )}
+        {oneClick.items.length > 0 && (
+          <article class="slide" id="hl-oneclick" aria-label="Latest one-click setups in RecompLauncher">
+            <header>
+              <p class="eyebrow">recomplauncher</p>
+              <h2>Latest 1-click setups</h2>
+              <p class="fresh-count">
+                <span class="n">{oneClick.total}</span>
+                <span class="mono">games set up from your own disc in one click{oneClick.week > 0 && <>, {oneClick.week} new this week</>}</span>
+              </p>
+              <p class="mono oc-note">
+                <a href="/m/recomplauncher-links/">What the 1-click badge means</a>
+              </p>
+            </header>
+            <ol class="items">
+              {oneClick.items.map((g) => {
+                const logo = mini(g.platform);
+                return (
+                  <li>
+                    <a href={entryPath(g)} class={`item ${g.kind}${g.cover ? " has-art" : " no-art"}`}>
+                      {g.cover ? <img class="art" src={g.cover.src} width={g.cover.width} height={g.cover.height} alt="" loading="lazy" decoding="async" /> : <PlatformGhost platform={g.platform} />}
+                      <span class="badge rl" title={g.launcher!.own ? "Set up by the developer's own recomplauncher.json" : "Set up by RecompLauncher's catalog"}>1-click</span>
+                      <strong>{g.game}</strong>
+                      <span class="by mono">by {g.repo.split("/")[0]}</span>
+                      <span class="meta mono">
+                        {logo ? <img class="logo-img" src={logo.src} width={logo.w} height={logo.h} alt={PLATFORMS[g.platform]} /> : PLATFORMS[g.platform]}
+                        <span>{agoShort(`${g.launcher!.since}T12:00:00Z`)}</span>
                       </span>
                     </a>
                   </li>
@@ -674,6 +709,22 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
   }
   .fresh-count .mono {
     font-size: 0.72rem;
+    color: var(--muted);
+  }
+  /* RecompLauncher's own cyan, as on the game cards */
+  .badge.rl {
+    color: #34f2e8;
+    border-color: rgb(52 242 232 / 0.35);
+    background: rgb(11 13 20 / 0.75);
+  }
+  #hl-oneclick .fresh-count .n {
+    color: #34f2e8;
+  }
+  .oc-note {
+    margin: 0.8rem 0 0;
+    font-size: 0.72rem;
+  }
+  .oc-note a {
     color: var(--muted);
   }
   .more-new {
