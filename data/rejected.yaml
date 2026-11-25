@@ -895,3 +895,7 @@
     says nothing is playable yet, but the zip ships a prebuilt leonida.exe and
     libcurl.dll. Not listed.
   date: 2026-11-25
+- repo: meizfl/winbox-recom
+  reason: The repository recompiles a Windows network management application, not
+    a playable game, so it does not belong on the list.
+  date: 2026-11-25
