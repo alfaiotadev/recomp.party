@@ -3,16 +3,26 @@
  * them have one-click setup. The catalog is one public JSON file the launcher itself downloads.
  */
 import { writeFileSync } from "node:fs";
-import { LAUNCHER_PATH, loadProjects } from "../data/load.ts";
+import { LAUNCHER_PATH, loadLauncher, loadProjects } from "../data/load.ts";
 import type { LauncherData } from "../data/schema.ts";
 
 const CATALOG = "https://recomplauncher.com/pc-catalog.json";
 
-type App = { id: string; repo: string; soon?: boolean; support?: { sdk?: string; easy_setup?: string } };
+type App = { id: string; repo: string; added?: string; soon?: boolean; support?: { sdk?: string; easy_setup?: string } };
 
 const res = await fetch(CATALOG, { headers: { "user-agent": "recomp.party data fetch (+https://recomp.party/about/)" } });
 if (!res.ok) throw new Error(`${CATALOG}: HTTP ${res.status}`);
 const apps = ((await res.json()) as { apps: App[] }).apps;
+
+const previous = loadLauncher().games;
+const today = new Date().toISOString().slice(0, 10);
+/** The day one-click setup appeared: kept from the last fetch, else today; on the first fetch, the catalog's date. */
+const easySince = (repo: string, app: App) => {
+  const before = previous[repo];
+  if (before?.easy && before.since) return before.since;
+  if (before?.easy || !before) return app.added && app.added.slice(0, 10) <= today && app.added >= "2026" ? app.added.slice(0, 10) : today;
+  return today;
+};
 
 const listed = new Map(loadProjects().map((p) => [p.repo.toLowerCase(), p.repo]));
 const games: LauncherData["games"] = {};
@@ -20,10 +30,12 @@ for (const app of apps) {
   const repo = listed.get(app.repo?.toLowerCase());
   // Coming Soon entries can't be installed yet; a repo listed twice keeps the entry with setup
   if (!repo || app.soon || games[repo]?.easy) continue;
+  const easy = Boolean(app.support?.easy_setup);
   games[repo] = {
     id: app.id,
-    easy: Boolean(app.support?.easy_setup),
+    easy,
     own: app.support?.sdk === "release" || app.support?.sdk === "repo",
+    ...(easy && { since: easySince(repo, app) }),
   };
 }
 

@@ -21,9 +21,10 @@
     at launch. RecompLauncher finds, installs and updates PC recomps straight from their developers' GitHub releases.
 
     234 of them have one-click setup: point the launcher at your own disc image or game folder and it sets the game
-    up. Those carry a cyan 1-click badge on their cards. For 95 the setup comes from the developer's own
-    recomplauncher.json; for the rest RecompLauncher's catalog provides it. The list is refreshed from the launcher's
+    up. Those carry a cyan 1-click badge on their cards. For about a third of them the setup comes from the
+    developer's own recomplauncher.json; for the rest RecompLauncher's catalog provides it. The list is refreshed from the launcher's
     public catalog with every data fetch.
+  chart: launcher
   sources:
     - label: RecompLauncher on GitHub
       url: https://github.com/elripalda/RecompLauncher

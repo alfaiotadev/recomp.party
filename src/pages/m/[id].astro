@@ -1,5 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
+import LauncherBreakdown from "../../components/LauncherBreakdown.astro";
 import { entryPath, games, GONE_REASONS, goneGames, MILESTONE_KINDS, PLATFORMS, VENDORS, milestonePath, milestones, shortDate, type Milestone } from "../../lib/data.ts";
 
 export function getStaticPaths() {
@@ -100,6 +101,7 @@ const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(
       </section>
     )
   }
+  {m.chart === "launcher" ? <LauncherBreakdown /> : (
   <section>
     <h2>Releases around this date</h2>
     <svg class={`weeks v-${m.vendor}`} viewBox={`0 0 ${CW} ${CH + 22}`} role="img" aria-label={`Releases per week, ${fmt(w0)} to ${fmt(weeks.at(-1)!.t)}`}>
@@ -123,6 +125,7 @@ const description = `${shortDate(m.date)}: ${m.title}. ${paragraphs[0]!.replace(
       three weeks after they appear.
     </p>
   </section>
+  )}
 
   {
     (prev || next) && (

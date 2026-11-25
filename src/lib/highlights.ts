@@ -136,6 +136,12 @@ function newReleases(): { title: string; note: string; items: Entry[]; rest: Ent
   };
 }
 
+/** Games that most recently got one-click setup in RecompLauncher (see scripts/launcher.ts for the dates). */
+function oneClick(): { items: Entry[]; total: number; week: number } {
+  const list = available.filter((g) => g.launcher?.easy && g.launcher.since).sort((a, b) => b.launcher!.since!.localeCompare(a.launcher!.since!));
+  return { items: list.slice(0, CARDS), total: list.length, week: list.filter((g) => Date.parse(g.launcher!.since!) >= weekAgo).length };
+}
+
 /** Rows on the Latest updates slide: two columns of six on wide screens. */
 const UPDATES = 12;
 
@@ -310,4 +316,4 @@ function lostAndFound() {
   return { items: goneGames.slice(0, CARDS), rest: goneGames.slice(CARDS), total: goneGames.length, moved: goneGames.filter((g) => g.moved_to).length, event };
 }
 
-export const highlights = { gone: lostAndFound(), updates: latestUpdates(), risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), starTrendPct: starTrendPct(), fresh: newReleases(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
+export const highlights = { gone: lostAndFound(), updates: latestUpdates(), risers: stars.rising, biggest: stars.biggest, starTrend: starTrend(), starTrendPct: starTrendPct(), fresh: newReleases(), oneClick: oneClick(), platform: platformOfWeek(), most: mostRecompiled(), fastest: fastest() };
