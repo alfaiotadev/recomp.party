@@ -126,9 +126,10 @@
   wikidata: Q189784
   added: 2026-11-16
 - repo: Tenome/Excitebike--Bun-Bun-Mario-Battle
-  game: "Excitebike: Bun Bun Mario Battle"
+  game: "Excitebike: Bun Bun Mario Battle Stadium"
   platform: snes
-  kind: port
+  kind: recomp
+  wikidata: Q108716836
   added: 2026-11-24
 - repo: RetroPortingToolKit/FZeroSNESRecomp
   game: F-Zero
@@ -896,13 +897,6 @@
   based_on: [zeldaret/oot]
   wikidata: Q213911
   added: 2026-10-28
-- repo: rimidalv333/longshot-oberon
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: n64
-  kind: port
-  based_on: [MagicBeanDev/Longshot, mihawk-99/PS5_Hookshot]
-  wikidata: Q213911
-  added: 2026-11-24
 - repo: SqueezyLemonade/HookshotVR
   game: "The Legend of Zelda: Ocarina of Time"
   platform: n64
@@ -2138,13 +2132,6 @@
   tool: nxnative
   wikidata: Q140140365
   added: 2026-11-09
-- repo: heydemoura/PS5_Longshot
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: switch2
-  kind: port
-  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
-  wikidata: Q140140365
-  added: 2026-11-20
 - repo: NotRexed/Hookshot
   game: "The Legend of Zelda: Ocarina of Time"
   platform: switch2
@@ -2170,12 +2157,26 @@
   kind: recomp
   wikidata: Q140140365
   added: 2026-11-18
+- repo: heydemoura/PS5_Longshot
+  game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
+  platform: switch2
+  kind: port
+  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
+  wikidata: Q140140365
+  added: 2026-11-20
 - repo: pixl27/ProjectReLink
   game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
   platform: switch2
   kind: recomp
   wikidata: Q140140365
   added: 2026-11-14
+- repo: rimidalv333/longshot-oberon
+  game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
+  platform: switch2
+  kind: recomp
+  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
+  wikidata: Q140140365
+  added: 2026-11-24
 
 # --- Game Boy --------------------------------------------------------------------
 - repo: bryanthaboi/gen1recomp
@@ -3359,7 +3360,7 @@
 - repo: Miguel0827/Crash-Tag-Team-Racing-PC
   game: Crash Tag Team Racing
   platform: ps2
-  kind: port
+  kind: recomp
   tool: ps2-native-recomp
   wikidata: Q869522
   added: 2026-11-24
@@ -3697,6 +3698,13 @@
   tool: PS2Recomp
   wikidata: Q964925
   added: 2026-10-31
+- repo: HammMannCH/HyperToken
+  game: "Wacky Races Starring: Dastardly & Muttley"
+  platform: ps2
+  kind: recomp
+  tool: ps2-native-recomp
+  wikidata: Q4017621
+  added: 2026-11-25
 - repo: yanm1103/War_of_the_Monsters_recomp
   game: War of the Monsters
   platform: ps2
@@ -4405,12 +4413,6 @@
   based_on: [luisxl15/vitaRT, luisxl15/GOD-OF-WAR-HD-COLLECTION]
   wikidata: Q5576061
   added: 2026-11-18
-- repo: elmnt22/vita-nfsu2
-  game: Need for Speed Underground 2
-  platform: vita
-  kind: port
-  wikidata: Q726190
-  added: 2026-11-24
 - repo: vita-recomps/ss-delta
   game: Soul Sacrifice Delta
   platform: vita
@@ -4748,13 +4750,6 @@
   tool: xboxrecomp
   wikidata: Q1998860
   added: 2026-11-09
-- repo: emanuele-giuseppe/main-leonida
-  game: Grand Theft Auto VI
-  platform: xbox
-  kind: recomp
-  based_on: [ItsNotRexed/Leonida]
-  wikidata: Q23648408
-  added: 2026-11-24
 - repo: chrissotraidis/projectreach
   game: "Halo: Combat Evolved"
   platform: xbox
@@ -5370,7 +5365,7 @@
 - repo: ChanseyIsTheBest/renut-nx
   game: "Banjo-Kazooie: Nuts & Bolts"
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   based_on: [masterspike52/reNut]
   wikidata: Q806592
@@ -5411,7 +5406,7 @@
 - repo: ChanseyIsTheBest/blur-nx
   game: Blur
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   based_on: [ChanseyIsTheBest/renut_nx_ultimate_base]
   wikidata: Q886391
@@ -6872,9 +6867,10 @@
   wikidata: Q5075219
   added: 2026-11-03
 - repo: phys-winner/pc_decomp_bs1
-  game: BioShock Classic
+  game: BioShock
   platform: pc
   kind: recomp
+  wikidata: Q57270
   added: 2026-11-24
 - repo: kerokline/BreathOfFire3PCPort
   game: Breath of Fire III
@@ -6993,7 +6989,7 @@
   kind: recomp
   added: 2026-11-13
 - repo: bhuiyah/ff8-recomp-android
-  game: FINAL FANTASY VIII
+  game: Final Fantasy VIII
   platform: pc
   kind: recomp
   based_on: [bhuiyah/ff7-recomp-android]
@@ -7041,16 +7037,11 @@
   kind: recomp
   wikidata: Q2450
   added: 2026-11-03
-- repo: davidptrssvea/HOTD-Scarlet-Dawn-recomp
-  game: "House of the Dead: Scarlet Dawn"
-  platform: pc
-  kind: recomp
-  wikidata: Q50333282
-  added: 2026-11-24
 - repo: saulob/jurassic-park-trespasser-recomp
   game: "Jurassic Park: Trespasser"
   platform: pc
   kind: recomp
+  wikidata: Q1299587
   added: 2026-11-24
 - repo: Aleph-One-Marathon/alephone
   game: "Marathon 2: Durandal"
@@ -7140,6 +7131,12 @@
   kind: recomp
   wikidata: Q726190
   added: 2026-10-28
+- repo: elmnt22/vita-nfsu2
+  game: "Need for Speed: Underground 2"
+  platform: pc
+  kind: port
+  wikidata: Q726190
+  added: 2026-11-24
 - repo: mininxd/NFSU2-Revived-Android
   game: "Need for Speed: Underground 2"
   platform: pc
@@ -7305,9 +7302,10 @@
   kind: port
   added: 2026-11-18
 - repo: phys-winner/pc_decomp_ts2
-  game: The Sims 2 Legacy Collection
+  game: The Sims 2
   platform: pc
   kind: recomp
+  wikidata: Q182771
   added: 2026-11-24
 - repo: Ryan3DSMods/Sims3DS
   game: The Sims Complete Collection
@@ -7403,6 +7401,11 @@
   kind: recomp
   note: Street Fighter Alpha 1–3, Super Street Fighter II Turbo, Super Gem Fighter Mini Mix and more in one launcher; replaces the earlier sfa2-recomp.
   added: 2026-10-31
+- repo: tmcleroy/spelunkomp
+  game: Cave arcade shooters
+  platform: arcade
+  kind: recomp
+  added: 2026-11-25
 - repo: CapsLock4284/DoDonPachi-Recomp
   game: DoDonPachi
   platform: arcade
@@ -7537,6 +7540,12 @@
   platform: arcade
   kind: recomp
   added: 2026-11-23
+- repo: davidptrssvea/HOTD-Scarlet-Dawn-recomp
+  game: "The House of the Dead: Scarlet Dawn"
+  platform: arcade
+  kind: recomp
+  wikidata: Q50333282
+  added: 2026-11-24
 - repo: spita90/konami-viper-recomp
   game: Thrill Drive 2 & GTI Club 2
   platform: arcade

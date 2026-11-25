@@ -874,11 +874,6 @@
     (nfsu2.xyz), classified as a launcher, which is explicitly excluded from
     recomp.party.
   date: 2026-11-23
-- repo: HammMannCH/HyperToken
-  reason: The release ships the game's own executable (SLES_501.83) and a memory
-    dump of the running game; recomp.party lists only projects that run from the
-    player's own game files. Welcome back once the release leaves them out.
-  date: 2026-11-24
 - repo: Likely7/Veyra-NRVideo
   reason: The repository is a Windows video enhancement/capture tool, not a game
     recompilation or source port.
@@ -895,3 +890,8 @@
   reason: It is a general-purpose Game Boy Advance emulator, which is explicitly
     out of scope.
   date: 2026-11-24
+- repo: emanuele-giuseppe/main-leonida
+  reason: Re-upload of a removed GTA VI project by a days-old account; the README
+    says nothing is playable yet, but the zip ships a prebuilt leonida.exe and
+    libcurl.dll. Not listed.
+  date: 2026-11-25
