@@ -200,6 +200,8 @@ export const MILESTONE_KINDS = {
   release: "Game release",
   /** recomp.party's own: the list passing a round number, recorded by scripts/count-milestones.ts. */
   count: "recomp.party milestone",
+  /** recomp.party's own news (a new feature): in Latest updates and the news box, not drawn on the timeline. */
+  news: "recomp.party news",
 } as const;
 
 /** Whose model or policy it is; drawn as the vendor's logo on the timeline. */
@@ -272,3 +274,18 @@ export const AiData = z.object({
   repos: z.record(z.string(), AiRepo),
 });
 export type AiData = z.infer<typeof AiData>;
+
+/** A listed repo in RecompLauncher's catalog (recomplauncher.com), from scripts/launcher.ts. */
+export const LauncherGame = z.object({
+  /** Its page: https://recomplauncher.com/game/{id} */
+  id: z.string(),
+  /** One-click setup: the launcher sets the game up from the player's disc image or folder. */
+  easy: z.boolean(),
+  /** The setup comes from the developer's own recomplauncher.json, not from the launcher's catalog. */
+  own: z.boolean(),
+});
+export const LauncherData = z.object({
+  generatedAt: z.string(),
+  games: z.record(z.string(), LauncherGame),
+});
+export type LauncherData = z.infer<typeof LauncherData>;

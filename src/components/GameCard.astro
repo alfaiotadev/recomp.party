@@ -29,6 +29,7 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
   <div class="top">
     <span class={`badge ${e.kind}`} title={KINDS[e.kind]}>{e.kind}</span>
     {e.snap?.archived && !e.gone && <span class="badge">archived</span>}
+    {e.launcher?.easy && !e.gone && <span class="badge rl" title="One-click setup in RecompLauncher: point it at your own disc image or game folder and press Play">1-click</span>}
     {
       e.gone &&
         (e.moved_to ? (
@@ -251,6 +252,11 @@ const fit = e.cover && Math.min(e.cover.width / e.cover.height / CARD_ASPECT, CA
   }
   .top .badge {
     background: rgb(11 13 20 / 0.75);
+  }
+  /* RecompLauncher's own cyan */
+  .top .badge.rl {
+    color: #34f2e8;
+    border-color: rgb(52 242 232 / 0.35);
   }
   .plat {
     margin-left: auto;

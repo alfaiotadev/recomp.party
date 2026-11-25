@@ -11,6 +11,7 @@
     "games": "tsx scripts/games.ts",
     "discover": "tsx scripts/discover.ts",
     "ai": "tsx scripts/ai.ts",
+    "launcher": "tsx scripts/launcher.ts",
     "milestones": "tsx scripts/count-milestones.ts",
     "validate": "tsx scripts/validate.ts && tsx scripts/format.ts --check",
     "check": "tsc --noEmit",

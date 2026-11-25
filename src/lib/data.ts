@@ -1,5 +1,5 @@
-import { loadGames, loadMilestones, loadProjects, loadSnapshot } from "../../data/load.ts";
-import { KINDS, MILESTONE_KINDS, PLATFORMS, VENDORS, type Milestone, type GameMeta, type Project, type Release, type RepoSnapshot } from "../../data/schema.ts";
+import { loadGames, loadLauncher, loadMilestones, loadProjects, loadSnapshot } from "../../data/load.ts";
+import { KINDS, MILESTONE_KINDS, PLATFORMS, VENDORS, type Milestone, type GameMeta, type LauncherData, type Project, type Release, type RepoSnapshot } from "../../data/schema.ts";
 
 export { KINDS, MILESTONE_KINDS, PLATFORMS, VENDORS, type Milestone };
 export type PlatformId = keyof typeof PLATFORMS;
@@ -20,16 +20,20 @@ export type Entry = Project & {
   cover: { src: string; width: number; height: number } | undefined;
   /** The GitHub repo no longer resolves (missed in two fetches in a row, or blocked); the rest is its last snapshot. */
   gone: NonNullable<RepoSnapshot["gone"]> | undefined;
+  /** Its entry in RecompLauncher's catalog, if it has one. */
+  launcher: (LauncherData["games"][string] & { url: string }) | undefined;
 };
 
 const snapshot = loadSnapshot();
 const gameMeta = loadGames();
+const launcher = loadLauncher().games;
 export const generatedAt = snapshot.generatedAt;
 
 function toEntry(p: Project): Entry {
   const snap = snapshot.repos[p.repo];
   const dates = snap?.releaseDates ?? [];
   const meta = p.wikidata ? gameMeta[p.wikidata] : undefined;
+  const rl = launcher[p.repo];
   return {
     ...p,
     slug: p.repo,
@@ -43,6 +47,7 @@ function toEntry(p: Project): Entry {
     cover: meta?.cover && { src: `/covers/${p.wikidata}.webp`, width: meta.cover.width, height: meta.cover.height },
     // one miss can be a GitHub hiccup; a DMCA block is certain at once
     gone: snap?.gone && (snap.gone.misses >= 2 || snap.gone.reason === "dmca") ? snap.gone : undefined,
+    launcher: rl && { ...rl, url: `https://recomplauncher.com/game/${rl.id}` },
   };
 }
 
