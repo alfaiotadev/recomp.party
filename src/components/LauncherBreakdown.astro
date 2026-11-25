@@ -1,22 +1,10 @@
 ---
-/**
- * Where the listed games stand in RecompLauncher (data/launcher.json): one whole as a tall segmented bar. An ordinal ramp of RecompLauncher's cyan (validated for the dark
- * surface: monotone lightness, one hue); "not in the catalog" is the empty track, not a fourth colour.
- */
-import { available, type Entry } from "../lib/data.ts";
-
-const LEVELS = [
-  { id: "own", name: "1-click, developer's own setup", color: "#34f2e8", ink: "#0b0d14", test: (e: Entry) => Boolean(e.launcher?.easy && e.launcher.own) },
-  { id: "rl", name: "1-click, set up by RecompLauncher", color: "#22aaa6", ink: "#0b0d14", test: (e: Entry) => Boolean(e.launcher?.easy && !e.launcher.own) },
-  { id: "listed", name: "In the catalog, set up by hand", color: "#1a6f73", ink: "#e8ecf6", test: (e: Entry) => Boolean(e.launcher && !e.launcher.easy) },
-  { id: "none", name: "Not in RecompLauncher", color: "", ink: "var(--muted)", test: (e: Entry) => !e.launcher },
-] as const;
+/** Where the listed games stand in RecompLauncher (src/lib/launcher.ts), as one tall segmented bar. */
+import { available } from "../lib/data.ts";
+import { launcherParts } from "../lib/launcher.ts";
 
 const total = available.length;
-const parts = LEVELS.map((l) => {
-  const n = available.filter(l.test).length;
-  return { ...l, n, share: n / total };
-});
+const parts = launcherParts();
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 
 ---

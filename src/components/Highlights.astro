@@ -1,4 +1,5 @@
 ---
+import { launcherParts } from "../lib/launcher.ts";
 import PlatformGhost from "./PlatformGhost.astro";
 import { ago, agoShort, entryPath, fitLogo, fitLogoArea, GONE_REASONS, goneBadge, hostOf, MILESTONE_KINDS, milestonePath, PLATFORMS, platformLogo, shortDate } from "../lib/data.ts";
 import { recentCredits, shortModel } from "../lib/ai.ts";
@@ -56,6 +57,19 @@ const mini = (id: Parameters<typeof platformLogo>[0]) => {
 };
 /** Nintendo marks carry their name in tiny print ("NINTENDO SWITCH", "GAMECUBE"); at the shared size it can't be read. */
 const FINE_PRINT = new Set<string>(["switch", "switch2", "gc", "nes", "snes"]);
+/** The 1-click slide's pie: every game you can get now by RecompLauncher support, as ring segments of a 100-unit circle. */
+const rlParts = launcherParts();
+const PIE_GAP = 0.8;
+let pieAt = 0;
+const pie = rlParts
+  .filter((p) => p.n > 0)
+  .map((p) => {
+    const len = p.share * 100;
+    const seg = { ...p, dash: `${Math.max(0.01, len - PIE_GAP).toFixed(2)} ${(100 - len + PIE_GAP).toFixed(2)}`, offset: (25 - pieAt).toFixed(2) };
+    pieAt += len;
+    return seg;
+  });
+const oneClickShare = Math.round((rlParts[0]!.share + rlParts[1]!.share) * 100);
 /** The latest-updates row icon keeps its own small box. */
 const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
   const l = platformLogo(id);
@@ -216,9 +230,29 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
                 <span class="n">{oneClick.total}</span>
                 <span class="mono">games set up from your own disc in one click{oneClick.week > 0 && <>, {oneClick.week} new this week</>}</span>
               </p>
-              <p class="mono oc-note">
-                <a href="/m/recomplauncher-links/">What the 1-click badge means</a>
-              </p>
+              <figure class="rl-pie">
+                <svg viewBox="0 0 42 42" role="img" aria-label={`Games you can get now in RecompLauncher: ${pie.map((p) => `${p.name} ${p.n}`).join(", ")}`}>
+                  {pie.map((p) => (
+                    <circle class={`seg-${p.id}`} cx="21" cy="21" r="15.9155" pathLength="100" stroke={p.color || undefined} stroke-dasharray={p.dash} stroke-dashoffset={p.offset}>
+                      <title>{`${p.name}: ${p.n.toLocaleString("en")} games (${Math.round(p.share * 100)}%)`}</title>
+                    </circle>
+                  ))}
+                  <text x="21" y="21.2" class="pie-n">{oneClickShare}%</text>
+                  <text x="21" y="26" class="pie-l">1-click</text>
+                </svg>
+                <figcaption>
+                  <ul>
+                    {rlParts.map((p) => (
+                      <li>
+                        <span class={`sw seg-${p.id}`} style={p.color ? `background:${p.color}` : ""} />
+                        <span>{p.short}</span>
+                        <span class="mono">{p.n.toLocaleString("en")}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <a class="mono" href="/m/recomplauncher-links/">All {rlParts.reduce((a, p) => a + p.n, 0).toLocaleString("en")} games →</a>
+                </figcaption>
+              </figure>
             </header>
             <ol class="items">
               {oneClick.items.map((g) => {
@@ -720,11 +754,84 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
   #hl-oneclick .fresh-count .n {
     color: #34f2e8;
   }
-  .oc-note {
-    margin: 0.8rem 0 0;
-    font-size: 0.72rem;
+  /* the share of every listed game per RecompLauncher level (src/lib/launcher.ts): a ring with 2-unit gaps */
+  /* the header column is narrow on wide screens: the legend goes under the ring; side by side on phones */
+  .rl-pie {
+    margin: 1rem 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
   }
-  .oc-note a {
+  @media (max-width: 760px) {
+    .rl-pie {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.9rem;
+    }
+  }
+  .rl-pie svg {
+    flex: none;
+    width: 92px;
+    height: 92px;
+  }
+  .rl-pie circle {
+    fill: none;
+    stroke-width: 6.5;
+  }
+  /* not in RecompLauncher: the empty track */
+  .rl-pie circle.seg-none {
+    stroke: var(--line);
+  }
+  .pie-n {
+    text-anchor: middle;
+    font-family: var(--mono);
+    font-size: 7px;
+    font-weight: 600;
+    fill: var(--fg);
+  }
+  .pie-l {
+    text-anchor: middle;
+    font-family: var(--mono);
+    font-size: 3.6px;
+    fill: var(--muted);
+  }
+  .rl-pie figcaption {
+    min-width: 0;
+    width: 100%;
+    max-width: 15rem;
+    font-size: 0.68rem;
+  }
+  .rl-pie ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.2rem;
+  }
+  .rl-pie li {
+    display: grid;
+    grid-template-columns: 0.65rem 1fr auto;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .rl-pie li .mono {
+    color: var(--fg);
+  }
+  .rl-pie .sw {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 2px;
+  }
+  .rl-pie .sw.seg-none {
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .rl-pie figcaption a {
+    display: inline-block;
+    margin-top: 0.45rem;
     color: var(--muted);
   }
   .more-new {
