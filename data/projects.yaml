@@ -125,6 +125,12 @@
   tool: SNESRecomp
   wikidata: Q189784
   added: 2026-11-16
+- repo: Tenome/Excitebike--Bun-Bun-Mario-Battle
+  game: "Excitebike: Bun Bun Mario Battle Stadium"
+  platform: snes
+  kind: recomp
+  wikidata: Q108716836
+  added: 2026-11-24
 - repo: RetroPortingToolKit/FZeroSNESRecomp
   game: F-Zero
   platform: snes
@@ -2126,13 +2132,6 @@
   tool: nxnative
   wikidata: Q140140365
   added: 2026-11-09
-- repo: heydemoura/PS5_Longshot
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: switch2
-  kind: port
-  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
-  wikidata: Q140140365
-  added: 2026-11-20
 - repo: NotRexed/Hookshot
   game: "The Legend of Zelda: Ocarina of Time"
   platform: switch2
@@ -2158,12 +2157,26 @@
   kind: recomp
   wikidata: Q140140365
   added: 2026-11-18
+- repo: heydemoura/PS5_Longshot
+  game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
+  platform: switch2
+  kind: port
+  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
+  wikidata: Q140140365
+  added: 2026-11-20
 - repo: pixl27/ProjectReLink
   game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
   platform: switch2
   kind: recomp
   wikidata: Q140140365
   added: 2026-11-14
+- repo: rimidalv333/longshot-oberon
+  game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
+  platform: switch2
+  kind: recomp
+  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
+  wikidata: Q140140365
+  added: 2026-11-24
 
 # --- Game Boy --------------------------------------------------------------------
 - repo: bryanthaboi/gen1recomp
@@ -3344,6 +3357,13 @@
   based_on: [denzi-gh/crashwoc-decomp-ps2]
   wikidata: Q869511
   added: 2026-11-13
+- repo: Miguel0827/Crash-Tag-Team-Racing-PC
+  game: Crash Tag Team Racing
+  platform: ps2
+  kind: recomp
+  tool: ps2-native-recomp
+  wikidata: Q869522
+  added: 2026-11-24
 - repo: GioPixelGH/Crash-Twinsanity-Windows
   game: Crash Twinsanity
   platform: ps2
@@ -3564,6 +3584,12 @@
   based_on: [ran-j/PS2Recomp]
   wikidata: Q2441816
   added: 2026-10-30
+- repo: ptfpinho23/rule-of-rose-recomp
+  game: Rule of Rose
+  platform: ps2
+  kind: recomp
+  wikidata: Q1516526
+  added: 2026-11-24
 - repo: matpdev/SaintSeiyaRecomp
   game: "Saint Seiya: The Hades"
   platform: ps2
@@ -3672,6 +3698,13 @@
   tool: PS2Recomp
   wikidata: Q964925
   added: 2026-10-31
+- repo: HammMannCH/HyperToken
+  game: "Wacky Races Starring: Dastardly & Muttley"
+  platform: ps2
+  kind: recomp
+  tool: ps2-native-recomp
+  wikidata: Q4017621
+  added: 2026-11-25
 - repo: yanm1103/War_of_the_Monsters_recomp
   game: War of the Monsters
   platform: ps2
@@ -4429,6 +4462,13 @@
   tool: ReXGlue
   wikidata: Q15621213
   added: 2026-10-28
+- repo: hk21x/50cent-recomp
+  game: "50 Cent: Bulletproof"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  wikidata: Q2308021
+  added: 2026-11-24
 - repo: christiansmmc/BatmanBeginsRecomp
   game: Batman Begins
   platform: xbox
@@ -4582,6 +4622,13 @@
   kind: recomp
   wikidata: Q2630705
   added: 2026-11-03
+- repo: nacholuver1/Crimson-Skies-High-Road-To-Revenge-Repo
+  game: "Crimson Skies: High Road to Revenge"
+  platform: xbox
+  kind: recomp
+  tool: Xbox XBE Recomp
+  wikidata: Q629055
+  added: 2026-11-24
 - repo: saironbusatto/CrimsonSkiesRecomp
   game: "Crimson Skies: High Road to Revenge"
   platform: xbox
@@ -5194,6 +5241,13 @@
   tool: Xbox XBE Recomp
   wikidata: Q1476611
   added: 2026-11-15
+- repo: technicrain0/ReKANGED
+  game: "True Crime: Streets of LA"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  wikidata: Q2456262
+  added: 2026-11-24
 - repo: MarkPremier/EvolutionRecomp
   game: "Turok: Evolution"
   platform: xbox
@@ -5308,6 +5362,14 @@
   kind: recomp
   wikidata: Q2076560
   added: 2026-11-20
+- repo: ChanseyIsTheBest/renut-nx
+  game: "Banjo-Kazooie: Nuts & Bolts"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [masterspike52/reNut]
+  wikidata: Q806592
+  added: 2026-11-24
 - repo: papand7/Battlefield-Recompilation-Project
   game: Battlefield 1943
   platform: x360
@@ -5341,6 +5403,14 @@
   kind: recomp
   wikidata: Q1471287
   added: 2026-11-10
+- repo: ChanseyIsTheBest/blur-nx
+  game: Blur
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [ChanseyIsTheBest/renut_nx_ultimate_base]
+  wikidata: Q886391
+  added: 2026-11-24
 - repo: shipa-2/Xerenge
   game: Burnout Revenge
   platform: x360
@@ -5607,6 +5677,13 @@
   tool: ReXGlue
   wikidata: Q817163
   added: 2026-11-01
+- repo: Fable2Recomp/Fable-Return-to-Albion
+  game: Fable II
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q984024
+  added: 2026-11-24
 - repo: himdo/Fable-2-Recomp
   game: Fable II
   platform: x360
@@ -5971,6 +6048,13 @@
   tool: ReXGlue
   wikidata: Q2296575
   added: 2026-11-03
+- repo: kelvynzucco/majistic-recomp
+  game: Majin and the Forsaken Kingdom
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q1083047
+  added: 2026-11-24
 - repo: saulob/marvel-ultimate-alliance-bundle-recompiled
   game: Marvel Ultimate Alliance
   platform: x360
@@ -6014,6 +6098,14 @@
   based_on: [holdmysocks/mcla-recomp]
   wikidata: Q1514674
   added: 2026-11-01
+- repo: shad0w77-code/MC_LA_Recompiled
+  game: "Midnight Club: Los Angeles"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  based_on: [holdmysocks/mcla-recomp, RenanQueiroz/mcla-recomp]
+  wikidata: Q1514674
+  added: 2026-11-24
 - repo: josiahg2502-glitch/MonopolyRecompiled
   game: Monopoly
   platform: x360
@@ -6221,6 +6313,13 @@
   tool: ReXGlue
   wikidata: Q576602
   added: 2026-10-28
+- repo: tazzkiller/PGR4_2026
+  game: Project Gotham Racing 4
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q576602
+  added: 2026-11-24
 - repo: zer0ducksgiven/PGR4-ReGPU
   game: Project Gotham Racing 4
   platform: x360
@@ -6701,6 +6800,12 @@
   based_on: [HollywoodAkeem/rexglue-sdk-yukes]
   wikidata: Q927012
   added: 2026-11-10
+- repo: nefariousjosiah/WWE-SVR2007-RECOMP
+  game: WWE SmackDown vs. Raw 2007
+  platform: x360
+  kind: recomp
+  wikidata: Q927012
+  added: 2026-11-24
 - repo: nefariousjosiah/WWE-SVR2009-RECOMP
   game: WWE SmackDown vs. Raw 2009
   platform: x360
@@ -6761,6 +6866,12 @@
   based_on: [yaz0r/FITD]
   wikidata: Q5075219
   added: 2026-11-03
+- repo: phys-winner/pc_decomp_bs1
+  game: BioShock
+  platform: pc
+  kind: recomp
+  wikidata: Q57270
+  added: 2026-11-24
 - repo: kerokline/BreathOfFire3PCPort
   game: Breath of Fire III
   platform: pc
@@ -6877,6 +6988,13 @@
   platform: pc
   kind: recomp
   added: 2026-11-13
+- repo: bhuiyah/ff8-recomp-android
+  game: Final Fantasy VIII
+  platform: pc
+  kind: recomp
+  based_on: [bhuiyah/ff7-recomp-android]
+  wikidata: Q245006
+  added: 2026-11-24
 - repo: rubymatrix/xi-on-anything
   game: FINAL FANTASY XI
   platform: pc
@@ -6919,6 +7037,12 @@
   kind: recomp
   wikidata: Q2450
   added: 2026-11-03
+- repo: saulob/jurassic-park-trespasser-recomp
+  game: "Jurassic Park: Trespasser"
+  platform: pc
+  kind: recomp
+  wikidata: Q1299587
+  added: 2026-11-24
 - repo: Aleph-One-Marathon/alephone
   game: "Marathon 2: Durandal"
   platform: pc
@@ -7007,6 +7131,12 @@
   kind: recomp
   wikidata: Q726190
   added: 2026-10-28
+- repo: elmnt22/vita-nfsu2
+  game: "Need for Speed: Underground 2"
+  platform: pc
+  kind: port
+  wikidata: Q726190
+  added: 2026-11-24
 - repo: mininxd/NFSU2-Revived-Android
   game: "Need for Speed: Underground 2"
   platform: pc
@@ -7171,6 +7301,12 @@
   platform: pc
   kind: port
   added: 2026-11-18
+- repo: phys-winner/pc_decomp_ts2
+  game: The Sims 2
+  platform: pc
+  kind: recomp
+  wikidata: Q182771
+  added: 2026-11-24
 - repo: Ryan3DSMods/Sims3DS
   game: The Sims Complete Collection
   platform: pc
@@ -7265,6 +7401,18 @@
   kind: recomp
   note: Street Fighter Alpha 1–3, Super Street Fighter II Turbo, Super Gem Fighter Mini Mix and more in one launcher; replaces the earlier sfa2-recomp.
   added: 2026-10-31
+- repo: tmcleroy/spelunkomp
+  game: Cave arcade shooters
+  platform: arcade
+  kind: recomp
+  added: 2026-11-25
+- repo: CapsLock4284/DoDonPachi-Recomp
+  game: DoDonPachi
+  platform: arcade
+  kind: recomp
+  based_on: [CapsLock4284/DonPachi-Recomp]
+  wikidata: Q4389172
+  added: 2026-11-24
 - repo: CapsLock4284/DonPachi-Recomp
   game: DonPachi
   platform: arcade
@@ -7392,6 +7540,12 @@
   platform: arcade
   kind: recomp
   added: 2026-11-23
+- repo: davidptrssvea/HOTD-Scarlet-Dawn-recomp
+  game: "The House of the Dead: Scarlet Dawn"
+  platform: arcade
+  kind: recomp
+  wikidata: Q50333282
+  added: 2026-11-24
 - repo: spita90/konami-viper-recomp
   game: Thrill Drive 2 & GTI Club 2
   platform: arcade
@@ -7415,6 +7569,11 @@
   kind: recomp
   wikidata: Q770585
   added: 2026-11-01
+- repo: djanice1980/VF4-Final-Tuned-Rev-B-Recomp
+  game: Virtua Fighter 4 Final Tuned
+  platform: arcade
+  kind: recomp
+  added: 2026-11-24
 
 # --- Toolchains ------------------------------------------------------------------
 - repo: J-Glitch2502/3dii-u
