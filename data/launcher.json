@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T09:07:28.690Z",
+ "generatedAt": "2026-11-25T21:51:11.135Z",
  "games": {
   "0c0de/splatterhouse-decomp": {
    "id": "splatterhouse-decomp",
@@ -118,8 +118,9 @@
   },
   "Akimitsu76/Lantern-Recomp": {
    "id": "lantern-recomp",
-   "easy": false,
-   "own": false
+   "easy": true,
+   "own": true,
+   "since": "2026-11-25"
   },
   "akratch/goldenballoon": {
    "id": "goldenballoon",
@@ -2941,11 +2942,6 @@
    "easy": false,
    "own": false
   },
-  "Petexy/Tekken-Tag-2-Ultimate-Edition": {
-   "id": "tekken-tag-2-ultimate-edition",
-   "easy": false,
-   "own": false
-  },
   "petrishevgeorgii-debug/prototype-pc-slop": {
    "id": "prototype-pc-slop",
    "easy": false,
@@ -3807,8 +3803,9 @@
   },
   "TekRantGaming/Battlefield-1943-Reborn": {
    "id": "battlefield-1943-reborn",
-   "easy": false,
-   "own": true
+   "easy": true,
+   "own": true,
+   "since": "2026-11-25"
   },
   "TekRantGaming/cartoon-network-racing-recompiled": {
    "id": "cartoon-network-racing-recompiled",
