@@ -18,7 +18,7 @@ const pct = (x: number) => `${Math.round(x * 100)}%`;
       parts
         .filter((p) => p.n > 0)
         .map((p) => (
-          <span class={`blk b-${p.id}`} style={`flex:${p.n} 1 0;${p.color ? `background:${p.color};` : ""}color:${p.ink}`} title={`${p.name}: ${p.n.toLocaleString("en")} games (${pct(p.share)})`} tabindex="0">
+          <span class={`blk b-${p.id}`} style={`flex:${p.n} 1 0;background:${p.color};color:${p.ink}`} title={`${p.name}: ${p.n.toLocaleString("en")} games (${pct(p.share)})`} tabindex="0">
             {p.share >= 0.07 && <span class="v">{pct(p.share)}</span>}
           </span>
         ))
@@ -28,7 +28,7 @@ const pct = (x: number) => `${Math.round(x * 100)}%`;
     {
       parts.map((p) => (
         <li>
-          <span class={`sw b-${p.id}`} style={p.color ? `background:${p.color}` : ""} />
+          <span class={`sw b-${p.id}`} style={`background:${p.color}`} />
           {p.name} <span class="mono muted">{p.n.toLocaleString("en")}{p.share < 0.07 && ` · ${pct(p.share)}`}</span>
         </li>
       ))
@@ -67,11 +67,6 @@ const pct = (x: number) => `${Math.round(x * 100)}%`;
   .blk:focus-visible {
     outline: 2px solid var(--fg);
     outline-offset: 2px;
-  }
-  /* not in the catalog: nothing there, so the empty track */
-  .b-none {
-    background: var(--surface-2);
-    box-shadow: inset 0 0 0 1px var(--line);
   }
   .legend {
     list-style: none;

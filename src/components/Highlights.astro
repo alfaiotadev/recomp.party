@@ -233,7 +233,7 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
               <figure class="rl-pie">
                 <svg viewBox="0 0 42 42" role="img" aria-label={`Games you can get now in RecompLauncher: ${pie.map((p) => `${p.name} ${p.n}`).join(", ")}`}>
                   {pie.map((p) => (
-                    <circle class={`seg-${p.id}`} cx="21" cy="21" r="15.9155" pathLength="100" stroke={p.color || undefined} stroke-dasharray={p.dash} stroke-dashoffset={p.offset}>
+                    <circle class={`seg-${p.id}`} cx="21" cy="21" r="15.9155" pathLength="100" stroke={p.color} stroke-dasharray={p.dash} stroke-dashoffset={p.offset}>
                       <title>{`${p.name}: ${p.n.toLocaleString("en")} games (${Math.round(p.share * 100)}%)`}</title>
                     </circle>
                   ))}
@@ -244,7 +244,7 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
                   <ul>
                     {rlParts.map((p) => (
                       <li>
-                        <span class={`sw seg-${p.id}`} style={p.color ? `background:${p.color}` : ""} />
+                        <span class={`sw seg-${p.id}`} style={`background:${p.color}`} />
                         <span>{p.short}</span>
                         <span class="mono">{p.n.toLocaleString("en")}</span>
                       </li>
@@ -779,10 +779,6 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
     fill: none;
     stroke-width: 6.5;
   }
-  /* not in RecompLauncher: the empty track */
-  .rl-pie circle.seg-none {
-    stroke: var(--line);
-  }
   .pie-n {
     text-anchor: middle;
     font-family: var(--mono);
@@ -824,10 +820,6 @@ const rowIcon = (id: Parameters<typeof platformLogo>[0]) => {
     width: 0.65rem;
     height: 0.65rem;
     border-radius: 2px;
-  }
-  .rl-pie .sw.seg-none {
-    background: var(--surface-2);
-    box-shadow: inset 0 0 0 1px var(--line);
   }
   .rl-pie figcaption a {
     display: inline-block;
