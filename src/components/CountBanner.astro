@@ -1,6 +1,6 @@
 ---
 /**
- * For a week after the list passes a round number (a `count` milestone, see scripts/count-milestones.ts): a banner
+ * For five days after the list passes a round number (a `count` milestone, see scripts/count-milestones.ts): a banner
  * above the stat tiles with the number, the project that took the list there and a little party.
  */
 import { available, countGames, entryPath, milestonePath, milestones, PLATFORMS, platformsInUse } from "../lib/data.ts";
@@ -10,7 +10,7 @@ import fireworks from "../assets/fireworks.svg";
 import robot from "../assets/robot.svg";
 
 const DAY = 86_400_000;
-const SHOW_DAYS = 7;
+const SHOW_DAYS = 5;
 const m = milestones.filter((x) => x.kind === "count").at(-1);
 const fresh = m && Date.now() - Date.parse(m.date) < SHOW_DAYS * DAY;
 const [, n, games] = m?.id.match(/-(\d+)(-games)?$/) ?? [];

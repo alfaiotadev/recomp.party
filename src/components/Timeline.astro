@@ -9,7 +9,9 @@ interface Props {
   games: Entry[];
 }
 const { games } = Astro.props;
-const layouts = views().map((v) => layout(games, v, milestones));
+// site news is not an outside event: it stays off the release timeline
+const outside = milestones.filter((m) => m.kind !== "news");
+const layouts = views().map((v) => layout(games, v, outside));
 // AI co-author filter: each game's credited models and vendors (data/ai.json), for the browser
 const aiMap = Object.fromEntries(games.map((g) => [g.repo, aiTokens(g)]).filter(([, t]) => t));
 const dayMonth = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
@@ -44,7 +46,7 @@ const platTop = new Set([...lanePlatforms].sort((a, b) => b.n - a.n).slice(0, PL
     <span class="sw recomp"></span> static recompilation
     <span class="sw port"></span> source port
     <span class="sw pre"></span> pre-release
-    {milestones.length > 0 && <><span class="sw mile"></span> milestone</>}
+    {outside.length > 0 && <><span class="sw mile"></span> milestone</>}
     {" "}<span class="legend-note">— each row runs from a project's first release to its latest one.</span>
   </p>
   <div class="fbox d-plat-filter" role="group" aria-label="Platforms to show">

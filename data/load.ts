@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { parse } from "yaml";
-import { AiData, Games, Milestones, Projects, Rejected, Snapshot, StarHistory, type AiData as AiDataT, type Games as GamesT, type Milestone, type Project, type Snapshot as SnapshotT } from "./schema.ts";
+import { AiData, Games, LauncherData, Milestones, Projects, Rejected, Snapshot, StarHistory, type AiData as AiDataT, type Games as GamesT, type LauncherData as LauncherDataT, type Milestone, type Project, type Snapshot as SnapshotT } from "./schema.ts";
 
 // Resolved from the repo root rather than import.meta.url: Astro bundles this module into dist/.
 export const PROJECTS_PATH = resolve(process.cwd(), "data/projects.yaml");
@@ -13,6 +13,7 @@ export const REJECTED_PATH = resolve(process.cwd(), "data/rejected.yaml");
 export const GAMES_PATH = resolve(process.cwd(), "data/games.json");
 export const MILESTONES_PATH = resolve(process.cwd(), "data/milestones.yaml");
 export const AI_PATH = resolve(process.cwd(), "data/ai.json");
+export const LAUNCHER_PATH = resolve(process.cwd(), "data/launcher.json");
 export const COVERS_DIR = resolve(process.cwd(), "public/covers");
 
 /** Parse and validate data/projects.yaml; throws a readable error listing every problem. */
@@ -62,3 +63,8 @@ export function loadAi(path = AI_PATH): AiDataT {
 
 /** Claude Code's first release: older commits predate the agents this data looks for. */
 export const AI_SINCE = "2025-02-24";
+
+export function loadLauncher(path = LAUNCHER_PATH): LauncherDataT {
+  if (!existsSync(path)) return { generatedAt: new Date(0).toISOString(), games: {} };
+  return LauncherData.parse(JSON.parse(readFileSync(path, "utf8")));
+}

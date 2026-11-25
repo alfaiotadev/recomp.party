@@ -189,6 +189,11 @@ const jsonLd = {
       <p class="actions">
         {e.latest && <a class="btn primary" href={e.latest.url}>Latest release: {e.latest.tag}</a>}
         <a class="btn" href={e.url}>{e.repo} on GitHub</a>
+        {e.launcher && (
+          <a class="btn rl" href={e.launcher.url} title={e.launcher.easy ? "RecompLauncher sets it up from your own disc image or game folder" : undefined}>
+            {e.launcher.easy ? "One-click setup in RecompLauncher" : "In RecompLauncher"}
+          </a>
+        )}
         {s?.homepage && <a class="btn" href={s.homepage}>Website</a>}
       </p>
     )
@@ -584,6 +589,13 @@ const jsonLd = {
     border-color: var(--recomp);
     font-weight: 600;
     box-shadow: 0 0 24px -6px rgb(124 240 197 / 0.6);
+  }
+  .btn.rl {
+    color: #34f2e8;
+    border-color: rgb(52 242 232 / 0.35);
+  }
+  .btn.rl:hover {
+    border-color: #34f2e8;
   }
   .btn.primary:hover {
     border-color: var(--recomp);

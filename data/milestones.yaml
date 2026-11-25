@@ -10,6 +10,26 @@
 # `kind: count` entries (the list passing 1000, 2000, … projects or games) are written by
 # scripts/count-milestones.ts after each data fetch; don't add them by hand.
 
+- id: recomplauncher-links
+  date: 2026-11-25
+  kind: news
+  vendor: recompparty
+  label: RecompLauncher links
+  title: Games now link to RecompLauncher, with a 1-click badge
+  summary: |-
+    Every game page now links to the game in RecompLauncher's catalog when it is there: 845 of the listed projects
+    at launch. RecompLauncher finds, installs and updates PC recomps straight from their developers' GitHub releases.
+
+    234 of them have one-click setup: point the launcher at your own disc image or game folder and it sets the game
+    up. Those carry a cyan 1-click badge on their cards. For 95 the setup comes from the developer's own
+    recomplauncher.json; for the rest RecompLauncher's catalog provides it. The list is refreshed from the launcher's
+    public catalog with every data fetch.
+  sources:
+    - label: RecompLauncher on GitHub
+      url: https://github.com/elripalda/RecompLauncher
+    - label: "RecompLauncher: adding one-click setup to a recomp"
+      url: https://github.com/elripalda/RecompLauncher/blob/main/docs/DEVELOPERS.md
+
 - id: recomp-party-1000
   date: 2026-11-20
   kind: count

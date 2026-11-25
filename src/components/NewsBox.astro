@@ -27,8 +27,8 @@ const items: Item[] = [
     .filter((m) => Date.parse(m.date) >= since)
     .map((m) => ({
       date: m.date,
-      // "recomp.party milestone" is too long for the card's top line
-      kind: m.kind === "count" ? "Milestone" : MILESTONE_KINDS[m.kind],
+      // "recomp.party milestone" / "recomp.party news" are too long for the card's top line
+      kind: m.kind === "count" ? "Milestone" : m.kind === "news" ? "News" : MILESTONE_KINDS[m.kind],
       title: m.title,
       text: firstSentence(m.summary),
       href: milestonePath(m),

@@ -39,6 +39,8 @@ jobs:
         continue-on-error: true # a slow or failing commit scan must not hold back the release refresh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm run launcher
+        continue-on-error: true # RecompLauncher's catalog being down keeps the last data/launcher.json
       - run: npm run validate
       - name: Commit data if it changed
         run: |
@@ -48,7 +50,7 @@ jobs:
           # commit that triggered it, older than the data the run before pushed. So the files this job generates are
           # put whole on top of the latest main: this run fetched them last. Merging them line by line conflicted
           # (and could splice two versions of a JSON file).
-          DATA="data/snapshot.json data/stars.json data/games.json data/ai.json"
+          DATA="data/snapshot.json data/stars.json data/games.json data/ai.json data/launcher.json"
           SAVE=$(mktemp -d)
           cp $DATA "$SAVE/" && cp -a public/covers "$SAVE/covers"
           for i in 1 2 3 4 5; do
