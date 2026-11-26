@@ -1476,12 +1476,6 @@
   based_on: [Petexy/Tekken-Tag-2-Ultimate-Edition]
   wikidata: Q1195150
   added: 2026-10-30
-- repo: Petexy/Golden-Fist-Launcher
-  game: Tekken Tag Tournament 2 Wii U Edition
-  platform: wiiu
-  kind: port
-  wikidata: Q672049
-  added: 2026-11-25
 - repo: Petexy/Tekken-Tag-2-Ultimate-Edition
   game: Tekken Tag Tournament 2 Wii U Edition
   platform: wiiu
@@ -1923,12 +1917,12 @@
   wikidata: Q28234671
   added: 2026-11-18
 - repo: ElKiro1311/smrpg-recompiled
-  game: Super Mario RPG
+  game: Super Mario RPG (2023)
   platform: switch
   kind: recomp
   tool: LASRecomp
   based_on: [peiikai/LASRecomp]
-  wikidata: Q61745904
+  wikidata: Q119822934
   added: 2026-11-25
 - repo: OpenSmash-Ultimate/OpenSmash-Ultimate
   game: Super Smash Bros. Ultimate
@@ -2205,6 +2199,13 @@
   based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
   wikidata: Q140140365
   added: 2026-11-20
+- repo: morpheus302/PS5_Grapnel
+  game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
+  platform: switch2
+  kind: recomp
+  based_on: [https://git.magicbean.dev/MagicBeanDev/Longshot]
+  wikidata: Q140140365
+  added: 2026-11-25
 - repo: pixl27/ProjectReLink
   game: "The Legend of Zelda: Ocarina of Time (Switch 2 remake)"
   platform: switch2
@@ -4027,7 +4028,7 @@
 - repo: IvanBarbosaFilho/Yakuza-Kenzan-Recomp
   game: Ryu ga Gotoku Kenzan!
   platform: ps3
-  kind: port
+  kind: recomp
   tool: ps3recomp
   wikidata: Q2093486
   added: 2026-11-25
@@ -4855,7 +4856,7 @@
 - repo: MertCNOZ/IndyPort
   game: Indiana Jones and the Emperor's Tomb
   platform: xbox
-  kind: port
+  kind: recomp
   based_on: [TGP482/XboxXBERecomp]
   wikidata: Q1661316
   added: 2026-11-25
@@ -5799,7 +5800,7 @@
 - repo: TGP482/FCIP-XEXRecomp
   game: "Far Cry Instincts: Predator"
   platform: x360
-  kind: port
+  kind: recomp
   tool: Xbox360XEX-Recomp
   wikidata: Q10494020
   added: 2026-11-25
@@ -6344,7 +6345,7 @@
 - repo: KijenP/nier-gestalt-port
   game: NieR Gestalt
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q108940777
   added: 2026-11-25
@@ -7426,6 +7427,7 @@
   game: "The Need for Speed: Special Edition"
   platform: pc
   kind: recomp
+  wikidata: Q120835702
   added: 2026-11-25
 - repo: nolffan/nolfsrc
   game: "The Operative: No One Lives Forever"
@@ -7694,11 +7696,6 @@
   platform: arcade
   kind: recomp
   added: 2026-11-03
-- repo: tmcleroy/vampire-savior-recomp
-  game: "Vampire Savior: The Lord of Vampire"
-  platform: arcade
-  kind: recomp
-  added: 2026-11-25
 - repo: mr-finster/vf1-recomp
   game: Virtua Fighter
   platform: arcade
@@ -7883,12 +7880,6 @@
   kind: tool
   based_on: [n64decomp/sm64]
   added: 2026-11-10
-- repo: morpheus302/PS5_Grapnel
-  game: "The Legend of Zelda: Ocarina of Time"
-  platform: n64
-  kind: tool
-  based_on: [MagicBeanDev/Longshot]
-  added: 2026-11-25
 - repo: jeff-strutb/brally
   game: Top Gear Rally
   platform: n64
