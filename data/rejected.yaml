@@ -900,13 +900,21 @@
     a playable game, so it does not belong on the list.
   date: 2026-11-25
 - repo: Petexy/Golden-Fist-Launcher
-  reason: The same repo as the listed Petexy/Tekken-Tag-2-Ultimate-Edition, renamed;
-    the entry follows it.
+  reason: The same repo as the listed Petexy/Tekken-Tag-2-Ultimate-Edition,
+    renamed; the entry follows it.
   date: 2026-11-26
 - repo: tmcleroy/vampire-savior-recomp
   reason: Moved into tmcleroy/cps2recomp, which is listed (Capcom CPS-2 arcade games).
   date: 2026-11-26
 - repo: JisungDiaz447/nsp-box-switch-recompiler-pc
-  reason: A password-protected archive from a day-old repo, claiming to recompile any
-    Switch game; nothing to check, not listed.
+  reason: A password-protected archive from a day-old repo, claiming to recompile
+    any Switch game; nothing to check, not listed.
+  date: 2026-11-26
+- repo: LooperSalty/AnyXboxX
+  reason: The repository is an Xbox Series X emulator prototype, not a
+    game‑specific static recompilation or source port.
+  date: 2026-11-26
+- repo: Guernica4u/GTA6-PC-Port-Archive
+  reason: The repo is an archive of multiple projects, not a single playable
+    static recompilation or source port.
   date: 2026-11-26
