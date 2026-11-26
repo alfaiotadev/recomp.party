@@ -1945,7 +1945,7 @@
   },
   "wikipedia": "Call of Duty: Black Ops II",
   "igdb": "call-of-duty-black-ops-ii",
-  "mobygames": "call-of-duty-black-ops-ii-digital-deluxe-edition",
+  "mobygames": "call-of-duty-black-ops-ii",
   "cover": {
    "igdbImage": "co1wkv",
    "width": 400,
@@ -2121,10 +2121,10 @@
   ],
   "series": [],
   "wikipedia": "The Lord of the Rings: The Return of the King (video game)",
-  "igdb": "the-lord-of-the-rings-the-return-of-the-king--1",
+  "igdb": "the-lord-of-the-rings-the-return-of-the-king",
   "mobygames": "lord-of-the-rings-the-return-of-the-king",
   "cover": {
-   "igdbImage": "co2cjq",
+   "igdbImage": "co20of",
    "width": 400,
    "height": 533
   }
@@ -3189,6 +3189,32 @@
    "height": 533
   }
  },
+ "Q641684": {
+  "title": "Heroes of Might and Magic IV",
+  "year": 2002,
+  "released": "2002-03-28",
+  "developers": [
+   "New World Computing"
+  ],
+  "publishers": [
+   "The 3DO Company"
+  ],
+  "genres": [
+   "turn-based strategy video game"
+  ],
+  "series": [],
+  "stores": {
+   "gog": "game/heroes_of_might_and_magic_4_complete"
+  },
+  "wikipedia": "Heroes of Might and Magic IV",
+  "igdb": "heroes-of-might-and-magic-iv-complete-edition",
+  "mobygames": "heroes-of-might-and-magic-iv",
+  "cover": {
+   "igdbImage": "co2122",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q641697": {
   "title": "Red Dead Revolver",
   "year": 2004,
@@ -3952,6 +3978,33 @@
   "mobygames": "mario-party-3",
   "cover": {
    "igdbImage": "co21yu",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q746351": {
+  "title": "Command & Conquer: Red Alert 3",
+  "year": 2008,
+  "released": "2008-10-28",
+  "developers": [
+   "Danger Close Games"
+  ],
+  "publishers": [
+   "Electronic Arts"
+  ],
+  "genres": [
+   "real-time strategy"
+  ],
+  "series": [],
+  "stores": {
+   "steam": "17480",
+   "msstore": "c2kf2l3vlrqt"
+  },
+  "wikipedia": "Command & Conquer: Red Alert 3",
+  "igdb": "command-conquer-red-alert-3",
+  "mobygames": "command-conquer-red-alert-3",
+  "cover": {
+   "igdbImage": "co3m4l",
    "width": 400,
    "height": 533
   }
@@ -7852,7 +7905,7 @@
   "igdb": "kirby-s-epic-yarn",
   "mobygames": "kirbys-epic-yarn",
   "cover": {
-   "igdbImage": "co1w9w",
+   "igdbImage": "cod9rh",
    "width": 400,
    "height": 533
   }
@@ -8260,7 +8313,7 @@
   ],
   "wikipedia": "Midnight Club: Los Angeles",
   "igdb": "midnight-club-los-angeles",
-  "mobygames": "midnight-club-los-angeles-complete-edition",
+  "mobygames": "midnight-club-los-angeles",
   "cover": {
    "igdbImage": "co2lcu",
    "width": 400,
@@ -8723,6 +8776,57 @@
   "mobygames": "illusion-of-gaia",
   "cover": {
    "igdbImage": "co8kyi",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q1661316": {
+  "title": "Indiana Jones and the Emperor's Tomb",
+  "year": 2003,
+  "released": "2003-02-24",
+  "developers": [
+   "The Collective"
+  ],
+  "publishers": [
+   "Lucasfilm Games"
+  ],
+  "genres": [
+   "action-adventure game"
+  ],
+  "series": [],
+  "stores": {
+   "steam": "560430",
+   "gog": "game/indiana_jones_and_the_emperors_tomb",
+   "msstore": "c02h769drlqx"
+  },
+  "wikipedia": "Indiana Jones and the Emperor's Tomb",
+  "igdb": "indiana-jones-and-the-emperor-s-tomb",
+  "mobygames": "indiana-jones-and-the-emperors-tomb",
+  "cover": {
+   "igdbImage": "co30yq",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q1668079": {
+  "title": "Smash TV",
+  "year": 1990,
+  "released": "1990-04",
+  "developers": [
+   "WMS Industries"
+  ],
+  "publishers": [
+   "WMS Industries"
+  ],
+  "genres": [
+   "action game"
+  ],
+  "series": [],
+  "wikipedia": "Smash TV",
+  "igdb": "smash-tv",
+  "mobygames": "smash-tv",
+  "cover": {
+   "igdbImage": "co5j51",
    "width": 400,
    "height": 533
   }
@@ -9204,6 +9308,31 @@
   "mobygames": "ultima-underworld-the-stygian-abyss",
   "cover": {
    "igdbImage": "co5xjp",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q1909600": {
+  "title": "Soulcalibur III",
+  "year": 2005,
+  "released": "2005-10-25",
+  "developers": [
+   "Project Soul"
+  ],
+  "publishers": [
+   "Namco"
+  ],
+  "genres": [
+   "3D fighting game"
+  ],
+  "series": [
+   "Soulcalibur"
+  ],
+  "wikipedia": "Soulcalibur III",
+  "igdb": "soulcalibur-iii",
+  "mobygames": "soulcalibur-iii",
+  "cover": {
+   "igdbImage": "co4kmb",
    "width": 400,
    "height": 533
   }
@@ -9817,6 +9946,31 @@
    "height": 533
   }
  },
+ "Q2055124": {
+  "title": "Galerians",
+  "year": 1999,
+  "released": "1999-08-26",
+  "developers": [
+   "Polygon Magic"
+  ],
+  "publishers": [
+   "ASCII Corporation"
+  ],
+  "genres": [
+   "cyberpunk video game",
+   "post-apocalyptic video game",
+   "survival horror"
+  ],
+  "series": [],
+  "wikipedia": "Galerians",
+  "igdb": "galerians",
+  "mobygames": "galerians",
+  "cover": {
+   "igdbImage": "co4py3",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q2057596": {
   "title": "Urban Chaos: Riot Response",
   "year": 2006,
@@ -10147,6 +10301,31 @@
   "mobygames": "valkyrie-profile",
   "cover": {
    "igdbImage": "co1u5x",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q2093486": {
+  "title": "Ryū ga Gotoku Kenzan!",
+  "year": 2008,
+  "released": "2008-03-06",
+  "developers": [
+   "Sega"
+  ],
+  "publishers": [
+   "Sega"
+  ],
+  "genres": [
+   "action-adventure game"
+  ],
+  "series": [
+   "Yakuza"
+  ],
+  "wikipedia": "Ryū ga Gotoku Kenzan!",
+  "igdb": "ryuu-ga-gotoku-kenzan",
+  "mobygames": "ry-ga-gotoku-kenzan",
+  "cover": {
+   "igdbImage": "co1paz",
    "width": 400,
    "height": 533
   }
@@ -12155,10 +12334,10 @@
   ],
   "series": [],
   "wikipedia": "Spider-Man (2002 video game)",
-  "igdb": "spider-man--1",
+  "igdb": "spider-man--14",
   "mobygames": "spider-man______",
   "cover": {
-   "igdbImage": "co1p17",
+   "igdbImage": "coarp7",
    "width": 400,
    "height": 533
   }
@@ -12739,10 +12918,10 @@
    "steam": "1842988"
   },
   "wikipedia": "Street Fighter Alpha 3",
-  "igdb": "street-fighter-alpha-3--1",
+  "igdb": "street-fighter-alpha-3",
   "mobygames": "street-fighter-alpha-3",
   "cover": {
-   "igdbImage": "co6akr",
+   "igdbImage": "co6auw",
    "width": 400,
    "height": 533
   }
@@ -12948,6 +13127,34 @@
   "mobygames": "40-winks",
   "cover": {
    "igdbImage": "co3e31",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q2701206": {
+  "title": "Harvest Moon: Animal Parade",
+  "year": 2008,
+  "released": "2008-10-30",
+  "developers": [
+   "Marvelous Entertainment"
+  ],
+  "publishers": [
+   "Marvelous Entertainment",
+   "Nintendo Australia",
+   "Rising Star Games",
+   "Winning Entertainment Group"
+  ],
+  "genres": [
+   "construction and management simulation"
+  ],
+  "series": [
+   "Story of Seasons"
+  ],
+  "wikipedia": "Harvest Moon: Animal Parade",
+  "igdb": "harvest-moon-animal-parade",
+  "mobygames": "harvest-moon-animal-parade",
+  "cover": {
+   "igdbImage": "co2xk1",
    "width": 400,
    "height": 533
   }
@@ -13746,10 +13953,10 @@
    "Bloody Roar"
   ],
   "wikipedia": "Bloody Roar Extreme",
-  "igdb": "bloody-roar-primal-fury",
+  "igdb": "bloody-roar-extreme",
   "mobygames": "bloody-roar-primal-fury",
   "cover": {
-   "igdbImage": "co4t49",
+   "igdbImage": "co7xrq",
    "width": 400,
    "height": 533
   }
@@ -14404,10 +14611,10 @@
    "Mega Man Legends"
   ],
   "wikipedia": "Mega Man Legends (video game)",
-  "igdb": "mega-man-legends",
+  "igdb": "mega-man-64",
   "mobygames": "mega-man-legends",
   "cover": {
-   "igdbImage": "cob1ls",
+   "igdbImage": "co5qb3",
    "width": 400,
    "height": 533
   }
@@ -16704,6 +16911,34 @@
    "height": 534
   }
  },
+ "Q11300470": {
+  "title": "The Legend of Zelda: A Link Between Worlds",
+  "year": 2013,
+  "released": "2013-11-22",
+  "developers": [
+   "Nintendo Entertainment Analysis & Development"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action-adventure game"
+  ],
+  "series": [
+   "The Legend of Zelda"
+  ],
+  "stores": {
+   "eshop": "the-legend-of-zelda-a-link-between-worlds-3ds"
+  },
+  "wikipedia": "The Legend of Zelda: A Link Between Worlds",
+  "igdb": "the-legend-of-zelda-a-link-between-worlds",
+  "mobygames": "legend-of-zelda-a-link-between-worlds",
+  "cover": {
+   "igdbImage": "co3p0j",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q11340490": {
   "title": "Muscle March",
   "year": 2009,
@@ -17837,6 +18072,35 @@
    "height": 533
   }
  },
+ "Q23008476": {
+  "title": "The Legend of Zelda: Twilight Princess HD",
+  "year": 2016,
+  "released": "2016-03-04",
+  "developers": [
+   "Nintendo Entertainment Planning & Development",
+   "Tantalus Media"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action-adventure game"
+  ],
+  "series": [
+   "The Legend of Zelda"
+  ],
+  "stores": {
+   "eshop": "the-legend-of-zelda-twilight-princess-hd-digital-version-wii-u"
+  },
+  "wikipedia": "The Legend of Zelda: Twilight Princess HD",
+  "igdb": "the-legend-of-zelda-twilight-princess-hd",
+  "mobygames": "legend-of-zelda-twilight-princess",
+  "cover": {
+   "igdbImage": "co3mqa",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q23013629": {
   "title": "Gravity Rush 2",
   "year": 2017,
@@ -18181,10 +18445,10 @@
   ],
   "series": [],
   "wikipedia": "Shadow of the Colossus (2018 video game)",
-  "igdb": "shadow-of-the-colossus--1",
+  "igdb": "shadow-of-the-colossus-special-edition",
   "mobygames": "shadow-of-the-colossus_",
   "cover": {
-   "igdbImage": "cobmel",
+   "igdbImage": "co2g0e",
    "width": 400,
    "height": 533
   }
@@ -18336,6 +18600,32 @@
   "mobygames": "dark-souls-remastered",
   "cover": {
    "igdbImage": "cobazz",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q56641109": {
+  "title": "Luigi's Mansion 3",
+  "year": 2019,
+  "released": "2019-10-31",
+  "developers": [
+   "Next Level Games"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action-adventure game"
+  ],
+  "series": [],
+  "stores": {
+   "eshop": "luigis-mansion-3-switch"
+  },
+  "wikipedia": "Luigi's Mansion 3",
+  "igdb": "luigis-mansion-3",
+  "mobygames": "luigis-mansion-3",
+  "cover": {
+   "igdbImage": "co22a9",
    "width": 400,
    "height": 533
   }
@@ -18996,7 +19286,7 @@
   }
  },
  "Q105688771": {
-  "title": "Pokémon Legends: Arceus",
+  "title": "Pokémon Legends: idk",
   "year": 2022,
   "released": "2022-01-28",
   "developers": [
@@ -19174,6 +19464,24 @@
    "width": 400,
    "height": 533
   }
+ },
+ "Q108940777": {
+  "title": "NieR Gestalt",
+  "year": 2010,
+  "released": "2010-04-22",
+  "developers": [
+   "Cavia"
+  ],
+  "publishers": [
+   "Square Enix"
+  ],
+  "genres": [
+   "action role-playing game"
+  ],
+  "series": [
+   "Drakengard"
+  ],
+  "mobygames": "nier"
  },
  "Q110147539": {
   "title": "Soul Sacrifice: Delta",
@@ -19364,6 +19672,41 @@
    "width": 400,
    "height": 533
   }
+ },
+ "Q119822934": {
+  "title": "Super Mario RPG",
+  "year": 2023,
+  "released": "2023-11-17",
+  "developers": [
+   "ArtePiazza"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action role-playing game"
+  ],
+  "series": [
+   "Mario role-playing games"
+  ],
+  "stores": {
+   "eshop": "super-mario-rpg-switch"
+  },
+  "wikipedia": "Super Mario RPG (2023 video game)",
+  "igdb": "super-mario-rpg",
+  "cover": {
+   "igdbImage": "coba9n",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q120835702": {
+  "title": "The Need for Speed: Special Edition",
+  "developers": [],
+  "publishers": [],
+  "genres": [],
+  "series": [],
+  "mobygames": "need-for-speed-special-edition"
  },
  "Q121008904": {
   "title": "Sub Rosa",
@@ -19845,6 +20188,33 @@
    "height": 533
   }
  },
+ "Q136231667": {
+  "title": "Mario Tennis Fever",
+  "year": 2026,
+  "released": "2026-02-12",
+  "developers": [
+   "Camelot Software Planning"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "sports video game"
+  ],
+  "series": [
+   "Mario Tennis"
+  ],
+  "stores": {
+   "eshop": "mario-tennis-fever-switch-2"
+  },
+  "wikipedia": "Mario Tennis Fever",
+  "igdb": "mario-tennis-fever",
+  "cover": {
+   "igdbImage": "coag5n",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q136735050": {
   "title": "MLB The Show 26",
   "year": 2026,
@@ -19911,6 +20281,34 @@
   "igdb": "the-legend-of-zelda-ocarina-of-time--1",
   "cover": {
    "igdbImage": "cocv5r",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q141935094": {
+  "title": "The Binding of Isaac: Repentance+",
+  "year": 2024,
+  "released": "2024-11-18",
+  "developers": [
+   "Edmund McMillen",
+   "Nicalis"
+  ],
+  "publishers": [
+   "Nicalis"
+  ],
+  "genres": [
+   "roguelite"
+  ],
+  "series": [
+   "The Binding of Isaac"
+  ],
+  "stores": {
+   "steam": "3353470"
+  },
+  "wikipedia": "The Binding of Isaac: Repentance+",
+  "igdb": "the-binding-of-isaac-repentance-plus",
+  "cover": {
+   "igdbImage": "co949f",
    "width": 400,
    "height": 533
   }
