@@ -10,6 +10,40 @@
 # `kind: count` entries (the list passing 1000, 2000, … projects or games) are written by
 # scripts/count-milestones.ts after each data fetch; don't add them by hand.
 
+- id: gta-vi-takedowns
+  date: 2026-11-24
+  kind: takedown
+  vendor: rockstar
+  label: GTA takedowns
+  sub: 3,007 repos
+  title: Take-Two has GitHub disable 3,007 GTA VI recompilation repos
+  summary: |-
+    On 24 November 2026 GitHub disabled 3,007 repositories after a DMCA notice from Take-Two Interactive, Rockstar
+    Games' parent company: Leonida, a project to run the Xbox Series version of Grand Theft Auto VI natively on
+    Windows, and the whole network of its forks (the notice counts more than 2,900).
+
+    The notice says the project opened on 21 November, the day after stolen game files from an Xbox Series build of
+    GTA VI were distributed publicly, and argues that its "bring your own files" instruction doesn't make it a
+    general-purpose project. It also cites the ban on decompiling and reverse engineering in Rockstar's terms of
+    service. GitHub acting on a notice is not a court ruling.
+
+    Six days earlier, on 18 November, GitHub processed four Take-Two notices against ports of GTA V's web version to
+    iOS, macOS, Android and Windows: Muguet (263 forks), glue5 (349 forks), gta5mobile-android and PlayGTA5. Leonida's
+    Discord server, with almost 180,000 members, was also taken offline, and its creator says their Discord account
+    was banned for two years.
+
+    None of the projects listed on recomp.party were named in the notices. Leonida was never listed: by its own
+    README, nothing in it was playable yet.
+  sources:
+    - label: "GitHub DMCA archive: Take-Two notice, 24 November 2026"
+      url: https://github.com/github/dmca/blob/master/2026/11/2026-11-24-take-two.md
+    - label: "GitHub DMCA archive: Take-Two notices, 18 November 2026 (Muguet)"
+      url: https://github.com/github/dmca/blob/master/2026/11/2026-11-18-take-two.md
+    - label: "GitHub DMCA archive: Take-Two notice, 18 November 2026 (glue5)"
+      url: https://github.com/github/dmca/blob/master/2026/11/2026-11-18-take-two-4.md
+    - label: "Tom's Hardware: the Discord server and the two-year ban"
+      url: https://www.tomshardware.com/video-games/pc-gaming/rockstar-nukes-15-year-olds-gta-6-recompilation-project-discord-and-github-servers-taken-down-project-leonida-had-almost-180-000-discord-members-host-account-banned-for-two-years
+
 - id: recomplauncher-links
   date: 2026-11-25
   kind: news
