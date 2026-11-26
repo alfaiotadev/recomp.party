@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T08:27:20.845Z",
+ "generatedAt": "2026-11-26T21:44:43.726Z",
  "games": {
   "0c0de/splatterhouse-decomp": {
    "id": "splatterhouse-decomp",
@@ -93,6 +93,11 @@
    "easy": true,
    "own": false,
    "since": "2026-10-31"
+  },
+  "Adolini1715/Concrete-Jungle-PC": {
+   "id": "concrete-jungle-pc",
+   "easy": false,
+   "own": false
   },
   "adrbn/bo2-mac": {
    "id": "bo2-mac",
@@ -889,8 +894,9 @@
   },
   "efm-games/scarface-recomp": {
    "id": "scarface-recomp",
-   "easy": false,
-   "own": false
+   "easy": true,
+   "own": true,
+   "since": "2026-11-26"
   },
   "elforeign/nfs-most-wanted-mac": {
    "id": "nfs-most-wanted-mac",
@@ -4470,6 +4476,12 @@
    "id": "portable-ops-native",
    "easy": false,
    "own": false
+  },
+  "Zexyen/Hotel-Luigi": {
+   "id": "hotel-luigi",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-26"
   },
   "Zexyen/Witch-Time": {
    "id": "witch-time",
