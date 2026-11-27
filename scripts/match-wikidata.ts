@@ -40,6 +40,8 @@ const PLATFORM_NAMES: Partial<Record<keyof typeof PLATFORMS, string[]>> = {
   amiga: ["Amiga 500", "Amiga 1200", "Amiga CD32"],
   j2me: ["Java Platform, Micro Edition", "mobile phone"],
   android: ["Android"],
+  xsx: ["Xbox Series X and Series S", "Xbox Series X", "Xbox Series S"],
+  sms: ["Master System", "Sega Master System", "Game Gear"],
   ios: ["iOS"],
   wsc: ["WonderSwan Color", "WonderSwan"],
 };

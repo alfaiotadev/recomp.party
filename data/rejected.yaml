@@ -974,3 +974,11 @@
   reason: Repository provides only a launcher for various runtimes, not a playable
     recompilation or a recompiler toolchain.
   date: 2026-11-27
+- repo: macgametest/nathan-drake-collection-macos
+  reason: A macOS launcher for someone else's Nathan Drake Collection PC port, not
+    a port of its own.
+  date: 2026-11-27
+- repo: californiaAlmonds/OpenScarlett
+  reason: A general Xbox Series X|S translation layer (Minecraft is its test
+    title), not a port of one game or a recompiler.
+  date: 2026-11-27
