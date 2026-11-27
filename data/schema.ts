@@ -15,6 +15,7 @@ export const PLATFORMS = {
   nds: "Nintendo DS",
   "3ds": "Nintendo 3DS",
   vb: "Virtual Boy",
+  wsc: "WonderSwan Color",
   pce: "PC Engine / TurboGrafx",
   genesis: "Mega Drive / Genesis",
   saturn: "Saturn",
@@ -32,6 +33,7 @@ export const PLATFORMS = {
   pc: "PC (DOS/Windows)",
   j2me: "Java phone (J2ME)",
   android: "Android",
+  ios: "iOS",
   arcade: "Arcade",
   /** Toolchains only: a recompiler for several consoles. */
   multi: "Multi-platform",

@@ -2670,6 +2670,14 @@
   wikidata: Q2698314
   added: 2026-11-13
 
+# --- WonderSwan Color ------------------------------------------------------------
+- repo: projectsawgod/sawgod
+  game: Makai Toushi SaGa
+  platform: wsc
+  kind: recomp
+  note: The 2002 WonderSwan Color remake of The Final Fantasy Legend (Game Boy, 1989).
+  added: 2026-11-27
+
 # --- PC Engine / TurboGrafx ------------------------------------------------------
 - repo: gminustwo/RondoRecomp
   game: "Castlevania: Rondo of Blood"
@@ -6138,6 +6146,12 @@
   tool: ReXGlue
   wikidata: Q17452
   added: 2026-11-03
+- repo: marcm0de/FivePocket
+  game: Grand Theft Auto V
+  platform: x360
+  kind: recomp
+  wikidata: Q17452
+  added: 2026-11-27
 - repo: Akimitsu76/Lantern-Recomp
   game: "Green Lantern: Rise of the Manhunters"
   platform: x360
@@ -7671,6 +7685,14 @@
   kind: recomp
   wikidata: Q104862407
   added: 2026-11-24
+
+# --- iOS -------------------------------------------------------------------------
+- repo: YuriDrak/mikuflick-recomp
+  game: Miku Flick/02
+  platform: ios
+  kind: port
+  wikidata: Q6850237
+  added: 2026-11-27
 
 # --- Arcade ----------------------------------------------------------------------
 - repo: tmcleroy/cps2recomp
