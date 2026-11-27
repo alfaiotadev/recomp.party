@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T10:42:14.666Z",
+ "generatedAt": "2026-11-27T11:45:30.073Z",
  "games": {
   "0c0de/splatterhouse-decomp": {
    "id": "splatterhouse-decomp",
@@ -3558,8 +3558,9 @@
   },
   "Simon3Sarkis/super-odyssey-pc-recomp": {
    "id": "super-odyssey-pc-recomp",
-   "easy": false,
-   "own": false
+   "easy": true,
+   "own": true,
+   "since": "2026-11-27"
   },
   "Sinan-Karakaya/DQ8-Recompiled": {
    "id": "dq8-recompiled",
