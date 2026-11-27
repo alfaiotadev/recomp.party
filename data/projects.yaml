@@ -717,6 +717,14 @@
   tool: N64Recomp
   wikidata: Q1705294
   added: 2026-10-28
+- repo: leonzordhue/PokemonStadium2-3DS
+  game: Pokémon Stadium 2
+  platform: n64
+  kind: recomp
+  tool: N64Recomp
+  based_on: [N64Recomp/N64Recomp]
+  wikidata: Q2290930
+  added: 2026-11-27
 - repo: boricuapab/quest64tale-recompiled
   game: Quest 64
   platform: n64
@@ -1391,6 +1399,12 @@
   kind: recomp
   tool: WiiCompiled
   added: 2026-11-09
+- repo: DeZer04/sb3utage-indo
+  game: Sengoku Basara 3 Utage
+  platform: wii
+  kind: recomp
+  wikidata: Q122394838
+  added: 2026-11-27
 - repo: meathax/sinandpun
   game: "Sin & Punishment: Star Successor"
   platform: wii
@@ -1651,6 +1665,14 @@
   wikidata: Q113956929
   added: 2026-11-03
   moved_to: https://gitlab.com/engage-pc-recomp/engage-pc-recomp
+- repo: Azzulin/FEW-Recomp
+  game: Fire Emblem Warriors
+  platform: switch
+  kind: recomp
+  tool: HWDER
+  based_on: [blocker-3/HWDER]
+  wikidata: Q30589355
+  added: 2026-11-27
 - repo: jaigner-hub/fe3h-pc-recomp
   game: "Fire Emblem: Three Houses"
   platform: switch
@@ -1679,6 +1701,13 @@
   based_on: [peiikai/LASRecomp]
   wikidata: Q108670544
   added: 2026-11-18
+- repo: pixelnorth/DreamstarRecomp
+  game: Kirby Star Allies
+  platform: switch
+  kind: recomp
+  based_on: [peiikai/LASRecomp]
+  wikidata: Q40888841
+  added: 2026-11-27
 - repo: Zexyen/Hotel-Luigi
   game: Luigi's Mansion 3
   platform: switch
@@ -1888,6 +1917,12 @@
   based_on: [peiikai/LASRecomp]
   wikidata: Q81919703
   added: 2026-11-17
+- repo: vfjoo888/Super3D
+  game: Super Mario 3D World + Bowser's Fury
+  platform: switch
+  kind: recomp
+  wikidata: Q105106422
+  added: 2026-11-27
 - repo: sm35recomp/sm35recomp
   game: Super Mario Bros. 35
   platform: switch
@@ -2209,6 +2244,13 @@
   platform: switch2
   kind: recomp
   added: 2026-11-12
+- repo: Kendoismebutmaybenot/wondershot
+  game: Super Mario Bros. Wonder
+  platform: switch2
+  kind: recomp
+  tool: Longshot
+  wikidata: Q119819453
+  added: 2026-11-27
 - repo: dsi-hub/HookLink
   game: "The Legend of Zelda: Ocarina of Time"
   platform: switch2
@@ -2276,6 +2318,13 @@
   kind: port
   wikidata: Q637137
   added: 2026-11-01
+- repo: mstan/PokemonRedAndBlueRecomp
+  game: Pokémon Red and Blue
+  platform: gb
+  kind: recomp
+  tool: gbcllr
+  wikidata: Q637137
+  added: 2026-11-27
 - repo: mstan/SuperMarioLand2Recomp
   game: "Super Mario Land 2: 6 Golden Coins"
   platform: gb
@@ -2503,6 +2552,12 @@
   kind: recomp
   wikidata: Q2611741
   added: 2026-11-15
+- repo: BoneyKK/Bright-Dawn
+  game: "Golden Sun: Dark Dawn"
+  platform: nds
+  kind: recomp
+  wikidata: Q520192
+  added: 2026-11-27
 - repo: matheus2x/ie3ogre-nds-recomp
   game: "Inazuma Eleven 3: Sekai heno Chousen!! The Ogre"
   platform: nds
@@ -3459,6 +3514,13 @@
   tool: ps2recomp
   wikidata: Q1112104
   added: 2026-11-11
+- repo: Harold0777/eagle_five_recomp
+  game: "Ace Combat 5: The Unsung War (USA)"
+  platform: ps2
+  kind: recomp
+  based_on: [sal063/Ace-Combat-5-Static-recompilation]
+  wikidata: Q1112104
+  added: 2026-11-27
 - repo: Arch61s/Baroque-Decomp
   game: Baroque
   platform: ps2
@@ -4083,6 +4145,13 @@
   tool: ps3recomp
   wikidata: Q107424221
   added: 2026-11-09
+- repo: papand7/Motorstorm-PacificRift-Recompilation
+  game: "MotorStorm: Pacific Rift"
+  platform: ps3
+  kind: recomp
+  tool: ps3recomp
+  wikidata: Q766891
+  added: 2026-11-27
 - repo: csrpfivem/PS3NHLLegacyRecomp
   game: NHL Legacy Edition
   platform: ps3
@@ -4433,6 +4502,13 @@
   kind: recomp
   wikidata: Q20059613
   added: 2026-10-28
+- repo: macgametest/nathan-drake-collection-macos
+  game: "Uncharted: The Nathan Drake Collection"
+  platform: ps4
+  kind: port
+  based_on: [bc160201983/Uncharted-The-Nathan-Drake-Collection-PC-port]
+  wikidata: Q20059613
+  added: 2026-11-27
 - repo: Supermedo/uncharted_pc
   game: "Uncharted: The Nathan Drake Collection"
   platform: ps4
@@ -4505,6 +4581,13 @@
   tool: PSPRecomp
   wikidata: Q94778
   added: 2026-10-28
+- repo: Tzeentchnet/MetalGearAcid2-Recomp
+  game: Metal Gear Acid 2
+  platform: psp
+  kind: recomp
+  tool: psp-recomp
+  wikidata: Q2517274
+  added: 2026-11-27
 - repo: zexk/portable-ops-native
   game: "Metal Gear Solid: Portable Ops"
   platform: psp
@@ -4709,6 +4792,14 @@
   based_on: [sp00nznet/xboxrecomp]
   wikidata: Q903728
   added: 2026-11-16
+- repo: Tzeentchnet/BruteForce
+  game: Brute Force
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  based_on: [sp00nznet/xboxrecomp]
+  wikidata: Q2927099
+  added: 2026-11-27
 - repo: djrobson5/Hellmouth-buffy-recomp
   game: Buffy the Vampire Slayer
   platform: xbox
@@ -4933,6 +5024,20 @@
   tool: xboxrecomp
   wikidata: Q1998860
   added: 2026-11-09
+- repo: trustno1-coder/VIctory-NVIDIA
+  game: Grand Theft Auto VI
+  platform: xbox
+  kind: port
+  based_on: [Marvisak/VIctory]
+  wikidata: Q23648408
+  added: 2026-11-27
+- repo: dalves408/halo2-recomp
+  game: Halo 2
+  platform: xbox
+  kind: recomp
+  tool: xboxrecomp
+  wikidata: Q252804
+  added: 2026-11-27
 - repo: chrissotraidis/projectreach
   game: "Halo: Combat Evolved"
   platform: xbox
@@ -5113,6 +5218,13 @@
   based_on: [RanggaCasper/MostWanted-Android, TGP482/XboxXBE-Recomp]
   wikidata: Q220365
   added: 2026-11-23
+- repo: PotatoRecomp/Underground-2-Android
+  game: "Need for Speed: Underground 2"
+  platform: xbox
+  kind: recomp
+  tool: XboxXBE-Recomp
+  wikidata: Q726190
+  added: 2026-11-27
 - repo: gamboozino/ngbrecomp
   game: Ninja Gaiden Black
   platform: xbox
@@ -5399,6 +5511,12 @@
   tool: Xbox XBE Recomp
   wikidata: Q1974230
   added: 2026-11-05
+- repo: mattiasribera/WarriorsReborn
+  game: The Warriors
+  platform: xbox
+  kind: port
+  wikidata: Q1974230
+  added: 2026-11-27
 - repo: phobos665/split2-recomp
   game: Timesplitters 2
   platform: xbox
@@ -5610,6 +5728,13 @@
   tool: ReXGlue
   wikidata: Q57270
   added: 2026-11-20
+- repo: nacholuver1/Blitz-TheLeague-Recomp
+  game: "Blitz: The League"
+  platform: x360
+  kind: recomp
+  tool: ReXGlue
+  wikidata: Q4926943
+  added: 2026-11-27
 - repo: zolaware/reblue
   game: Blue Dragon
   platform: x360
@@ -5645,6 +5770,13 @@
   tool: ReXGlue
   wikidata: Q308961
   added: 2026-11-01
+- repo: yassinsolim/cod4-recomp
+  game: "Call of Duty 4: Modern Warfare"
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  wikidata: Q76255
+  added: 2026-11-27
 - repo: yassinsolim/aw-recomp
   game: "Call of Duty: Advanced Warfare"
   platform: x360
@@ -5670,6 +5802,13 @@
   kind: recomp
   wikidata: Q486351
   added: 2026-10-31
+- repo: yassinsolim/mw2-recomp
+  game: "Call of Duty: Modern Warfare 2"
+  platform: x360
+  kind: recomp
+  tool: XenonRecomp
+  wikidata: Q486351
+  added: 2026-11-27
 - repo: yassinsolim/mw3-recomp
   game: "Call of Duty: Modern Warfare 3"
   platform: x360
@@ -5958,6 +6097,14 @@
   kind: recomp
   wikidata: Q767436
   added: 2026-11-10
+- repo: Simon3Sarkis/fifa-street-3-pc-recomp
+  game: FIFA Street 3
+  platform: x360
+  kind: port
+  tool: ReXGlue
+  based_on: [Simon3Sarkis/fifa-street-3-rexglue-sdk]
+  wikidata: Q779227
+  added: 2026-11-27
 - repo: whompay/FNCReborn
   game: Fight Night Champion
   platform: x360
@@ -7291,6 +7438,13 @@
   platform: pc
   kind: port
   added: 2026-11-10
+- repo: almost-drowned-rat/Grand-Theft-Auto-2-Recompiled
+  game: Grand Theft Auto 2
+  platform: pc
+  kind: recomp
+  tool: winrecomp
+  wikidata: Q94460
+  added: 2026-11-27
 - repo: Awis13/liberty-pro-max
   game: Grand Theft Auto IV
   platform: pc
@@ -7871,6 +8025,12 @@
   platform: arcade
   kind: recomp
   added: 2026-11-03
+- repo: KG2G/vcop3-recomp
+  game: Virtua Cop 3
+  platform: arcade
+  kind: recomp
+  wikidata: Q7934911
+  added: 2026-11-27
 - repo: mr-finster/vf1-recomp
   game: Virtua Fighter
   platform: arcade
@@ -7955,6 +8115,11 @@
   kind: tool
   based_on: [seedds/nxnative]
   added: 2026-11-19
+- repo: californiaAlmonds/OpenScarlett
+  game: OpenScarlett
+  platform: xbox
+  kind: tool
+  added: 2026-11-27
 - repo: TheLostPantheon/nativ
   game: Project Nativ
   platform: vita
@@ -8032,6 +8197,11 @@
   platform: switch
   kind: tool
   added: 2026-11-09
+- repo: scarletnx/ScarletNX
+  game: ScarletNX
+  platform: multi
+  kind: tool
+  added: 2026-11-27
 - repo: mstan/segagenesisrecomp
   game: segagenesisrecomp
   platform: genesis
@@ -8043,6 +8213,12 @@
   platform: multi
   kind: tool
   added: 2026-11-14
+- repo: mstan/smsggrecomp
+  game: smsggrecomp
+  platform: multi
+  kind: tool
+  tool: smsggrecomp
+  added: 2026-11-27
 - repo: RetroPortingToolKit/snesrecomp
   game: SNESRecomp
   platform: snes
