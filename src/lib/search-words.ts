@@ -28,6 +28,8 @@ const ALIASES: Partial<Record<PlatformId, string[]>> = {
   vita: ["psvita", "playstation vita"],
   xbox: ["og xbox", "original xbox"],
   x360: ["xbox 360", "360"],
+  xsx: ["xbox series", "series x", "series s", "scarlett"],
+  sms: ["master system", "sega master system", "sms", "game gear"],
   pc: ["dos", "windows"],
   j2me: ["java", "j2me", "java me", "mobile", "phone"],
   android: ["android", "mobile", "phone", "apk"],

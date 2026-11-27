@@ -926,3 +926,59 @@
   reason: A general compatibility layer for Xbox Series X|S dumps, like Wine or
     Proton, not a port or recompilation of one game.
   date: 2026-11-27
+- repo: stellarr-studio/kelvaroq
+  reason: It is a general Xbox Series console compatibility runtime/emulator
+    rather than a game-specific static recompilation or source port.
+  date: 2026-11-27
+- repo: sammwyy/xvalkyrie
+  reason: It is a general Xbox One/Series compatibility layer rather than a
+    game-specific port or static recompilation.
+  date: 2026-11-27
+- repo: holdmysocks/SixNG
+  reason: It is an asset extraction tool for model and texture extraction, not a
+    playable game port or static recompiler toolchain.
+  date: 2026-11-27
+- repo: breadbbbb/rpf9-explorer
+  reason: The repository is an asset/explorer tool for GTA 6 archives, not a
+    static recompilation, source port, or recompiler toolchain.
+  date: 2026-11-27
+- repo: rpatty-dev/PercyStar
+  reason: It is an archive explorer and model viewer tool for game assets, not a
+    playable game or recompiler toolchain.
+  date: 2026-11-27
+- repo: jadeowaowa/scarlett-layer
+  reason: It is a general Xbox Series X|S compatibility layer, not a game-specific
+    port or static recompiler tool.
+  date: 2026-11-27
+- repo: OnlyMoisties/GTA6-BootTest
+  reason: The project is explicitly not playable yet, only booting to the initial
+    start-screen UI prompt bar.
+  date: 2026-11-27
+- repo: rpatty-dev/PercyScarlett
+  reason: It is a general Xbox Series X|S translation layer rather than a
+    game-specific port or static recompiler tool.
+  date: 2026-11-27
+- repo: woreksami/ttpf-studio
+  reason: It is an asset viewing and extraction tool, not a playable game port or
+    recompiler toolchain.
+  date: 2026-11-27
+- repo: TheoBIET/OpenVI
+  reason: OpenVI is a file‑explorer/data‑mining tool, not a playable recompilation
+    or source‑port.
+  date: 2026-11-27
+- repo: Librett0/vice-lens
+  reason: It is a game data and model explorer, not a playable game port or static
+    recompilation.
+  date: 2026-11-27
+- repo: DesignWithTommy/i95-GTA6-PC-Launcher
+  reason: Repository provides only a launcher for various runtimes, not a playable
+    recompilation or a recompiler toolchain.
+  date: 2026-11-27
+- repo: macgametest/nathan-drake-collection-macos
+  reason: A macOS launcher for someone else's Nathan Drake Collection PC port, not
+    a port of its own.
+  date: 2026-11-27
+- repo: californiaAlmonds/OpenScarlett
+  reason: A general Xbox Series X|S translation layer (Minecraft is its test
+    title), not a port of one game or a recompiler.
+  date: 2026-11-27
