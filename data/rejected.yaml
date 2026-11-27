@@ -922,3 +922,7 @@
   reason: A password-protected archive with almost no source code; the static
     recompilation claim cannot be checked, looks like a malware lure.
   date: 2026-11-27
+- repo: ZigZagBoi1/ScarlettPort
+  reason: A general compatibility layer for Xbox Series X|S dumps, like Wine or
+    Proton, not a port or recompilation of one game.
+  date: 2026-11-27
