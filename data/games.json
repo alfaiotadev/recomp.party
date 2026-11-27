@@ -1531,7 +1531,7 @@
   },
   "wikipedia": "Call of Duty 3",
   "igdb": "call-of-duty-3",
-  "mobygames": "call-of-duty-3-gold-edition",
+  "mobygames": "call-of-duty-3",
   "cover": {
    "igdbImage": "co1wku",
    "width": 400,
@@ -1774,10 +1774,10 @@
    "eshop": "the-legend-of-zelda-a-link-to-the-past-3ds"
   },
   "wikipedia": "The Legend of Zelda: A Link to the Past",
-  "igdb": "the-legend-of-zelda-a-link-to-the-past--1",
+  "igdb": "the-legend-of-zelda-a-link-to-the-past",
   "mobygames": "legend-of-zelda-a-link-to-the-past",
   "cover": {
-   "igdbImage": "co5x34",
+   "igdbImage": "co3vzn",
    "width": 400,
    "height": 533
   }
@@ -2270,6 +2270,37 @@
    "height": 533
   }
  },
+ "Q486233": {
+  "title": "Call of Duty: Modern Warfare 3",
+  "year": 2011,
+  "released": "2011-11-08",
+  "developers": [
+   "Infinity Ward",
+   "Raven Software",
+   "Sledgehammer Games",
+   "Treyarch"
+  ],
+  "publishers": [
+   "Activision",
+   "Square Enix"
+  ],
+  "genres": [
+   "first-person shooter"
+  ],
+  "series": [],
+  "stores": {
+   "steam": "115300",
+   "msstore": "bxzlchzt8ndf"
+  },
+  "wikipedia": "Call of Duty: Modern Warfare 3",
+  "igdb": "call-of-duty-modern-warfare-3",
+  "mobygames": "call-of-duty-mw3",
+  "cover": {
+   "igdbImage": "co1wkn",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q486351": {
   "title": "Call of Duty: Modern Warfare 2",
   "year": 2009,
@@ -2317,7 +2348,7 @@
   ],
   "wikipedia": "Crash: Mind over Mutant",
   "igdb": "crash-mind-over-mutant",
-  "mobygames": "crash-mind-over-mutant",
+  "mobygames": "crash-mind-over-mutant_",
   "cover": {
    "igdbImage": "co3n2m",
    "width": 400,
@@ -3314,6 +3345,35 @@
   "mobygames": "superman-returns",
   "cover": {
    "igdbImage": "co2des",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q657710": {
+  "title": "The Legend of Zelda: Phantom Hourglass",
+  "year": 2007,
+  "released": "2007-06-23",
+  "developers": [
+   "Nintendo Entertainment Analysis & Development"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action-adventure game",
+   "post-apocalyptic video game"
+  ],
+  "series": [
+   "The Legend of Zelda"
+  ],
+  "stores": {
+   "eshop": "the-legend-of-zelda-phantom-hourglass-wii-u"
+  },
+  "wikipedia": "The Legend of Zelda: Phantom Hourglass",
+  "igdb": "the-legend-of-zelda-phantom-hourglass",
+  "mobygames": "legend-of-zelda-phantom-hourglass",
+  "cover": {
+   "igdbImage": "co3ocu",
    "width": 400,
    "height": 533
   }
@@ -4628,6 +4688,32 @@
    "height": 533
   }
  },
+ "Q835084": {
+  "title": "Diablo II: Lord of Destruction",
+  "year": 2001,
+  "released": "2001-06-27",
+  "developers": [
+   "Blizzard North"
+  ],
+  "publishers": [
+   "Blizzard Entertainment"
+  ],
+  "genres": [
+   "action role-playing game",
+   "role-playing video game"
+  ],
+  "series": [
+   "Diablo"
+  ],
+  "wikipedia": "Diablo II: Lord of Destruction",
+  "igdb": "diablo-ii-lord-of-destruction",
+  "mobygames": "diablo-ii-lord-of-destruction",
+  "cover": {
+   "igdbImage": "co3gfn",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q838642": {
   "title": "Doom RPG",
   "year": 2005,
@@ -4824,7 +4910,7 @@
   ],
   "wikipedia": "The Legend of Zelda: The Wind Waker",
   "igdb": "the-legend-of-zelda-the-wind-waker",
-  "mobygames": "legend-of-zelda-the-wind-waker",
+  "mobygames": "legend-of-zelda-the-wind-waker-limited-edition",
   "cover": {
    "igdbImage": "co3ohz",
    "width": 400,
@@ -4962,6 +5048,34 @@
    "height": 533
   }
  },
+ "Q868545": {
+  "title": "The Legend of Zelda: Spirit Tracks",
+  "year": 2009,
+  "released": "2009-12-07",
+  "developers": [
+   "Nintendo Entertainment Analysis & Development"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action-adventure game"
+  ],
+  "series": [
+   "The Legend of Zelda"
+  ],
+  "stores": {
+   "eshop": "the-legend-of-zelda-spirit-tracks-wii-u"
+  },
+  "wikipedia": "The Legend of Zelda: Spirit Tracks",
+  "igdb": "the-legend-of-zelda-spirit-tracks",
+  "mobygames": "legend-of-zelda-spirit-tracks",
+  "cover": {
+   "igdbImage": "co3oj6",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q869511": {
   "title": "Crash Bandicoot: The Wrath of Cortex",
   "year": 2001,
@@ -5087,7 +5201,7 @@
   },
   "wikipedia": "Tom Clancy's Splinter Cell: Double Agent",
   "igdb": "tom-clancy-s-splinter-cell-double-agent",
-  "mobygames": "tom-clancys-splinter-cell-double-agent",
+  "mobygames": "tom-clancys-splinter-cell-double-agent-limited-collectors-editio",
   "cover": {
    "igdbImage": "co1ypg",
    "width": 400,
@@ -6720,7 +6834,7 @@
   ],
   "wikipedia": "Metroid Prime Hunters",
   "igdb": "metroid-prime-hunters",
-  "mobygames": "metroid-prime-hunters-first-hunt",
+  "mobygames": "metroid-prime-hunters",
   "cover": {
    "igdbImage": "co7j9t",
    "width": 400,
@@ -9156,6 +9270,31 @@
    "height": 533
   }
  },
+ "Q1814366": {
+  "title": "Psi-Ops: The Mindgate Conspiracy",
+  "year": 2004,
+  "released": "2004-06-14",
+  "developers": [
+   "Midway Games"
+  ],
+  "publishers": [
+   "Capcom",
+   "Midway Games"
+  ],
+  "genres": [
+   "science fiction video game",
+   "third-person shooter"
+  ],
+  "series": [],
+  "wikipedia": "Psi-Ops: The Mindgate Conspiracy",
+  "igdb": "psi-ops-the-mindgate-conspiracy",
+  "mobygames": "psi-ops-the-mindgate-conspiracy",
+  "cover": {
+   "igdbImage": "co2msx",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q1826891": {
   "title": "Tom Clancy's Ghost Recon 2",
   "year": 2004,
@@ -9173,7 +9312,7 @@
   "series": [],
   "wikipedia": "Tom Clancy's Ghost Recon 2",
   "igdb": "tom-clancy-s-ghost-recon-2",
-  "mobygames": "tom-clancys-ghost-recon-2-2011-final-assault",
+  "mobygames": "tom-clancys-ghost-recon-2",
   "cover": {
    "igdbImage": "co1yhn",
    "width": 400,
@@ -9440,6 +9579,31 @@
    "height": 533
   }
  },
+ "Q1959943": {
+  "title": "NBA Jam",
+  "year": 1994,
+  "released": "1994-03",
+  "developers": [
+   "Midway Games"
+  ],
+  "publishers": [
+   "Midway Games"
+  ],
+  "genres": [
+   "basketball video game"
+  ],
+  "series": [
+   "NBA Jam"
+  ],
+  "wikipedia": "NBA Jam (1993 video game)",
+  "igdb": "nba-jam--1",
+  "mobygames": "nba-jam",
+  "cover": {
+   "igdbImage": "co6ze0",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q1973179": {
   "title": "Crimsonland",
   "year": 2003,
@@ -9692,6 +9856,35 @@
   "mobygames": "medal-of-honor-rising-sun",
   "cover": {
    "igdbImage": "co2u6y",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q2005910": {
+  "title": "Metroid: Other M",
+  "year": 2010,
+  "released": "2010-08-31",
+  "developers": [
+   "D-Rockets",
+   "Nintendo Software Planning & Development",
+   "Team Ninja"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action-adventure game",
+   "science fiction video game"
+  ],
+  "series": [],
+  "stores": {
+   "eshop": "metroid-other-m-wii-u"
+  },
+  "wikipedia": "Metroid: Other M",
+  "igdb": "metroid-other-m",
+  "mobygames": "metroid-other-m",
+  "cover": {
+   "igdbImage": "cobc4u",
    "width": 400,
    "height": 533
   }
@@ -10194,10 +10387,10 @@
   ],
   "series": [],
   "wikipedia": "Gauntlet Dark Legacy",
-  "igdb": "gauntlet-dark-legacy",
+  "igdb": "gauntlet-dark-legacy--1",
   "mobygames": "gauntlet-dark-legacy",
   "cover": {
-   "igdbImage": "co3kry",
+   "igdbImage": "co7yjd",
    "width": 400,
    "height": 533
   }
@@ -10714,6 +10907,29 @@
    "height": 533
   }
  },
+ "Q2287853": {
+  "title": "Castlevania: Dawn of Sorrow",
+  "year": 2005,
+  "released": "2005-08-25",
+  "developers": [
+   "Konami"
+  ],
+  "publishers": [
+   "Konami"
+  ],
+  "genres": [
+   "Metroidvania"
+  ],
+  "series": [],
+  "wikipedia": "Castlevania: Dawn of Sorrow",
+  "igdb": "castlevania-dawn-of-sorrow",
+  "mobygames": "castlevania-dawn-of-sorrow",
+  "cover": {
+   "igdbImage": "cob9z0",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q2287952": {
   "title": "Tony Hawk's Project 8",
   "year": 2006,
@@ -10841,6 +11057,32 @@
    "height": 533
   }
  },
+ "Q2292483": {
+  "title": "Ratchet & Clank: Up Your Arsenal",
+  "year": 2004,
+  "released": "2004-11-03",
+  "developers": [
+   "Insomniac Games"
+  ],
+  "publishers": [
+   "Sony Interactive Entertainment"
+  ],
+  "genres": [
+   "platform game",
+   "third-person shooter"
+  ],
+  "series": [
+   "Ratchet & Clank"
+  ],
+  "wikipedia": "Ratchet & Clank: Up Your Arsenal",
+  "igdb": "ratchet-clank-up-your-arsenal",
+  "mobygames": "ratchet-clank-up-your-arsenal",
+  "cover": {
+   "igdbImage": "co1oyn",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q2295559": {
   "title": "Ogre Battle 64: Person of Lordly Caliber",
   "year": 1999,
@@ -10937,7 +11179,7 @@
   "series": [],
   "wikipedia": "God of War: Ascension",
   "igdb": "god-of-war-ascension",
-  "mobygames": "god-of-war-ascension",
+  "mobygames": "god-of-war-ascension-chimeran-armor-multiplayer-armor",
   "cover": {
    "igdbImage": "co3die",
    "width": 400,
@@ -11317,7 +11559,7 @@
   },
   "wikipedia": "Marvel: Ultimate Alliance",
   "igdb": "marvel-ultimate-alliance",
-  "mobygames": "marvel-ultimate-alliance-gold-edition",
+  "mobygames": "marvel-ultimate-alliance-special-edition",
   "cover": {
    "igdbImage": "co2idz",
    "width": 400,
@@ -11366,10 +11608,10 @@
   ],
   "series": [],
   "wikipedia": "The Lord of the Rings: The Two Towers (video game)",
-  "igdb": "the-lord-of-the-rings-the-two-towers--1",
+  "igdb": "the-lord-of-the-rings-the-two-towers",
   "mobygames": "lord-of-the-rings-the-two-towers",
   "cover": {
-   "igdbImage": "co437y",
+   "igdbImage": "cod74h",
    "width": 400,
    "height": 533
   }
@@ -12111,6 +12353,34 @@
    "height": 533
   }
  },
+ "Q2523519": {
+  "title": "PlayStation All-Stars Battle Royale",
+  "year": 2012,
+  "released": "2012-11-20",
+  "developers": [
+   "Bluepoint Games",
+   "Santa Monica Studio",
+   "SuperBot Entertainment"
+  ],
+  "publishers": [
+   "Sony Interactive Entertainment"
+  ],
+  "genres": [
+   "action game",
+   "crossover fiction",
+   "fighting game",
+   "platform game"
+  ],
+  "series": [],
+  "wikipedia": "PlayStation All-Stars Battle Royale",
+  "igdb": "playstation-all-stars-battle-royale",
+  "mobygames": "playstation-all-stars-battle-royale",
+  "cover": {
+   "igdbImage": "co2ssv",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q2525853": {
   "title": "Rallisport Challenge 2",
   "year": 2004,
@@ -12334,10 +12604,10 @@
   ],
   "series": [],
   "wikipedia": "Spider-Man (2002 video game)",
-  "igdb": "spider-man--14",
+  "igdb": "spider-man--1",
   "mobygames": "spider-man______",
   "cover": {
-   "igdbImage": "coarp7",
+   "igdbImage": "co1p17",
    "width": 400,
    "height": 533
   }
@@ -13521,6 +13791,33 @@
    "height": 533
   }
  },
+ "Q2732145": {
+  "title": "Sin & Punishment: Star Successor",
+  "year": 2009,
+  "released": "2009-10-29",
+  "developers": [
+   "Treasure"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "rail shooter",
+   "shoot 'em up"
+  ],
+  "series": [],
+  "stores": {
+   "eshop": "sin-punishment-star-successor-wii-u"
+  },
+  "wikipedia": "Sin & Punishment: Star Successor",
+  "igdb": "sin-punishment-star-successor",
+  "mobygames": "sin-punishment-star-successor",
+  "cover": {
+   "igdbImage": "coc64e",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q2733462": {
   "title": "Mega Man X6",
   "year": 2001,
@@ -13953,10 +14250,10 @@
    "Bloody Roar"
   ],
   "wikipedia": "Bloody Roar Extreme",
-  "igdb": "bloody-roar-primal-fury",
+  "igdb": "bloody-roar-extreme",
   "mobygames": "bloody-roar-primal-fury",
   "cover": {
-   "igdbImage": "co4t49",
+   "igdbImage": "co7xrq",
    "width": 400,
    "height": 533
   }
@@ -14318,6 +14615,34 @@
   "mobygames": "drakan-the-ancients-gates",
   "cover": {
    "igdbImage": "co7nls",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q3046150": {
+  "title": "Excitebike 64",
+  "year": 2000,
+  "released": "2000-04-30",
+  "developers": [
+   "Left Field Productions"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "racing video game"
+  ],
+  "series": [
+   "Excite"
+  ],
+  "stores": {
+   "eshop": "excitebike-64-wii-u"
+  },
+  "wikipedia": "Excitebike 64",
+  "igdb": "excitebike-64",
+  "mobygames": "excitebike-64",
+  "cover": {
+   "igdbImage": "co4an4",
    "width": 400,
    "height": 533
   }
@@ -15231,6 +15556,31 @@
   "mobygames": "ssx-3",
   "cover": {
    "igdbImage": "co1o4m",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q3482233": {
+  "title": "Shining Soul II",
+  "year": 2003,
+  "released": "2003-07-24",
+  "developers": [
+   "Nex Entertainment"
+  ],
+  "publishers": [
+   "Sega"
+  ],
+  "genres": [
+   "action role-playing game"
+  ],
+  "series": [
+   "Shining"
+  ],
+  "wikipedia": "Shining Soul II",
+  "igdb": "shining-soul-ii",
+  "mobygames": "shining-soul-ii",
+  "cover": {
+   "igdbImage": "co4pug",
    "width": 400,
    "height": 533
   }
@@ -17433,6 +17783,60 @@
    "height": 536
   }
  },
+ "Q16323079": {
+  "title": "Planet Harriers",
+  "developers": [
+   "Amusement Vision"
+  ],
+  "publishers": [
+   "Sega"
+  ],
+  "genres": [
+   "rail shooter"
+  ],
+  "series": [
+   "Space Harrier"
+  ],
+  "wikipedia": "Planet Harriers",
+  "igdb": "planet-harriers",
+  "mobygames": "planet-harriers",
+  "cover": {
+   "igdbImage": "co4gj6",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q16743064": {
+  "title": "Call of Duty: Advanced Warfare",
+  "year": 2014,
+  "released": "2014-11-04",
+  "developers": [
+   "High Moon Studios",
+   "Sledgehammer Games"
+  ],
+  "publishers": [
+   "Activision",
+   "Sledgehammer Games"
+  ],
+  "genres": [
+   "first-person shooter",
+   "third-person shooter"
+  ],
+  "series": [],
+  "stores": {
+   "steam": "209650",
+   "psn": "UP0002-CUSA00803_00-CODAWPSNGOLDEDIT",
+   "msstore": "c20hl06x0v8w"
+  },
+  "wikipedia": "Call of Duty: Advanced Warfare",
+  "igdb": "call-of-duty-advanced-warfare",
+  "mobygames": "call-of-duty-advanced-warfare",
+  "cover": {
+   "igdbImage": "co1wky",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q16746773": {
   "title": "Persona 4 Arena Ultimax",
   "year": 2013,
@@ -17656,10 +18060,10 @@
    "msstore": "9n5253j559lr"
   },
   "wikipedia": "Five Nights at Freddy's (video game)",
-  "igdb": "five-nights-at-freddys",
+  "igdb": "five-nights-at-freddys--2",
   "mobygames": "five-nights-at-freddys",
   "cover": {
-   "igdbImage": "co8efb",
+   "igdbImage": "co71zy",
    "width": 400,
    "height": 533
   }
@@ -19257,6 +19661,31 @@
    "height": 533
   }
  },
+ "Q105560569": {
+  "title": "The Legend of Zelda: Skyward Sword HD",
+  "year": 2021,
+  "released": "2021-07-16",
+  "developers": [
+   "Tantalus Media"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action-adventure game"
+  ],
+  "series": [],
+  "stores": {
+   "eshop": "the-legend-of-zelda-skyward-sword-hd-switch"
+  },
+  "wikipedia": "The Legend of Zelda: Skyward Sword HD",
+  "igdb": "the-legend-of-zelda-skyward-sword-hd",
+  "cover": {
+   "igdbImage": "cob8lb",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q105592900": {
   "title": "Diablo II: Resurrected",
   "year": 2021,
@@ -19592,6 +20021,30 @@
   "igdb": "pokemon-scarlet",
   "cover": {
    "igdbImage": "co5sfi",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q111031687": {
+  "title": "Pokémon Violet",
+  "year": 2022,
+  "released": "2022-11-18",
+  "developers": [],
+  "publishers": [],
+  "genres": [
+   "role-playing video game",
+   "turn-based strategy video game"
+  ],
+  "series": [
+   "Pokémon"
+  ],
+  "stores": {
+   "eshop": "pokemon-violet-switch"
+  },
+  "wikipedia": "Pokémon Violet",
+  "igdb": "pokemon-violet",
+  "cover": {
+   "igdbImage": "co5sfa",
    "width": 400,
    "height": 533
   }
@@ -20235,6 +20688,24 @@
   "igdb": "mlb-the-show-26",
   "cover": {
    "igdbImage": "cobph4",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q137363789": {
+  "title": "Orbitals",
+  "year": 2026,
+  "released": "2026-09-03",
+  "developers": [],
+  "publishers": [
+   "Kepler Interactive"
+  ],
+  "genres": [],
+  "series": [],
+  "wikipedia": "Orbitals (video game)",
+  "igdb": "orbitals--1",
+  "cover": {
+   "igdbImage": "coc9r6",
    "width": 400,
    "height": 533
   }
