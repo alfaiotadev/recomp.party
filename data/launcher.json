@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T21:44:43.726Z",
+ "generatedAt": "2026-11-27T08:48:13.551Z",
  "games": {
   "0c0de/splatterhouse-decomp": {
    "id": "splatterhouse-decomp",
@@ -461,6 +461,18 @@
    "id": "farcryinstinctspredatorrecomp",
    "easy": false,
    "own": false
+  },
+  "Buyukcaglar/NFSSE": {
+   "id": "nfsse",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-27"
+  },
+  "Buyukcaglar/synd": {
+   "id": "synd",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-27"
   },
   "CaduGimenes/SanctuaryPort": {
    "id": "sanctuaryport",
@@ -2613,17 +2625,17 @@
   "n64hub/mario-party-2-recomp": {
    "id": "mario-party-2-recomp",
    "easy": false,
-   "own": false
+   "own": true
   },
   "n64hub/mario-party-3-recomp": {
    "id": "mario-party-3-recomp",
    "easy": false,
-   "own": false
+   "own": true
   },
   "n64hub/mario-party-recomp": {
    "id": "mario-party-recomp",
    "easy": false,
-   "own": false
+   "own": true
   },
   "n64hub/rayman-2-recomp": {
    "id": "rayman-2-recomp",
