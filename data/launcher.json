@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T11:45:30.073Z",
+ "generatedAt": "2026-11-27T17:11:07.807Z",
  "games": {
   "0c0de/splatterhouse-decomp": {
    "id": "splatterhouse-decomp",
@@ -174,6 +174,12 @@
    "id": "final-fantasy-viii-recomp",
    "easy": false,
    "own": false
+  },
+  "almost-drowned-rat/Grand-Theft-Auto-2-Recompiled": {
+   "id": "grand-theft-auto-2-recompiled",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-26"
   },
   "almost-drowned-rat/Orta-Recompiled": {
    "id": "orta-recompiled",
@@ -652,6 +658,12 @@
    "easy": true,
    "own": false,
    "since": "2026-10-26"
+  },
+  "dalves408/halo2-recomp": {
+   "id": "halo2-recomp",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-22"
   },
   "danielalves96/gow-pc-port": {
    "id": "gow-pc-port",
@@ -1419,6 +1431,11 @@
    "easy": false,
    "own": false
   },
+  "Harold0777/eagle_five_recomp": {
+   "id": "eagle-five-recomp",
+   "easy": false,
+   "own": false
+  },
   "HarvestMoon64Recomp/HarvestMoon64Recomp": {
    "id": "harvestmoon64recomp",
    "easy": false,
@@ -1792,11 +1809,6 @@
   },
   "josiahg2502-glitch/Smash4PC": {
    "id": "smash4pc",
-   "easy": false,
-   "own": false
-  },
-  "josiahg2502-glitch/TomodachiLife-recomp": {
-   "id": "tomodachilife-recomp",
    "easy": false,
    "own": false
   },
@@ -2178,6 +2190,11 @@
    "easy": false,
    "own": false
   },
+  "mattiasribera/WarriorsReborn": {
+   "id": "warriorsreborn",
+   "easy": false,
+   "own": false
+  },
   "mattkuhnQAAI/sfiii-native": {
    "id": "sfiii-native",
    "easy": false,
@@ -2327,7 +2344,7 @@
    "since": "2026-11-06"
   },
   "minimalice92/bloodwake-recomp": {
-   "id": "bloodwake-recomp-2",
+   "id": "bloodwake-recomp",
    "easy": false,
    "own": false
   },
@@ -2675,6 +2692,12 @@
    "easy": false,
    "own": false
   },
+  "nacholuver1/Blitz-TheLeague-Recomp": {
+   "id": "blitz-theleague-recomp",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-26"
+  },
   "nacholuver1/Crimson-Skies-High-Road-To-Revenge-Repo": {
    "id": "crimson-skies-high-road-to-revenge-repo",
    "easy": true,
@@ -3020,6 +3043,12 @@
    "id": "split2-recomp",
    "easy": false,
    "own": false
+  },
+  "pixelnorth/DreamstarRecomp": {
+   "id": "dreamstarrecomp",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-25"
   },
   "plinkr/Wild9Recomp": {
    "id": "wild9recomp",
@@ -3556,6 +3585,12 @@
    "own": false,
    "since": "2026-10-31"
   },
+  "Simon3Sarkis/fifa-street-3-pc-recomp": {
+   "id": "fifa-street-3-pc-recomp",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-26"
+  },
   "Simon3Sarkis/super-odyssey-pc-recomp": {
    "id": "super-odyssey-pc-recomp",
    "easy": true,
@@ -3644,12 +3679,12 @@
    "own": false
   },
   "sonicdcer/MarioKart64Recomp": {
-   "id": "mariokart64recomp-2",
+   "id": "mariokart64recomp",
    "easy": false,
    "own": false
   },
   "sonicdcer/Starfox64Recomp": {
-   "id": "starfox64recomp-2",
+   "id": "starfox64recomp",
    "easy": false,
    "own": false
   },
@@ -4176,6 +4211,12 @@
    "easy": false,
    "own": false
   },
+  "Tzeentchnet/BruteForce": {
+   "id": "bruteforce",
+   "easy": true,
+   "own": true,
+   "since": "2026-11-27"
+  },
   "u2-bot/uDPRE": {
    "id": "udpre",
    "easy": false,
@@ -4225,6 +4266,11 @@
   },
   "Veemyu/strahlender-xnu": {
    "id": "strahlender-xnu",
+   "easy": false,
+   "own": false
+  },
+  "vfjoo888/Super3D": {
+   "id": "super3d",
    "easy": false,
    "own": false
   },

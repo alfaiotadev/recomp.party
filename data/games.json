@@ -198,6 +198,31 @@
    "height": 533
   }
  },
+ "Q37115": {
+  "title": "Sonic the Hedgehog",
+  "year": 1991,
+  "released": "1991-10-25",
+  "developers": [
+   "Ancient"
+  ],
+  "publishers": [
+   "Sega"
+  ],
+  "genres": [
+   "2D platform game"
+  ],
+  "series": [
+   "Sonic the Hedgehog"
+  ],
+  "wikipedia": "Sonic the Hedgehog (8-bit video game)",
+  "igdb": "sonic-the-hedgehog--2",
+  "mobygames": "sonic-the-hedgehog__",
+  "cover": {
+   "igdbImage": "cobt1i",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q37123": {
   "title": "Sonic the Hedgehog",
   "year": 1991,
@@ -504,6 +529,36 @@
    "height": 533
   }
  },
+ "Q76255": {
+  "title": "Call of Duty 4: Modern Warfare",
+  "year": 2007,
+  "released": "2007-11-05",
+  "developers": [
+   "Aspyr",
+   "Infinity Ward",
+   "Treyarch"
+  ],
+  "publishers": [
+   "Activision",
+   "Square Enix"
+  ],
+  "genres": [
+   "first-person shooter"
+  ],
+  "series": [],
+  "stores": {
+   "steam": "7940",
+   "msstore": "c1k9426124pr"
+  },
+  "wikipedia": "Call of Duty 4: Modern Warfare",
+  "igdb": "call-of-duty-4-modern-warfare",
+  "mobygames": "call-of-duty-4-modern-warfare",
+  "cover": {
+   "igdbImage": "co1wko",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q83843": {
   "title": "Forza Horizon",
   "year": 2012,
@@ -524,6 +579,35 @@
   "mobygames": "forza-horizon",
   "cover": {
    "igdbImage": "co228y",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q94460": {
+  "title": "Grand Theft Auto 2",
+  "year": 1999,
+  "released": "1999-09-30",
+  "developers": [
+   "Rockstar North"
+  ],
+  "publishers": [
+   "Rockstar Games"
+  ],
+  "genres": [
+   "action-adventure game",
+   "cyberpunk video game"
+  ],
+  "series": [
+   "Grand Theft Auto"
+  ],
+  "stores": {
+   "steam": "12180"
+  },
+  "wikipedia": "Grand Theft Auto 2",
+  "igdb": "grand-theft-auto-2",
+  "mobygames": "grand-theft-auto-2",
+  "cover": {
+   "igdbImage": "co2lb2",
    "width": 400,
    "height": 533
   }
@@ -1323,6 +1407,30 @@
    "height": 533
   }
  },
+ "Q252804": {
+  "title": "Halo 2",
+  "year": 2004,
+  "released": "2004-11-09",
+  "developers": [
+   "Bungie"
+  ],
+  "publishers": [
+   "Xbox Game Studios"
+  ],
+  "genres": [
+   "first-person shooter",
+   "science fiction video game"
+  ],
+  "series": [],
+  "wikipedia": "Halo 2",
+  "igdb": "halo-2",
+  "mobygames": "halo-2",
+  "cover": {
+   "igdbImage": "co1x77",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q276217": {
   "title": "Halo: Combat Evolved",
   "year": 2001,
@@ -1531,7 +1639,7 @@
   },
   "wikipedia": "Call of Duty 3",
   "igdb": "call-of-duty-3",
-  "mobygames": "call-of-duty-3",
+  "mobygames": "call-of-duty-3-gold-edition",
   "cover": {
    "igdbImage": "co1wku",
    "width": 400,
@@ -2121,10 +2229,10 @@
   ],
   "series": [],
   "wikipedia": "The Lord of the Rings: The Return of the King (video game)",
-  "igdb": "the-lord-of-the-rings-the-return-of-the-king",
+  "igdb": "the-lord-of-the-rings-the-return-of-the-king--1",
   "mobygames": "lord-of-the-rings-the-return-of-the-king",
   "cover": {
-   "igdbImage": "co20of",
+   "igdbImage": "co2cjq",
    "width": 400,
    "height": 533
   }
@@ -2294,7 +2402,7 @@
   },
   "wikipedia": "Call of Duty: Modern Warfare 3",
   "igdb": "call-of-duty-modern-warfare-3",
-  "mobygames": "call-of-duty-mw3",
+  "mobygames": "call-of-duty-mw3_",
   "cover": {
    "igdbImage": "co1wkn",
    "width": 400,
@@ -2377,6 +2485,31 @@
   "mobygames": "donkey-kong-country",
   "cover": {
    "igdbImage": "co70qn",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q520192": {
+  "title": "Golden Sun: Dark Dawn",
+  "year": 2010,
+  "released": "2010-11-29",
+  "developers": [
+   "Camelot Software Planning"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "role-playing video game"
+  ],
+  "series": [
+   "Golden Sun"
+  ],
+  "wikipedia": "Golden Sun: Dark Dawn",
+  "igdb": "golden-sun-dark-dawn",
+  "mobygames": "golden-sun-dark-dawn",
+  "cover": {
+   "igdbImage": "co25qp",
    "width": 400,
    "height": 533
   }
@@ -3341,10 +3474,10 @@
   ],
   "series": [],
   "wikipedia": "Superman Returns (video game)",
-  "igdb": "superman-returns-the-videogame--1",
+  "igdb": "superman-returns-the-videogame",
   "mobygames": "superman-returns",
   "cover": {
-   "igdbImage": "co72g0",
+   "igdbImage": "co2des",
    "width": 400,
    "height": 533
   }
@@ -4205,6 +4338,31 @@
    "height": 533
   }
  },
+ "Q766891": {
+  "title": "MotorStorm: Pacific Rift",
+  "year": 2008,
+  "released": "2008-09-11",
+  "developers": [
+   "Evolution Studios"
+  ],
+  "publishers": [
+   "Sony Interactive Entertainment"
+  ],
+  "genres": [
+   "racing video game"
+  ],
+  "series": [
+   "MotorStorm"
+  ],
+  "wikipedia": "MotorStorm: Pacific Rift",
+  "igdb": "motorstorm-pacific-rift",
+  "mobygames": "motorstorm-pacific-rift",
+  "cover": {
+   "igdbImage": "co26t6",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q767436": {
   "title": "FIFA Street",
   "year": 2012,
@@ -4348,6 +4506,29 @@
   "mobygames": "donkey-kong-64",
   "cover": {
    "igdbImage": "co289i",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q779227": {
+  "title": "FIFA Street 3",
+  "year": 2008,
+  "released": "2008-02-18",
+  "developers": [
+   "EA Vancouver"
+  ],
+  "publishers": [
+   "EA Sports Big"
+  ],
+  "genres": [
+   "association football video game"
+  ],
+  "series": [],
+  "wikipedia": "FIFA Street 3",
+  "igdb": "fifa-street-3",
+  "mobygames": "fifa-street-3",
+  "cover": {
+   "igdbImage": "co20b7",
    "width": 400,
    "height": 533
   }
@@ -6989,10 +7170,10 @@
    "msstore": "c098fgnmts8f"
   },
   "wikipedia": "Sonic Unleashed",
-  "igdb": "sonic-unleashed--2",
+  "igdb": "sonic-unleashed",
   "mobygames": "sonic-unleashed",
   "cover": {
-   "igdbImage": "cocsg8",
+   "igdbImage": "co2v6p",
    "width": 400,
    "height": 533
   }
@@ -10387,10 +10568,10 @@
   ],
   "series": [],
   "wikipedia": "Gauntlet Dark Legacy",
-  "igdb": "gauntlet-dark-legacy--1",
+  "igdb": "gauntlet-dark-legacy",
   "mobygames": "gauntlet-dark-legacy",
   "cover": {
-   "igdbImage": "co7yjd",
+   "igdbImage": "co3kry",
    "width": 400,
    "height": 533
   }
@@ -11005,6 +11186,31 @@
    "height": 533
   }
  },
+ "Q2290930": {
+  "title": "Pokémon Stadium 2",
+  "year": 2000,
+  "released": "2000-12-14",
+  "developers": [
+   "Nintendo Entertainment Analysis & Development"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "strategy video game"
+  ],
+  "series": [
+   "Pokémon Stadium"
+  ],
+  "wikipedia": "Pokémon Stadium 2",
+  "igdb": "pokemon-stadium-2",
+  "mobygames": "pokmon-stadium-2",
+  "cover": {
+   "igdbImage": "co4w07",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q2292272": {
   "title": "Skies of Arcadia",
   "year": 2000,
@@ -11608,10 +11814,10 @@
   ],
   "series": [],
   "wikipedia": "The Lord of the Rings: The Two Towers (video game)",
-  "igdb": "the-lord-of-the-rings-the-two-towers",
+  "igdb": "the-lord-of-the-rings-the-two-towers--1",
   "mobygames": "lord-of-the-rings-the-two-towers",
   "cover": {
-   "igdbImage": "cod74h",
+   "igdbImage": "co437y",
    "width": 400,
    "height": 533
   }
@@ -12329,6 +12535,32 @@
    "height": 533
   }
  },
+ "Q2517274": {
+  "title": "Metal Gear Acid 2",
+  "year": 2005,
+  "released": "2005-12-08",
+  "developers": [
+   "Kojima Productions"
+  ],
+  "publishers": [
+   "Konami"
+  ],
+  "genres": [
+   "stealth game"
+  ],
+  "series": [
+   "Metal Gear",
+   "Metal Gear Ac!d"
+  ],
+  "wikipedia": "Metal Gear Acid 2",
+  "igdb": "metal-gear-acid-2",
+  "mobygames": "metal-gear-acd_",
+  "cover": {
+   "igdbImage": "co5ipm",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q2520122": {
   "title": "Dragon Ball Z: Budokai Tenkaichi 3",
   "year": 2007,
@@ -12526,7 +12758,7 @@
   ],
   "wikipedia": "Resistance 3",
   "igdb": "resistance-3",
-  "mobygames": "resistance-3-survivor-edition",
+  "mobygames": "resistance-3",
   "cover": {
    "igdbImage": "co2b3y",
    "width": 400,
@@ -12604,10 +12836,10 @@
   ],
   "series": [],
   "wikipedia": "Spider-Man (2002 video game)",
-  "igdb": "spider-man--6",
+  "igdb": "spider-man--1",
   "mobygames": "spider-man______",
   "cover": {
-   "igdbImage": "co4t0p",
+   "igdbImage": "co1p17",
    "width": 400,
    "height": 533
   }
@@ -14250,10 +14482,10 @@
    "Bloody Roar"
   ],
   "wikipedia": "Bloody Roar Extreme",
-  "igdb": "bloody-roar-extreme",
+  "igdb": "bloody-roar-primal-fury",
   "mobygames": "bloody-roar-primal-fury",
   "cover": {
-   "igdbImage": "co7xrq",
+   "igdbImage": "co4t49",
    "width": 400,
    "height": 533
   }
@@ -14307,6 +14539,30 @@
   "mobygames": "bomberman-world",
   "cover": {
    "igdbImage": "co85g1",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q2927099": {
+  "title": "Brute Force",
+  "year": 2003,
+  "released": "2003-05-27",
+  "developers": [
+   "Digital Anvil"
+  ],
+  "publishers": [
+   "Xbox Game Studios"
+  ],
+  "genres": [
+   "science fiction video game",
+   "third-person shooter"
+  ],
+  "series": [],
+  "wikipedia": "Brute Force (video game)",
+  "igdb": "brute-force",
+  "mobygames": "brute-force",
+  "cover": {
+   "igdbImage": "co7jtu",
    "width": 400,
    "height": 533
   }
@@ -16426,6 +16682,29 @@
    "height": 533
   }
  },
+ "Q4926943": {
+  "title": "Blitz: The League",
+  "year": 2005,
+  "released": "2005-10-17",
+  "developers": [
+   "Midway Games"
+  ],
+  "publishers": [
+   "Midway Games"
+  ],
+  "genres": [
+   "American football video game"
+  ],
+  "series": [],
+  "wikipedia": "Blitz: The League",
+  "igdb": "blitz-the-league",
+  "mobygames": "blitz-the-league",
+  "cover": {
+   "igdbImage": "co70pg",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q4940643": {
   "title": "Bomberman Fantasy Race",
   "year": 1998,
@@ -17212,6 +17491,31 @@
   "mobygames": "vigilante-8-arcade",
   "cover": {
    "igdbImage": "co97zd",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q7934911": {
+  "title": "Virtua Cop 3",
+  "year": 2003,
+  "released": "2003-03",
+  "developers": [
+   "Sega AM2"
+  ],
+  "publishers": [
+   "Sega"
+  ],
+  "genres": [
+   "light-gun shooter"
+  ],
+  "series": [
+   "Virtua Cop"
+  ],
+  "wikipedia": "Virtua Cop 3",
+  "igdb": "virtua-cop-3",
+  "mobygames": "virtua-cop-3",
+  "cover": {
+   "igdbImage": "co4oq4",
    "width": 400,
    "height": 533
   }
@@ -18555,6 +18859,34 @@
    "height": 533
   }
  },
+ "Q23648408": {
+  "title": "Grand Theft Auto VI",
+  "year": 2026,
+  "released": "2026-11-19",
+  "developers": [
+   "Rockstar Games"
+  ],
+  "publishers": [
+   "Take-Two Interactive"
+  ],
+  "genres": [
+   "action-adventure game",
+   "third-person shooter"
+  ],
+  "series": [
+   "Grand Theft Auto"
+  ],
+  "stores": {
+   "msstore": "9nl3wwnzlzzn"
+  },
+  "wikipedia": "Grand Theft Auto VI",
+  "igdb": "grand-theft-auto-vi",
+  "cover": {
+   "igdbImage": "cocv1v",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q28127331": {
   "title": "Knack 2",
   "year": 2017,
@@ -18755,6 +19087,39 @@
    "height": 533
   }
  },
+ "Q30589355": {
+  "title": "Fire Emblem Warriors",
+  "year": 2017,
+  "released": "2017",
+  "developers": [
+   "Intelligent Systems",
+   "Omega Force",
+   "Team Ninja"
+  ],
+  "publishers": [
+   "Koei Tecmo Games",
+   "Nintendo"
+  ],
+  "genres": [
+   "action game",
+   "hack and slash"
+  ],
+  "series": [
+   "Dynasty Warriors",
+   "Fire Emblem"
+  ],
+  "stores": {
+   "eshop": "fire-emblem-warriors-3ds"
+  },
+  "wikipedia": "Fire Emblem Warriors",
+  "igdb": "fire-emblem-warriors",
+  "mobygames": "fire-emblem-warriors",
+  "cover": {
+   "igdbImage": "co24h8",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q30749509": {
   "title": "Metroid Prime 4: Beyond",
   "year": 2025,
@@ -18801,6 +19166,32 @@
   "mobygames": "monster-hunter-4-ultimate",
   "cover": {
    "igdbImage": "co2gkk",
+   "width": 400,
+   "height": 533
+  }
+ },
+ "Q40888841": {
+  "title": "Kirby Star Allies",
+  "year": 2018,
+  "released": "2018-03-16",
+  "developers": [
+   "HAL Laboratory"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "action game"
+  ],
+  "series": [],
+  "stores": {
+   "eshop": "kirby-star-allies-switch"
+  },
+  "wikipedia": "Kirby Star Allies",
+  "igdb": "kirby-star-allies",
+  "mobygames": "kirby-star-allies",
+  "cover": {
+   "igdbImage": "co8ezz",
    "width": 400,
    "height": 533
   }
@@ -19686,6 +20077,31 @@
    "height": 533
   }
  },
+ "Q105106422": {
+  "title": "Super Mario 3D World + Bowser's Fury",
+  "year": 2021,
+  "released": "2021-02-12",
+  "developers": [
+   "Nintendo",
+   "Nintendo Entertainment Planning & Development"
+  ],
+  "publishers": [
+   "Nintendo"
+  ],
+  "genres": [
+   "platform game"
+  ],
+  "series": [],
+  "stores": {
+   "eshop": "super-mario-3d-world-plus-bowsers-fury-switch"
+  },
+  "igdb": "super-mario-3d-world-plus-bowsers-fury",
+  "cover": {
+   "igdbImage": "cobb2d",
+   "width": 400,
+   "height": 533
+  }
+ },
  "Q105560569": {
   "title": "The Legend of Zelda: Skyward Sword HD",
   "year": 2021,
@@ -20246,6 +20662,21 @@
    "width": 400,
    "height": 533
   }
+ },
+ "Q122394838": {
+  "title": "Sengoku Basara 3 Utage",
+  "year": 2011,
+  "released": "2011-11-10",
+  "developers": [
+   "Capcom"
+  ],
+  "publishers": [
+   "Capcom"
+  ],
+  "genres": [],
+  "series": [
+   "Sengoku Basara"
+  ]
  },
  "Q123335605": {
   "title": "Diablo III: Eternal Collection",
