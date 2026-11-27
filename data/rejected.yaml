@@ -918,3 +918,7 @@
   reason: The repo is an archive of multiple projects, not a single playable
     static recompilation or source port.
   date: 2026-11-26
+- repo: martina1713/gow-pc-port-classic-recompiled
+  reason: A password-protected archive with almost no source code; the static
+    recompilation claim cannot be checked, looks like a malware lure.
+  date: 2026-11-27
