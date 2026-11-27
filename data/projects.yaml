@@ -1789,14 +1789,6 @@
   kind: port
   wikidata: Q21078985
   added: 2026-11-09
-- repo: Dimi-Sama/OrbitalsPCRecomp
-  game: Orbitals
-  platform: switch
-  kind: port
-  tool: SwitchRecomp
-  based_on: [MZ-Labs/SwitchRecomp]
-  wikidata: Q137363789
-  added: 2026-11-26
 - repo: Brandon04Gonzalez/p4au-android
   game: Persona 4 Arena Ultimax
   platform: switch
@@ -2183,6 +2175,14 @@
   based_on: [kayochiaradia/mtf-recomp, valentderah/totk-pc-recomp, peiikai/LASRecomp, ly05010419/MacNativeGames, seedds/nxnative, Revivedx/SavageWindRecomp]
   wikidata: Q136231667
   added: 2026-11-25
+- repo: Dimi-Sama/OrbitalsPCRecomp
+  game: Orbitals
+  platform: switch2
+  kind: recomp
+  tool: SwitchRecomp
+  based_on: [MZ-Labs/SwitchRecomp]
+  wikidata: Q137363789
+  added: 2026-11-26
 - repo: Dittobyte/Recompia
   game: Pokémon Pokopia
   platform: switch2
@@ -2552,7 +2552,7 @@
 - repo: dguillot-gh/spirit-tracks-recomp
   game: "The Legend of Zelda: Spirit Tracks"
   platform: nds
-  kind: port
+  kind: recomp
   wikidata: Q868545
   added: 2026-11-26
 
@@ -4085,7 +4085,7 @@
 - repo: samuelMadureira23/allstars-port
   game: PlayStation All-Stars Battle Royale
   platform: ps3
-  kind: port
+  kind: recomp
   tool: ps3recomp
   based_on: [sp00nznet/ps3recomp]
   wikidata: Q2523519
@@ -5550,7 +5550,7 @@
 - repo: BanhMi93P/asura-nx
   game: Asura's Wrath
   platform: x360
-  kind: port
+  kind: recomp
   tool: ReXGlue
   wikidata: Q2532697
   added: 2026-11-26
@@ -5665,7 +5665,7 @@
 - repo: yassinsolim/mw3-recomp
   game: "Call of Duty: Modern Warfare 3"
   platform: x360
-  kind: port
+  kind: recomp
   tool: XenonRecomp
   wikidata: Q486233
   added: 2026-11-26
@@ -7738,6 +7738,7 @@
   platform: arcade
   kind: recomp
   based_on: [historicalsource/nba-jam-tournament-edition, Asure/nba-jam-tournament-edition-SE, historicalsource/nba-hangtime]
+  wikidata: Q1959943
   added: 2026-11-26
 - repo: djyt/cannonball
   game: OutRun
