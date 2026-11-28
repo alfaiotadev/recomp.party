@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T21:29:46.624Z",
+ "generatedAt": "2026-11-28T08:02:17.375Z",
  "games": {
   "0c0de/splatterhouse-decomp": {
    "id": "splatterhouse-decomp",
@@ -2660,7 +2660,7 @@
   "n64hub/f-zero-x-recomp": {
    "id": "f-zero-x-recomp",
    "easy": false,
-   "own": false
+   "own": true
   },
   "n64hub/mario-party-2-recomp": {
    "id": "mario-party-2-recomp",
@@ -2690,7 +2690,7 @@
   "n64hub/super-mario-64-recomp": {
    "id": "super-mario-64-recomp",
    "easy": false,
-   "own": false
+   "own": true
   },
   "nacholuver1/Blitz-TheLeague-Recomp": {
    "id": "blitz-theleague-recomp",
@@ -2932,8 +2932,9 @@
   },
   "OpenSmash-Ultimate/OpenSmash-Ultimate": {
    "id": "opensmash-ultimate",
-   "easy": false,
-   "own": false
+   "easy": true,
+   "own": true,
+   "since": "2026-11-28"
   },
   "opentyrian/opentyrian": {
    "id": "opentyrian",
