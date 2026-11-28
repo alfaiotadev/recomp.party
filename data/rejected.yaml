@@ -982,3 +982,27 @@
   reason: A general Xbox Series X|S translation layer (Minecraft is its test
     title), not a port of one game or a recompiler.
   date: 2026-11-27
+- repo: Xeeynamo/sotn-decomp
+  reason: This is a matching decompilation project aimed at re-creating the
+    original binary, not a playable native port or static recompilation.
+  date: 2026-11-28
+- repo: Vicen04/Dw1DataAndPatches
+  reason: Repository provides patches, hacks and randomizers, not a native
+    recompilation or source port.
+  date: 2026-11-28
+- repo: ggMartinez/CastlevaniaLOI-PC
+  reason: The port is explicitly not yet playable as it crashes to a black screen
+    after the intro.
+  date: 2026-11-28
+- repo: felixcarmona/dw1horizon
+  reason: It is a fan mod/patch for the original PlayStation game, not a native
+    port or static recompilation.
+  date: 2026-11-28
+- repo: pharmerdan/auto-modellista-enhanced
+  reason: Project provides source code only; no precompiled runnable release; user
+    must compile and provide own game files.
+  date: 2026-11-28
+- repo: al4xdev/digimon-world-3-definitive-edition
+  reason: Fan remake using original Digimon World 3 assets; falls under rejected
+    mods/remakes with original assets.
+  date: 2026-11-28
